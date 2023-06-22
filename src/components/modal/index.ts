@@ -1,3 +1,3 @@
 import ModaExcluir from "./modalExcluir/ModalExcluir";
-
-export { ModaExcluir };
+import ModalAddEditSchool from "./modalAddEditSchool/ModalAddEditSchool";
+export { ModaExcluir, ModalAddEditSchool };

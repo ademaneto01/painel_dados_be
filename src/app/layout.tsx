@@ -1,6 +1,5 @@
-'use client'
 import { Inter } from 'next/font/google'
-
+import { GlobalContextProvider } from '@/context/store'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -15,7 +14,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className={inter.className}> {children} </body>
+      <body className={inter.className}>
+        <GlobalContextProvider>
+          {children} 
+        </GlobalContextProvider>  
+      </body>
     </html>
   )
 }

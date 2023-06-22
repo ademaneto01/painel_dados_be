@@ -7,6 +7,7 @@ import SideNavBar from "@/components/sideNavBar";
 import TopNavBar from "@/components/topNavBaR";
 import pages from "@/components/pages/index";
 
+
 export default function Home(): JSX.Element {
   const [page, setPage] = useState(PageEnum.digitalResources);
   const [sideNavBarHidden, setSideNavBarHidden] = useState(false);

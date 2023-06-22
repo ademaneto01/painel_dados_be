@@ -1,11 +1,13 @@
 import {
     Escolas,
+    Lessons
   } from "@/entities";
   import { FailedToFetchError } from "@/errors";
   import { BackendApiInterface, SerializerInterface } from "@/interfaces";
 
   import {
     MockEscolasSerializers,
+    MockLessonsSerializers
   } from "@/serializers/mocks";
   import axios, { AxiosInstance, AxiosResponse } from "axios";
   
@@ -26,6 +28,12 @@ import {
       return await this.get<Escolas>(
         "/escolas",
         new MockEscolasSerializers()
+      );
+    }
+    public async getLessons(): Promise<Lessons[]> {
+      return await this.get<Lessons>(
+        "/resources",
+        new MockLessonsSerializers()
       );
     }
     private async get<T>(

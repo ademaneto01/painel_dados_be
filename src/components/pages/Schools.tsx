@@ -6,6 +6,7 @@ import { Column, Table } from "../Table";
 import { useEffect, useState } from "react";
 import backendApi from "@/backendApi";
 import { FailedToFetchError } from "@/errors";
+import { ModalAddEditSchool } from "../modal";
 
 const columns = [
   new Column("Nome", "nome"),
@@ -18,6 +19,11 @@ export default function Schools(): JSX.Element {
   const [data, setData] = useState([] as Escolas[]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [ showModalAddEditSchool, setShowModalAddEditSchool ] = useState(false)
+
+  function handleClickOpenModalAdd( ):void {
+    setShowModalAddEditSchool(true)
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -43,7 +49,8 @@ export default function Schools(): JSX.Element {
     <div className={styles.pageContainer}>
       <h4>Escolas</h4>
       <PageContentContainer>
-        <CreateButton text="Nova escola" onClick={() => {}} />
+        <CreateButton text="Nova escola" onClick={() => handleClickOpenModalAdd()} />
+        {showModalAddEditSchool  && <ModalAddEditSchool onCancel={() => setShowModalAddEditSchool(false)} modalKey={''}/>}
         <Table<Escolas>
           data={data}
           columns={columns}
