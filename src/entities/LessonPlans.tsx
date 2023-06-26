@@ -22,6 +22,6 @@ export default class Lessons {
   }
 
   public get acoes(): JSX.Element {
-    return <TableActions id={this.id} nome={this.nome} modalKey={this.id}/>;
+    return <TableActions id={this.id} nome={this.nome} lessonKey={this.id}/>;
   }
 }

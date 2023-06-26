@@ -21,14 +21,14 @@ const modules = {
 
 const theme = 'snow';
 
- export const MultilineInput: React.FC<MultilineInputProps> = ({
+ export const MultilineInput: React.FC<MultilineInputProps> = (
+  {
   label,
   register,
   onChange,
   value,
 }) => {
   return (
-
     <>
       <label>{label}</label>
       <ReactQuill className={styles.meuEditorQuill}

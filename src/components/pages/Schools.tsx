@@ -49,7 +49,7 @@ export default function Schools(): JSX.Element {
     <div className={styles.pageContainer}>
       <h4>Escolas</h4>
       <PageContentContainer>
-        <CreateButton text="Nova escola" onClick={() => handleClickOpenModalAdd()} />
+        <CreateButton  color={'var(--white'} colorBackGround={'var(--blue-300)'} text="Nova escola" onClick={() => handleClickOpenModalAdd()} />
         {showModalAddEditSchool  && <ModalAddEditSchool onCancel={() => setShowModalAddEditSchool(false)} modalKey={''}/>}
         <Table<Escolas>
           data={data}
