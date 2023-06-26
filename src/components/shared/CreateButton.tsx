@@ -1,8 +1,9 @@
 import styles from "@/styles/Page.module.css";
+import React, { ReactNode } from 'react';
 
 interface CreateButtonProps {
   text?: string;
-  icon?:string;
+  icon?: ReactNode;
   onClick: VoidFunction;
   color: string; // Adicionando a prop "color"
   colorBackGround: string;
