@@ -21,7 +21,7 @@ const modules = {
 
 const theme = 'snow';
 
- export const MultilineInput: React.FC<MultilineInputProps> = (
+const MultilineInput: React.FC<MultilineInputProps> = (
   {
   label,
   register,
@@ -43,3 +43,5 @@ const theme = 'snow';
     </>
   );
 }
+
+export default MultilineInput;

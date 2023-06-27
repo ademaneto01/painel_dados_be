@@ -2,7 +2,7 @@ import { PageEnum } from "@/enums";
 import styles from "@/styles/SideNavBar.module.css";
 import { Dispatch, SetStateAction } from "react";
 import { IconType } from "react-icons";
-import { 
+import {
   ImOffice,
   ImBook,
   ImFolderOpen,

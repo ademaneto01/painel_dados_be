@@ -1,19 +1,21 @@
 import {
     Escolas,
-    Lessons
+    Lessons,
+    Users
   } from "@/entities";
   import { FailedToFetchError } from "@/errors";
   import { BackendApiInterface, SerializerInterface } from "@/interfaces";
 
   import {
     MockEscolasSerializers,
-    MockLessonsSerializers
+    MockLessonsSerializers,
+    MockUsersSerializers
   } from "@/serializers/mocks";
   import axios, { AxiosInstance, AxiosResponse } from "axios";
-  
+
   export default class BackendApiMock implements BackendApiInterface {
     private api: AxiosInstance;
-  
+
     constructor() {
       this.api = axios.create({
         baseURL: "http://localhost:3001",
@@ -23,7 +25,7 @@ import {
         },
       });
     }
-  
+
     public async getEscolas(): Promise<Escolas[]> {
       return await this.get<Escolas>(
         "/escolas",
@@ -36,6 +38,12 @@ import {
         new MockLessonsSerializers()
       );
     }
+    public async getUsers(): Promise<Users[]> {
+      return await this.get<Users>(
+        "/users",
+        new MockUsersSerializers()
+      );
+    }
     private async get<T>(
       route: string,
       serializer: SerializerInterface
@@ -43,7 +51,7 @@ import {
       const response = await this.api.get(route);
       return this.serializeOrError<T>(response, serializer);
     }
-  
+
     private serializeOrError<T>(
       response: AxiosResponse,
       serializer: SerializerInterface
@@ -60,4 +68,3 @@ import {
       }
     }
   }
-  

@@ -5,7 +5,7 @@ interface CreateButtonProps {
   text?: string;
   icon?: ReactNode;
   onClick: VoidFunction;
-  color: string; // Adicionando a prop "color"
+  color: string;
   colorBackGround: string;
 }
 

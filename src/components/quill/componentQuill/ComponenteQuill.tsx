@@ -1,6 +1,7 @@
-import { MultilineInput } from '../multipeInput/MultipleInput';
+import  MultilineInput from '../multipeInput/MultipleInput';
 import styles from '@/styles/ComponenteQuill.module.css'
 import { useGlobalContext } from '@/context/store';
+import { CreateButton } from '@/components/shared';
 
 const ComponenteQuill = () => {
   const { lesson, setLesson, setTitleQuill, titleQuill } = useGlobalContext();
@@ -29,7 +30,9 @@ const ComponenteQuill = () => {
           value={lesson}
 
         />
-
+        <div className={styles.boxToAlignBtnSave}>
+      <CreateButton  color={'var(--white)'} colorBackGround={'var(--blue-300)'} text="Salvar e voltar" onClick={() => {}} />
+        </div>
       </form>
     </div>
   );

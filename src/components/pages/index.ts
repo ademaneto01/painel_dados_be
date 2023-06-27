@@ -1,8 +1,8 @@
 import DigitalResources from "./DigitalResources";
-import LessonsPlans from "./LessonsPlans";
+import Documentation from "./Documentation";
 import Tools from "./Tools";
 import Users from "./Users";
-import Documentation from "./Documentation";
+import LessonsPlans from "./LessonsPlans";
 import Materials from "./Materials";
 import Schools from "./Schools";
 

@@ -5,7 +5,7 @@ import { Loader } from "../shared";
 import Column from "./Column";
 import TableHeaders from "./TableHeaders";
 import TableRow from "./TableRow";
-import { 
+import {
   ImArrowRight2,
   ImArrowLeft2
 } from "react-icons/im";
@@ -98,3 +98,4 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
     return <Loader />;
   }
 }
+
