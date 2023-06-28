@@ -3,12 +3,12 @@
     margin-top: 1em;
     flex-direction: column;
   }
-  
+
   .table table {
     border-collapse: collapse;
     flex-grow: 1;
   }
-  
+
   .table th {
     border-collapse: collapse;
     border-top: 1px solid #eaf0f7;
@@ -17,14 +17,14 @@
     text-align: left;
     font-size: 0.8em;
   }
-  
+
   .table td {
     border-collapse: collapse;
     padding: 1.1em;
     font-size: 0.8em;
     color: #7286a2;
   }
-  
+
   .odd {
     background-color: #f1f5fa;
     border-collapse: collapse;
@@ -39,7 +39,7 @@
     align-items: center;
     gap:1rem;
   }
-  
+
   .pagination button {
    all:unset;
    display: flex;
@@ -50,4 +50,20 @@
    border-radius: 50%;
    background-color: var(--blue-300);
    cursor: pointer;
+  }
+  .inputFilter {
+    all: unset;
+    text-align: start;
+    width: 20%;
+    padding-left: 0.7rem;
+    height: 2rem;
+    border-radius: 5px;
+    border: 1px solid var(--gray-200);
+    cursor: text;
+  }
+  .inputFilter:focus-within {
+    box-shadow: 0 0 5px var(--gray-200);
+  }
+  .inputFilter:focus {
+    outline: transparent;
   }

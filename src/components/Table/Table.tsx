@@ -19,6 +19,7 @@ interface TableProps<T> {
   columns: Column<T>[];
   error?: boolean;
   loaded?: boolean;
+  searchInputHidden?: string;
 }
 
 let id = 0;
@@ -32,6 +33,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
   const error = "error" in props ? props.error : false;
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [filterName, setFilterName] = useState("");
   const itemsPerPage = 6;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -44,7 +46,29 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
     [props.columns]
   );
 
-  const totalPages = Math.ceil(props.data.length / itemsPerPage);
+  const styleInput = {
+
+    display: props.searchInputHidden,
+
+  }
+   const filterData = (data: T[], filterName: string): T[] => {
+    const normalizedFilterName = filterName.toLowerCase().trim();
+    return data.filter((item) => {
+      const itemName = (item as any).nome.toLowerCase();
+      return itemName.includes(normalizedFilterName);
+    });
+  };
+
+  const filteredData = useMemo(() => {
+    if (filterName.trim() === "") {
+      return props.data;
+    } else {
+      return filterData(props.data, filterName);
+    }
+  }, [props.data, filterName]);
+
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  //const totalPages = Math.ceil(props.data.length / itemsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -57,39 +81,54 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
       setCurrentPage(currentPage - 1);
     }
   };
+  const handleFilterNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterName(event.target.value);
+    setCurrentPage(1);
+  };
+  const paginatedData = filteredData.slice(startIndex, endIndex);
 
+  // const paginatedData = props.data.slice(startIndex, endIndex);
   if (loaded) {
     if (!error) {
-      const paginatedData = props.data.slice(startIndex, endIndex);
-
       return (
-        <div className={styles.table}>
-          <table>
-            <TableHeaders headers={headers} />
-            <tbody>
-              {paginatedData.map((item) => {
-                const key = getKey("row-");
-                return (
-                  <TableRow<T>
-                    key={key}
-                    id={id}
-                    item={item}
-                    accessors={accessors}
-                  />
-                );
-              })}
-            </tbody>
-          </table>
-          <div className={styles.pagination}>
-            <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-              {reactIcon(ImArrowLeft2)}
-            </button>
-            <span>{`${currentPage}/${totalPages}`}</span>
-            <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-            {reactIcon(ImArrowRight2)}
-            </button>
-          </div>
-        </div>
+  <>
+  <div style={styleInput}>
+        <input
+          className={styles.inputFilter}
+          type="text"
+          placeholder="Filtre pelo nome"
+          value={filterName}
+          onChange={handleFilterNameChange}
+        />
+      </div>
+         <div className={styles.table}>
+           <table>
+             <TableHeaders headers={headers} />
+             <tbody>
+               {paginatedData.map((item) => {
+                 const key = getKey("row-");
+                 return (
+                   <TableRow<T>
+                     key={key}
+                     id={id}
+                     item={item}
+                     accessors={accessors}
+                   />
+                 );
+               })}
+             </tbody>
+           </table>
+           <div className={styles.pagination}>
+             <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+               {reactIcon(ImArrowLeft2)}
+             </button>
+             <span>{`${currentPage}/${totalPages}`}</span>
+             <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+             {reactIcon(ImArrowRight2)}
+             </button>
+           </div>
+         </div>
+</>
       );
     } else {
       return <ErrorComponent />;
@@ -98,4 +137,5 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
     return <Loader />;
   }
 }
+
 

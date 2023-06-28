@@ -91,6 +91,7 @@ export default function Documentation(): JSX.Element {
               columns={columns}
               loaded={loaded}
                error={error}
+               searchInputHidden={'none'}
              />
              )}
              </>

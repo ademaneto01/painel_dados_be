@@ -56,6 +56,7 @@ export default function Schools(): JSX.Element {
           columns={columns}
           loaded={loaded}
           error={error}
+          searchInputHidden={'none'}
         />
       </PageContentContainer>
     </div>
