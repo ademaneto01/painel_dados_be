@@ -1,8 +1,10 @@
-import MockEscolasSerializers from "./mockEscolasSerializers";
-import MockLessonsSerializers from "./mockLessonsSerializers";
-import MockUsersSerializers from "./mockUsersSerializers";
+import MockSchoolSerializers from './mockSchoolSerializers';
+import MockDocumentationSerializers from './mockDocumentationSerializers';
+import MockUsersSerializers from './mockUsersSerializers';
+import MockMaterialsSerializers from './mockMaterialsSerializers';
 export {
-    MockEscolasSerializers,
-    MockLessonsSerializers,
-    MockUsersSerializers
+  MockSchoolSerializers,
+  MockDocumentationSerializers,
+  MockUsersSerializers,
+  MockMaterialsSerializers,
 };

@@ -1,4 +1,4 @@
-import { TableActions } from "@/components/actions";
+import { TableActions } from '@/components/actions';
 
 interface LessonProps {
   id: string;
@@ -6,22 +6,20 @@ interface LessonProps {
   register: string;
 }
 
-export default class Lessons {
+export default class EntitiesDocumentation {
   readonly id: string;
   readonly nome: string;
   readonly register: string;
 
-  constructor({
-    id,
-    nome,
-    register,
-  }: LessonProps) {
+  constructor({ id, nome, register }: LessonProps) {
     this.id = id;
     this.nome = nome;
     this.register = register;
   }
 
   public get acoes(): JSX.Element {
-    return <TableActions id={this.id} nome={this.nome} lessonKey={this.id}/>;
+    return (
+      <TableActions id={this.id} titleDelete={this.nome} lessonKey={this.id} />
+    );
   }
 }

@@ -1,11 +1,10 @@
 .container {
-    display: flex;
-    flex-direction: row;
-    z-index: 0;
-  }
-  
-  .action {
-    margin: 0.2em;
-    cursor: pointer;
-  }
-  
+  display: flex;
+  flex-direction: row;
+  z-index: 0;
+}
+
+.action {
+  margin: 0.2em;
+  cursor: pointer;
+}

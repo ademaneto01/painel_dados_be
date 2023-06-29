@@ -1,6 +1,6 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import styles from '@/styles/ComponenteQuill.module.css'
+import styles from '@/styles/ComponenteQuill.module.css';
 
 type MultilineInputProps = {
   label?: string;
@@ -21,8 +21,7 @@ const modules = {
 
 const theme = 'snow';
 
-const MultilineInput: React.FC<MultilineInputProps> = (
-  {
+const MultilineInput: React.FC<MultilineInputProps> = ({
   label,
   register,
   onChange,
@@ -31,10 +30,11 @@ const MultilineInput: React.FC<MultilineInputProps> = (
   return (
     <>
       <label>{label}</label>
-      <ReactQuill className={styles.meuEditorQuill}
-      toolbarStyle={{ border: '2px solid red', backgroundColor: 'lightgray' }}
+      <ReactQuill
+        className={styles.meuEditorQuill}
+        toolbarStyle={{ border: '2px solid red', backgroundColor: 'lightgray' }}
         placeholder={label}
-         {...register}
+        {...register}
         theme={theme}
         modules={modules}
         onChange={onChange}
@@ -42,6 +42,6 @@ const MultilineInput: React.FC<MultilineInputProps> = (
       />
     </>
   );
-}
+};
 
 export default MultilineInput;

@@ -1,4 +1,4 @@
-import styles from "@/styles/Action.module.css";
+import styles from '@/styles/Action.module.css';
 
 interface ActionProps {
   onClick: VoidFunction;

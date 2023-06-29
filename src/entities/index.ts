@@ -1,9 +1,10 @@
-import Escolas from "./Escolas";
-import Lessons from "./LessonPlans";
-import Users from "./Users";
-
+import EntitiesSchool from './EntitiesSchool';
+import EntitiesDocumentation from './EntitiesDocumentation';
+import EntitiesUsers from './EntitiesUsers';
+import EntitiesMaterials from './EntitiesMaterials';
 export {
-  Escolas,
-  Lessons,
-  Users
+  EntitiesSchool,
+  EntitiesDocumentation,
+  EntitiesUsers,
+  EntitiesMaterials,
 };

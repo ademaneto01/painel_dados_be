@@ -1,12 +1,11 @@
-'use client'
-import styles from "@/styles/Home.module.css";
+'use client';
+import styles from '@/styles/Home.module.css';
 import '../styles/global.css';
-import { PageEnum } from "@/enums";
-import { useState } from "react";
-import SideNavBar from "@/components/sideNavBar";
-import TopNavBar from "@/components/topNavBaR";
-import pages from "@/components/pages/index";
-
+import { PageEnum } from '@/enums';
+import { useState } from 'react';
+import SideNavBar from '@/components/sideNavBar';
+import TopNavBar from '@/components/topNavBaR';
+import pages from '@/components/pages/index';
 
 export default function Home(): JSX.Element {
   const [page, setPage] = useState(PageEnum.digitalResources);
@@ -19,7 +18,7 @@ export default function Home(): JSX.Element {
   function Page(): JSX.Element {
     switch (page) {
       case PageEnum.schools:
-        return <pages.Schools/>;
+        return <pages.Schools />;
       case PageEnum.lessonsPlans:
         return <pages.LessonsPlans />;
       case PageEnum.documentation:
@@ -38,7 +37,7 @@ export default function Home(): JSX.Element {
   }
 
   function expandable(style: string): string {
-    return style + (sideNavBarHidden ? ` ${styles.expanded}` : "");
+    return style + (sideNavBarHidden ? ` ${styles.expanded}` : '');
   }
 
   return (

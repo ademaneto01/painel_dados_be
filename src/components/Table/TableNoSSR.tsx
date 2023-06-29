@@ -1,7 +1,7 @@
-import dynamic from "next/dynamic";
-import { TableProps} from "./Table";
+import dynamic from 'next/dynamic';
+import { TableProps } from './Table';
 
-const TableNoServerSideRendering = dynamic(() => import("./Table"), {
+const TableNoServerSideRendering = dynamic(() => import('./Table'), {
   ssr: false,
 });
 

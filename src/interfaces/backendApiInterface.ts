@@ -1,7 +1,13 @@
-import { Escolas, Lessons, Users } from "@/entities";
+import {
+  EntitiesSchool,
+  EntitiesDocumentation,
+  EntitiesUsers,
+  EntitiesMaterials,
+} from '@/entities';
 
 export default interface BackendApiInterface {
-    getEscolas(): Promise<Escolas[]>;
-    getLessons(): Promise<Lessons[]>;
-    getUsers(): Promise<Users[]>;
+  getSchools(): Promise<EntitiesSchool[]>;
+  getDocumentation(): Promise<EntitiesDocumentation[]>;
+  getUsers(): Promise<EntitiesUsers[]>;
+  getMaterials(): Promise<EntitiesMaterials[]>;
 }

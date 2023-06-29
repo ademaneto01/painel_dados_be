@@ -1,8 +1,8 @@
-import styles from "@/styles/OnOffToogler.module.css";
-import { useState } from "react";
+import styles from '@/styles/OnOffToogler.module.css';
+import { useState } from 'react';
 
 interface OnOffTogglerProps {
-    active: boolean;
+  active: boolean;
 }
 
 export default function OnOffToggler(props: OnOffTogglerProps): JSX.Element {
@@ -21,7 +21,7 @@ export default function OnOffToggler(props: OnOffTogglerProps): JSX.Element {
         classes.push(styles.active);
       }
     }
-    return classes.join(" ");
+    return classes.join(' ');
   }
 
   return (

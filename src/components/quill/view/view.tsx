@@ -1,7 +1,7 @@
-import { PageContentContainer } from "@/components/shared";
-import { useGlobalContext } from "@/context/store";
+import { PageContentContainer } from '@/components/shared';
+import { useGlobalContext } from '@/context/store';
 
- const ResourceView = (): JSX.Element => {
+const ResourceView = (): JSX.Element => {
   const { lesson } = useGlobalContext();
 
   return (

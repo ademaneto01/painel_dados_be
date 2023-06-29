@@ -1,14 +1,13 @@
-
 .container h3 {
   margin-bottom: 1rem;
 }
-.labelInput{
+.labelInput {
   display: flex;
   flex-direction: column;
   align-items: start;
 }
 
- .meuEditorQuill{
+.meuEditorQuill {
   border-radius: 5px;
   line-height: 1.5;
   border: 1px solid var(--gray-200);
@@ -17,8 +16,9 @@
 .customToolbar {
   border: 1px solid var(--gray-200);
 }
-.meuEditorQuill:focus-within, .inputName:focus-within {
-    box-shadow: 0 0 5px var(--gray-200);
+.meuEditorQuill:focus-within,
+.inputName:focus-within {
+  box-shadow: 0 0 5px var(--gray-200);
 }
 
 .inputName {
@@ -32,7 +32,8 @@
   border: 0.6px solid var(--gray-200);
   cursor: text;
 }
-.inputName:focus, .meuEditorQuill:focus {
+.inputName:focus,
+.meuEditorQuill:focus {
   outline: transparent;
 }
 

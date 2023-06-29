@@ -1,3 +1,3 @@
-import FailedToFetchError from "./failedToFetchError";
+import FailedToFetchError from './failedToFetchError';
 
 export { FailedToFetchError };

@@ -17,7 +17,7 @@
 
 .navBarButton {
   display: flex;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.87em;
   color: var(--gray-300);
   text-decoration: none;
@@ -28,7 +28,7 @@
 }
 
 .navBarButtonHidden {
- display: none;
+  display: none;
 }
 
 .navBarButton:hover {
@@ -39,7 +39,6 @@
   background: linear-gradient(to bottom, var(--blue-500), var(--blue-300));
   border-radius: 0.3em;
   color: var(--white);
-
 }
 
 .activeNavBarButton:hover {

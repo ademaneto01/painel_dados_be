@@ -1,4 +1,4 @@
-import styles from "@/styles/Table.module.css";
+import styles from '@/styles/Table.module.css';
 
 interface TableRowProps<T> {
   id: number;
@@ -16,7 +16,7 @@ export default function TableRow<T>(props: TableRowProps<T>): JSX.Element {
   }
 
   return (
-    <tr className={props.id % 2 === 0 ? styles.odd : ""}>
+    <tr className={props.id % 2 === 0 ? styles.odd : ''}>
       {props.accessors.map((accessor) => (
         <td key={getKey(accessor)}>{retrieve(props.item, accessor)}</td>
       ))}

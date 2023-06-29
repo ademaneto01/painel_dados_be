@@ -1,105 +1,107 @@
 .background {
-    position: fixed;
-    top:0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    background-color: rgba(128, 128, 128, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: rgba(128, 128, 128, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
 }
 
 .container {
-    background-color: var(--white);
-    border-radius: 10px;
-    padding: 2rem;
-    width: 43rem;
-    max-width: 90%;
-    text-align: center;
-    box-shadow: 0 0 10px #00000080;
-    z-index: 8;
-  }
+  background-color: var(--white);
+  border-radius: 10px;
+  padding: 2rem;
+  width: 43rem;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 0 10px #00000080;
+  z-index: 8;
+}
 
-  .boxNameContactSSO {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 1rem;
-  }
+.boxNameContactSSO {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
 
-  .labelModalAddEdit{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-  }
+.labelModalAddEdit {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
 
-  .inputNameContactSSO {
-    all: unset;
-    text-align: start;
-    width: 100%;
-    padding-left: 0.7rem;
-    height: 2.5rem;
-    border-radius: 5px;
-    border: 1px solid var(--gray-200);
-    margin-top: 0.2rem;
-    cursor: text;
-  }
-  .inputSelect {
-    text-align: start;
-    width: 100%;
-    padding-left: 0.7rem;
-    height: 2.5rem;
-    color: #7286a2;
-    border-radius: 5px;
-    border: 1px solid var(--gray-200);
-    margin-top: 0.2rem;
-    cursor: pointer;
-  }
+.inputNameContactSSO {
+  all: unset;
+  text-align: start;
+  width: 100%;
+  padding-left: 0.7rem;
+  height: 2.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--gray-200);
+  margin-top: 0.2rem;
+  cursor: text;
+}
+.inputSelect {
+  text-align: start;
+  width: 100%;
+  padding-left: 0.7rem;
+  height: 2.5rem;
+  color: #7286a2;
+  border-radius: 5px;
+  border: 1px solid var(--gray-200);
+  margin-top: 0.2rem;
+  cursor: pointer;
+}
 
-.inputNameContactSSO:focus-within, .inputSelect:focus-within {
-    box-shadow: 0 0 5px var(--gray-200);
+.inputNameContactSSO:focus-within,
+.inputSelect:focus-within {
+  box-shadow: 0 0 5px var(--gray-200);
 }
 .inputSelect:focus {
   outline: transparent;
 }
 
 .boxCidadeEstadoCepTel {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 1rem;
-    gap: 1.5rem;
-  }
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1rem;
+  gap: 1.5rem;
+}
 
-  .boxEstadoTel, .boxCidadeCep {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    gap: 1rem;
-  }
+.boxEstadoTel,
+.boxCidadeCep {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 1rem;
+}
 
-  .buttonContainer {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-    gap: 1rem;
-  }
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
 
-  .confirmButton,
-  .cancelButton {
-     border: none;
-     border-radius: 4px;
-     padding: 10px 20px;
-     cursor: pointer;
-   }
+.confirmButton,
+.cancelButton {
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
 
- .confirmButton {
-     background-color: #27ae60;
-     color: #ffffff;
-   }
- .cancelButton {
-     background-color: #c0392b;
-     color: #ffffff;
-   }
+.confirmButton {
+  background-color: #27ae60;
+  color: #ffffff;
+}
+.cancelButton {
+  background-color: #c0392b;
+  color: #ffffff;
+}

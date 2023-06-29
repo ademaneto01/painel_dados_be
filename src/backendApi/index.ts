@@ -1,4 +1,4 @@
-import BackendApiMock from "./backendApiMock";
+import BackendApiMock from './backendApiMock';
 
 const backendApi = new BackendApiMock();
 

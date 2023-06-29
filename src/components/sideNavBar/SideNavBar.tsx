@@ -1,7 +1,7 @@
-import { PageEnum } from "@/enums";
-import styles from "@/styles/SideNavBar.module.css";
-import { Dispatch, SetStateAction } from "react";
-import { IconType } from "react-icons";
+import { PageEnum } from '@/enums';
+import styles from '@/styles/SideNavBar.module.css';
+import { Dispatch, SetStateAction } from 'react';
+import { IconType } from 'react-icons';
 import {
   ImOffice,
   ImBook,
@@ -10,12 +10,12 @@ import {
   ImDisplay,
   ImBooks,
   ImWrench,
-  ImLock
-} from "react-icons/im";
-import SideNavBarButton from "./SideNavBarButton";
+  ImLock,
+} from 'react-icons/im';
+import SideNavBarButton from './SideNavBarButton';
 
 function reactIcon(icon: IconType): JSX.Element {
-  return icon({ style: { fontSize: "1.15em" } });
+  return icon({ style: { fontSize: '1.15em' } });
 }
 
 interface SideNavBarProps {
@@ -26,7 +26,7 @@ interface SideNavBarProps {
 
 export default function SideNavBar(props: SideNavBarProps) {
   function hidable(style: string): string {
-    return style + (props.hidden ? ` ${styles.hidden}` : "");
+    return style + (props.hidden ? ` ${styles.hidden}` : '');
   }
 
   function isActive(page: PageEnum): boolean {
