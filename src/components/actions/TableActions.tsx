@@ -6,15 +6,17 @@ import { FiEdit, FiEye } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
 import { useGlobalContext } from '@/context/store';
-import { ModalDelete, ModalAddEditSchool } from '../modal';
+import { ModalDelete, ModalAddEditSchool, ModalMaterials } from '../modal';
 import backendApi from '@/backendApi';
 import { EntitiesDocumentation } from '@/entities';
+import { useState } from 'react';
 
 interface PropsForFxclusion {
   id: string;
   titleDelete?: string;
   modalKey?: string;
-  lessonKey?: string;
+  documentationKey?: string;
+  modalMaterials?: string;
 }
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
@@ -27,6 +29,7 @@ function reactIcon(icon: IconType, color?: string): JSX.Element {
 }
 
 export default function TableActions(props: PropsForFxclusion): JSX.Element {
+  const [showModalMaterials, setShowModalMaterials] = useState('');
   const {
     showModalDelete,
     setShowModalDelete,
@@ -45,7 +48,7 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
       try {
         const lessons = await backendApi.getDocumentation();
         const lessonFind: EntitiesDocumentation | undefined = lessons.find(
-          (lesson) => lesson.id === props.lessonKey,
+          (lesson) => lesson.id === props.documentationKey,
         );
 
         if (lessonFind) {
@@ -69,13 +72,16 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
   function handleClickOpenModalEdit(id: string): void {
     setShowModalAddEditSchool(props.id);
   }
+  function handleClickOpenModalMaterial(id: string): void {
+    setShowModalMaterials(props.id);
+  }
 
   function handleClickOpenLesson(id: string): void {
     async function fetchData() {
       try {
         const dataDoc = await backendApi.getDocumentation();
         const docFind: EntitiesDocumentation | undefined = dataDoc.find(
-          (doc) => doc.id === props.lessonKey,
+          (doc) => doc.id === props.documentationKey,
         );
 
         if (docFind) {
@@ -100,13 +106,19 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
           onClick={() => handleClickOpenModalEdit(props.id)}
         />
       )}
-      {props.lessonKey && (
+      {props.modalMaterials && (
+        <Action
+          icon={reactIcon(FiEdit)}
+          onClick={() => handleClickOpenModalMaterial(props.id)}
+        />
+      )}
+      {props.documentationKey && (
         <Action
           icon={reactIcon(FiEdit)}
           onClick={() => handleClickOpenLesson(props.id)}
         />
       )}
-      {props.lessonKey && (
+      {props.documentationKey && (
         <Action
           icon={reactIcon(FiEye)}
           onClick={() => handleClickShowView(props.id)}
@@ -120,6 +132,12 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
         <ModalAddEditSchool
           onCancel={() => setShowModalAddEditSchool('')}
           modalKey={props.id}
+        />
+      )}
+      {showModalMaterials === props.id && (
+        <ModalMaterials
+          onCancel={() => setShowModalMaterials('')}
+          modalMaterials={props.id}
         />
       )}
 

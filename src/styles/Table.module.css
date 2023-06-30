@@ -51,19 +51,43 @@
   background-color: var(--blue-300);
   cursor: pointer;
 }
+.boxInput {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
 .inputFilter {
   all: unset;
   text-align: start;
   width: 20%;
   padding-left: 0.7rem;
   height: 2rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9em;
   border-radius: 5px;
+  color: var(--gray-300);
   border: 1px solid var(--gray-200);
   cursor: text;
 }
-.inputFilter:focus-within {
+.inputSelect {
+  text-align: start;
+  width: 20%;
+  padding-left: 0.7rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9em;
+  height: 2rem;
+  font-size: medium;
+  color: var(--gray-300);
+  border-radius: 5px;
+  border: 1px solid var(--gray-200);
+  cursor: pointer;
+}
+.inputFilter:focus-within,
+.inputSelect:focus-within {
   box-shadow: 0 0 5px var(--gray-200);
 }
-.inputFilter:focus {
+.inputFilter:focus,
+.inputSelect:focus {
   outline: transparent;
 }

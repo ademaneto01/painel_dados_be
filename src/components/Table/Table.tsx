@@ -31,7 +31,10 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
   const error = 'error' in props ? props.error : false;
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [filterName, setFilterName] = useState('');
+  const [filterNameOrEmail, setFilterNameOrEmail] = useState('');
+  const [filterSchool, setFilterSchool] = useState('');
+  const [filterProfile, setFilterProfile] = useState('');
+
   const itemsPerPage = 6;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -48,24 +51,54 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
   const styleInput = {
     display: props.searchInputNone,
   };
-  const filterData = (data: T[], filterName: string): T[] => {
-    const normalizedFilterName = filterName.toLowerCase().trim();
+
+  const filterData = (
+    data: T[],
+    filterNameOrEmail: string,
+    filterSchool: string,
+    filterProfile: string,
+  ): T[] => {
+    const normalizedFilterNameOrEmail = filterNameOrEmail.toLowerCase().trim();
+    const normalizedFilterSchool = filterSchool.toLowerCase().trim();
+
     return data.filter((item) => {
-      const itemName = (item as any).nome.toLowerCase();
-      return itemName.includes(normalizedFilterName);
+      const itemName = (item as any).nome?.toLowerCase();
+      const itemEmail = (item as any).email?.toLowerCase();
+      const itemSchool = (item as any).escola?.toLowerCase();
+      const itemProfile = (item as any).perfil;
+
+      const nameMatch =
+        itemName && itemName.includes(normalizedFilterNameOrEmail);
+      const emailMatch =
+        itemEmail && itemEmail.includes(normalizedFilterNameOrEmail);
+      const schoolMatch =
+        !filterSchool ||
+        (itemSchool && itemSchool.includes(normalizedFilterSchool));
+      const profileMatch =
+        !filterProfile || (itemProfile && itemProfile === filterProfile);
+
+      return (nameMatch || emailMatch) && schoolMatch && profileMatch;
     });
   };
 
   const filteredData = useMemo(() => {
-    if (filterName.trim() === '') {
+    if (
+      filterNameOrEmail.trim() === '' &&
+      filterSchool.trim() === '' &&
+      filterProfile === ''
+    ) {
       return props.data;
     } else {
-      return filterData(props.data, filterName);
+      return filterData(
+        props.data,
+        filterNameOrEmail,
+        filterSchool,
+        filterProfile,
+      );
     }
-  }, [props.data, filterName]);
+  }, [props.data, filterNameOrEmail, filterSchool, filterProfile]);
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-  //const totalPages = Math.ceil(props.data.length / itemsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -78,27 +111,58 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
       setCurrentPage(currentPage - 1);
     }
   };
-  const handleFilterNameChange = (
+
+  const handleFilterNameOrEmailChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setFilterName(event.target.value);
+    setFilterNameOrEmail(event.target.value);
     setCurrentPage(1);
   };
+  const handleFilterSchoolChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setFilterSchool(event.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleFilterProfileChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setFilterProfile(event.target.value);
+    setCurrentPage(1);
+  };
+
   const paginatedData = filteredData.slice(startIndex, endIndex);
 
-  // const paginatedData = props.data.slice(startIndex, endIndex);
   if (loaded) {
     if (!error) {
       return (
         <>
-          <div style={styleInput}>
+          <div className={styles.boxInput}>
             <input
               className={styles.inputFilter}
               type="text"
-              placeholder="Filtre pelo nome"
-              value={filterName}
-              onChange={handleFilterNameChange}
+              placeholder="Filtre pelo nome ou email"
+              value={filterNameOrEmail}
+              onChange={handleFilterNameOrEmailChange}
             />
+            <input
+              className={styles.inputFilter}
+              type="text"
+              placeholder="Filtre pela escola"
+              value={filterSchool}
+              onChange={handleFilterSchoolChange}
+            />
+            <select
+              className={styles.inputSelect}
+              value={filterProfile}
+              onChange={handleFilterProfileChange}
+            >
+              <option value="">Todos os perfis</option>
+              <option value="Administrador">Administrador</option>
+              <option value="Estudante">Estudante</option>
+              <option value="Professor">Professor</option>
+            </select>
           </div>
           <div className={styles.table}>
             <table>

@@ -88,7 +88,7 @@ export default function SideNavBar(props: SideNavBarProps) {
           active={isActive(PageEnum.materials)}
           hidden={true}
         />
-        <SideNavBarButton
+        {/* <SideNavBarButton
           text="Tools"
           onClick={() => {
             props.setPage(PageEnum.tools);
@@ -96,7 +96,7 @@ export default function SideNavBar(props: SideNavBarProps) {
           icon={reactIcon(ImWrench)}
           active={isActive(PageEnum.tools)}
           hidden={true}
-        />
+        /> */}
         <SideNavBarButton
           text="Logout"
           onClick={() => {}}

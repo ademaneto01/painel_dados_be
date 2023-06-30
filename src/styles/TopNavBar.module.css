@@ -22,12 +22,15 @@
 .logo {
   margin-right: 0.5em;
 }
-
+.toogleTopNav {
+  cursor: pointer;
+}
 .user {
   font-size: 0.85em;
   display: flex;
   align-items: flex-end;
   margin-right: 2em;
+  cursor: pointer;
 }
 
 .spacer {

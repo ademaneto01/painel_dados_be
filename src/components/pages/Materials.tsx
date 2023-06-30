@@ -5,7 +5,7 @@ import { Column, Table } from '../Table';
 import { useEffect, useState } from 'react';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
-import { ModalAddUser } from '../modal';
+import { ModalMaterials } from '../modal';
 
 const columns = [
   new Column('Nome', 'nome'),
@@ -55,11 +55,11 @@ export default function Materials() {
         <CreateButton
           color={'var(--white'}
           colorBackGround={'var(--blue-300)'}
-          text="Nova material"
+          text="Novo Material"
           onClick={() => handleClickOpenModalAdd()}
         />
         {showModalUser && (
-          <ModalAddUser onCancel={() => handleClickCloseModalAdd()} />
+          <ModalMaterials onCancel={() => handleClickCloseModalAdd()} />
         )}
         <Table<EntitiesMaterials>
           data={data}

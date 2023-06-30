@@ -21,13 +21,13 @@ export default function TopNavBar(props: TopNavBarProps) {
         />
       </div>
 
-      <a href="#" onClick={props.toggleSideNavBar}>
+      <a className={styles.toogleTopNav} onClick={props.toggleSideNavBar}>
         <TfiMenu size="1.1em" />
       </a>
 
       <div className={styles.spacer} />
 
-      <a href="#" className={styles.user}>
+      <a className={styles.user}>
         Ademar - BeEducation
         <HiChevronDown />
       </a>
