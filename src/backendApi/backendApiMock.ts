@@ -3,6 +3,7 @@ import {
   EntitiesDocumentation,
   EntitiesUsers,
   EntitiesMaterials,
+  EntitiesLessons,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterface, SerializerInterface } from '@/interfaces';
@@ -12,6 +13,7 @@ import {
   MockDocumentationSerializers,
   MockUsersSerializers,
   MockMaterialsSerializers,
+  MockLessonsSerializers,
 } from '@/serializers/mocks';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
@@ -47,6 +49,12 @@ export default class BackendApiMock implements BackendApiInterface {
     return await this.get<EntitiesMaterials>(
       '/materials',
       new MockMaterialsSerializers(),
+    );
+  }
+  public async getLessons(): Promise<EntitiesLessons[]> {
+    return await this.get<EntitiesLessons>(
+      '/lessonplans',
+      new MockLessonsSerializers(),
     );
   }
   private async get<T>(

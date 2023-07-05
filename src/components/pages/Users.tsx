@@ -66,6 +66,7 @@ export default function PageUsers() {
           columns={columns}
           loaded={loaded}
           error={error}
+          labelInput={'Buscar pelo nome ou email'}
         />
       </PageContentContainer>
     </div>

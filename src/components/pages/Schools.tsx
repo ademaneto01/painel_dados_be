@@ -66,6 +66,7 @@ export default function Schools(): JSX.Element {
           loaded={loaded}
           error={error}
           searchInputNone={'none'}
+          labelInput={'Buscar pelo nome'}
         />
       </PageContentContainer>
     </div>

@@ -66,6 +66,8 @@ export default function Materials() {
           columns={columns}
           loaded={loaded}
           error={error}
+          labelInput={'Buscar pelo nome'}
+          searchInputNone={'none'}
         />
       </PageContentContainer>
     </div>

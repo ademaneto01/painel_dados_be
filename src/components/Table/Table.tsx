@@ -14,6 +14,7 @@ interface TableProps<T> {
   error?: boolean;
   loaded?: boolean;
   searchInputNone?: string;
+  labelInput?: string;
 }
 
 function reactIcon(icon: IconType): JSX.Element {
@@ -48,7 +49,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
     [props.columns],
   );
 
-  const styleInput = {
+  const styleInput: React.CSSProperties = {
     display: props.searchInputNone,
   };
 
@@ -142,18 +143,20 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
             <input
               className={styles.inputFilter}
               type="text"
-              placeholder="Filtre pelo nome ou email"
+              placeholder={props.labelInput}
               value={filterNameOrEmail}
               onChange={handleFilterNameOrEmailChange}
             />
             <input
               className={styles.inputFilter}
               type="text"
-              placeholder="Filtre pela escola"
+              style={styleInput}
+              placeholder="Buscar pela escola"
               value={filterSchool}
               onChange={handleFilterSchoolChange}
             />
             <select
+              style={styleInput}
               className={styles.inputSelect}
               value={filterProfile}
               onChange={handleFilterProfileChange}

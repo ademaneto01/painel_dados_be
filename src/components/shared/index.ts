@@ -1,4 +1,10 @@
 import Loader from './Loader';
 import PageContentContainer from './pageContentContainer';
 import CreateButton from './CreateButton';
-export { Loader, PageContentContainer, CreateButton };
+import PageContentContainerLessons from './pageContentContainerLessons';
+export {
+  Loader,
+  PageContentContainer,
+  CreateButton,
+  PageContentContainerLessons,
+};

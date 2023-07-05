@@ -8,7 +8,6 @@
   background-color: rgba(128, 128, 128, 0.5);
   justify-content: center;
   align-items: center;
-  z-index: 3;
 }
 
 .container {
@@ -16,6 +15,7 @@
   border-radius: 10px;
   padding: 20px;
   width: 400px;
+  color: var(--gray-300);
   max-width: 90%;
   text-align: center;
   box-shadow: 0 0 10px #00000080;

@@ -10,6 +10,9 @@ interface TopNavBarProps {
 export default function TopNavBar(props: TopNavBarProps) {
   return (
     <div className={styles.topNavBar}>
+      <a className={styles.toogleTopNav} onClick={props.toggleSideNavBar}>
+        <TfiMenu size="1.1em" />
+      </a>
       <div className={styles.logoContainer}>
         <Image
           className={styles.logo}
@@ -20,10 +23,6 @@ export default function TopNavBar(props: TopNavBarProps) {
           height={28}
         />
       </div>
-
-      <a className={styles.toogleTopNav} onClick={props.toggleSideNavBar}>
-        <TfiMenu size="1.1em" />
-      </a>
 
       <div className={styles.spacer} />
 

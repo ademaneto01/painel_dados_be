@@ -1,6 +1,6 @@
 import { TableActions } from '@/components/actions';
 
-interface LessonProps {
+interface documentationProps {
   id: string;
   nome: string;
   register: string;
@@ -11,7 +11,7 @@ export default class EntitiesDocumentation {
   readonly nome: string;
   readonly register: string;
 
-  constructor({ id, nome, register }: LessonProps) {
+  constructor({ id, nome, register }: documentationProps) {
     this.id = id;
     this.nome = nome;
     this.register = register;

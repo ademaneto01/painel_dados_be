@@ -117,7 +117,7 @@ export default function Documentation(): JSX.Element {
                 columns={columns}
                 loaded={loaded}
                 error={error}
-                nome={data.nome}
+                labelInput={'Buscar recurso'}
                 searchInputNone={'none'}
               />
             )}
