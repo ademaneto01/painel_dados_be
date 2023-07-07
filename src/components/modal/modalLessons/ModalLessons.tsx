@@ -8,7 +8,7 @@ import { File } from 'buffer';
 
 interface ModalProps {
   onClose: () => void;
-  modalKey: string;
+  modalKey?: string;
 }
 
 interface FormData {

@@ -3,10 +3,12 @@ import EntitiesDocumentation from './EntitiesDocumentation';
 import EntitiesUsers from './EntitiesUsers';
 import EntitiesMaterials from './EntitiesMaterials';
 import EntitiesLessons from './EntitiesLessons';
+import EntitiesTeacherGuides from './EntitiesTeacherGuides';
 export {
   EntitiesSchool,
   EntitiesDocumentation,
   EntitiesUsers,
   EntitiesMaterials,
   EntitiesLessons,
+  EntitiesTeacherGuides,
 };

@@ -4,6 +4,7 @@ import {
   EntitiesUsers,
   EntitiesMaterials,
   EntitiesLessons,
+  EntitiesTeacherGuides,
 } from '@/entities';
 
 export default interface BackendApiInterface {
@@ -12,4 +13,5 @@ export default interface BackendApiInterface {
   getUsers(): Promise<EntitiesUsers[]>;
   getMaterials(): Promise<EntitiesMaterials[]>;
   getLessons(): Promise<EntitiesLessons[]>;
+  getTeacherGuides(): Promise<EntitiesTeacherGuides[]>;
 }

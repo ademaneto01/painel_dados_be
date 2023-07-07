@@ -1,3 +1,3 @@
 import PageEnum from './pageEnum';
-
-export { PageEnum };
+import PageEnumLessons from './pageEnumLessons';
+export { PageEnum, PageEnumLessons };

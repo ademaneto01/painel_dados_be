@@ -1,0 +1,30 @@
+.boxTeacherGuides {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-left: 1rem;
+  justify-content: center;
+  width: 100%;
+  height: 5rem;
+  border: 1px solid var(--gray-200);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.boxTeacherGuides p {
+  font-size: 1.5rem;
+}
+.boxTeacherGuides:hover {
+  box-shadow: 0 0 5px var(--gray-300);
+}
+.boxTitleAction {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-right: 1rem;
+}
+.boxBtn {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
