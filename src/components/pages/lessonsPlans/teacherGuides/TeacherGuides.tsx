@@ -24,10 +24,6 @@ export default function TeacherGuides(props: pageLessonsTeachers): JSX.Element {
   const [error, setError] = useState(false);
   const [showModalEditTeachers, setShowModalEditTeachers] = useState(false);
 
-  function handlePageTeacherGuides(event: React.MouseEvent<HTMLDivElement>) {
-    event.stopPropagation();
-    props.setPage(PageEnumLessons.classPlan);
-  }
   useEffect(() => {
     async function fetchData() {
       try {
@@ -80,21 +76,26 @@ export default function TeacherGuides(props: pageLessonsTeachers): JSX.Element {
 
             {data.map((guides) => {
               return (
-                <div
-                  className={styles.boxTeacherGuides}
-                  key={guides.id}
-                  // onClick={(event) => handlePageTeacherGuides(event)}
-                  // onClick={(event) => props.setPage(PageEnumLessons.classPlan)}
-                >
-                  <div className={styles.boxTitleAction}>
-                    <p>{guides.nome}</p>
+                <div className={styles.boxDataDelete}>
+                  <div
+                    className={styles.boxTeacherGuides}
+                    key={guides.id}
+                    onClick={(event) =>
+                      props.setPage(PageEnumLessons.classPlan)
+                    }
+                  >
+                    <div className={styles.boxTitleAction}>
+                      <p>{guides.nome}</p>
+                    </div>
+                    <strong>{`${guides.unidades} | ${guides.aulas}`}</strong>
+                  </div>
+                  <div className={styles.boxDelete}>
                     <CardActions
                       id={guides.id}
                       modalDeleteTeachers={true}
                       titleDeleteTeachers={guides.nome}
                     />
                   </div>
-                  <strong>{`${guides.unidades} | ${guides.aulas}`}</strong>
                 </div>
               );
             })}

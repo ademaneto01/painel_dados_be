@@ -91,3 +91,6 @@
 .inputSelect:focus {
   outline: transparent;
 }
+.pointer {
+  cursor: pointer;
+}

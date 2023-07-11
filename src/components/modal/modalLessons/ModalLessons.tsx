@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/ModalAddUser.module.css';
-import { base64, getBase64 } from '@/components/base64';
+import { base64 } from '@/components/base64';
 import backendApi from '@/backendApi';
-import { EntitiesSchool } from '@/entities';
 import { FailedToFetchError } from '@/errors';
-import { File } from 'buffer';
 
 interface ModalProps {
   onClose: () => void;
@@ -106,7 +104,6 @@ const ModalLessons: React.FC<ModalProps> = ({ onClose, modalKey }) => {
         <label className={styles.labelModalAddUser}>Nome</label>
         <input
           type="text"
-          id="text-input"
           name="textInput"
           className={styles.inputAddUser}
           value={formData.textInput}

@@ -15,6 +15,7 @@ interface TableProps<T> {
   loaded?: boolean;
   searchInputNone?: string;
   labelInput?: string;
+  onClickRow?: (item: T) => void;
 }
 
 function reactIcon(icon: IconType): JSX.Element {
@@ -179,6 +180,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
                       id={id}
                       item={item}
                       accessors={accessors}
+                      onClick={props.onClickRow}
                     />
                   );
                 })}

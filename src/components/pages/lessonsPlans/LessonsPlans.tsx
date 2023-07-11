@@ -14,6 +14,8 @@ export default function LessonsPlans() {
         return <pages.TeacherGuides setPage={setPage} />;
       case PageEnumLessons.classPlan:
         return <pages.ClassPlans setPage={setPage} />;
+      case PageEnumLessons.units:
+        return <pages.Units setPage={setPage} />;
       default:
         return <></>;
     }

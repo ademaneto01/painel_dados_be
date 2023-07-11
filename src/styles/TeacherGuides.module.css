@@ -1,3 +1,7 @@
+.boxDataDelete {
+  display: flex;
+  gap: 0.5rem;
+}
 .boxTeacherGuides {
   display: flex;
   position: relative;
@@ -5,7 +9,7 @@
   gap: 0.5rem;
   padding-left: 1rem;
   justify-content: center;
-  width: 100%;
+  width: 90%;
   height: 5rem;
   border: 1px solid var(--gray-200);
   border-radius: 5px;
@@ -27,4 +31,12 @@
   display: flex;
   justify-content: flex-end;
   width: 100%;
+}
+.boxDelete {
+  border-radius: 5px;
+  border: 1px solid var(--gray-200);
+  padding-top: 0.5rem;
+}
+.boxDelete:hover {
+  box-shadow: 0 0 5px var(--gray-300);
 }

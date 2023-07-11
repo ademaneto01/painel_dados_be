@@ -16,12 +16,13 @@ interface PropsForFxclusion {
   titleDeleteTeachers?: string;
   modalDeleteTeachers?: boolean;
   modalDeleteLessons?: boolean;
+  color?: string;
 }
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
   const options: IconBaseProps = {};
 
-  options.fontSize = '1.3em';
+  options.fontSize = '1.1em';
   options.color = color;
 
   return icon(options);
@@ -49,7 +50,7 @@ export default function CardActions(props: PropsForFxclusion): JSX.Element {
     <div className={styles.container}>
       {props.modalDeleteTeachers && (
         <Action
-          icon={reactIcon(FiEdit)}
+          icon={reactIcon(FiEdit, 'var(--gray-300)')}
           onClick={() => handleClickOpenModalEditTeachers(props.id)}
         />
       )}
@@ -62,7 +63,7 @@ export default function CardActions(props: PropsForFxclusion): JSX.Element {
 
       {props.modalDeleteLessons && (
         <Action
-          icon={reactIcon(FiEdit)}
+          icon={reactIcon(FiEdit, 'var(--gray-300)')}
           onClick={() => handleClickOpenModalEdit(props.id)}
         />
       )}

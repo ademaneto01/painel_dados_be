@@ -4,12 +4,19 @@ import styles from '@/styles/Action.module.css';
 import Action from './Action';
 import { FiEdit, FiEye } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
+import { BiCalendar } from 'react-icons/bi';
 import { IconBaseProps, IconType } from 'react-icons';
 import { useGlobalContext } from '@/context/store';
-import { ModalDelete, ModalAddEditSchool, ModalMaterials } from '../modal';
+import {
+  ModalDelete,
+  ModalAddEditSchool,
+  ModalMaterials,
+  ModalAddEditClassPlan,
+} from '../modal';
 import backendApi from '@/backendApi';
 import { EntitiesDocumentation } from '@/entities';
 import { useState } from 'react';
+import ComponenteCalendar from '../calendar/componenteCalendar/Calendar';
 
 interface PropsForFxclusion {
   id: string;
@@ -17,6 +24,8 @@ interface PropsForFxclusion {
   modalKey?: string;
   documentationKey?: string;
   modalMaterials?: string;
+  modalClassPlan?: string;
+  calendar?: string;
 }
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
@@ -30,6 +39,10 @@ function reactIcon(icon: IconType, color?: string): JSX.Element {
 
 export default function TableActions(props: PropsForFxclusion): JSX.Element {
   const [showModalMaterials, setShowModalMaterials] = useState('');
+  const [showCalendar, setShowCalendar] = useState('');
+  const [showModalAddEditClassPlan, setShowModalAddEditClassPlan] =
+    useState('');
+
   const {
     showModalDelete,
     setShowModalDelete,
@@ -75,6 +88,12 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
   function handleClickOpenModalMaterial(id: string): void {
     setShowModalMaterials(props.id);
   }
+  function handleClickOpenModalClassPlan(id: string): void {
+    setShowModalAddEditClassPlan(props.id);
+  }
+  function handleClickOpenCalendar(id: string): void {
+    setShowCalendar(props.id);
+  }
 
   function handleClickOpenLesson(id: string): void {
     async function fetchData() {
@@ -104,6 +123,19 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
         <Action
           icon={reactIcon(FiEdit)}
           onClick={() => handleClickOpenModalEdit(props.id)}
+        />
+      )}
+
+      {props.modalClassPlan && (
+        <Action
+          icon={reactIcon(FiEdit)}
+          onClick={() => handleClickOpenModalClassPlan(props.id)}
+        />
+      )}
+      {props.calendar && (
+        <Action
+          icon={reactIcon(BiCalendar)}
+          onClick={() => handleClickOpenCalendar(props.id)}
         />
       )}
       {props.modalMaterials && (
@@ -140,7 +172,15 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
           modalMaterials={props.id}
         />
       )}
-
+      {showModalAddEditClassPlan === props.id && (
+        <ModalAddEditClassPlan
+          onCancel={() => setShowModalAddEditClassPlan('')}
+          modalKey={props.id}
+        />
+      )}
+      {showCalendar === props.id && (
+        <ComponenteCalendar onClick={() => setShowCalendar('')} />
+      )}
       {showModalDelete === props.id && (
         <ModalDelete
           title={'Excluir'}

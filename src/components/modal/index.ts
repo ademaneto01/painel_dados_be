@@ -4,6 +4,7 @@ import ModalAddUser from './modalAddUser/ModalAddUser';
 import ModalMaterials from './modalMaterials/ModalMaterials';
 import ModalLessons from './modalLessons/ModalLessons';
 import ModalAddEditTeachers from './modalAddEditTeachers/ModalAddEditTeachers';
+import ModalAddEditClassPlan from './modalAddEditClassPlans/ModalAddEditClassPlans';
 export {
   ModalDelete,
   ModalAddEditSchool,
@@ -11,4 +12,5 @@ export {
   ModalMaterials,
   ModalLessons,
   ModalAddEditTeachers,
+  ModalAddEditClassPlan,
 };

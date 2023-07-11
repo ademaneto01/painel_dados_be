@@ -9,7 +9,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
 import React from 'react';
-import { CardActions, CardActions } from '@/components/actions';
+import { CardActions } from '@/components/actions';
 import { ModalLessons } from '@/components/modal';
 import { PageEnumLessons } from '@/enums';
 import ErrorComponent from '@/components/ErrorComponent';
@@ -65,26 +65,26 @@ export default function Lessons(props: pageLessonsProps): JSX.Element {
             )}
             {data.map((lesson) => {
               return (
-                <>
+                <div>
+                  <div className={styles.boxActions}>
+                    <CardActions
+                      id={lesson.id}
+                      modalDeleteLessons={true}
+                      titleDelete={lesson.nome}
+                    />
+                  </div>
                   <div className={styles.boxCardLesson} key={lesson.id}>
                     <div
                       className={styles.cardLessons}
                       onClick={HandlePageLesson}
                     >
-                      <div id={styles.boxActions}>
-                        <CardActions
-                          id={lesson.id}
-                          modalDeleteLessons={true}
-                          titleDelete={lesson.nome}
-                        />
-                      </div>
                       <div className={styles.boxNome}>
                         <h3>{lesson.nome}</h3>
                         <p>{lesson.descricao}</p>
                       </div>
                     </div>
                   </div>
-                </>
+                </div>
               );
             })}
           </PageContentContainerLessons>
