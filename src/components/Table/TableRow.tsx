@@ -5,7 +5,7 @@ interface TableRowProps<T> {
   item: T;
   accessors: (keyof T)[];
   // onClick?: (item: T) => void;
-  onClick?: (item: T, accessor: keyof T) => void;
+  onClickRow?: (item: T, accessor: keyof T) => void;
 }
 
 export default function TableRow<T>(props: TableRowProps<T>): JSX.Element {
@@ -22,21 +22,25 @@ export default function TableRow<T>(props: TableRowProps<T>): JSX.Element {
   //     props.onClick(props.item);
   //   }
   // };
+  // const handleClick = (accessor: keyof T) => {
+  //   if (props.onClickRow) {
+  //     props.onClickRow(props.item, accessor);
+  //   }
+  // };
   const handleClick = (accessor: keyof T) => {
-    if (props.onClick) {
-      props.onClick(props.item, accessor);
+    if (props.onClickRow && accessor === 'nome') {
+      props.onClickRow(props.item, accessor);
     }
   };
 
-  const rowClassName = `${props.id % 2 === 0 ? styles.odd : ''} ${
-    props.onClick ? styles.pointer : ''
-  }`;
+  const rowClassName = ` ${props.onClickRow ? styles.pointer : ''}`;
+
   return (
-    <tr className={rowClassName}>
+    <tr className={`${props.id % 2 === 0 ? styles.odd : ''}`}>
       {props.accessors.map((accessor) => (
         <td
           key={getKey(accessor)}
-          // onClick={props.onClick ? handleClick : undefined}
+          className={accessor === 'nome' ? styles.pointer : ''}
           onClick={() => handleClick(accessor)}
         >
           {retrieve(props.item, accessor)}

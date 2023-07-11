@@ -180,7 +180,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
                       id={id}
                       item={item}
                       accessors={accessors}
-                      onClick={props.onClickRow}
+                      onClickRow={props.onClickRow}
                     />
                   );
                 })}
