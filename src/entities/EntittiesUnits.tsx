@@ -1,20 +1,23 @@
 import { TableActions } from '@/components/actions';
 
-interface documentationProps {
+interface UnitsProps {
   id: string;
   nome: string;
-  register: string[];
+  planos: string;
+  doc: string;
 }
 
-export default class EntitiesDocumentation {
+export default class EntitiesUnits {
   readonly id: string;
   readonly nome: string;
-  readonly register: string[];
+  readonly planos: string;
+  readonly doc: string;
 
-  constructor({ id, nome, register }: documentationProps) {
+  constructor({ id, nome, planos, doc }: UnitsProps) {
     this.id = id;
     this.nome = nome;
-    this.register = register;
+    this.planos = planos;
+    this.doc = doc;
   }
 
   public get acoes(): JSX.Element {
@@ -22,7 +25,9 @@ export default class EntitiesDocumentation {
       <TableActions
         id={this.id}
         titleDelete={this.nome}
-        documentationKey={this.id}
+        calendar={'true'}
+        unitsKey={this.id}
+        urlDoc={this.doc}
       />
     );
   }

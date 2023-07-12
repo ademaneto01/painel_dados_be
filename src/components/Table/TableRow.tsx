@@ -17,30 +17,20 @@ export default function TableRow<T>(props: TableRowProps<T>): JSX.Element {
     return item[accessor];
   }
 
-  // const handleClick = () => {
-  //   if (props.onClick) {
-  //     props.onClick(props.item);
-  //   }
-  // };
-  // const handleClick = (accessor: keyof T) => {
-  //   if (props.onClickRow) {
-  //     props.onClickRow(props.item, accessor);
-  //   }
-  // };
   const handleClick = (accessor: keyof T) => {
     if (props.onClickRow && accessor === 'nome') {
       props.onClickRow(props.item, accessor);
     }
   };
 
-  const rowClassName = ` ${props.onClickRow ? styles.pointer : ''}`;
-
   return (
     <tr className={`${props.id % 2 === 0 ? styles.odd : ''}`}>
       {props.accessors.map((accessor) => (
         <td
           key={getKey(accessor)}
-          className={accessor === 'nome' ? styles.pointer : ''}
+          className={
+            accessor === 'nome' && props.onClickRow ? styles.pointer : ''
+          }
           onClick={() => handleClick(accessor)}
         >
           {retrieve(props.item, accessor)}

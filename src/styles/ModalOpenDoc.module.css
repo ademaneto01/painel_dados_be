@@ -1,0 +1,50 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: rgba(128, 128, 128, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+.container {
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 75%;
+  height: 85%;
+  box-shadow: 0 0 10px #00000080;
+}
+
+.boxBtns {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 50%;
+  padding-right: 1rem;
+  height: 2rem;
+}
+.btnClose {
+  all: unset;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.thumbUpActive {
+  color: #27ae60;
+}
+.thumbDownActive {
+  color: #c0392b;
+}
+.thumbButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+.thumbButton {
+  font-size: 1.3rem;
+  cursor: pointer;
+  background-color: var(--white);
+  border: none;
+}

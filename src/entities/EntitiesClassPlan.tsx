@@ -23,7 +23,6 @@ export default class EntitiesClassPlan {
         id={this.id}
         titleDelete={this.nome}
         modalClassPlan={this.id}
-        calendar={'true'}
       />
     );
   }

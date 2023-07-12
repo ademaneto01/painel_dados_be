@@ -6,6 +6,7 @@ import {
   EntitiesLessons,
   EntitiesTeacherGuides,
   EntitiesClassPlan,
+  EntitiesUnits,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterface, SerializerInterface } from '@/interfaces';
@@ -18,6 +19,7 @@ import {
   MockLessonsSerializers,
   MockTeacherGuidesSerializers,
   MockClassPanSerializers,
+  MockUnitsSerializers,
 } from '@/serializers/mocks';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
@@ -72,6 +74,9 @@ export default class BackendApiMock implements BackendApiInterface {
       '/classPlans',
       new MockClassPanSerializers(),
     );
+  }
+  public async getUnits(): Promise<EntitiesUnits[]> {
+    return await this.get<EntitiesUnits>('/units', new MockUnitsSerializers());
   }
   private async get<T>(
     route: string,

@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import React from 'react';
 import { PageEnumLessons } from '@/enums';
 import { Column, Table } from '@/components/Table';
-import { EntitiesClassPlan, EntitiesUsers } from '@/entities';
+import { EntitiesUnits } from '@/entities';
 import error from 'next/error';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
@@ -21,7 +21,7 @@ interface pageClassPlanProps {
 }
 
 export default function Units(props: pageClassPlanProps): JSX.Element {
-  const [data, setData] = useState([] as EntitiesClassPlan[]);
+  const [data, setData] = useState([] as EntitiesUnits[]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [showModalAddEditClassPlan, setShowModalAddEditClassPlan] =
@@ -30,15 +30,11 @@ export default function Units(props: pageClassPlanProps): JSX.Element {
   function handleClickOpenModalClassPlan(): void {
     setShowModalAddEditClassPlan(true);
   }
-  const handleRowClick = (item: EntitiesClassPlan) => {
-    // Lógica de clique na linha
-    console.log('Clicou na linha:', item);
-  };
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const users = await backendApi.getClassPlans();
+        const users = await backendApi.getUnits();
         setData(users);
       } catch (error) {
         if (error instanceof FailedToFetchError) {
@@ -58,7 +54,37 @@ export default function Units(props: pageClassPlanProps): JSX.Element {
   return (
     <>
       <h4>Units</h4>
-      <PageContentContainer></PageContentContainer>
+      <PageContentContainer>
+        <div className={styles.boxBtnClassPlan}>
+          <CreateButton
+            color={'var(--white'}
+            colorBackGround={'var(--blue-300)'}
+            text="Nova unidade"
+            onClick={() => handleClickOpenModalClassPlan()}
+          />
+          <CreateButton
+            color={'var(--gray-300'}
+            colorBackGround={'var(--white)'}
+            text="Voltar"
+            size="8rem"
+            onClick={() => props.setPage(PageEnumLessons.classPlan)}
+          />
+        </div>
+        {showModalAddEditClassPlan && (
+          <ModalAddEditClassPlan
+            onCancel={() => setShowModalAddEditClassPlan(false)}
+            modalKey={''}
+          />
+        )}
+        <Table<EntitiesUnits>
+          data={data}
+          columns={columns}
+          loaded={loaded}
+          error={error}
+          searchInputNone={'none'}
+          labelInput={'Buscar pelo nome'}
+        />
+      </PageContentContainer>
     </>
   );
 }

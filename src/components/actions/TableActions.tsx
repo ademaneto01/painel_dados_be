@@ -17,6 +17,7 @@ import backendApi from '@/backendApi';
 import { EntitiesDocumentation } from '@/entities';
 import { useState } from 'react';
 import ComponenteCalendar from '../calendar/componenteCalendar/Calendar';
+import ModalOpenDoc from '../modal/modalOpenDoc/ModalOpenDoc';
 
 interface PropsForFxclusion {
   id: string;
@@ -26,6 +27,8 @@ interface PropsForFxclusion {
   modalMaterials?: string;
   modalClassPlan?: string;
   calendar?: string;
+  unitsKey?: string;
+  urlDoc?: string;
 }
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
@@ -42,7 +45,7 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
   const [showCalendar, setShowCalendar] = useState('');
   const [showModalAddEditClassPlan, setShowModalAddEditClassPlan] =
     useState('');
-
+  const [showIframeDoc, setShowIframeDoc] = useState('');
   const {
     showModalDelete,
     setShowModalDelete,
@@ -94,6 +97,13 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
   function handleClickOpenCalendar(id: string): void {
     setShowCalendar(props.id);
   }
+  function handleOpenDoc(urlDoc?: string): void {
+    console.log(props.urlDoc);
+    if (props.urlDoc) {
+      setShowIframeDoc(props.id);
+      // window.open(url, '_blank');
+    }
+  }
 
   function handleClickOpenLesson(id: string): void {
     async function fetchData() {
@@ -104,7 +114,7 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
         );
 
         if (docFind) {
-          const asString = docFind.register.join('');
+          const asString = docFind.register.join(' ');
           setLesson(asString);
           setTitleQuill(docFind.nome);
         }
@@ -156,6 +166,12 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
           onClick={() => handleClickShowView(props.id)}
         />
       )}
+      {props.unitsKey && (
+        <Action
+          icon={reactIcon(FiEye)}
+          onClick={() => handleOpenDoc(props.urlDoc)}
+        />
+      )}
       <Action
         icon={reactIcon(FaTrashAlt, '#f1646c')}
         onClick={() => handleClickOpenModalExcluir(props.id)}
@@ -164,6 +180,12 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
         <ModalAddEditSchool
           onCancel={() => setShowModalAddEditSchool('')}
           modalKey={props.id}
+        />
+      )}
+      {showIframeDoc === props.id && (
+        <ModalOpenDoc
+          urlDoc={props.urlDoc}
+          onCancel={() => setShowIframeDoc('')}
         />
       )}
       {showModalMaterials === props.id && (
