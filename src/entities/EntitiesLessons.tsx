@@ -1,5 +1,3 @@
-import { CardActions } from '@/components/actions';
-
 interface LessonProps {
   id: string;
   nome: string;
@@ -21,8 +19,4 @@ export default class EntitiesLessons {
     this.arquivo = arquivo;
     this.ano = ano;
   }
-
-  // public get acoes(): JSX.Element {
-  //   return <CardActions id={this.id} />;
-  // }
 }

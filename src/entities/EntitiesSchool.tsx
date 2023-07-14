@@ -1,4 +1,4 @@
-import { TableActions } from '@/components/actions';
+import { TableActionsSchool } from '@/components/actions';
 import OnOffToggler from '@/components/shared/onOffToogler';
 
 interface CarteiraProps {
@@ -47,9 +47,7 @@ export default class EntitiesSchool {
   }
 
   public get acoes(): JSX.Element {
-    return (
-      <TableActions id={this.id} titleDelete={this.nome} modalKey={this.id} />
-    );
+    return <TableActionsSchool id={this.id} titleDelete={this.nome} />;
   }
 
   public get ativo(): JSX.Element {

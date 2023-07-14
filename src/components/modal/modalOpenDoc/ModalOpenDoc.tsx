@@ -13,11 +13,8 @@ interface ModalValidationProps {
   unitsKey: string;
   urlDoc: string;
   onCancel: () => void;
-  calendar?: string;
 }
-interface FormData {
-  dataUnits: string;
-}
+
 function reactIcon(icon: IconType): JSX.Element {
   return icon({ style: { fontSize: '1.1rem' } });
 }
@@ -25,12 +22,11 @@ const ModalOpenDoc: React.FC<ModalValidationProps> = ({
   urlDoc,
   onCancel,
   unitsKey,
-  calendar,
 }) => {
   const [thumbsUpClicked, setThumbsUpClicked] = useState(false);
   const [thumbsDownClicked, setThumbsDownClicked] = useState(false);
   const [formData, setFormData] = useState<string>(urlDoc);
-  const [units, setUnits] = useState<any[]>([]); // substitua 'any[]' pelo tipo correto dos dados das unidades
+  const [units, setUnits] = useState<any[]>([]);
   const [currentUnitIndex, setCurrentUnitIndex] = useState<number>(0);
   const [loaded, setLoaded] = useState(false);
   const [showCalendar, setShowCalendar] = useState('');
@@ -78,7 +74,7 @@ const ModalOpenDoc: React.FC<ModalValidationProps> = ({
         }
       } catch (error) {
         if (error instanceof FailedToFetchError) {
-          // Trate o erro de falha ao buscar as unidades
+          throw error;
         } else {
           throw error;
         }
@@ -98,12 +94,10 @@ const ModalOpenDoc: React.FC<ModalValidationProps> = ({
       <div className={styles.container}>
         <div className={styles.boxBtns}>
           <div className={styles.boxCalendarThumbs}>
-            {calendar && (
-              <Action
-                icon={reactIcon(BiCalendar)}
-                onClick={() => handleClickOpenCalendar()}
-              />
-            )}
+            <Action
+              icon={reactIcon(BiCalendar)}
+              onClick={() => handleClickOpenCalendar()}
+            />
             <div className={styles.thumbButtons}>
               <button
                 className={`${styles.thumbButton} ${

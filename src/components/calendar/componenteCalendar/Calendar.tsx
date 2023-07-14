@@ -1,7 +1,6 @@
-import React, { useState, ChangeEvent } from 'react';
-import Calendar, { CalendarProps } from 'react-calendar';
+import React, { useState } from 'react';
+import Calendar from 'react-calendar';
 import styles from '@/styles/Calendar.module.css';
-import { format } from 'path';
 
 interface propsModalCalendar {
   onClick: VoidFunction;

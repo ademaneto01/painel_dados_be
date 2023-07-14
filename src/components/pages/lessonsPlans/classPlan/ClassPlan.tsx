@@ -30,21 +30,11 @@ export default function ClassPlans(props: pageClassPlanProps): JSX.Element {
   function handleClickOpenModalClassPlan(): void {
     setShowModalAddEditClassPlan(true);
   }
-  // const handleRowClick = (item: EntitiesClassPlan) => {
-  //   console.log('Clicou na linha:', item);
-  //   props.setPage(PageEnumLessons.units).stopPropagation();
-  // };
+
   const handleRowClick = (item: EntitiesClassPlan) => {
     // console.log('Row clicked:', item);
     props.setPage(PageEnumLessons.units);
   };
-  // const handleRowClick = (
-  //   item: EntitiesClassPlan,
-  //   accessor: keyof EntitiesClassPlan,
-  // ) => {
-  //   console.log('Row clicked:', item, accessor);
-  //   // setSelectedItem(item);
-  // };
 
   useEffect(() => {
     async function fetchData() {

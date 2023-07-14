@@ -9,7 +9,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
 import React from 'react';
-import { CardActions } from '@/components/actions';
+import { TableLessonsPlansCard } from '@/components/actions';
 import { ModalLessons } from '@/components/modal';
 import { PageEnumLessons } from '@/enums';
 import ErrorComponent from '@/components/ErrorComponent';
@@ -67,9 +67,8 @@ export default function Lessons(props: pageLessonsProps): JSX.Element {
               return (
                 <div>
                   <div className={styles.boxActions}>
-                    <CardActions
+                    <TableLessonsPlansCard
                       id={lesson.id}
-                      modalDeleteLessons={true}
                       titleDelete={lesson.nome}
                     />
                   </div>

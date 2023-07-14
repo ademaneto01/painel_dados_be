@@ -1,4 +1,4 @@
-import { TableActions } from '@/components/actions';
+import { TableActionsClassPlan } from '@/components/actions';
 
 interface ClassPlanProps {
   id: string;
@@ -18,12 +18,6 @@ export default class EntitiesClassPlan {
   }
 
   public get acoes(): JSX.Element {
-    return (
-      <TableActions
-        id={this.id}
-        titleDelete={this.nome}
-        modalClassPlan={this.id}
-      />
-    );
+    return <TableActionsClassPlan id={this.id} titleDelete={this.nome} />;
   }
 }

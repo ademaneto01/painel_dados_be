@@ -1,4 +1,4 @@
-import { TableActions } from '@/components/actions';
+import { TableActionsDoc } from '@/components/actions';
 
 interface documentationProps {
   id: string;
@@ -18,12 +18,6 @@ export default class EntitiesDocumentation {
   }
 
   public get acoes(): JSX.Element {
-    return (
-      <TableActions
-        id={this.id}
-        titleDelete={this.nome}
-        documentationKey={this.id}
-      />
-    );
+    return <TableActionsDoc id={this.id} titleDelete={this.nome} />;
   }
 }

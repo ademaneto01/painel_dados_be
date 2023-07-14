@@ -1,4 +1,4 @@
-import { TableActions } from '@/components/actions';
+import { TableActionsUnits } from '@/components/actions';
 
 interface UnitsProps {
   id: string;
@@ -22,11 +22,9 @@ export default class EntitiesUnits {
 
   public get acoes(): JSX.Element {
     return (
-      <TableActions
+      <TableActionsUnits
         id={this.id}
         titleDelete={this.nome}
-        calendar={'true'}
-        unitsKey={this.id}
         urlDoc={this.doc}
       />
     );

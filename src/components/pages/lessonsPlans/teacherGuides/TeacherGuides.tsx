@@ -9,7 +9,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
 import React from 'react';
-import { CardActions } from '@/components/actions';
+import { TableTeacherGuidesCard } from '@/components/actions';
 import { ModalAddEditTeachers } from '@/components/modal';
 import { PageEnumLessons } from '@/enums';
 import ErrorComponent from '@/components/ErrorComponent';
@@ -89,9 +89,8 @@ export default function TeacherGuides(props: pageLessonsTeachers): JSX.Element {
                     <strong>{`${guides.unidades} | ${guides.aulas}`}</strong>
                   </div>
                   <div className={styles.boxDelete}>
-                    <CardActions
+                    <TableTeacherGuidesCard
                       id={guides.id}
-                      modalDeleteTeachers={true}
                       titleDeleteTeachers={guides.nome}
                     />
                   </div>
