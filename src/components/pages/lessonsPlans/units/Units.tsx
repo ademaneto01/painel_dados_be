@@ -8,7 +8,7 @@ import { EntitiesUnits } from '@/entities';
 import error from 'next/error';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
-import { ModalAddEditClassPlan } from '@/components/modal';
+import { ModalAddEditUnits } from '@/components/modal';
 
 const columns = [
   new Column('Nome', 'nome'),
@@ -24,11 +24,10 @@ export default function Units(props: pageClassPlanProps): JSX.Element {
   const [data, setData] = useState([] as EntitiesUnits[]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const [showModalAddEditClassPlan, setShowModalAddEditClassPlan] =
-    useState(false);
+  const [showModalUnits, setShowModalUnits] = useState(false);
 
-  function handleClickOpenModalClassPlan(): void {
-    setShowModalAddEditClassPlan(true);
+  function handleClickOpenModalUnits(): void {
+    setShowModalUnits(true);
   }
 
   useEffect(() => {
@@ -59,8 +58,9 @@ export default function Units(props: pageClassPlanProps): JSX.Element {
           <CreateButton
             color={'var(--white'}
             colorBackGround={'var(--blue-300)'}
-            text="Nova unidade"
-            onClick={() => handleClickOpenModalClassPlan()}
+            size={'11rem'}
+            text="Novo Plano de Aula"
+            onClick={() => handleClickOpenModalUnits()}
           />
           <CreateButton
             color={'var(--gray-300'}
@@ -70,10 +70,10 @@ export default function Units(props: pageClassPlanProps): JSX.Element {
             onClick={() => props.setPage(PageEnumLessons.classPlan)}
           />
         </div>
-        {showModalAddEditClassPlan && (
-          <ModalAddEditClassPlan
-            onCancel={() => setShowModalAddEditClassPlan(false)}
-            modalKey={''}
+        {showModalUnits && (
+          <ModalAddEditUnits
+            onCancel={() => setShowModalUnits(false)}
+            unitsKey={''}
           />
         )}
         <Table<EntitiesUnits>

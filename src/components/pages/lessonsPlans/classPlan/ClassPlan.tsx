@@ -35,7 +35,7 @@ export default function ClassPlans(props: pageClassPlanProps): JSX.Element {
   //   props.setPage(PageEnumLessons.units).stopPropagation();
   // };
   const handleRowClick = (item: EntitiesClassPlan) => {
-    console.log('Row clicked:', item);
+    // console.log('Row clicked:', item);
     props.setPage(PageEnumLessons.units);
   };
   // const handleRowClick = (

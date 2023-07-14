@@ -1,11 +1,11 @@
 'use client';
-
-import {
+import React, {
   createContext,
   useContext,
   Dispatch,
   SetStateAction,
   useState,
+  ReactNode,
 } from 'react';
 
 interface ContextProps {
@@ -42,7 +42,9 @@ export const GlobalContext = createContext<ContextProps>({
   setTitleQuill: () => {},
 });
 
-export const GlobalContextProvider = ({ children }) => {
+export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [showModalDelete, setShowModalDelete] = useState('');
   const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
   const [lesson, setLesson] = useState('');

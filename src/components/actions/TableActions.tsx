@@ -12,6 +12,7 @@ import {
   ModalAddEditSchool,
   ModalMaterials,
   ModalAddEditClassPlan,
+  ModalAddEditUnits,
 } from '../modal';
 import backendApi from '@/backendApi';
 import { EntitiesDocumentation } from '@/entities';
@@ -43,6 +44,8 @@ function reactIcon(icon: IconType, color?: string): JSX.Element {
 export default function TableActions(props: PropsForFxclusion): JSX.Element {
   const [showModalMaterials, setShowModalMaterials] = useState('');
   const [showCalendar, setShowCalendar] = useState('');
+  const [showModalUnits, setShowModalUnits] = useState('');
+
   const [showModalAddEditClassPlan, setShowModalAddEditClassPlan] =
     useState('');
   const [showIframeDoc, setShowIframeDoc] = useState('');
@@ -97,6 +100,9 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
   function handleClickOpenCalendar(id: string): void {
     setShowCalendar(props.id);
   }
+  function handleClickOpenModalUnits(id: string): void {
+    setShowModalUnits(props.id);
+  }
   function handleOpenDoc(urlDoc?: string): void {
     console.log(props.urlDoc);
     if (props.urlDoc) {
@@ -135,7 +141,12 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
           onClick={() => handleClickOpenModalEdit(props.id)}
         />
       )}
-
+      {props.unitsKey && (
+        <Action
+          icon={reactIcon(FiEdit)}
+          onClick={() => handleClickOpenModalUnits(props.id)}
+        />
+      )}
       {props.modalClassPlan && (
         <Action
           icon={reactIcon(FiEdit)}
@@ -166,6 +177,7 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
           onClick={() => handleClickShowView(props.id)}
         />
       )}
+
       {props.unitsKey && (
         <Action
           icon={reactIcon(FiEye)}
@@ -184,7 +196,9 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
       )}
       {showIframeDoc === props.id && (
         <ModalOpenDoc
-          urlDoc={props.urlDoc}
+          unitsKey={props.id}
+          urlDoc={props.urlDoc || ''}
+          calendar={'true'}
           onCancel={() => setShowIframeDoc('')}
         />
       )}
@@ -194,6 +208,14 @@ export default function TableActions(props: PropsForFxclusion): JSX.Element {
           modalMaterials={props.id}
         />
       )}
+
+      {showModalUnits === props.id && (
+        <ModalAddEditUnits
+          onCancel={() => setShowModalUnits('')}
+          unitsKey={props.id}
+        />
+      )}
+
       {showModalAddEditClassPlan === props.id && (
         <ModalAddEditClassPlan
           onCancel={() => setShowModalAddEditClassPlan('')}

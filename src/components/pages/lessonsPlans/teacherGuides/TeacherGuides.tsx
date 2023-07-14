@@ -76,10 +76,9 @@ export default function TeacherGuides(props: pageLessonsTeachers): JSX.Element {
 
             {data.map((guides) => {
               return (
-                <div className={styles.boxDataDelete}>
+                <div key={guides.id} className={styles.boxDataDelete}>
                   <div
                     className={styles.boxTeacherGuides}
-                    key={guides.id}
                     onClick={(event) =>
                       props.setPage(PageEnumLessons.classPlan)
                     }

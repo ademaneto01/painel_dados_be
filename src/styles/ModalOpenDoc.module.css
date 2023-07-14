@@ -21,11 +21,32 @@
 
 .boxBtns {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
-  gap: 50%;
-  padding-right: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
   height: 2rem;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.boxCalendarThumbs {
+  display: flex;
+  gap: 1rem;
+}
+.pagination button {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  color: var(--white);
+  background-color: var(--blue-300);
+  cursor: pointer;
 }
 .btnClose {
   all: unset;
