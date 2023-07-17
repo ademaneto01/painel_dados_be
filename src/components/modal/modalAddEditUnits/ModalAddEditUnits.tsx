@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
-import styles from '@/styles/ModalAddUser.module.css';
+import styles from '@/styles/ModalStandard.module.css';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
 
@@ -65,32 +65,33 @@ const ModalAddEditUnits: React.FC<ModalProps> = ({ onCancel, unitsKey }) => {
   };
 
   return (
-    <div className={styles.backGroundModalAddUser}>
+    <div className={styles.background}>
       <form className={styles.container} onSubmit={handleSubmit}>
         <h2>Novo Plano de Aula</h2>
-        <label className={styles.labelModalAddUser}>
-          Nome
-          <input
-            type="text"
-            placeholder="Nome"
-            name="className"
-            value={formData.className}
-            onChange={handleInputChange}
-            className={styles.inputAddUser}
-          />
-        </label>
-        <label className={styles.labelModalAddUser}>
-          Content
-          <input
-            type="text"
-            placeholder="Content"
-            name="contentName"
-            value={formData.contentName}
-            onChange={handleInputChange}
-            className={styles.inputAddUser}
-          />
-        </label>
-
+        <div className={styles.boxStandard}>
+          <label className={styles.labelStandard}>
+            Nome
+            <input
+              type="text"
+              placeholder="Nome"
+              name="className"
+              value={formData.className}
+              onChange={handleInputChange}
+              className={styles.inputStandard}
+            />
+          </label>
+          <label className={styles.labelStandard}>
+            Content
+            <input
+              type="text"
+              placeholder="Content"
+              name="contentName"
+              value={formData.contentName}
+              onChange={handleInputChange}
+              className={styles.inputStandard}
+            />
+          </label>
+        </div>
         <div className={styles.buttonContainer}>
           <button
             className={styles.confirmButton}

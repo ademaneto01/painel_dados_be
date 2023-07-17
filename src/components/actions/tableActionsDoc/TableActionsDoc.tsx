@@ -9,6 +9,7 @@ import { useGlobalContext } from '@/context/store';
 import { ModalDelete } from '../../modal';
 import backendApi from '@/backendApi';
 import { EntitiesDocumentation } from '@/entities';
+import { useState } from 'react';
 
 interface PropsForFxclusion {
   id: string;
@@ -25,9 +26,8 @@ function reactIcon(icon: IconType, color?: string): JSX.Element {
 }
 
 export default function TableActionsDoc(props: PropsForFxclusion): JSX.Element {
+  const [showModalDelete, setShowModalDelete] = useState('');
   const {
-    showModalDelete,
-    setShowModalDelete,
     setLesson,
     setShowQuillEdit,
     setShowBtnReturn,

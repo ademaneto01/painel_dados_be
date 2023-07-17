@@ -5,8 +5,8 @@ import Action from '../Action';
 import { FiEdit } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
-import { useGlobalContext } from '@/context/store';
 import { ModalDelete, ModalAddEditSchool } from '../../modal';
+import { useState } from 'react';
 
 interface PropsForFxclusion {
   id: string;
@@ -25,12 +25,8 @@ function reactIcon(icon: IconType, color?: string): JSX.Element {
 export default function TableActionsSchool(
   props: PropsForFxclusion,
 ): JSX.Element {
-  const {
-    showModalDelete,
-    setShowModalDelete,
-    showModalAddEditSchool,
-    setShowModalAddEditSchool,
-  } = useGlobalContext();
+  const [showModalDelete, setShowModalDelete] = useState('');
+  const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
 
   function handleClickOpenModalExcluir(id: string): void {
     setShowModalDelete(props.id);

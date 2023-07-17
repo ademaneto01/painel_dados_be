@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from '@/styles/ModalAddUser.module.css';
+import styles from '@/styles/ModalStandard.module.css';
 import { base64 } from '@/components/base64';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
@@ -98,41 +98,43 @@ const ModalLessons: React.FC<ModalProps> = ({ onClose, modalKey }) => {
   };
 
   return (
-    <div className={styles.backGroundModalAddUser}>
+    <div className={styles.background}>
       <form className={styles.container} onSubmit={handleSave}>
         <h2>Modal Editar</h2>
-        <label className={styles.labelModalAddUser}>Nome</label>
-        <input
-          type="text"
-          name="textInput"
-          className={styles.inputAddUser}
-          value={formData.textInput}
-          onChange={handleChange}
-        />
-
-        <label className={styles.labelModalAddUser}>Upload</label>
-        <input
-          className={styles.inputFile}
-          type="file"
-          id="image-input"
-          onChange={handleFileChange}
-        />
-        {formData.imageInput && (
-          <img
-            src={formData.imageInput}
-            alt="Uploaded"
-            className={styles.uploadedImage}
+        <div className={styles.boxStandard}>
+          <label className={styles.labelStandard}>Nome</label>
+          <input
+            type="text"
+            name="textInput"
+            className={styles.inputStandard}
+            value={formData.textInput}
+            onChange={handleChange}
           />
-        )}
-        <label className={styles.labelModalAddUser}>Descrição</label>
-        <input
-          id="textarea-input"
-          name="textareaInput"
-          type="text"
-          className={styles.inputAddUser}
-          value={formData.textareaInput}
-          onChange={handleChange}
-        />
+
+          <label className={styles.labelStandard}>Upload</label>
+          <input
+            className={styles.inputFile}
+            type="file"
+            id="image-input"
+            onChange={handleFileChange}
+          />
+          {formData.imageInput && (
+            <img
+              src={formData.imageInput}
+              alt="Uploaded"
+              className={styles.uploadedImage}
+            />
+          )}
+          <label className={styles.labelStandard}>Descrição</label>
+          <input
+            id="textarea-input"
+            name="textareaInput"
+            type="text"
+            className={styles.inputStandard}
+            value={formData.textareaInput}
+            onChange={handleChange}
+          />
+        </div>
         <div className={styles.buttonContainer}>
           <button
             className={styles.confirmButton}

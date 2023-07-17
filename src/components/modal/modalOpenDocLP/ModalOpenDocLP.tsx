@@ -18,7 +18,7 @@ interface ModalValidationProps {
 function reactIcon(icon: IconType): JSX.Element {
   return icon({ style: { fontSize: '1.1rem' } });
 }
-const ModalOpenDoc: React.FC<ModalValidationProps> = ({
+const ModalOpenDocLP: React.FC<ModalValidationProps> = ({
   urlDoc,
   onCancel,
   unitsKey,
@@ -131,4 +131,4 @@ const ModalOpenDoc: React.FC<ModalValidationProps> = ({
   );
 };
 
-export default ModalOpenDoc;
+export default ModalOpenDocLP;

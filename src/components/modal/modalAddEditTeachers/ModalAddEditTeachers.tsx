@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import styles from '@/styles/ModalAddEditTeachers.module.css';
+import styles from '@/styles/ModalStandard.module.css';
 import backendApi from '@/backendApi';
-import { EntitiesTeacherGuides } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 
 interface ModalProps {
@@ -64,11 +63,8 @@ const ModalAddEditTeachers: React.FC<ModalProps> = ({ onClose, modalKey }) => {
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Aqui você pode realizar a lógica para salvar os dados do formulário
     console.log('Form Data:', formData);
 
-    // Fechar o modal após salvar
     onClose();
   };
   const handleInputChange = (
@@ -82,20 +78,20 @@ const ModalAddEditTeachers: React.FC<ModalProps> = ({ onClose, modalKey }) => {
   };
 
   return (
-    <div className={styles.backGroundModalAddUser}>
+    <div className={styles.background}>
       <form className={styles.container} onSubmit={handleSave}>
         <h2>Modal Editar</h2>
-        <label className={styles.labelModalAddUser}>Nome</label>
+        <label className={styles.labelStandard}>Nome</label>
         <input
           type="text"
           id="text-input"
           name="textInput"
-          className={styles.inputAddUser}
+          className={styles.inputStandard}
           value={formData.nomeInput}
           onChange={handleChange}
         />
 
-        <label className={styles.labelModalAddUser}>
+        <label className={styles.labelStandard}>
           Ano
           <select
             className={styles.inputSelect}
@@ -112,7 +108,7 @@ const ModalAddEditTeachers: React.FC<ModalProps> = ({ onClose, modalKey }) => {
           </select>
         </label>
 
-        <label className={styles.labelModalAddUser}>
+        <label className={styles.labelStandard}>
           Material
           <select
             className={styles.inputSelect}

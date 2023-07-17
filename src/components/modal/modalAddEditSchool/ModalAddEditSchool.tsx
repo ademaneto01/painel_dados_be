@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from '@/styles/ModalAddEditSchool.module.css';
+import styles from '@/styles/ModalStandard.module.css';
 import ErrorComponent from '@/components/ErrorComponent';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
@@ -81,28 +81,28 @@ const ModalAddEditSchool: React.FC<ModalProps> = ({ onCancel, modalKey }) => {
         <div className={styles.container}>
           <h2>Editar Escola</h2>
           <form>
-            <div className={styles.boxNameContactSSO}>
-              <label className={styles.labelModalAddEdit}>
+            <div className={styles.boxStandard}>
+              <label className={styles.labelStandard}>
                 Nome:
                 <input
-                  className={styles.inputNameContactSSO}
+                  className={styles.inputStandard}
                   type="text"
                   name="input1"
                   value={formData.input1}
                   onChange={handleInputChange}
                 />
               </label>
-              <label className={styles.labelModalAddEdit}>
+              <label className={styles.labelStandard}>
                 Nome do Contato:
                 <input
-                  className={styles.inputNameContactSSO}
+                  className={styles.inputStandard}
                   type="text"
                   name="input2"
                   value={formData.input2}
                   onChange={handleInputChange}
                 />
               </label>
-              <label className={styles.labelModalAddEdit}>
+              <label className={styles.labelStandard}>
                 SSO:
                 <select
                   className={styles.inputSelect}
@@ -118,20 +118,20 @@ const ModalAddEditSchool: React.FC<ModalProps> = ({ onCancel, modalKey }) => {
             </div>
             <div className={styles.boxCidadeEstadoCepTel}>
               <div className={styles.boxCidadeCep}>
-                <label className={styles.labelModalAddEdit}>
+                <label className={styles.labelStandard}>
                   Cidade:
                   <input
-                    className={styles.inputNameContactSSO}
+                    className={styles.inputStandard}
                     type="text"
                     name="input4"
                     value={formData.input4}
                     onChange={handleInputChange}
                   />
                 </label>
-                <label className={styles.labelModalAddEdit}>
+                <label className={styles.labelStandard}>
                   CEP:
                   <input
-                    className={styles.inputNameContactSSO}
+                    className={styles.inputStandard}
                     type="text"
                     name="input5"
                     value={formData.input5}
@@ -140,20 +140,20 @@ const ModalAddEditSchool: React.FC<ModalProps> = ({ onCancel, modalKey }) => {
                 </label>
               </div>
               <div className={styles.boxEstadoTel}>
-                <label className={styles.labelModalAddEdit}>
+                <label className={styles.labelStandard}>
                   Estado:
                   <input
-                    className={styles.inputNameContactSSO}
+                    className={styles.inputStandard}
                     type="text"
                     name="input6"
                     value={formData.input6}
                     onChange={handleInputChange}
                   />
                 </label>
-                <label className={styles.labelModalAddEdit}>
+                <label className={styles.labelStandard}>
                   Telefone:
                   <input
-                    className={styles.inputNameContactSSO}
+                    className={styles.inputStandard}
                     type="text"
                     name="input7"
                     value={formData.input7}

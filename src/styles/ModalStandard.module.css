@@ -22,20 +22,20 @@
   z-index: 8;
 }
 
-.boxNameContactSSO {
+.boxStandard {
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 1rem;
 }
 
-.labelModalAddEdit {
+.labelStandard {
   display: flex;
   flex-direction: column;
   align-items: start;
 }
 
-.inputNameContactSSO {
+.inputStandard {
   all: unset;
   text-align: start;
   width: 100%;
@@ -46,9 +46,10 @@
   margin-top: 0.2rem;
   cursor: text;
 }
+
 .inputSelect {
   text-align: start;
-  width: 100%;
+  width: 102%;
   padding-left: 0.7rem;
   height: 2.5rem;
   color: #7286a2;
@@ -58,28 +59,12 @@
   cursor: pointer;
 }
 
-.inputNameContactSSO:focus-within,
+.inputStandard:focus-within,
 .inputSelect:focus-within {
   box-shadow: 0 0 5px var(--gray-200);
 }
 .inputSelect:focus {
   outline: transparent;
-}
-
-.boxCidadeEstadoCepTel {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 1rem;
-  gap: 1.5rem;
-}
-
-.boxEstadoTel,
-.boxCidadeCep {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  gap: 1rem;
 }
 
 .buttonContainer {
@@ -104,4 +89,38 @@
 .cancelButton {
   background-color: #c0392b;
   color: #ffffff;
+}
+
+.boxCidadeEstadoCepTel {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1rem;
+  gap: 1.5rem;
+}
+
+.boxEstadoTel,
+.boxCidadeCep {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 1rem;
+}
+
+.uploadedImage {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 5px;
+}
+
+.inputFile {
+  display: flex;
+  justify-content: center;
+  width: 102%;
+  padding-left: 0.7rem;
+  height: 2.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--gray-200);
+  padding-top: 0.5rem;
+  margin-top: 0.2rem;
 }

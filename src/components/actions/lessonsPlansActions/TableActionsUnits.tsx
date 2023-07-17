@@ -6,11 +6,9 @@ import { FiEdit, FiEye } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { BiCalendar } from 'react-icons/bi';
 import { IconBaseProps, IconType } from 'react-icons';
-import { useGlobalContext } from '@/context/store';
-import { ModalDelete, ModalAddEditUnits } from '../../modal';
+import { ModalDelete, ModalAddEditUnits, ModalOpenDocLP } from '../../modal';
 import { useState } from 'react';
 import ComponenteCalendar from '../../calendar/componenteCalendar/Calendar';
-import ModalOpenDoc from '../../modal/modalOpenDoc/ModalOpenDoc';
 
 interface PropsForFxclusion {
   id: string;
@@ -32,9 +30,8 @@ export default function TableActionsUnits(
 ): JSX.Element {
   const [showCalendar, setShowCalendar] = useState('');
   const [showModalUnits, setShowModalUnits] = useState('');
-
   const [showIframeDoc, setShowIframeDoc] = useState('');
-  const { showModalDelete, setShowModalDelete } = useGlobalContext();
+  const [showModalDelete, setShowModalDelete] = useState('');
 
   function handleClickOpenModalExcluir(id: string): void {
     setShowModalDelete(id);
@@ -75,7 +72,7 @@ export default function TableActionsUnits(
       />
 
       {showIframeDoc === props.id && (
-        <ModalOpenDoc
+        <ModalOpenDocLP
           unitsKey={props.id}
           urlDoc={props.urlDoc || ''}
           onCancel={() => setShowIframeDoc('')}

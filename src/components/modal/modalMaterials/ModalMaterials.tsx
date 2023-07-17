@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import styles from '@/styles/ModalAddUser.module.css';
+import styles from '@/styles/ModalStandard.module.css';
 import { useEffect } from 'react';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
@@ -72,51 +72,53 @@ const ModalMaterials: React.FC<ModalProps> = ({ onCancel, modalMaterials }) => {
   };
   if (!error) {
     return (
-      <div className={styles.backGroundModalAddUser}>
+      <div className={styles.background}>
         <form className={styles.container} onSubmit={handleSubmit}>
           <h2>Novo Material</h2>
-          <label className={styles.labelModalAddUser}>
-            Nome
-            <input
-              type="text"
-              placeholder="Nome"
-              name="nome"
-              value={formData.nome}
-              onChange={handleInputChange}
-              className={styles.inputAddUser}
-            />
-          </label>
-          <label className={styles.labelModalAddUser}>
-            Permissão
-            <select
-              value={formData.disciplina}
-              onChange={handleInputChange}
-              name="disciplina"
-              className={styles.inputAddUserSelect}
-            >
-              <option value="">-</option>
-              <option value="Be Activities">Be Activities</option>
-              <option value="Be Activities for Kids">Estudante</option>
-              <option value="Language">Language</option>
-              <option value="Science">Science</option>
-            </select>
-          </label>
-          <label className={styles.labelModalAddUser}>
-            Permissão
-            <select
-              value={formData.grade}
-              onChange={handleInputChange}
-              name="grade"
-              className={styles.inputAddUserSelect}
-            >
-              <option value="">-</option>
-              <option value="k3">k3</option>
-              <option value="k4">k4</option>
-              <option value="k5">k5</option>
-              <option value="1º ano">1º ano</option>
-              <option value="2º ano">2º ano</option>
-            </select>
-          </label>
+          <div className={styles.boxStandard}>
+            <label className={styles.labelStandard}>
+              Nome
+              <input
+                type="text"
+                placeholder="Nome"
+                name="nome"
+                value={formData.nome}
+                onChange={handleInputChange}
+                className={styles.inputStandard}
+              />
+            </label>
+            <label className={styles.labelStandard}>
+              Permissão
+              <select
+                value={formData.disciplina}
+                onChange={handleInputChange}
+                name="disciplina"
+                className={styles.inputSelect}
+              >
+                <option value="">-</option>
+                <option value="Be Activities">Be Activities</option>
+                <option value="Be Activities for Kids">Estudante</option>
+                <option value="Language">Language</option>
+                <option value="Science">Science</option>
+              </select>
+            </label>
+            <label className={styles.labelStandard}>
+              Permissão
+              <select
+                value={formData.grade}
+                onChange={handleInputChange}
+                name="grade"
+                className={styles.inputSelect}
+              >
+                <option value="">-</option>
+                <option value="k3">k3</option>
+                <option value="k4">k4</option>
+                <option value="k5">k5</option>
+                <option value="1º ano">1º ano</option>
+                <option value="2º ano">2º ano</option>
+              </select>
+            </label>
+          </div>
           <div className={styles.buttonContainer}>
             <button
               className={styles.confirmButton}

@@ -9,10 +9,6 @@ import React, {
 } from 'react';
 
 interface ContextProps {
-  showModalDelete: string;
-  setShowModalDelete: Dispatch<SetStateAction<string>>;
-  showModalAddEditSchool: string;
-  setShowModalAddEditSchool: Dispatch<SetStateAction<string>>;
   lesson: string;
   setLesson: Dispatch<SetStateAction<string>>;
   showQuillEdit: boolean;
@@ -26,10 +22,6 @@ interface ContextProps {
 }
 
 export const GlobalContext = createContext<ContextProps>({
-  showModalDelete: '',
-  setShowModalDelete: () => {},
-  showModalAddEditSchool: '',
-  setShowModalAddEditSchool: () => {},
   lesson: '',
   setLesson: () => {},
   showQuillEdit: false,
@@ -45,8 +37,6 @@ export const GlobalContext = createContext<ContextProps>({
 export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [showModalDelete, setShowModalDelete] = useState('');
-  const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
   const [lesson, setLesson] = useState('');
   const [showQuillEdit, setShowQuillEdit] = useState(false);
   const [showBtnReturn, setShowBtnReturn] = useState(false);
@@ -56,10 +46,6 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <GlobalContext.Provider
       value={{
-        showModalDelete,
-        setShowModalDelete,
-        showModalAddEditSchool,
-        setShowModalAddEditSchool,
         lesson,
         setLesson,
         showQuillEdit,

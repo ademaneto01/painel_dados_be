@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from '@/styles/ModalAddEditSchool.module.css';
+import styles from '@/styles/ModalStandard.module.css';
 import ErrorComponent from '@/components/ErrorComponent';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
@@ -68,11 +68,11 @@ const ModalAddEditClassPlan: React.FC<ModalProps> = ({
         <div className={styles.container}>
           <h2>Editar Class Plans</h2>
           <form>
-            <div className={styles.boxNameContactSSO}>
-              <label className={styles.labelModalAddEdit}>
+            <div className={styles.boxStandard}>
+              <label className={styles.labelStandard}>
                 Nome:
                 <input
-                  className={styles.inputNameContactSSO}
+                  className={styles.inputStandard}
                   type="text"
                   name="input1"
                   value={formData.input1}

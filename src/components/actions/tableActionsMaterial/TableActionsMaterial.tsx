@@ -5,7 +5,6 @@ import Action from '../Action';
 import { FiEdit, FiEye } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
-import { useGlobalContext } from '@/context/store';
 import { ModalDelete, ModalMaterials } from '../../modal';
 import { useState } from 'react';
 
@@ -27,7 +26,7 @@ export default function TableActionsMaterial(
   props: PropsForFxclusion,
 ): JSX.Element {
   const [showModalMaterials, setShowModalMaterials] = useState('');
-  const { showModalDelete, setShowModalDelete } = useGlobalContext();
+  const [showModalDelete, setShowModalDelete] = useState('');
 
   function handleClickOpenModalExcluir(id: string): void {
     setShowModalDelete(props.id);

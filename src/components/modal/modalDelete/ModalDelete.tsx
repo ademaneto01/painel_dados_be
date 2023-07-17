@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '@/styles/ModalExcluir.module.css';
+import styles from '@/styles/ModalDelete.module.css';
 
 interface ModalValidationProps {
   title: string;
