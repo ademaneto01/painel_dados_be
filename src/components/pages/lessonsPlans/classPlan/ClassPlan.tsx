@@ -61,19 +61,36 @@ export default function ClassPlans(props: pageClassPlanProps): JSX.Element {
       <h4>Class Plans</h4>
       <PageContentContainer>
         <div className={styles.boxBtnClassPlan}>
-          <CreateButton
-            color={'var(--white'}
-            colorBackGround={'var(--blue-300)'}
-            text="Nova unidade"
-            onClick={() => handleClickOpenModalClassPlan()}
-          />
-          <CreateButton
-            color={'var(--gray-300'}
-            colorBackGround={'var(--white)'}
-            text="Voltar"
-            size="8rem"
-            onClick={() => props.setPage(PageEnumLessons.teacherGuides)}
-          />
+          <nav className={styles.boxNavBtn}>
+            <p
+              className={styles.btnBreadCrumb}
+              onClick={() => props.setPage(PageEnumLessons.lessons)}
+            >
+              Lessons Plans /<span>&nbsp;</span>
+            </p>
+            <p
+              className={styles.btnBreadCrumb}
+              onClick={() => props.setPage(PageEnumLessons.teacherGuides)}
+            >
+              Teacher Guides /<span>&nbsp;</span>
+            </p>
+            <strong>Class Plans</strong>
+          </nav>
+          <nav className={styles.boxNavBtn}>
+            <CreateButton
+              color={'var(--white'}
+              colorBackGround={'var(--blue-300)'}
+              text="Nova unidade"
+              onClick={() => handleClickOpenModalClassPlan()}
+            />
+            <CreateButton
+              color={'var(--gray-300'}
+              colorBackGround={'var(--white)'}
+              text="Voltar"
+              size="8rem"
+              onClick={() => props.setPage(PageEnumLessons.teacherGuides)}
+            />
+          </nav>
         </div>
         {showModalAddEditClassPlan && (
           <ModalAddEditClassPlan

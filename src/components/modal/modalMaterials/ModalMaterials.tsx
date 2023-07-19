@@ -88,7 +88,7 @@ const ModalMaterials: React.FC<ModalProps> = ({ onCancel, modalMaterials }) => {
               />
             </label>
             <label className={styles.labelStandard}>
-              Permissão
+              Permissão da Disciplina
               <select
                 value={formData.disciplina}
                 onChange={handleInputChange}
@@ -103,7 +103,7 @@ const ModalMaterials: React.FC<ModalProps> = ({ onCancel, modalMaterials }) => {
               </select>
             </label>
             <label className={styles.labelStandard}>
-              Permissão
+              Permissão da Grade
               <select
                 value={formData.grade}
                 onChange={handleInputChange}

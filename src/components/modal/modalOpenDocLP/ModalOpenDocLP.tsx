@@ -13,6 +13,7 @@ interface ModalValidationProps {
   unitsKey: string;
   urlDoc: string;
   onCancel: () => void;
+  unitsData: { id: string; doc: string }[];
 }
 
 function reactIcon(icon: IconType): JSX.Element {
@@ -118,7 +119,7 @@ const ModalOpenDocLP: React.FC<ModalValidationProps> = ({
             </div>
           </div>
           <div className={styles.pagination}>
-            <button onClick={handlePrevUnit}> {reactIcon(ImArrowLeft2)}</button>
+            <button onClick={handlePrevUnit}>{reactIcon(ImArrowLeft2)}</button>
             <button onClick={handleNextUnit}>{reactIcon(ImArrowRight2)}</button>
           </div>
           <button className={styles.btnClose} onClick={onCancel}>
@@ -132,3 +133,5 @@ const ModalOpenDocLP: React.FC<ModalValidationProps> = ({
 };
 
 export default ModalOpenDocLP;
+
+//reactIcon(ImArrowLeft2)

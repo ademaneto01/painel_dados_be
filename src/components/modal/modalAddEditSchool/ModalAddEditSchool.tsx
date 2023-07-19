@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
-import ErrorComponent from '@/components/ErrorComponent';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
 
@@ -62,125 +61,134 @@ const ModalAddEditSchool: React.FC<ModalProps> = ({ onCancel, modalKey }) => {
     }
   }, [loaded]);
 
+  // const handleInputChange = (
+  //   event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  // ) => {
+  //   const { name, value } = event.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
+
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
 
+    if ('value' in event.target) {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
   // const handleSave = () => {
   //     onCancel();
   // };
-  if (!error) {
-    return (
-      <div className={styles.background}>
-        <div className={styles.container}>
-          <h2>Editar Escola</h2>
-          <form>
-            <div className={styles.boxStandard}>
-              <label className={styles.labelStandard}>
-                Nome:
-                <input
-                  className={styles.inputStandard}
-                  type="text"
-                  name="input1"
-                  value={formData.input1}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label className={styles.labelStandard}>
-                Nome do Contato:
-                <input
-                  className={styles.inputStandard}
-                  type="text"
-                  name="input2"
-                  value={formData.input2}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label className={styles.labelStandard}>
-                SSO:
-                <select
-                  className={styles.inputSelect}
-                  name="input3"
-                  value={formData.input3}
-                  onChange={handleInputChange}
-                >
-                  <option value="SEM SSO">SEM SSO</option>
-                  <option value="Microsoft">Microsoft</option>
-                  <option value="Google">Google</option>
-                </select>
-              </label>
-            </div>
-            <div className={styles.boxCidadeEstadoCepTel}>
-              <div className={styles.boxCidadeCep}>
-                <label className={styles.labelStandard}>
-                  Cidade:
-                  <input
-                    className={styles.inputStandard}
-                    type="text"
-                    name="input4"
-                    value={formData.input4}
-                    onChange={handleInputChange}
-                  />
-                </label>
-                <label className={styles.labelStandard}>
-                  CEP:
-                  <input
-                    className={styles.inputStandard}
-                    type="text"
-                    name="input5"
-                    value={formData.input5}
-                    onChange={handleInputChange}
-                  />
-                </label>
-              </div>
-              <div className={styles.boxEstadoTel}>
-                <label className={styles.labelStandard}>
-                  Estado:
-                  <input
-                    className={styles.inputStandard}
-                    type="text"
-                    name="input6"
-                    value={formData.input6}
-                    onChange={handleInputChange}
-                  />
-                </label>
-                <label className={styles.labelStandard}>
-                  Telefone:
-                  <input
-                    className={styles.inputStandard}
-                    type="text"
-                    name="input7"
-                    value={formData.input7}
-                    onChange={handleInputChange}
-                  />
-                </label>
-              </div>
-            </div>
-            <div className={styles.buttonContainer}>
-              <button className={styles.confirmButton} type="button">
-                Salvar
-              </button>
-              <button
-                className={styles.cancelButton}
-                type="button"
-                onClick={onCancel}
+
+  return (
+    <div className={styles.background}>
+      <div className={styles.container}>
+        <h2>Editar Escola</h2>
+        <form>
+          <div className={styles.boxStandard}>
+            <label className={styles.labelStandard}>
+              Nome:
+              <input
+                className={styles.inputStandard}
+                type="text"
+                name="input1"
+                value={formData.input1}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label className={styles.labelStandard}>
+              Nome do Contato:
+              <input
+                className={styles.inputStandard}
+                type="text"
+                name="input2"
+                value={formData.input2}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label className={styles.labelStandard}>
+              SSO:
+              <select
+                className={styles.inputSelect}
+                name="input3"
+                value={formData.input3}
+                onChange={handleInputChange}
               >
-                Cancelar
-              </button>
+                <option value="SEM SSO">SEM SSO</option>
+                <option value="Microsoft">Microsoft</option>
+                <option value="Google">Google</option>
+              </select>
+            </label>
+          </div>
+          <div className={styles.boxCidadeEstadoCepTel}>
+            <div className={styles.boxCidadeCep}>
+              <label className={styles.labelStandard}>
+                Cidade:
+                <input
+                  className={styles.inputStandard}
+                  type="text"
+                  name="input4"
+                  value={formData.input4}
+                  onChange={handleInputChange}
+                />
+              </label>
+              <label className={styles.labelStandard}>
+                CEP:
+                <input
+                  className={styles.inputStandard}
+                  type="text"
+                  name="input5"
+                  value={formData.input5}
+                  onChange={handleInputChange}
+                />
+              </label>
             </div>
-          </form>
-        </div>
+            <div className={styles.boxEstadoTel}>
+              <label className={styles.labelStandard}>
+                Estado:
+                <input
+                  className={styles.inputStandard}
+                  type="text"
+                  name="input6"
+                  value={formData.input6}
+                  onChange={handleInputChange}
+                />
+              </label>
+              <label className={styles.labelStandard}>
+                Telefone:
+                <input
+                  className={styles.inputStandard}
+                  type="text"
+                  name="input7"
+                  value={formData.input7}
+                  onChange={handleInputChange}
+                />
+              </label>
+            </div>
+          </div>
+          <div className={styles.buttonContainer}>
+            <button className={styles.confirmButton} type="button">
+              Salvar
+            </button>
+            <button
+              className={styles.cancelButton}
+              type="button"
+              onClick={onCancel}
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
       </div>
-    );
-  } else {
-    return <ErrorComponent />;
-  }
+    </div>
+  );
 };
 
 export default ModalAddEditSchool;

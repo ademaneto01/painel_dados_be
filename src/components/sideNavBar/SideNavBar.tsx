@@ -9,7 +9,6 @@ import {
   ImUser,
   ImDisplay,
   ImBooks,
-  ImWrench,
   ImLock,
 } from 'react-icons/im';
 import SideNavBarButton from './SideNavBarButton';

@@ -7,7 +7,7 @@ interface ActionProps {
 
 export default function Action(props: ActionProps): JSX.Element {
   return (
-    <div className={styles.action} onClick={props.onClick}>
+    <div className={styles.action} onClick={props.onClick} data-testid="action">
       {props.icon}
     </div>
   );

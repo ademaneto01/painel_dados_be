@@ -29,8 +29,17 @@
 }
 .boxBtn {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
+}
+.boxNavBtn {
+  display: flex;
+}
+.btnBreadCrumb {
+  cursor: pointer;
+}
+.btnBreadCrumb:hover {
+  color: #000000;
 }
 .boxDelete {
   border-radius: 5px;

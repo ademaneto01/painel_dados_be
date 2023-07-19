@@ -3,7 +3,7 @@ import styles from '@/styles/SideNavBar.module.css';
 interface SideNavBarButtonProps {
   text: string;
   icon: JSX.Element;
-  onClick: VoidFunction;
+  onClick?: VoidFunction;
   active: boolean;
   hidden: boolean;
 }

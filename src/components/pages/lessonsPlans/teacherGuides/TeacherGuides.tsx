@@ -5,7 +5,7 @@ import {
   Loader,
   PageContentContainerTeacher,
 } from '@/components/shared';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
 import React from 'react';
@@ -51,22 +51,32 @@ export default function TeacherGuides(props: pageLessonsTeachers): JSX.Element {
           <h4>Teacher Guides</h4>
           <PageContentContainerTeacher>
             <div className={styles.boxBtn}>
-              <CreateButton
-                color={'var(--white'}
-                colorBackGround={'var(--blue-300)'}
-                text="Novo Teacher's guide"
-                size="12rem"
-                onClick={() => setShowModalEditTeachers(true)}
-              />
-              <CreateButton
-                color={'var(--gray-300'}
-                colorBackGround={'var(--white)'}
-                text="Voltar"
-                size="8rem"
-                onClick={() => props.setPage(PageEnumLessons.lessons)}
-              />
+              <nav className={styles.boxNavBtn}>
+                <p
+                  className={styles.btnBreadCrumb}
+                  onClick={() => props.setPage(PageEnumLessons.lessons)}
+                >
+                  Lessons Plans /<span>&nbsp;</span>
+                </p>
+                <strong>Teacher Guides</strong>
+              </nav>
+              <nav className={styles.boxNavBtn}>
+                <CreateButton
+                  color="var(--white"
+                  colorBackGround="var(--blue-300)"
+                  text="Novo Teacher's guide"
+                  size="12rem"
+                  onClick={() => setShowModalEditTeachers(true)}
+                />
+                <CreateButton
+                  color="var(--gray-300"
+                  colorBackGround="var(--white)"
+                  text="Voltar"
+                  size="8rem"
+                  onClick={() => props.setPage(PageEnumLessons.lessons)}
+                />
+              </nav>
             </div>
-
             {showModalEditTeachers && (
               <ModalAddEditTeachers
                 modalKey={''}

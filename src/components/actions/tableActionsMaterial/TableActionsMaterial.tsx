@@ -39,10 +39,13 @@ export default function TableActionsMaterial(
   return (
     <div className={styles.container}>
       <Action
+        data-testid="edit-action"
         icon={reactIcon(FiEdit)}
         onClick={() => handleClickOpenModalMaterial(props.id)}
       />
+
       <Action
+        data-testid="trash-action"
         icon={reactIcon(FaTrashAlt, '#f1646c')}
         onClick={() => handleClickOpenModalExcluir(props.id)}
       />

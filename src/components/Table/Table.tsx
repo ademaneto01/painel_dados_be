@@ -1,4 +1,4 @@
-import styles from '@/styles/Table.module.css';
+import styles from '../../styles/Table.module.css';
 import { useMemo, useState } from 'react';
 import ErrorComponent from '../ErrorComponent';
 import { Loader } from '../shared';

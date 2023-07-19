@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
-import ErrorComponent from '@/components/ErrorComponent';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
 
@@ -62,43 +61,40 @@ const ModalAddEditClassPlan: React.FC<ModalProps> = ({
   // const handleSave = () => {
   //     onCancel();
   // };
-  if (!error) {
-    return (
-      <div className={styles.background}>
-        <div className={styles.container}>
-          <h2>Editar Class Plans</h2>
-          <form>
-            <div className={styles.boxStandard}>
-              <label className={styles.labelStandard}>
-                Nome:
-                <input
-                  className={styles.inputStandard}
-                  type="text"
-                  name="input1"
-                  value={formData.input1}
-                  onChange={handleInputChange}
-                />
-              </label>
-            </div>
-            <div className={styles.buttonContainer}>
-              <button className={styles.confirmButton} type="button">
-                Salvar
-              </button>
-              <button
-                className={styles.cancelButton}
-                type="button"
-                onClick={onCancel}
-              >
-                Cancelar
-              </button>
-            </div>
-          </form>
-        </div>
+
+  return (
+    <div className={styles.background}>
+      <div className={styles.container}>
+        <h2>Editar Class Plans</h2>
+        <form>
+          <div className={styles.boxStandard}>
+            <label className={styles.labelStandard}>
+              Nome:
+              <input
+                className={styles.inputStandard}
+                type="text"
+                name="input1"
+                value={formData.input1}
+                onChange={handleInputChange}
+              />
+            </label>
+          </div>
+          <div className={styles.buttonContainer}>
+            <button className={styles.confirmButton} type="button">
+              Salvar
+            </button>
+            <button
+              className={styles.cancelButton}
+              type="button"
+              onClick={onCancel}
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
       </div>
-    );
-  } else {
-    return <ErrorComponent />;
-  }
+    </div>
+  );
 };
 
 export default ModalAddEditClassPlan;

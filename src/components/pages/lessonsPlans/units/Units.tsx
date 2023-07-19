@@ -55,20 +55,43 @@ export default function Units(props: pageClassPlanProps): JSX.Element {
       <h4>Units</h4>
       <PageContentContainer>
         <div className={styles.boxBtnClassPlan}>
-          <CreateButton
-            color={'var(--white'}
-            colorBackGround={'var(--blue-300)'}
-            size={'11rem'}
-            text="Novo Plano de Aula"
-            onClick={() => handleClickOpenModalUnits()}
-          />
-          <CreateButton
-            color={'var(--gray-300'}
-            colorBackGround={'var(--white)'}
-            text="Voltar"
-            size="8rem"
-            onClick={() => props.setPage(PageEnumLessons.classPlan)}
-          />
+          <nav className={styles.boxNavBtn}>
+            <p
+              className={styles.btnBreadCrumb}
+              onClick={() => props.setPage(PageEnumLessons.lessons)}
+            >
+              Lessons Plans /<span>&nbsp;</span>
+            </p>
+            <p
+              className={styles.btnBreadCrumb}
+              onClick={() => props.setPage(PageEnumLessons.teacherGuides)}
+            >
+              Teacher Guides /<span>&nbsp;</span>
+            </p>
+            <p
+              className={styles.btnBreadCrumb}
+              onClick={() => props.setPage(PageEnumLessons.classPlan)}
+            >
+              Class Plans /<span>&nbsp;</span>
+            </p>
+            <strong>Units</strong>
+          </nav>
+          <nav className={styles.boxNavBtn}>
+            <CreateButton
+              color={'var(--white'}
+              colorBackGround={'var(--blue-300)'}
+              size={'11rem'}
+              text="Novo Plano de Aula"
+              onClick={() => handleClickOpenModalUnits()}
+            />
+            <CreateButton
+              color={'var(--gray-300'}
+              colorBackGround={'var(--white)'}
+              text="Voltar"
+              size="8rem"
+              onClick={() => props.setPage(PageEnumLessons.classPlan)}
+            />
+          </nav>
         </div>
         {showModalUnits && (
           <ModalAddEditUnits
