@@ -18,6 +18,7 @@ export default function SideNavBarButton(props: SideNavBarButtonProps) {
 
   return (
     <a
+      data-testid="side-nav-button"
       className={
         props.hidden
           ? activable(styles.navBarButton)

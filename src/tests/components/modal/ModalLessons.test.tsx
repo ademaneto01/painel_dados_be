@@ -23,7 +23,6 @@ describe('ModalLessons', () => {
 
     render(<ModalLessons onClose={onClose} modalKey="example" />);
 
-    // Wait for the form data to be loaded
     await waitFor(() => {
       expect(screen.getByLabelText('Nome')).toHaveValue('Example Lesson');
       expect(screen.getByLabelText('Descrição')).toHaveValue(
@@ -31,12 +30,10 @@ describe('ModalLessons', () => {
       );
     });
 
-    // Simulate input change
     fireEvent.change(screen.getByLabelText('Nome'), {
       target: { value: 'Updated Lesson' },
     });
 
-    // Simulate file change
     const file = new File(['file contents'], 'example.jpg', {
       type: 'image/jpeg',
     });
@@ -44,11 +41,8 @@ describe('ModalLessons', () => {
       target: { files: [file] },
     });
 
-    // Wait for the image to load
     await waitFor(() => {
       expect(screen.getByAltText('Uploaded')).toBeInTheDocument();
     });
-
-    // Trigger click event on the "Salvar" button
   });
 });

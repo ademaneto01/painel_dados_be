@@ -13,7 +13,7 @@ interface ModalValidationProps {
   unitsKey: string;
   urlDoc: string;
   onCancel: () => void;
-  unitsData: { id: string; doc: string }[];
+  unitsData?: { id: string; doc: string }[];
 }
 
 function reactIcon(icon: IconType): JSX.Element {

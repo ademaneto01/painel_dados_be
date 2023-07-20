@@ -47,12 +47,14 @@ export default function TableLessonsPlansCard(
 
       {showModalEdit === props.id && (
         <ModalLessons
+          data-testid="ModalLessons"
           modalKey={props.id}
           onClose={() => setShowModalEdit('')}
         />
       )}
       {showModalDelete === props.id && (
         <ModalDelete
+          data-testid="ModalDelete"
           title={'Excluir'}
           message={`Realmente deseja excluir ${props.titleDelete}?`}
           onCancel={() => setShowModalDelete('')}

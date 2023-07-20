@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableHeaders matches the snapshot 1`] = `
+<DocumentFragment>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Nome
+        </th>
+        <th>
+          Idade
+        </th>
+        <th>
+          Cargo
+        </th>
+      </tr>
+    </thead>
+  </table>
+</DocumentFragment>
+`;

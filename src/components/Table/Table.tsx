@@ -8,7 +8,7 @@ import TableRow from './TableRow';
 import { ImArrowRight2, ImArrowLeft2 } from 'react-icons/im';
 import { IconType } from 'react-icons';
 
-interface TableProps<T> {
+export interface TableProps<T> {
   data: T[];
   columns: Column<T>[];
   error?: boolean;

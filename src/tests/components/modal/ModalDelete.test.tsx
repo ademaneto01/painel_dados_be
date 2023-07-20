@@ -13,10 +13,8 @@ describe('ModalDelete', () => {
       />,
     );
 
-    // Simulate button click
     fireEvent.click(screen.getByRole('button', { name: 'Não' }));
 
-    // Assert that onCancel is called
     expect(onCancel).toHaveBeenCalled();
   });
 });

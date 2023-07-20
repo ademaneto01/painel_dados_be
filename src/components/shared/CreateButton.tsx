@@ -20,6 +20,7 @@ export default function CreateButton(props: CreateButtonProps): JSX.Element {
     <div className={styles.createButtonContainer}>
       <div
         className={styles.createButton}
+        data-testid="action"
         onClick={props.onClick}
         style={styleButton}
       >

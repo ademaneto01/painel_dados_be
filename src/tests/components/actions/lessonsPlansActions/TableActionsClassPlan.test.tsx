@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { TableActionsClassPlan } from '../../../components/actions';
+import { TableActionsClassPlan } from '../../../../components/actions';
 
 test('should render ok', () => {
   const mockId = '123';

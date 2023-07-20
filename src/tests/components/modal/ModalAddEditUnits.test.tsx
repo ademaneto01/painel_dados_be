@@ -8,14 +8,11 @@ describe('ModalAddEditUnits', () => {
   test('renders the component correctly', async () => {
     render(<ModalAddEditUnits onCancel={mockOnCancel} unitsKey="123" />);
 
-    // Wait for the component to load
     await screen.findByText('Novo Plano de Aula');
 
-    // Assert that the input fields are rendered with initial values
     expect(screen.getByLabelText('Nome')).toBeInTheDocument();
     expect(screen.getByLabelText('Content')).toBeInTheDocument();
 
-    // Simulate user input
     fireEvent.change(screen.getByLabelText('Nome'), {
       target: { value: 'Test Class' },
     });
@@ -23,7 +20,6 @@ describe('ModalAddEditUnits', () => {
       target: { value: 'Test Content' },
     });
 
-    // Assert that the input values are updated
     expect((screen.getByLabelText('Nome') as HTMLInputElement).value).toBe(
       'Test Class',
     );
@@ -31,11 +27,9 @@ describe('ModalAddEditUnits', () => {
       'Test Content',
     );
 
-    // Trigger the save button click
     const saveButton = screen.getByText('Salvar');
     fireEvent.click(saveButton);
 
-    // Assert that the handleSubmit function is called
     expect(mockOnCancel).toHaveBeenCalledTimes(1);
   });
 });

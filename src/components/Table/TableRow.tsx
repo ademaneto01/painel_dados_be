@@ -4,7 +4,6 @@ interface TableRowProps<T> {
   id: number;
   item: T;
   accessors: (keyof T)[];
-  // onClick?: (item: T) => void;
   onClickRow?: (item: T, accessor: keyof T) => void;
 }
 

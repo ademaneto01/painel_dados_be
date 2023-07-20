@@ -35,7 +35,6 @@ describe('ModalMaterials', () => {
 
     fireEvent.click(submitButton);
 
-    // We need to wait for the asynchronous code to complete before asserting
     setTimeout(() => {
       expect(handleSubmit).toHaveBeenCalled();
     }, 0);

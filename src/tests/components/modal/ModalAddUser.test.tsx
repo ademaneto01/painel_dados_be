@@ -24,7 +24,6 @@ describe('ModalAddUser', () => {
   it('updates form data on input change', () => {
     render(<ModalAddUser onCancel={() => {}} />);
 
-    // Simulate input change
     fireEvent.change(screen.getByLabelText('Nome'), {
       target: { value: 'John Doe' },
     });
@@ -44,7 +43,6 @@ describe('ModalAddUser', () => {
       target: { value: 'administrator' },
     });
 
-    // Assert that form data is updated
     expect(screen.getByLabelText('Nome')).toHaveValue('John Doe');
     expect(screen.getByLabelText('E-mail')).toHaveValue('john@example.com');
     expect(screen.getByLabelText('Confirme o E-mail')).toHaveValue(
@@ -59,10 +57,8 @@ describe('ModalAddUser', () => {
     const handleSubmit = jest.spyOn(console, 'log');
     render(<ModalAddUser onCancel={() => {}} />);
 
-    // Simulate button click
     fireEvent.click(screen.getByRole('button', { name: 'Salvar' }));
 
-    // Assert that handleSubmit is called
     expect(handleSubmit).toHaveBeenCalled();
   });
 
@@ -70,10 +66,8 @@ describe('ModalAddUser', () => {
     const onCancel = jest.fn();
     render(<ModalAddUser onCancel={onCancel} />);
 
-    // Simulate button click
     fireEvent.click(screen.getByRole('button', { name: 'Cancelar' }));
 
-    // Assert that onCancel is called
     expect(onCancel).toHaveBeenCalled();
   });
 });

@@ -17,7 +17,6 @@ const mockData = [
     school: 'School B',
     profile: 'Student',
   },
-  // Add more mock data as needed
 ];
 
 const mockColumns: Column<{
@@ -43,12 +42,10 @@ describe('Table', () => {
       />,
     );
 
-    // Assert that the table headers are rendered
     expect(screen.getByText('Name')).toBeInTheDocument();
     expect(screen.getByText('Email')).toBeInTheDocument();
     expect(screen.getByText('School')).toBeInTheDocument();
 
-    // Assert that the table rows are rendered with correct data
     expect(screen.getByText('John Doe')).toBeInTheDocument();
     expect(screen.getByText('john@example.com')).toBeInTheDocument();
     expect(screen.getByText('School A')).toBeInTheDocument();
@@ -57,11 +54,9 @@ describe('Table', () => {
     expect(screen.getByText('jane@example.com')).toBeInTheDocument();
     expect(screen.getByText('School B')).toBeInTheDocument();
 
-    // Simulate user input for filtering
     const searchInput = screen.getByPlaceholderText('Search by Name or Email');
     fireEvent.change(searchInput, { target: { value: 'John' } });
 
-    // Assert that the table rows are updated based on the filter
     expect(screen.getByText('John Doe')).toBeInTheDocument();
     expect(screen.queryByText('Jane Smith')).not.toBeInTheDocument();
   });

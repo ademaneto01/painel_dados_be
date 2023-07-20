@@ -25,7 +25,11 @@ export default function OnOffToggler(props: OnOffTogglerProps): JSX.Element {
   }
 
   return (
-    <div className={styles.container} onClick={() => setActive(!active)}>
+    <div
+      className={styles.container}
+      onClick={() => setActive(!active)}
+      data-testid="on-off-toggler-container"
+    >
       <div className={style({ on: true })}>On</div>
       <div className={style({ on: false })}>Off</div>
     </div>
