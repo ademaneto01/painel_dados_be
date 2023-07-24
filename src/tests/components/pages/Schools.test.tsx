@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Schools from '../../../components/pages/Schools';
+import Schools from '../../../components/pages/schoolPages/schools/Schools';
 
 test('should render elements', () => {
   render(<Schools />);

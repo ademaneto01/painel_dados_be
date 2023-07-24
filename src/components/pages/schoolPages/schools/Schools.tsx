@@ -1,11 +1,12 @@
 import { EntitiesSchool } from '@/entities';
 import styles from '@/styles/Page.module.css';
-import { CreateButton, PageContentContainer } from '../shared';
-import { Column, Table } from '../Table';
-import { useEffect, useState } from 'react';
+import { CreateButton, PageContentContainer } from '../../../shared';
+import { Column, Table } from '../../../Table';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
-import { ModalAddEditSchool } from '../modal';
+import { ModalAddEditSchool } from '../../../modal';
+import { PageEnumSchool } from '@/enums';
 
 const columns = [
   new Column('Nome', 'nome'),
@@ -14,7 +15,11 @@ const columns = [
   new Column('Ativo', 'ativo'),
 ];
 
-export default function Schools(): JSX.Element {
+interface pageSchoolProps {
+  setPage: Dispatch<SetStateAction<PageEnumSchool>>;
+  setLabel: Dispatch<SetStateAction<string>>;
+}
+export default function Schools(props: pageSchoolProps): JSX.Element {
   const [data, setData] = useState([] as EntitiesSchool[]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -23,6 +28,10 @@ export default function Schools(): JSX.Element {
   function handleClickOpenModalAdd(): void {
     setShowModalAddEditSchool(true);
   }
+  const handleRowClick = (item: EntitiesSchool) => {
+    props.setPage(PageEnumSchool.turmas);
+    props.setLabel(item.nome);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -67,6 +76,7 @@ export default function Schools(): JSX.Element {
           error={error}
           searchInputNone={'none'}
           labelInput={'Buscar pelo nome'}
+          onClickRow={handleRowClick}
         />
       </PageContentContainer>
     </div>

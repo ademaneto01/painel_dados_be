@@ -14,6 +14,7 @@ export interface TableProps<T> {
   error?: boolean;
   loaded?: boolean;
   searchInputNone?: string;
+  searchInputNoneNome?: string;
   labelInput?: string;
   onClickRow?: (item: T) => void;
 }
@@ -52,6 +53,9 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
 
   const styleInput: React.CSSProperties = {
     display: props.searchInputNone,
+  };
+  const styleInputNome: React.CSSProperties = {
+    display: props.searchInputNoneNome,
   };
 
   const filterData = (
@@ -144,6 +148,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
             <input
               className={styles.inputFilter}
               type="text"
+              style={styleInputNome}
               placeholder={props.labelInput}
               value={filterNameOrEmail}
               onChange={handleFilterNameOrEmailChange}

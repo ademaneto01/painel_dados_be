@@ -7,6 +7,9 @@ import {
   EntitiesTeacherGuides,
   EntitiesClassPlan,
   EntitiesUnits,
+  EntitiesTurmas,
+  EntitiesAlunos,
+  EntitiesProfessores,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterface, SerializerInterface } from '@/interfaces';
@@ -20,7 +23,10 @@ import {
   MockTeacherGuidesSerializers,
   MockClassPanSerializers,
   MockUnitsSerializers,
+  MockTurmasSerializers,
+  MockProfessoresSerializers,
 } from '@/serializers/mocks';
+import MockAlunosSerializers from '@/serializers/mocks/mockAlunosSerializers';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
 export default class BackendApiMock implements BackendApiInterface {
@@ -77,6 +83,24 @@ export default class BackendApiMock implements BackendApiInterface {
   }
   public async getUnits(): Promise<EntitiesUnits[]> {
     return await this.get<EntitiesUnits>('/units', new MockUnitsSerializers());
+  }
+  public async getTurmas(): Promise<EntitiesTurmas[]> {
+    return await this.get<EntitiesTurmas>(
+      '/turmas',
+      new MockTurmasSerializers(),
+    );
+  }
+  public async getAlunos(): Promise<EntitiesAlunos[]> {
+    return await this.get<EntitiesAlunos>(
+      '/alunos',
+      new MockAlunosSerializers(),
+    );
+  }
+  public async getProfessores(): Promise<EntitiesProfessores[]> {
+    return await this.get<EntitiesProfessores>(
+      '/professores',
+      new MockProfessoresSerializers(),
+    );
   }
   private async get<T>(
     route: string,

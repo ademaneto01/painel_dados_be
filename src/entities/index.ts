@@ -6,6 +6,9 @@ import EntitiesLessons from './EntitiesLessons';
 import EntitiesTeacherGuides from './EntitiesTeacherGuides';
 import EntitiesClassPlan from './EntitiesClassPlan';
 import EntitiesUnits from './EntittiesUnits';
+import EntitiesTurmas from './EntittiesTurmas';
+import EntitiesAlunos from './EntitiesAlunos';
+import EntitiesProfessores from './EntitiesProfessores';
 export {
   EntitiesSchool,
   EntitiesDocumentation,
@@ -15,4 +18,7 @@ export {
   EntitiesTeacherGuides,
   EntitiesClassPlan,
   EntitiesUnits,
+  EntitiesTurmas,
+  EntitiesAlunos,
+  EntitiesProfessores,
 };

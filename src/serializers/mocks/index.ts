@@ -6,6 +6,8 @@ import MockLessonsSerializers from './mockLessonsSerializers';
 import MockTeacherGuidesSerializers from './mockTeacherGuidesSerializers';
 import MockClassPanSerializers from './mockClassPlans';
 import MockUnitsSerializers from './mockUnitsSerializers';
+import MockTurmasSerializers from './mockTurmasSerializers';
+import MockProfessoresSerializers from './mockProfessoresSerializers';
 export {
   MockSchoolSerializers,
   MockDocumentationSerializers,
@@ -15,4 +17,6 @@ export {
   MockTeacherGuidesSerializers,
   MockClassPanSerializers,
   MockUnitsSerializers,
+  MockTurmasSerializers,
+  MockProfessoresSerializers,
 };

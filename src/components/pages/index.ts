@@ -4,7 +4,7 @@ import Tools from './Tools';
 import Users from './Users';
 import LessonsPlans from './lessonsPlans/LessonsPlans';
 import Materials from './Materials';
-import Schools from './Schools';
+import Schools from './schoolPages/SwitchCaseSchools';
 
 export default {
   DigitalResources,
