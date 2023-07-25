@@ -65,7 +65,7 @@ export default function Lessons(props: pageLessonsProps): JSX.Element {
             )}
             {data.map((lesson) => {
               return (
-                <div>
+                <div key={lesson.id}>
                   <div className={styles.boxActions}>
                     <TableLessonsPlansCard
                       id={lesson.id}
