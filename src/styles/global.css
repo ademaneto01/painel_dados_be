@@ -1,0 +1,13 @@
+:root {
+  --white: #ffffff;
+  --blue-300: #0db4b0;
+  --blue-500: #0656ff;
+  --gray-200: #bec8db;
+  --gray-300: #586571;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

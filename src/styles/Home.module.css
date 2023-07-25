@@ -1,0 +1,13 @@
+.pageContainer {
+  margin-top: 4.2em;
+  display: flex;
+  margin-left: 17em;
+  transition: margin-left 0.3s ease-out;
+  padding: 2em;
+  font-family: 'Roboto', sans-serif;
+  color: #303e67;
+}
+
+.expanded {
+  margin-left: 0;
+}

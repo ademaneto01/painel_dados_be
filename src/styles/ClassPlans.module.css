@@ -1,0 +1,14 @@
+.boxBtnClassPlan {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.btnBreadCrumb:hover {
+  color: #000000;
+}
+.boxNavBtn {
+  display: flex;
+}
+.btnBreadCrumb {
+  cursor: pointer;
+}
