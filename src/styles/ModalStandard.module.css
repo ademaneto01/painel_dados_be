@@ -124,3 +124,71 @@
   padding-top: 0.5rem;
   margin-top: 0.2rem;
 }
+.inputStandardAddEscola {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 102%;
+  padding-left: 0.7rem;
+  min-height: 2.5rem;
+  max-height: auto;
+  border-radius: 5px;
+  border: 1px solid var(--gray-200);
+  margin-top: 0.2rem;
+}
+.buttonLabelEscola {
+  all: unset;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem;
+  align-items: center;
+  border-radius: 5px;
+  width: 9rem;
+  height: 1.5rem;
+  border: 1px solid var(--gray-200);
+}
+.buttonRemoveEscola {
+  all: unset;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem;
+  align-items: center;
+  border-radius: 2px;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px solid var(--gray-200);
+  cursor: pointer;
+}
+.boxTags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+}
+.btnDropDownEscola {
+  all: unset;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+}
+#selectDrop {
+  all: unset;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  width: 102%;
+  cursor: pointer;
+  overflow-y: auto;
+  border-radius: 5px;
+  max-height: 10rem;
+  border: 1px solid var(--gray-200);
+}
+#selectDrop option:hover {
+  background-color: var(--gray-200);
+}
+#selectDrop option {
+  margin-top: 0.4rem;
+}

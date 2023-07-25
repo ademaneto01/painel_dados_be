@@ -7,6 +7,7 @@ import ModalAddEditTeachers from './modalAddEditTeachers/ModalAddEditTeachers';
 import ModalAddEditClassPlan from './modalAddEditClassPlans/ModalAddEditClassPlans';
 import ModalAddEditUnits from './modalAddEditUnits/ModalAddEditUnits';
 import ModalOpenDocLP from './modalOpenDocLP/ModalOpenDocLP';
+import ModalAddEscola from './modalAddEscola/ModalAddEscola';
 export {
   ModalDelete,
   ModalAddEditSchool,
@@ -17,4 +18,5 @@ export {
   ModalAddEditClassPlan,
   ModalAddEditUnits,
   ModalOpenDocLP,
+  ModalAddEscola,
 };

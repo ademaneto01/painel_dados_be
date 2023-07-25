@@ -6,6 +6,7 @@ import { EntitiesTurmas } from '@/entities';
 import { Column, Table } from '@/components/Table';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
+import { ModalAddEditClassPlan, ModalAddEscola } from '@/components/modal';
 
 interface pageSchoolProps {
   setPage: Dispatch<SetStateAction<PageEnumSchool>>;
@@ -25,6 +26,7 @@ export default function Turmas(props: pageSchoolProps): JSX.Element {
   const [data, setData] = useState([] as EntitiesTurmas[]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [showModalAddEscola, setShowModalAddEscola] = useState(false);
 
   const handleRowClick = () => {
     console.log('Row clicked:', props);
@@ -69,7 +71,7 @@ export default function Turmas(props: pageSchoolProps): JSX.Element {
             color={'var(--white'}
             colorBackGround={'var(--blue-300)'}
             text="Nova Turma"
-            onClick={() => {}}
+            onClick={() => setShowModalAddEscola(true)}
           />
           <CreateButton
             color={'var(--gray-300'}
@@ -79,6 +81,9 @@ export default function Turmas(props: pageSchoolProps): JSX.Element {
             onClick={() => props.setPage(PageEnumSchool.schools)}
           />
         </div>
+        {showModalAddEscola && (
+          <ModalAddEscola onCancel={() => setShowModalAddEscola(false)} />
+        )}
         <Table<EntitiesTurmas>
           data={data}
           columns={columns}
