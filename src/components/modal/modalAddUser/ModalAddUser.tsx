@@ -13,7 +13,7 @@ interface FormData {
 }
 interface ModalProps {
   onCancel: () => void;
-  userId: string;
+  userId?: string;
 }
 const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
   const [formData, setFormData] = useState<FormData>({
