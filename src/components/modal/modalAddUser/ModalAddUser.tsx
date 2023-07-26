@@ -100,7 +100,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
               type="email"
               placeholder="E-mail"
               name="email"
-              value={formData.email}
+              value={formData.email ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -111,7 +111,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
               type="email"
               placeholder="Confirme o E-mail"
               name="confirmEmail"
-              value={formData.confirmEmail}
+              value={formData.confirmEmail ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -122,7 +122,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
               type="password"
               placeholder="Senha"
               name="password"
-              value={formData.password}
+              value={formData.password ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -133,7 +133,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
               type="password"
               placeholder="Confirme a senha"
               name="confirmPassword"
-              value={formData.confirmPassword}
+              value={formData.confirmPassword ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -141,7 +141,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
           <label className={styles.labelStandard}>
             Permissão
             <select
-              value={formData.role}
+              value={formData.role ?? ''}
               onChange={handleInputChange}
               name="role"
               className={styles.inputSelect}
