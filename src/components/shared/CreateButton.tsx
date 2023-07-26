@@ -24,7 +24,14 @@ export default function CreateButton(props: CreateButtonProps): JSX.Element {
         onClick={props.onClick}
         style={styleButton}
       >
-        {props.text ? props.text : <>{props.icon}Visualizar</>}
+        {props.icon ? (
+          <>
+            {props.icon}
+            {props.text}
+          </>
+        ) : (
+          props.text
+        )}
       </div>
     </div>
   );

@@ -2,10 +2,12 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { PageEnumSchool } from '@/enums';
 import { CreateButton, PageContentContainer } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
-import { EntitiesAlunos, EntitiesTurmas } from '@/entities';
+import { EntitiesAlunos } from '@/entities';
+import { IconBaseProps, IconType } from 'react-icons';
 import { Column, Table } from '@/components/Table';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
+import { BiCloudDownload } from 'react-icons/bi';
 
 interface pageSchoolProps {
   setPage: Dispatch<SetStateAction<PageEnumSchool>>;
@@ -17,6 +19,15 @@ const columns = [
   new Column('Responsável', 'responsavel'),
   new Column('Turma', 'turma'),
 ];
+
+function reactIcon(icon: IconType, color?: string): JSX.Element {
+  const options: IconBaseProps = {};
+
+  options.fontSize = '1.3em';
+  options.color = color;
+
+  return icon(options);
+}
 export default function Alunos(props: pageSchoolProps): JSX.Element {
   const [data, setData] = useState([] as EntitiesAlunos[]);
   const [loaded, setLoaded] = useState(false);
@@ -58,13 +69,22 @@ export default function Alunos(props: pageSchoolProps): JSX.Element {
         <button onClick={handleRowClickProf}>Professores</button>
       </nav>
       <PageContentContainer>
-        <CreateButton
-          color={'var(--gray-300'}
-          colorBackGround={'var(--white)'}
-          text="Voltar"
-          size="8rem"
-          onClick={() => props.setPage(PageEnumSchool.schools)}
-        />
+        <div className={styles.boxBtns}>
+          <CreateButton
+            color={'var(--white'}
+            colorBackGround={'var(--blue-300)'}
+            icon={reactIcon(BiCloudDownload)}
+            text="Importar"
+            onClick={() => {}}
+          />
+          <CreateButton
+            color={'var(--gray-300'}
+            colorBackGround={'var(--white)'}
+            text="Voltar"
+            size="8rem"
+            onClick={() => props.setPage(PageEnumSchool.schools)}
+          />
+        </div>
         <Table<EntitiesAlunos>
           data={data}
           columns={columns}

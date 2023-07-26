@@ -1,3 +1,4 @@
+import { TableActionsUsers } from '@/components/actions';
 import OnOffToggler from '@/components/shared/onOffToogler';
 
 interface UserProps {
@@ -22,6 +23,9 @@ export default class EntitiesUsers {
     this.nome = nome;
     this.email = email;
     (this.escola = escola), (this.perfil = perfil), (this._ativo = ativo);
+  }
+  public get acoes(): JSX.Element {
+    return <TableActionsUsers id={this.id} nome={this.nome} />;
   }
 
   public get ativo(): JSX.Element {

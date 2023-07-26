@@ -1,18 +1,21 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
+import backendApi from '@/backendApi';
+import { FailedToFetchError } from '@/errors';
 
 interface FormData {
-  firstName: string;
-  email: string;
-  confirmEmail: string;
-  password: string;
-  confirmPassword: string;
-  role: string;
+  firstName: string | null;
+  email: string | null;
+  confirmEmail: string | null;
+  password: string | null;
+  confirmPassword: string | null;
+  role: string | null;
 }
 interface ModalProps {
   onCancel: () => void;
+  userId: string;
 }
-const ModalAddUser: React.FC<ModalProps> = ({ onCancel }) => {
+const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
     email: '',
@@ -21,7 +24,35 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel }) => {
     confirmPassword: '',
     role: '',
   });
-
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const users = await backendApi.getUsers();
+        const userData = users.find((user) => user.id === userId);
+        setFormData({
+          firstName: userData?.nome || '',
+          email: userData?.email || '',
+          confirmEmail: '',
+          password: '',
+          confirmPassword: '',
+          role: '',
+        });
+      } catch (error) {
+        if (error instanceof FailedToFetchError) {
+          setError(true);
+        } else {
+          throw error;
+        }
+      } finally {
+        setLoaded(true);
+      }
+    }
+    if (!loaded) {
+      fetchData();
+    }
+  }, [loaded]);
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
