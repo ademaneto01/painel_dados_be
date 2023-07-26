@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
     "start": "json-server --watch src/api/db.json --port 3001",
     "lint": "next lint",
     "test": "jest --watch"
