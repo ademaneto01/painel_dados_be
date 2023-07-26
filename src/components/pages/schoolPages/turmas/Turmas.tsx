@@ -2,11 +2,13 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { PageEnumSchool } from '@/enums';
 import { CreateButton, PageContentContainer } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
+import { IconBaseProps, IconType } from 'react-icons';
 import { EntitiesTurmas } from '@/entities';
 import { Column, Table } from '@/components/Table';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
-import { ModalAddEditClassPlan, ModalAddEscola } from '@/components/modal';
+import { ModalAddEscola } from '@/components/modal';
+import { BiCloudDownload, BiCloudUpload } from 'react-icons/bi';
 
 interface pageSchoolProps {
   setPage: Dispatch<SetStateAction<PageEnumSchool>>;
@@ -21,6 +23,15 @@ const columns = [
   new Column('Código', 'codigo'),
   new Column('Materiais de Language', 'languageMaterials'),
 ];
+
+function reactIcon(icon: IconType, color?: string): JSX.Element {
+  const options: IconBaseProps = {};
+
+  options.fontSize = '1.3em';
+  options.color = color;
+
+  return icon(options);
+}
 
 export default function Turmas(props: pageSchoolProps): JSX.Element {
   const [data, setData] = useState([] as EntitiesTurmas[]);
@@ -67,6 +78,20 @@ export default function Turmas(props: pageSchoolProps): JSX.Element {
       </nav>
       <PageContentContainer>
         <div className={styles.boxBtns}>
+          <CreateButton
+            color={'var(--white'}
+            colorBackGround={'var(--blue-300)'}
+            icon={reactIcon(BiCloudDownload)}
+            text="Importar"
+            onClick={() => {}}
+          />
+          <CreateButton
+            color={'var(--white'}
+            colorBackGround={'var(--blue-300)'}
+            icon={reactIcon(BiCloudUpload)}
+            text="Exportar"
+            onClick={() => {}}
+          />
           <CreateButton
             color={'var(--white'}
             colorBackGround={'var(--blue-300)'}

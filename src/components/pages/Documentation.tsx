@@ -101,6 +101,7 @@ export default function Documentation(): JSX.Element {
               color={'var(--blue-300)'}
               colorBackGround={'var(--white)'}
               icon={reactIcon(FiEye)}
+              text="Visualizar"
               onClick={() => handleClickShowView()}
             />
           )}

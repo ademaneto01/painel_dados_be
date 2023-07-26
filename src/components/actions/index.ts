@@ -6,6 +6,7 @@ import TableActionsClassPlan from './lessonsPlansActions/TableActionsClassPlan';
 import TableActionsUnits from './lessonsPlansActions/TableActionsUnits';
 import TableLessonsPlansCard from './lessonsPlansActions/TableLessonsPlansCard';
 import TableTeacherGuidesCard from './lessonsPlansActions/TableTeacherGuidesCard';
+import TableActionsUsers from './tableActionsUsers/TableActionsUsers';
 export {
   Action,
   TableActionsDoc,
@@ -15,4 +16,5 @@ export {
   TableActionsUnits,
   TableLessonsPlansCard,
   TableTeacherGuidesCard,
+  TableActionsUsers,
 };

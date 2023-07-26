@@ -3,9 +3,11 @@ import { PageEnumSchool } from '@/enums';
 import { CreateButton, PageContentContainer } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { EntitiesProfessores } from '@/entities';
+import { IconBaseProps, IconType } from 'react-icons';
 import { Column, Table } from '@/components/Table';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
+import { BiCloudDownload } from 'react-icons/bi';
 
 interface pageSchoolProps {
   setPage: Dispatch<SetStateAction<PageEnumSchool>>;
@@ -16,6 +18,14 @@ const columns = [
   new Column('Professor', 'professor'),
   new Column('Turma', 'turma'),
 ];
+function reactIcon(icon: IconType, color?: string): JSX.Element {
+  const options: IconBaseProps = {};
+
+  options.fontSize = '1.3em';
+  options.color = color;
+
+  return icon(options);
+}
 export default function Professores(props: pageSchoolProps): JSX.Element {
   const [data, setData] = useState([] as EntitiesProfessores[]);
   const [loaded, setLoaded] = useState(false);
@@ -59,13 +69,23 @@ export default function Professores(props: pageSchoolProps): JSX.Element {
       </nav>
 
       <PageContentContainer>
-        <CreateButton
-          color={'var(--gray-300'}
-          colorBackGround={'var(--white)'}
-          text="Voltar"
-          size="8rem"
-          onClick={() => props.setPage(PageEnumSchool.schools)}
-        />
+        <div className={styles.boxBtns}>
+          <CreateButton
+            color={'var(--white'}
+            colorBackGround={'var(--blue-300)'}
+            icon={reactIcon(BiCloudDownload)}
+            text="Importar"
+            onClick={() => {}}
+          />
+          <CreateButton
+            color={'var(--gray-300'}
+            colorBackGround={'var(--white)'}
+            text="Voltar"
+            size="8rem"
+            onClick={() => props.setPage(PageEnumSchool.schools)}
+          />
+        </div>
+
         <Table<EntitiesProfessores>
           data={data}
           columns={columns}
