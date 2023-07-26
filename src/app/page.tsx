@@ -5,7 +5,7 @@ import { PageEnum } from '@/enums';
 import { useState } from 'react';
 import SideNavBar from '@/components/sideNavBar';
 import TopNavBar from '@/components/topNavBaR';
-import pages from '@/components/pages/index';
+import * as pages from '@/components/pages';
 
 export default function Home(): JSX.Element {
   const [page, setPage] = useState(PageEnum.digitalResources);

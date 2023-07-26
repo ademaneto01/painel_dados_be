@@ -6,7 +6,7 @@ import LessonsPlans from './lessonsPlans/LessonsPlans';
 import Materials from './Materials';
 import Schools from './schoolPages/SwitchCaseSchools';
 
-const pageComponents = {
+export {
   DigitalResources,
   Tools,
   LessonsPlans,
@@ -15,5 +15,3 @@ const pageComponents = {
   Materials,
   Schools,
 };
-
-export default pageComponents;

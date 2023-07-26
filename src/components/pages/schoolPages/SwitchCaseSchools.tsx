@@ -1,4 +1,4 @@
-import pages from '@/components/pages/schoolPages/index';
+import pages from '../../pages/schoolPages/index';
 import { PageEnumSchool } from '@/enums';
 import styles from '@/styles/CardLessons.module.css';
 import { useState } from 'react';
