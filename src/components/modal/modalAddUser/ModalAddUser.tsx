@@ -89,7 +89,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
               type="text"
               placeholder="Nome"
               name="firstName"
-              value={formData.firstName}
+              value={formData.firstName ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
