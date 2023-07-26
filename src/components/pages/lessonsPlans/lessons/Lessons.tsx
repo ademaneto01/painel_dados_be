@@ -61,7 +61,10 @@ export default function Lessons(props: pageLessonsProps): JSX.Element {
               />
             </div>
             {showModalLesson && (
-              <ModalLessons onClose={() => setShowModalLesson(false)} />
+              <ModalLessons
+                modalKey={''}
+                onClose={() => setShowModalLesson(false)}
+              />
             )}
             {data.map((lesson) => {
               return (

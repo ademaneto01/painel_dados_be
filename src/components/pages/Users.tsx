@@ -60,7 +60,10 @@ export default function PageUsers() {
           onClick={() => handleClickOpenModalAdd()}
         />
         {showModalUser && (
-          <ModalAddUser onCancel={() => handleClickCloseModalAdd()} />
+          <ModalAddUser
+            userId={''}
+            onCancel={() => handleClickCloseModalAdd()}
+          />
         )}
         <Table<EntitiesUsers>
           data={data}

@@ -5,7 +5,7 @@ import { FailedToFetchError } from '@/errors';
 
 interface ModalProps {
   onClose: () => void;
-  modalKey?: string;
+  modalKey: string;
 }
 
 interface FormData {
@@ -49,7 +49,7 @@ const ModalAddEditTeachers: React.FC<ModalProps> = ({ onClose, modalKey }) => {
     if (!loaded) {
       fetchData();
     }
-  }, [loaded]);
+  }, [loaded, modalKey]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

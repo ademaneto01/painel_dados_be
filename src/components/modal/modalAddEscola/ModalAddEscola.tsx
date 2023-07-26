@@ -10,7 +10,7 @@ interface FormData {
 }
 interface ModalProps {
   onCancel: () => void;
-  unitsKey?: string;
+  unitsKey: string;
 }
 interface Option {
   value: string;

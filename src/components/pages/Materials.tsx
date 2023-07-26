@@ -59,7 +59,10 @@ export default function Materials() {
           onClick={() => handleClickOpenModalAdd()}
         />
         {showModalUser && (
-          <ModalMaterials onCancel={() => handleClickCloseModalAdd()} />
+          <ModalMaterials
+            modalMaterials={''}
+            onCancel={() => handleClickCloseModalAdd()}
+          />
         )}
         <Table<EntitiesMaterials>
           data={data}

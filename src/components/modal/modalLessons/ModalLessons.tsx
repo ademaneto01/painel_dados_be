@@ -166,7 +166,7 @@ import { FailedToFetchError } from '@/errors';
 
 interface ModalProps {
   onClose: () => void;
-  modalKey?: string;
+  modalKey: string;
 }
 
 interface FormData {
@@ -208,7 +208,7 @@ const ModalLessons: React.FC<ModalProps> = ({ onClose, modalKey }) => {
     if (!loaded) {
       fetchData();
     }
-  }, [loaded]);
+  }, [loaded, modalKey]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -227,16 +227,16 @@ const ModalLessons: React.FC<ModalProps> = ({ onClose, modalKey }) => {
       // Processar o arquivo de imagem
       console.log('Selected Image:', base64String);
 
-      const image = new Image();
-      image.src = base64String;
+      const imageELement = new Image();
+      imageELement.src = base64String;
 
-      image.onload = function () {
+      imageELement.onload = function () {
         const canvas = document.createElement('canvas');
-        canvas.width = image.width;
-        canvas.height = image.height;
+        canvas.width = imageELement.width;
+        canvas.height = imageELement.height;
 
         const ctx = canvas.getContext('2d');
-        ctx?.drawImage(image, 0, 0);
+        ctx?.drawImage(imageELement, 0, 0);
 
         const convertedBase64 = canvas.toDataURL('image/jpeg');
 
@@ -284,11 +284,15 @@ const ModalLessons: React.FC<ModalProps> = ({ onClose, modalKey }) => {
             onChange={handleFileChange}
           />
           {formData.imageInput && (
-            <img
-              src={formData.imageInput}
-              alt="Uploaded"
+            <div
               className={styles.uploadedImage}
+              style={{ backgroundImage: `url(${formData.imageInput})` }}
             />
+            // <img
+            //   src={formData.imageInput}
+            //   alt="Uploaded"
+            //   className={styles.uploadedImage}
+            // />
           )}
           <label className={styles.labelStandard} htmlFor="textarea-input">
             Descrição

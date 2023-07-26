@@ -13,7 +13,7 @@ interface FormData {
 }
 interface ModalProps {
   onCancel: () => void;
-  userId?: string;
+  userId: string;
 }
 const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
   const [formData, setFormData] = useState<FormData>({
@@ -52,7 +52,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
     if (!loaded) {
       fetchData();
     }
-  }, [loaded]);
+  }, [loaded, userId]);
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {

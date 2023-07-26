@@ -1,5 +1,5 @@
 import styles from '../../styles/Table.module.css';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import ErrorComponent from '../ErrorComponent';
 import { Loader } from '../shared';
 import Column from './Column';
@@ -57,35 +57,84 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
   const styleInputNome: React.CSSProperties = {
     display: props.searchInputNoneNome,
   };
+  const filterData = useCallback(
+    (
+      data: T[],
+      filterNameOrEmail: string,
+      filterSchool: string,
+      filterProfile: string,
+    ): T[] => {
+      const normalizedFilterNameOrEmail = filterNameOrEmail
+        .toLowerCase()
+        .trim();
+      const normalizedFilterSchool = filterSchool.toLowerCase().trim();
 
-  const filterData = (
-    data: T[],
-    filterNameOrEmail: string,
-    filterSchool: string,
-    filterProfile: string,
-  ): T[] => {
-    const normalizedFilterNameOrEmail = filterNameOrEmail.toLowerCase().trim();
-    const normalizedFilterSchool = filterSchool.toLowerCase().trim();
+      return data.filter((item) => {
+        const itemName = (item as any).nome?.toLowerCase();
+        const itemEmail = (item as any).email?.toLowerCase();
+        const itemSchool = (item as any).escola?.toLowerCase();
+        const itemProfile = (item as any).perfil;
 
-    return data.filter((item) => {
-      const itemName = (item as any).nome?.toLowerCase();
-      const itemEmail = (item as any).email?.toLowerCase();
-      const itemSchool = (item as any).escola?.toLowerCase();
-      const itemProfile = (item as any).perfil;
+        const nameMatch =
+          itemName && itemName.includes(normalizedFilterNameOrEmail);
+        const emailMatch =
+          itemEmail && itemEmail.includes(normalizedFilterNameOrEmail);
+        const schoolMatch =
+          !filterSchool ||
+          (itemSchool && itemSchool.includes(normalizedFilterSchool));
+        const profileMatch =
+          !filterProfile || (itemProfile && itemProfile === filterProfile);
 
-      const nameMatch =
-        itemName && itemName.includes(normalizedFilterNameOrEmail);
-      const emailMatch =
-        itemEmail && itemEmail.includes(normalizedFilterNameOrEmail);
-      const schoolMatch =
-        !filterSchool ||
-        (itemSchool && itemSchool.includes(normalizedFilterSchool));
-      const profileMatch =
-        !filterProfile || (itemProfile && itemProfile === filterProfile);
+        return (nameMatch || emailMatch) && schoolMatch && profileMatch;
+      });
+    },
+    [],
+  );
+  // const filterData = (
+  //   data: T[],
+  //   filterNameOrEmail: string,
+  //   filterSchool: string,
+  //   filterProfile: string,
+  // ): T[] => {
+  //   const normalizedFilterNameOrEmail = filterNameOrEmail.toLowerCase().trim();
+  //   const normalizedFilterSchool = filterSchool.toLowerCase().trim();
 
-      return (nameMatch || emailMatch) && schoolMatch && profileMatch;
-    });
-  };
+  //   return data.filter((item) => {
+  //     const itemName = (item as any).nome?.toLowerCase();
+  //     const itemEmail = (item as any).email?.toLowerCase();
+  //     const itemSchool = (item as any).escola?.toLowerCase();
+  //     const itemProfile = (item as any).perfil;
+
+  //     const nameMatch =
+  //       itemName && itemName.includes(normalizedFilterNameOrEmail);
+  //     const emailMatch =
+  //       itemEmail && itemEmail.includes(normalizedFilterNameOrEmail);
+  //     const schoolMatch =
+  //       !filterSchool ||
+  //       (itemSchool && itemSchool.includes(normalizedFilterSchool));
+  //     const profileMatch =
+  //       !filterProfile || (itemProfile && itemProfile === filterProfile);
+
+  //     return (nameMatch || emailMatch) && schoolMatch && profileMatch;
+  //   });
+  // };
+
+  // const filteredData = useMemo(() => {
+  //   if (
+  //     filterNameOrEmail.trim() === '' &&
+  //     filterSchool.trim() === '' &&
+  //     filterProfile === ''
+  //   ) {
+  //     return props.data;
+  //   } else {
+  //     return filterData(
+  //       props.data,
+  //       filterNameOrEmail,
+  //       filterSchool,
+  //       filterProfile,
+  //     );
+  //   }
+  // }, [props.data, filterNameOrEmail, filterSchool, filterProfile]);
 
   const filteredData = useMemo(() => {
     if (
@@ -102,7 +151,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
         filterProfile,
       );
     }
-  }, [props.data, filterNameOrEmail, filterSchool, filterProfile]);
+  }, [props.data, filterNameOrEmail, filterSchool, filterProfile, filterData]);
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 

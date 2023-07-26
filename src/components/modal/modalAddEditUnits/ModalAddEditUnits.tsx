@@ -9,7 +9,7 @@ interface FormData {
 }
 interface ModalProps {
   onCancel: () => void;
-  unitsKey?: string;
+  unitsKey: string;
 }
 const ModalAddEditUnits: React.FC<ModalProps> = ({ onCancel, unitsKey }) => {
   const [formData, setFormData] = useState<FormData>({
@@ -42,7 +42,7 @@ const ModalAddEditUnits: React.FC<ModalProps> = ({ onCancel, unitsKey }) => {
     if (!loaded) {
       fetchData();
     }
-  }, [loaded]);
+  }, [loaded, unitsKey]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

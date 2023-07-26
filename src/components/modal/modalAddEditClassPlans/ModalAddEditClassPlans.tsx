@@ -46,7 +46,7 @@ const ModalAddEditClassPlan: React.FC<ModalProps> = ({
     if (!loaded) {
       fetchData();
     }
-  }, [loaded]);
+  }, [loaded, modalKey]);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,

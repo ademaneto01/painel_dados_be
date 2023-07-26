@@ -11,7 +11,7 @@ interface FormData {
 }
 interface ModalProps {
   onCancel: () => void;
-  modalMaterials?: string;
+  modalMaterials: string;
 }
 const ModalMaterials: React.FC<ModalProps> = ({ onCancel, modalMaterials }) => {
   const [loaded, setLoaded] = useState(false);
@@ -48,7 +48,7 @@ const ModalMaterials: React.FC<ModalProps> = ({ onCancel, modalMaterials }) => {
     if (!loaded) {
       fetchData();
     }
-  }, [loaded]);
+  }, [loaded, modalMaterials]);
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {

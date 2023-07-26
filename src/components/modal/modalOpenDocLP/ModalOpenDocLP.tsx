@@ -85,7 +85,7 @@ const ModalOpenDocLP: React.FC<ModalValidationProps> = ({
     }
 
     fetchData();
-  }, []);
+  }, [loaded, unitsKey]);
 
   return (
     <div className={styles.background}>

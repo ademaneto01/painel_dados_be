@@ -59,7 +59,7 @@ const ModalAddEditSchool: React.FC<ModalProps> = ({ onCancel, modalKey }) => {
     if (!loaded) {
       fetchData();
     }
-  }, [loaded]);
+  }, [loaded, modalKey]);
 
   // const handleInputChange = (
   //   event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,

@@ -107,7 +107,10 @@ export default function Turmas(props: pageSchoolProps): JSX.Element {
           />
         </div>
         {showModalAddEscola && (
-          <ModalAddEscola onCancel={() => setShowModalAddEscola(false)} />
+          <ModalAddEscola
+            unitsKey={''}
+            onCancel={() => setShowModalAddEscola(false)}
+          />
         )}
         <Table<EntitiesTurmas>
           data={data}
