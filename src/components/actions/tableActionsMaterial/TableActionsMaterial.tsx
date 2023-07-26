@@ -1,5 +1,3 @@
-'use client';
-
 import styles from '@/styles/Action.module.css';
 import Action from '../Action';
 import { FiEdit, FiEye } from 'react-icons/fi';
