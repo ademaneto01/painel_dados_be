@@ -4,7 +4,7 @@ import { SerializerInterface } from '@/interfaces';
 interface LessonsMockPayload {
   id: string;
   nome: string;
-  register: string;
+  register: string[];
 }
 
 export default class MockDocumentationSerializers
