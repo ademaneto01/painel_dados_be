@@ -12,7 +12,7 @@ const ComponenteQuill = () => {
 
   return (
     <div>
-      <h3>Documentação</h3>
+      {/* <h3>Documentação</h3> */}
       <form className={styles.boxForm}>
         <label className={styles.labelInput}>
           Nome:

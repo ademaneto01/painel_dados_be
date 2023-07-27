@@ -1,12 +1,13 @@
 import styles from '@/styles/ComponenteQuill.module.css';
-// import ReactQuill from 'react-quill';
+// import dynamic from 'next/dynamic';
+import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import dynamic from 'next/dynamic';
 
-const ReactQuill = dynamic(import('react-quill'), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-});
+// const ReactQuill = dynamic(import('react-quill'), {
+//   ssr: false,
+//   loading: () => <p>Loading ...</p>,
+// });
+
 type MultilineInputProps = {
   label?: string;
   register?: any;
@@ -14,7 +15,7 @@ type MultilineInputProps = {
   value?: string;
 };
 
-const models = {
+const modules = {
   toolbar: [
     [{ header: [1, 2, false] }],
     ['bold', 'italic', 'underline'],
@@ -37,11 +38,14 @@ const MultilineInput: React.FC<MultilineInputProps> = ({
       <label>{label}</label>
       <ReactQuill
         className={styles.meuEditorQuill}
-        toolbarStyle={{ border: '2px solid red', backgroundColor: 'lightgray' }}
+        toolbarStyle={{
+          border: '2px solid red',
+          backgroundColor: 'lightgray',
+        }}
         placeholder={label}
         {...register}
         theme={theme}
-        modules={models}
+        modules={modules}
         onChange={onChange}
         value={value}
       />
