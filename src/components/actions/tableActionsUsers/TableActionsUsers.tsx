@@ -3,7 +3,7 @@ import Action from '../Action';
 import { FiEdit } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
-import { ModalDelete, ModalAddEditSchool, ModalAddUser } from '../../modal';
+import { ModalDelete, ModalAddUser } from '../../modal';
 import { useState } from 'react';
 
 interface PropsForFxclusion {
