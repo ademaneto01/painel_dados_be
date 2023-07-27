@@ -1,3 +1,4 @@
+'use-cliente';
 import { PageContentContainer } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 
