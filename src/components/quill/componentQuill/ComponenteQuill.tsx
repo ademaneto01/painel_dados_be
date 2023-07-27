@@ -1,4 +1,3 @@
-'use client';
 import MultilineInput from '../multipeInput/MultipleInput';
 import styles from '@/styles/ComponenteQuill.module.css';
 import { useGlobalContext } from '@/context/store';
