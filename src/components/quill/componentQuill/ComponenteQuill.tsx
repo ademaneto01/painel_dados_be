@@ -1,7 +1,15 @@
-import MultilineInput from '../multipeInput/MultipleInput';
+// import MultilineInput from '../multipeInput/MultipleInput';
 import styles from '@/styles/ComponenteQuill.module.css';
 import { useGlobalContext } from '@/context/store';
 import { CreateButton } from '@/components/shared';
+import dynamic from 'next/dynamic';
+
+const MultilineInputSSR = dynamic(
+  () => import('../multipeInput/MultipleInput'),
+  {
+    ssr: false,
+  },
+);
 
 const ComponenteQuill = () => {
   const { lesson, setLesson, setTitleQuill, titleQuill } = useGlobalContext();
@@ -24,7 +32,7 @@ const ComponenteQuill = () => {
           />
         </label>
 
-        <MultilineInput
+        <MultilineInputSSR
           label="Conteúdo"
           onChange={(newValue) => setLesson(newValue)}
           value={lesson}
