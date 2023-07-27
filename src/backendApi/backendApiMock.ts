@@ -34,7 +34,7 @@ export default class BackendApiMock implements BackendApiInterface {
 
   constructor() {
     this.api = axios.create({
-      baseURL: 'http://localhost:3001',
+      baseURL: 'https://mock-api-be.vercel.app',
       timeout: 30000,
       headers: {
         'Content-Type': 'application/json',
