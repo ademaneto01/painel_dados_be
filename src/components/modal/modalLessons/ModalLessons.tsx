@@ -3,6 +3,7 @@ import styles from '@/styles/ModalStandard.module.css';
 import { base64 } from '@/components/base64';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
+import ImageNext from 'next/image';
 
 interface ModalProps {
   onClose: () => void;
@@ -65,26 +66,25 @@ const ModalLessons: React.FC<ModalProps> = ({ onClose, modalKey }) => {
 
     if (file) {
       const base64String = await base64(file);
-      if (typeof document !== 'undefined') {
-        const imageELement = new Image();
-        imageELement.src = base64String;
 
-        imageELement.onload = function () {
-          const canvas = document.createElement('canvas');
-          canvas.width = imageELement.width;
-          canvas.height = imageELement.height;
+      const imageELement = new Image();
+      imageELement.src = base64String;
 
-          const ctx = canvas.getContext('2d');
-          ctx?.drawImage(imageELement, 0, 0);
+      imageELement.onload = function () {
+        const canvas = document.createElement('canvas');
+        canvas.width = imageELement.width;
+        canvas.height = imageELement.height;
 
-          const convertedBase64 = canvas.toDataURL('image/jpeg');
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(imageELement, 0, 0);
 
-          setFormData((prevFormData) => ({
-            ...prevFormData,
-            imageInput: convertedBase64,
-          }));
-        };
-      }
+        const convertedBase64 = canvas.toDataURL('image/jpeg');
+
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          imageInput: convertedBase64,
+        }));
+      };
     }
   };
   const handleSave = (e: React.FormEvent) => {
@@ -122,15 +122,13 @@ const ModalLessons: React.FC<ModalProps> = ({ onClose, modalKey }) => {
             onChange={handleFileChange}
           />
           {formData.imageInput && (
-            <div
+            <ImageNext
+              src={formData.imageInput}
+              alt="Uploaded"
+              width={6}
+              height={6}
               className={styles.uploadedImage}
-              style={{ backgroundImage: `url(${formData.imageInput})` }}
             />
-            // <img
-            //   src={formData.imageInput}
-            //   alt="Uploaded"
-            //   className={styles.uploadedImage}
-            // />
           )}
           <label className={styles.labelStandard} htmlFor="textarea-input">
             Descrição
