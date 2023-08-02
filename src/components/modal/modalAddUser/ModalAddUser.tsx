@@ -26,33 +26,33 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
   });
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const users = await backendApi.getUsers();
-        const userData = users.find((user) => user.id === userId);
-        setFormData({
-          firstName: userData?.nome || '',
-          email: userData?.email || '',
-          confirmEmail: '',
-          password: '',
-          confirmPassword: '',
-          role: '',
-        });
-      } catch (error) {
-        if (error instanceof FailedToFetchError) {
-          setError(true);
-        } else {
-          throw error;
-        }
-      } finally {
-        setLoaded(true);
-      }
-    }
-    if (!loaded) {
-      fetchData();
-    }
-  }, [loaded, userId]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const users = await backendApi.getUsers();
+  //       const userData = users.find((user) => user.id === userId);
+  //       setFormData({
+  //         firstName: userData?.nome || '',
+  //         email: userData?.email || '',
+  //         confirmEmail: '',
+  //         password: '',
+  //         confirmPassword: '',
+  //         role: '',
+  //       });
+  //     } catch (error) {
+  //       if (error instanceof FailedToFetchError) {
+  //         setError(true);
+  //       } else {
+  //         throw error;
+  //       }
+  //     } finally {
+  //       setLoaded(true);
+  //     }
+  //   }
+  //   if (!loaded) {
+  //     fetchData();
+  //   }
+  // }, [loaded, userId]);
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {

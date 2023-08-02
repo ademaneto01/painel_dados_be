@@ -90,51 +90,6 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
     },
     [],
   );
-  // const filterData = (
-  //   data: T[],
-  //   filterNameOrEmail: string,
-  //   filterSchool: string,
-  //   filterProfile: string,
-  // ): T[] => {
-  //   const normalizedFilterNameOrEmail = filterNameOrEmail.toLowerCase().trim();
-  //   const normalizedFilterSchool = filterSchool.toLowerCase().trim();
-
-  //   return data.filter((item) => {
-  //     const itemName = (item as any).nome?.toLowerCase();
-  //     const itemEmail = (item as any).email?.toLowerCase();
-  //     const itemSchool = (item as any).escola?.toLowerCase();
-  //     const itemProfile = (item as any).perfil;
-
-  //     const nameMatch =
-  //       itemName && itemName.includes(normalizedFilterNameOrEmail);
-  //     const emailMatch =
-  //       itemEmail && itemEmail.includes(normalizedFilterNameOrEmail);
-  //     const schoolMatch =
-  //       !filterSchool ||
-  //       (itemSchool && itemSchool.includes(normalizedFilterSchool));
-  //     const profileMatch =
-  //       !filterProfile || (itemProfile && itemProfile === filterProfile);
-
-  //     return (nameMatch || emailMatch) && schoolMatch && profileMatch;
-  //   });
-  // };
-
-  // const filteredData = useMemo(() => {
-  //   if (
-  //     filterNameOrEmail.trim() === '' &&
-  //     filterSchool.trim() === '' &&
-  //     filterProfile === ''
-  //   ) {
-  //     return props.data;
-  //   } else {
-  //     return filterData(
-  //       props.data,
-  //       filterNameOrEmail,
-  //       filterSchool,
-  //       filterProfile,
-  //     );
-  //   }
-  // }, [props.data, filterNameOrEmail, filterSchool, filterProfile]);
 
   const filteredData = useMemo(() => {
     if (

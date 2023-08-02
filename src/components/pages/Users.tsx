@@ -1,22 +1,20 @@
-import { EntitiesUsers } from '@/entities';
 import styles from '@/styles/Page.module.css';
 import { CreateButton, PageContentContainer } from '../shared';
 import { Column, Table } from '../Table';
 import { useEffect, useState } from 'react';
-import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
 import { ModalAddUser } from '../modal';
+import EntitiesUsers from '@/entities/EntitiesUsers';
+import BackendApiMock from '@/backendApi';
 
 const columns = [
   new Column('Nome', 'nome'),
   new Column('E-mail', 'email'),
-  new Column('Escola', 'escola'),
   new Column('Perfil', 'perfil'),
   new Column('Ações', 'acoes'),
-  new Column('Ativo', 'ativo'),
 ];
 
-export default function PageUsers() {
+function PageUsers() {
   const [data, setData] = useState([] as EntitiesUsers[]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -32,7 +30,12 @@ export default function PageUsers() {
   useEffect(() => {
     async function fetchData() {
       try {
+        const backendApi = new BackendApiMock(
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjkwODk1ODQwfQ.JBNUnxhHQeMXAhQHti5_u8iEZTt1Xc1ptGOoYGJGg9w',
+        );
+
         const users = await backendApi.getUsers();
+
         setData(users);
       } catch (error) {
         if (error instanceof FailedToFetchError) {
@@ -76,3 +79,5 @@ export default function PageUsers() {
     </div>
   );
 }
+
+export default PageUsers;

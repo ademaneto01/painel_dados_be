@@ -17,20 +17,10 @@ export default function Home(): JSX.Element {
 
   function Page(): JSX.Element {
     switch (page) {
-      case PageEnum.schools:
-        return <pages.Schools />;
-      case PageEnum.lessonsPlans:
-        return <pages.LessonsPlans />;
-      case PageEnum.documentation:
-        return <pages.Documentation />;
       case PageEnum.users:
         return <pages.Users />;
       case PageEnum.digitalResources:
         return <pages.DigitalResources />;
-      case PageEnum.materials:
-        return <pages.Materials />;
-      case PageEnum.tools:
-        return <pages.Tools />;
       default:
         return <></>;
     }

@@ -1,21 +1,7 @@
-import {
-  EntitiesSchool,
-  EntitiesDocumentation,
-  EntitiesUsers,
-  EntitiesMaterials,
-  EntitiesLessons,
-  EntitiesTeacherGuides,
-  EntitiesClassPlan,
-  EntitiesUnits,
-} from '@/entities';
+import { EntitiesUserLogin, EntitiesUsers, EntitiesOneUser } from '@/entities';
 
 export default interface BackendApiInterface {
-  getSchools(): Promise<EntitiesSchool[]>;
-  getDocumentation(): Promise<EntitiesDocumentation[]>;
   getUsers(): Promise<EntitiesUsers[]>;
-  getMaterials(): Promise<EntitiesMaterials[]>;
-  getLessons(): Promise<EntitiesLessons[]>;
-  getTeacherGuides(): Promise<EntitiesTeacherGuides[]>;
-  getClassPlans(): Promise<EntitiesClassPlan[]>;
-  getUnits(): Promise<EntitiesUnits[]>;
+  findOneUser(userId: any): Promise<EntitiesOneUser[]>;
+  userLogin(userData: any): Promise<EntitiesUserLogin[]>;
 }

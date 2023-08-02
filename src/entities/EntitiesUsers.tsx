@@ -1,34 +1,25 @@
 import { TableActionsUsers } from '@/components/actions';
-import OnOffToggler from '@/components/shared/onOffToogler';
 
 interface UserProps {
   id: string;
   nome: string;
   email: string;
-  escola: string;
   perfil: string;
-  ativo: boolean;
 }
 
 export default class EntitiesUsers {
   readonly id: string;
   readonly nome: string;
   readonly email: string;
-  readonly escola: string;
   readonly perfil: string;
-  private readonly _ativo: boolean;
 
-  constructor({ id, nome, email, escola, perfil, ativo }: UserProps) {
+  constructor({ id, nome, email, perfil }: UserProps) {
     this.id = id;
     this.nome = nome;
     this.email = email;
-    (this.escola = escola), (this.perfil = perfil), (this._ativo = ativo);
+    this.perfil = perfil;
   }
   public get acoes(): JSX.Element {
     return <TableActionsUsers id={this.id} nome={this.nome} />;
-  }
-
-  public get ativo(): JSX.Element {
-    return <OnOffToggler active={this._ativo} />;
   }
 }

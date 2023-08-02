@@ -1,107 +1,63 @@
-import {
-  EntitiesSchool,
-  EntitiesDocumentation,
-  EntitiesUsers,
-  EntitiesMaterials,
-  EntitiesLessons,
-  EntitiesTeacherGuides,
-  EntitiesClassPlan,
-  EntitiesUnits,
-  EntitiesTurmas,
-  EntitiesAlunos,
-  EntitiesProfessores,
-} from '@/entities';
+import { EntitiesOneUser, EntitiesUserLogin, EntitiesUsers } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterface, SerializerInterface } from '@/interfaces';
-
 import {
-  MockSchoolSerializers,
-  MockDocumentationSerializers,
+  MockUserLogin,
   MockUsersSerializers,
-  MockMaterialsSerializers,
-  MockLessonsSerializers,
-  MockTeacherGuidesSerializers,
-  MockClassPanSerializers,
-  MockUnitsSerializers,
-  MockTurmasSerializers,
-  MockProfessoresSerializers,
+  MockOneUserSerializers,
 } from '@/serializers/mocks';
-import MockAlunosSerializers from '@/serializers/mocks/mockAlunosSerializers';
+
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
 export default class BackendApiMock implements BackendApiInterface {
   private api: AxiosInstance;
+  private accessToken?: string;
 
-  constructor() {
+  constructor(accessToken?: string) {
+    this.accessToken = accessToken || undefined;
     this.api = axios.create({
-      baseURL: 'https://mockapibe.onrender.com',
+      baseURL: 'http://localhost:3001',
       timeout: 30000,
       headers: {
         'Content-Type': 'application/json',
+        Authorization: this.accessToken
+          ? `Bearer ${this.accessToken}`
+          : undefined,
       },
     });
   }
 
-  public async getSchools(): Promise<EntitiesSchool[]> {
-    return await this.get<EntitiesSchool>(
-      '/escolas',
-      new MockSchoolSerializers(),
-    );
-  }
-  public async getDocumentation(): Promise<EntitiesDocumentation[]> {
-    return await this.get<EntitiesDocumentation>(
-      '/resources',
-      new MockDocumentationSerializers(),
-    );
-  }
   public async getUsers(): Promise<EntitiesUsers[]> {
-    return await this.get<EntitiesUsers>('/users', new MockUsersSerializers());
-  }
-  public async getMaterials(): Promise<EntitiesMaterials[]> {
-    return await this.get<EntitiesMaterials>(
-      '/materials',
-      new MockMaterialsSerializers(),
+    return await this.get<EntitiesUsers>(
+      '/findUsers',
+      new MockUsersSerializers(),
     );
   }
-  public async getLessons(): Promise<EntitiesLessons[]> {
-    return await this.get<EntitiesLessons>(
-      '/lessonplans',
-      new MockLessonsSerializers(),
+  public async findOneUser(userId: any): Promise<EntitiesOneUser[]> {
+    return await this.post<EntitiesOneUser>(
+      '/findOneUser',
+      userId,
+      new MockOneUserSerializers(),
     );
   }
-  public async getTeacherGuides(): Promise<EntitiesTeacherGuides[]> {
-    return await this.get<EntitiesTeacherGuides>(
-      '/teacherGuides',
-      new MockTeacherGuidesSerializers(),
+  public async userLogin(userData: any): Promise<EntitiesUserLogin[]> {
+    return await this.post<EntitiesUserLogin>(
+      '/login',
+      userData,
+      new MockUserLogin(),
     );
   }
-  public async getClassPlans(): Promise<EntitiesClassPlan[]> {
-    return await this.get<EntitiesClassPlan>(
-      '/classPlans',
-      new MockClassPanSerializers(),
-    );
+
+  private async post<T>(
+    route: string,
+    data: any,
+    serializer: SerializerInterface,
+  ): Promise<T[]> {
+    const response = await this.api.post(route, data);
+
+    return this.serializeOrError<T>(response, serializer);
   }
-  public async getUnits(): Promise<EntitiesUnits[]> {
-    return await this.get<EntitiesUnits>('/units', new MockUnitsSerializers());
-  }
-  public async getTurmas(): Promise<EntitiesTurmas[]> {
-    return await this.get<EntitiesTurmas>(
-      '/turmas',
-      new MockTurmasSerializers(),
-    );
-  }
-  public async getAlunos(): Promise<EntitiesAlunos[]> {
-    return await this.get<EntitiesAlunos>(
-      '/alunos',
-      new MockAlunosSerializers(),
-    );
-  }
-  public async getProfessores(): Promise<EntitiesProfessores[]> {
-    return await this.get<EntitiesProfessores>(
-      '/professores',
-      new MockProfessoresSerializers(),
-    );
-  }
+
   private async get<T>(
     route: string,
     serializer: SerializerInterface,
@@ -116,6 +72,7 @@ export default class BackendApiMock implements BackendApiInterface {
   ): T[] {
     if (response.status === 200) {
       const entities: T[] = [];
+
       for (let otd of response.data) {
         const entity = serializer.toEntity(otd);
         entities.push(entity);

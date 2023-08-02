@@ -1,4 +1,4 @@
-import BackendApiInterface from './backendApiInterface';
-import SerializerInterface from './serializers';
+import BackendApiInterface from './BackendApiInterface';
+import SerializerInterface from './Serializers';
 
 export type { BackendApiInterface, SerializerInterface };
