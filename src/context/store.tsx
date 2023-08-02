@@ -11,6 +11,10 @@ import React, {
 interface ContextProps {
   lesson: string;
   setLesson: Dispatch<SetStateAction<string>>;
+  isAdmin: string;
+  setIsAdmin: Dispatch<SetStateAction<string>>;
+  usersUpdated: boolean;
+  setUsersUpdated: Dispatch<SetStateAction<boolean>>;
   showQuillEdit: boolean;
   setShowQuillEdit: Dispatch<SetStateAction<boolean>>;
   showBtnReturn: boolean;
@@ -24,6 +28,10 @@ interface ContextProps {
 export const GlobalContext = createContext<ContextProps>({
   lesson: '',
   setLesson: () => {},
+  isAdmin: '',
+  setIsAdmin: () => {},
+  usersUpdated: false,
+  setUsersUpdated: () => {},
   showQuillEdit: false,
   setShowQuillEdit: () => {},
   showBtnReturn: false,
@@ -37,7 +45,9 @@ export const GlobalContext = createContext<ContextProps>({
 export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const [usersUpdated, setUsersUpdated] = useState(false);
   const [lesson, setLesson] = useState('');
+  const [isAdmin, setIsAdmin] = useState('');
   const [showQuillEdit, setShowQuillEdit] = useState(false);
   const [showBtnReturn, setShowBtnReturn] = useState(false);
   const [resourceView, setResourceView] = useState(false);
@@ -48,6 +58,8 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
       value={{
         lesson,
         setLesson,
+        isAdmin,
+        setIsAdmin,
         showQuillEdit,
         setShowQuillEdit,
         showBtnReturn,
@@ -56,6 +68,8 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
         setResourceView,
         titleQuill,
         setTitleQuill,
+        usersUpdated,
+        setUsersUpdated,
       }}
     >
       {children}

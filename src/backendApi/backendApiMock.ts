@@ -1,10 +1,17 @@
-import { EntitiesOneUser, EntitiesUserLogin, EntitiesUsers } from '@/entities';
+import {
+  EntitiesDeletUser,
+  EntitiesOneUser,
+  EntitiesUserLogin,
+  EntitiesUsers,
+} from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterface, SerializerInterface } from '@/interfaces';
 import {
   MockUserLogin,
   MockUsersSerializers,
   MockOneUserSerializers,
+  MockDeleteUserSerializers,
+  MockCadastroSerializers,
 } from '@/serializers/mocks';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
@@ -33,6 +40,13 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockUsersSerializers(),
     );
   }
+  public async deleteUser(userId: any): Promise<EntitiesDeletUser[]> {
+    return await this.post<EntitiesDeletUser>(
+      '/deleteUser',
+      userId,
+      new MockDeleteUserSerializers(),
+    );
+  }
   public async findOneUser(userId: any): Promise<EntitiesOneUser[]> {
     return await this.post<EntitiesOneUser>(
       '/findOneUser',
@@ -47,7 +61,13 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockUserLogin(),
     );
   }
-
+  public async cadastroUser(userData: any): Promise<EntitiesOneUser[]> {
+    return await this.post<EntitiesOneUser>(
+      '/cadastroUser',
+      userData,
+      new MockCadastroSerializers(),
+    );
+  }
   private async post<T>(
     route: string,
     data: any,

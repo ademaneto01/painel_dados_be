@@ -2,7 +2,7 @@
 import { Inter } from 'next/font/google';
 import { GlobalContextProvider } from '@/context/store';
 const inter = Inter({ subsets: ['latin'] });
-
+import '../styles/global.css';
 import { ReactNode } from 'react';
 export const metadata = {
   title: 'Beyond V2',

@@ -6,7 +6,7 @@ import { FailedToFetchError } from '@/errors';
 import { ModalAddUser } from '../modal';
 import EntitiesUsers from '@/entities/EntitiesUsers';
 import BackendApiMock from '@/backendApi';
-
+import { useGlobalContext } from '@/context/store';
 const columns = [
   new Column('Nome', 'nome'),
   new Column('E-mail', 'email'),
@@ -19,7 +19,7 @@ function PageUsers() {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [showModalUser, setShowModalUser] = useState(false);
-
+  const { usersUpdated, setUsersUpdated } = useGlobalContext();
   function handleClickOpenModalAdd(): void {
     setShowModalUser(true);
   }
@@ -29,10 +29,9 @@ function PageUsers() {
 
   useEffect(() => {
     async function fetchData() {
+      const token = localStorage.getItem('auth_token');
       try {
-        const backendApi = new BackendApiMock(
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjkwODk1ODQwfQ.JBNUnxhHQeMXAhQHti5_u8iEZTt1Xc1ptGOoYGJGg9w',
-        );
+        const backendApi = new BackendApiMock(`${token}`);
 
         const users = await backendApi.getUsers();
 
@@ -45,12 +44,13 @@ function PageUsers() {
         }
       } finally {
         setLoaded(true);
+        setUsersUpdated(false);
       }
     }
-    if (!loaded) {
+    if (!loaded || usersUpdated) {
       fetchData();
     }
-  }, [loaded]);
+  }, [loaded, usersUpdated]);
 
   return (
     <div className={styles.pageContainer}>

@@ -32,13 +32,13 @@
   width: 20rem;
 }
 
-.labelStandard {
+.labelLogin {
   display: flex;
   flex-direction: column;
   align-items: start;
 }
 
-.inputStandard {
+.inputLogin {
   all: unset;
   text-align: start;
   width: 100%;
@@ -65,4 +65,11 @@
   padding: 1em 0.8em 1em 0.8em;
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
+}
+.boxWarning {
+  text-align: center;
+  height: 2.5rem;
+}
+.error {
+  color: #ff0000;
 }

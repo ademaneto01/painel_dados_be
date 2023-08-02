@@ -1,11 +1,11 @@
 'use client';
-
 import { useRouter } from 'next/navigation';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import BackendApiMock from '@/backendApi';
 import styles from '@/styles/Login.module.css';
-import Cookie from 'js-cookie';
 import Image from 'next/image';
+import Cookies from 'js-cookie';
+
 interface FormState {
   email: string;
   password: string;
@@ -33,21 +33,36 @@ function SignIn() {
       [key]: value,
     }));
   }
-
+  function hideWarningAfterDelay() {
+    setTimeout(() => {
+      setWarning(() => ({
+        msg: '',
+        show: false,
+      }));
+    }, 6000);
+  }
   async function handleSignIn(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
 
-    const backendApi = new BackendApiMock();
+    try {
+      const backendApi = new BackendApiMock();
 
-    const users = await backendApi.userLogin({
-      email: form.email,
-      senha: form.password,
-    });
-
-    Cookie.set('auth_token', users[0].token);
-    Cookie.set('userId', users[0].id);
-    Cookie.set('perfil', users[0].perfil);
-    router.push('/');
+      const users = await backendApi.userLogin({
+        email: form.email,
+        senha: form.password,
+      });
+      localStorage.setItem('perfil', users[0].perfil);
+      localStorage.setItem('auth_token', users[0].token);
+      localStorage.setItem('userId', users[0].id);
+      Cookies.set('auth_token', users[0].token);
+      router.push('/');
+    } catch (error: any) {
+      setWarning({
+        msg: error.response.data.mensagem,
+        show: true,
+      });
+      hideWarningAfterDelay();
+    }
   }
 
   return (
@@ -59,9 +74,9 @@ function SignIn() {
         >
           <h1>Login</h1>
           <div className={styles.groupForm}>
-            <label className={styles.labelStandard}>E-mail</label>
+            <label className={styles.labelLogin}>E-mail</label>
             <input
-              className={styles.inputStandard}
+              className={styles.inputLogin}
               type="email"
               name="email"
               value={form.email}
@@ -69,9 +84,9 @@ function SignIn() {
             />
           </div>
           <div className={styles.groupForm}>
-            <label className={styles.labelStandard}>Senha</label>
+            <label className={styles.labelLogin}>Senha</label>
             <input
-              className={styles.inputStandard}
+              className={styles.inputLogin}
               type="password"
               name="password"
               value={form.password}
@@ -81,6 +96,9 @@ function SignIn() {
           <button className={styles.btnLogin} type="submit">
             Entrar
           </button>
+          <div className={styles.boxWarning}>
+            <span className={styles.error}>{warning.show && warning.msg}</span>
+          </div>
         </form>
       </div>
       <div className={styles.containerFundo}>

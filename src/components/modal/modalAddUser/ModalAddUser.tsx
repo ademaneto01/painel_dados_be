@@ -2,57 +2,36 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
 import backendApi from '@/backendApi';
 import { FailedToFetchError } from '@/errors';
+import BackendApiMock from '@/backendApi';
+import { useGlobalContext } from '@/context/store';
 
 interface FormData {
-  firstName: string | null;
+  nome: string | null;
   email: string | null;
   confirmEmail: string | null;
-  password: string | null;
+  senha: string | null;
   confirmPassword: string | null;
-  role: string | null;
+  perfil: string | null;
+  url_dados: string | null;
 }
 interface ModalProps {
   onCancel: () => void;
   userId: string;
 }
 const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
+  const { usersUpdated, setUsersUpdated } = useGlobalContext();
   const [formData, setFormData] = useState<FormData>({
-    firstName: '',
+    nome: '',
     email: '',
     confirmEmail: '',
-    password: '',
+    senha: '',
     confirmPassword: '',
-    role: '',
+    perfil: '',
+    url_dados: '',
   });
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const users = await backendApi.getUsers();
-  //       const userData = users.find((user) => user.id === userId);
-  //       setFormData({
-  //         firstName: userData?.nome || '',
-  //         email: userData?.email || '',
-  //         confirmEmail: '',
-  //         password: '',
-  //         confirmPassword: '',
-  //         role: '',
-  //       });
-  //     } catch (error) {
-  //       if (error instanceof FailedToFetchError) {
-  //         setError(true);
-  //       } else {
-  //         throw error;
-  //       }
-  //     } finally {
-  //       setLoaded(true);
-  //     }
-  //   }
-  //   if (!loaded) {
-  //     fetchData();
-  //   }
-  // }, [loaded, userId]);
+
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -66,16 +45,34 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    console.log('Form Data:', formData);
+    async function fetchData() {
+      try {
+        const token = localStorage.getItem('auth_token');
+        const backendApi = new BackendApiMock(`${token}`);
 
-    setFormData({
-      firstName: '',
-      email: '',
-      confirmEmail: '',
-      password: '',
-      confirmPassword: '',
-      role: '',
-    });
+        await backendApi.cadastroUser({
+          nome: formData.nome,
+          email: formData.email,
+          senha: formData.senha,
+          perfil: formData.perfil,
+          url_dados: formData.url_dados,
+        });
+      } catch (error) {
+        if (error instanceof FailedToFetchError) {
+          setError(true);
+        } else {
+          throw error;
+        }
+      } finally {
+        setUsersUpdated(true);
+        setLoaded(true);
+      }
+    }
+    if (!loaded) {
+      fetchData();
+    }
+    setUsersUpdated(true);
+    onCancel();
   };
 
   return (
@@ -88,8 +85,8 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
             <input
               type="text"
               placeholder="Nome"
-              name="firstName"
-              value={formData.firstName ?? ''}
+              name="nome"
+              value={formData.nome ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -105,24 +102,14 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
               className={styles.inputStandard}
             />
           </label>
-          <label className={styles.labelStandard}>
-            Confirme o E-mail
-            <input
-              type="email"
-              placeholder="Confirme o E-mail"
-              name="confirmEmail"
-              value={formData.confirmEmail ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
+
           <label className={styles.labelStandard}>
             Senha
             <input
               type="password"
               placeholder="Senha"
-              name="password"
-              value={formData.password ?? ''}
+              name="senha"
+              value={formData.senha ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -139,17 +126,28 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
             />
           </label>
           <label className={styles.labelStandard}>
+            URL
+            <input
+              type="text"
+              placeholder="URL Dados"
+              name="url_dados"
+              value={formData.url_dados ?? ''}
+              onChange={handleInputChange}
+              className={styles.inputStandard}
+            />
+          </label>
+          <label className={styles.labelStandard}>
             Permissão
             <select
-              value={formData.role ?? ''}
+              value={formData.perfil ?? ''}
               onChange={handleInputChange}
-              name="role"
+              name="perfil"
               className={styles.inputSelect}
             >
               <option value="">-</option>
-              <option value="administrator">Administrator</option>
-              <option value="estudante">Estudante</option>
-              <option value="professor">Professor</option>
+              <option value="Administrador">Administrator</option>
+              <option value="Estudante">Estudante</option>
+              <option value="Professor">Professor</option>
             </select>
           </label>
         </div>

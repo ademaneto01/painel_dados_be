@@ -5,6 +5,9 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ModalDelete, ModalAddUser } from '../../modal';
 import { useState } from 'react';
+import Cookies from 'js-cookie';
+import BackendApiMock from '@/backendApi';
+import { useGlobalContext } from '@/context/store';
 
 interface PropsForFxclusion {
   id: string;
@@ -25,9 +28,22 @@ export default function TableActionsUsers(
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
   const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
-
+  const { setUsersUpdated } = useGlobalContext();
   function handleClickOpenModalExcluir(id: string): void {
     setShowModalDelete(props.id);
+  }
+  async function deleteUser(id: string) {
+    const token = Cookies.get('auth_token');
+
+    try {
+      const backendApi = new BackendApiMock(`${token}`);
+
+      await backendApi.deleteUser({ userId: id });
+      setShowModalDelete('');
+      setUsersUpdated(true);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function handleClickOpenModalAddEditSchool(id: string): void {
@@ -55,6 +71,7 @@ export default function TableActionsUsers(
         <ModalDelete
           title={'Excluir'}
           message={`Realmente deseja excluir ${props.nome} ?`}
+          onConfirm={() => deleteUser(props.id)}
           onCancel={() => setShowModalDelete('')}
         />
       )}

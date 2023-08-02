@@ -1,6 +1,5 @@
 'use client';
 import styles from '@/styles/Home.module.css';
-import '../styles/global.css';
 import { PageEnum } from '@/enums';
 import { useState } from 'react';
 import SideNavBar from '@/components/sideNavBar';
