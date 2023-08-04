@@ -19,8 +19,13 @@ interface FormData {
 interface ModalProps {
   onCancel: () => void;
   userId: string;
+  isEditing?: boolean;
 }
-const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
+const ModalAddUser: React.FC<ModalProps> = ({
+  onCancel,
+  userId,
+  isEditing,
+}) => {
   const { usersUpdated, setUsersUpdated } = useGlobalContext();
   const [formData, setFormData] = useState<FormData>({
     nome: '',
@@ -35,7 +40,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
   });
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-
+  const [msgError, setMsgError] = useState('');
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -48,30 +53,131 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
   function getPasswordClass(isPasswordMatch: boolean): string {
     return isPasswordMatch ? styles.inputStandard : styles.inputStandardError;
   }
+
+  useEffect(() => {
+    if (isEditing) {
+      fetchDataInitial();
+    }
+  }, []);
+
+  async function fetchDataInitial() {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const backendApi = new BackendApiMock(`${token}`);
+      const response = await backendApi.findOneUser({ userId });
+      console.log(response, 'aqui data');
+      setFormData({
+        nome: response[0]?.nome || '',
+        email: response[0]?.email || '',
+        confirmEmail: response[0]?.email || '',
+        senha: '',
+        confirmPassword: '',
+        perfil: response[0]?.perfil || '',
+        url_dados: response[0]?.url_dados || '',
+        escola: response[0]?.escola || '',
+        isPasswordMatch: true,
+      });
+    } catch (error) {
+      if (error instanceof FailedToFetchError) {
+        setError(true);
+      } else {
+        throw error;
+      }
+    }
+  }
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
-    if (
-      formData.nome === '' ||
-      formData.email == '' ||
-      formData.senha == '' ||
-      formData.confirmPassword == '' ||
-      formData.escola == '' ||
-      formData.perfil == ''
-    ) {
-      setError(true);
-      setTimeout(() => {
-        setError(false);
-      }, 6000);
-      return;
-    } else if (formData.senha !== formData.confirmPassword) {
-      setFormData((prevState) => ({
-        ...prevState,
-        isPasswordMatch: false,
-      }));
-      return;
+    if (isEditing) {
+      if (
+        formData.nome === '' ||
+        formData.email == '' ||
+        formData.senha == '' ||
+        formData.confirmPassword == '' ||
+        formData.escola == '' ||
+        formData.perfil == ''
+      ) {
+        setError(true);
+        setMsgError('Todos campos são obrigatórios...');
+        setTimeout(() => {
+          setError(false);
+        }, 6000);
+        return;
+      } else if (formData.senha !== formData.confirmPassword) {
+        setError(true);
+        setMsgError('Confirmação de senha inválida.');
+        setTimeout(() => {
+          setError(false);
+        }, 6000);
+        setFormData((prevState) => ({
+          ...prevState,
+          isPasswordMatch: false,
+        }));
+        return;
+      }
+      if (!loaded) {
+        fetchDataUpdate();
+      }
+      setUsersUpdated(true);
+      onCancel();
+    } else {
+      if (
+        formData.nome === '' ||
+        formData.email == '' ||
+        formData.senha == '' ||
+        formData.confirmPassword == '' ||
+        formData.escola == '' ||
+        formData.perfil == ''
+      ) {
+        setError(true);
+        setMsgError('Todos campos são obrigatórios...');
+        setTimeout(() => {
+          setError(false);
+        }, 6000);
+        return;
+      } else if (formData.senha !== formData.confirmPassword) {
+        setFormData((prevState) => ({
+          ...prevState,
+          isPasswordMatch: false,
+        }));
+        setError(true);
+        setMsgError('Confirmação de senha inválida.');
+        setTimeout(() => {
+          setError(false);
+        }, 6000);
+        return;
+      }
+      if (!loaded) {
+        fetchData();
+      }
+      setUsersUpdated(true);
+      onCancel();
     }
+    async function fetchDataUpdate() {
+      try {
+        const token = localStorage.getItem('auth_token');
+        const backendApi = new BackendApiMock(`${token}`);
 
+        await backendApi.updateUser({
+          id: userId,
+          nome: formData.nome,
+          email: formData.email,
+          senha: formData.senha,
+          perfil: formData.perfil,
+          url_dados: formData.url_dados,
+          escola: formData.escola,
+        });
+      } catch (error) {
+        if (error instanceof FailedToFetchError) {
+          setError(true);
+        } else {
+          throw error;
+        }
+      } finally {
+        setUsersUpdated(true);
+        setLoaded(true);
+      }
+    }
     async function fetchData() {
       try {
         const token = localStorage.getItem('auth_token');
@@ -96,11 +202,6 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
         setLoaded(true);
       }
     }
-    if (!loaded) {
-      fetchData();
-    }
-    setUsersUpdated(true);
-    onCancel();
   };
 
   return (
@@ -214,11 +315,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, userId }) => {
           </div>
         </form>
       </div>
-      {error ? (
-        <ErrorComponent message={'Todos os campos são obrigatórios...'} />
-      ) : (
-        ''
-      )}
+      {error ? <ErrorComponent message={msgError} /> : ''}
     </>
   );
 };

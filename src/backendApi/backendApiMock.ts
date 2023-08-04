@@ -49,6 +49,13 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockUrlSerializers(),
     );
   }
+  public async updateUser(userData: any): Promise<EntitiesOneUser[]> {
+    return await this.post<EntitiesOneUser>(
+      '/update',
+      userData,
+      new MockOneUserSerializers(),
+    );
+  }
   public async deleteUser(userId: any): Promise<EntitiesDeletUser[]> {
     return await this.post<EntitiesDeletUser>(
       '/deleteUser',
@@ -83,7 +90,7 @@ export default class BackendApiMock implements BackendApiInterface {
     serializer: SerializerInterface,
   ): Promise<T[]> {
     const response = await this.api.post(route, data);
-
+    console.log(response);
     return this.serializeOrError<T>(response, serializer);
   }
 

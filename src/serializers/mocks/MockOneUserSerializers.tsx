@@ -7,6 +7,7 @@ interface UsersMockPayload {
   email: string;
   perfil: string;
   escola: string;
+  url_dados: string;
 }
 
 export default class MockOneUserSerializers implements SerializerInterface {
@@ -17,6 +18,7 @@ export default class MockOneUserSerializers implements SerializerInterface {
       email: otd.email,
       perfil: otd.perfil,
       escola: otd.escola,
+      url_dados: otd.url_dados,
     });
   }
 }
