@@ -1,6 +1,6 @@
 import { PageEnum } from '@/enums';
 import styles from '@/styles/SideNavBar.module.css';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IconType } from 'react-icons';
 import { ImUser, ImDisplay, ImLock } from 'react-icons/im';
 import SideNavBarButton from './SideNavBarButton';
@@ -19,8 +19,12 @@ interface SideNavBarProps {
 
 export default function SideNavBar(props: SideNavBarProps) {
   const router = useRouter();
+  const [perfil, setPerfil] = useState('');
 
-  const perfil = localStorage.getItem('perfil');
+  useEffect(() => {
+    const perfilValue = localStorage.getItem('perfil');
+    setPerfil(perfilValue || '');
+  }, []);
   function hidable(style: string): string {
     return style + (props.hidden ? ` ${styles.hidden}` : '');
   }
@@ -29,6 +33,8 @@ export default function SideNavBar(props: SideNavBarProps) {
     return page === props.activePage;
   }
   function logOut() {
+    localStorage.removeItem('userNome');
+    localStorage.removeItem('escola');
     localStorage.removeItem('perfil');
     localStorage.removeItem('userId');
     localStorage.removeItem('auth_token');

@@ -11,6 +11,7 @@ const columns = [
   new Column('Nome', 'nome'),
   new Column('E-mail', 'email'),
   new Column('Perfil', 'perfil'),
+  new Column('Escola', 'escola'),
   new Column('Ações', 'acoes'),
 ];
 

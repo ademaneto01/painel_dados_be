@@ -1,6 +1,7 @@
 import {
   EntitiesDeletUser,
   EntitiesOneUser,
+  EntitiesUrl,
   EntitiesUserLogin,
   EntitiesUsers,
 } from '@/entities';
@@ -12,6 +13,7 @@ import {
   MockOneUserSerializers,
   MockDeleteUserSerializers,
   MockCadastroSerializers,
+  MockUrlSerializers,
 } from '@/serializers/mocks';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
@@ -38,6 +40,13 @@ export default class BackendApiMock implements BackendApiInterface {
     return await this.get<EntitiesUsers>(
       '/findUsers',
       new MockUsersSerializers(),
+    );
+  }
+  public async getUrl(userId: any): Promise<EntitiesUrl[]> {
+    return await this.post<EntitiesUrl>(
+      '/findDadosUser',
+      userId,
+      new MockUrlSerializers(),
     );
   }
   public async deleteUser(userId: any): Promise<EntitiesDeletUser[]> {

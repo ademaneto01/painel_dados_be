@@ -13,4 +13,5 @@
   left: 2rem;
   width: 16rem;
   padding: 1rem;
+  z-index: 15;
 }

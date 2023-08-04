@@ -47,6 +47,18 @@
   cursor: text;
 }
 
+.inputStandardError {
+  all: unset;
+  text-align: start;
+  width: 100%;
+  padding-left: 0.7rem;
+  height: 2.5rem;
+  border-radius: 5px;
+  border: 1px solid #ec250e;
+  margin-top: 0.2rem;
+  cursor: text;
+}
+
 .inputSelect {
   text-align: start;
   width: 102%;
@@ -192,4 +204,11 @@
 }
 #selectDrop option {
   margin-top: 0.4rem;
+}
+.containerSenhasAddUser {
+  display: flex;
+  justify-content: space-between;
+}
+.boxSenhasAddUser {
+  width: 48%;
 }

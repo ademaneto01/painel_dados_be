@@ -51,6 +51,8 @@ function SignIn() {
         email: form.email,
         senha: form.password,
       });
+      localStorage.setItem('userNome', users[0].nome);
+      localStorage.setItem('escola', users[0].escola);
       localStorage.setItem('perfil', users[0].perfil);
       localStorage.setItem('auth_token', users[0].token);
       localStorage.setItem('userId', users[0].id);

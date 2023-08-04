@@ -2,12 +2,23 @@ import Image from 'next/image';
 import styles from '@/styles/TopNavBar.module.css';
 import { TfiMenu } from 'react-icons/tfi';
 import { HiChevronDown } from 'react-icons/hi';
+import { useState, useEffect } from 'react';
 
 interface TopNavBarProps {
   toggleSideNavBar: VoidFunction;
 }
 
 export default function TopNavBar(props: TopNavBarProps) {
+  const [nome, setNome] = useState('');
+  const [escola, setEscola] = useState('');
+
+  useEffect(() => {
+    const nomeStorage = localStorage.getItem('userNome');
+    const escolaStorage = localStorage.getItem('escola');
+    setNome(nomeStorage || '');
+    setEscola(escolaStorage || '');
+  }, []);
+
   return (
     <div className={styles.topNavBar}>
       <a className={styles.toogleTopNav} onClick={props.toggleSideNavBar}>
@@ -27,8 +38,8 @@ export default function TopNavBar(props: TopNavBarProps) {
       <div className={styles.spacer} />
 
       <a className={styles.user}>
-        Ademar - BeEducation
-        <HiChevronDown />
+        {`${nome} - ${escola}`}
+        {/* <HiChevronDown /> */}
       </a>
     </div>
   );

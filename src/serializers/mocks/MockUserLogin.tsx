@@ -7,6 +7,7 @@ interface UsersMockPayload {
   email: string;
   token: string;
   perfil: string;
+  escola: string;
 }
 
 export default class MockUserLogin implements SerializerInterface {
@@ -17,6 +18,7 @@ export default class MockUserLogin implements SerializerInterface {
       email: otd.email,
       token: otd.token,
       perfil: otd.perfil,
+      escola: otd.escola,
     });
   }
 }

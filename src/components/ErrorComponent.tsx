@@ -1,9 +1,13 @@
 import styles from '@/styles/Error.module.css';
-
-export default function ErrorComponent(): JSX.Element {
+interface ModalValidationProps {
+  message: string;
+}
+export default function ErrorComponent({
+  message,
+}: ModalValidationProps): JSX.Element {
   return (
     <div className={styles.errorComponent}>
-      <strong>Algo deu errado...</strong>
+      <strong>{message}.</strong>
     </div>
   );
 }
