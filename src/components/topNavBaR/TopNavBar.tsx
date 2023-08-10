@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styles from '@/styles/TopNavBar.module.css';
 import { TfiMenu } from 'react-icons/tfi';
-import { HiChevronDown } from 'react-icons/hi';
+// import { HiChevronDown } from 'react-icons/hi';
 import { useState, useEffect } from 'react';
 
 interface TopNavBarProps {

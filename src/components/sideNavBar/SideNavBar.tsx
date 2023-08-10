@@ -1,11 +1,12 @@
 import { PageEnum } from '@/enums';
 import styles from '@/styles/SideNavBar.module.css';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { IconType } from 'react-icons';
 import { ImUser, ImDisplay, ImLock } from 'react-icons/im';
 import SideNavBarButton from './SideNavBarButton';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { useGlobalContext } from '@/context/store';
 
 function reactIcon(icon: IconType): JSX.Element {
   return icon({ style: { fontSize: '1.15em' } });
@@ -20,6 +21,7 @@ interface SideNavBarProps {
 export default function SideNavBar(props: SideNavBarProps) {
   const router = useRouter();
   const [perfil, setPerfil] = useState('');
+  const { titleQuill, setLesson } = useGlobalContext();
 
   useEffect(() => {
     const perfilValue = localStorage.getItem('perfil');
@@ -32,14 +34,11 @@ export default function SideNavBar(props: SideNavBarProps) {
   function isActive(page: PageEnum): boolean {
     return page === props.activePage;
   }
+
   function logOut() {
-    localStorage.removeItem('userNome');
-    localStorage.removeItem('escola');
-    localStorage.removeItem('perfil');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('auth_token');
+    localStorage.clear();
     Cookies.remove('auth_token');
-    router.push('/login');
+    router.replace('/login');
   }
 
   return (
@@ -52,7 +51,7 @@ export default function SideNavBar(props: SideNavBarProps) {
           }}
           icon={reactIcon(ImUser)}
           active={isActive(PageEnum.users)}
-          hidden={perfil === 'Administrador' ? true : false}
+          hidden={titleQuill === 'Administrador' ? true : false}
         />
         <SideNavBarButton
           text="Recursos Digitais"

@@ -62,6 +62,7 @@ export default function TableActionsUsers(
       />
       {showModalAddEditSchool === props.id && (
         <ModalAddUser
+          titleModal={'Editar usuário'}
           userId={props.id}
           isEditing={true}
           onCancel={() => setShowModalAddEditSchool('')}

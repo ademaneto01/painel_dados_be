@@ -1,10 +1,12 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import BackendApiMock from '@/backendApi';
 import styles from '@/styles/Login.module.css';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
+import { Loader } from '@/components/shared';
+import { useGlobalContext } from '@/context/store';
 
 interface FormState {
   email: string;
@@ -16,8 +18,10 @@ interface WarningState {
   show: boolean;
 }
 
-function SignIn() {
+export function SignIn() {
   const router = useRouter();
+  const { titleQuill, setTitleQuill } = useGlobalContext();
+  const [loaded, setLoaded] = useState(false);
   const [form, setForm] = useState<FormState>({ email: '', password: '' });
   const [warning, setWarning] = useState<WarningState>({
     msg: '',
@@ -51,9 +55,13 @@ function SignIn() {
         email: form.email,
         senha: form.password,
       });
+      setLoaded(true);
       localStorage.setItem('userNome', users[0].nome);
       localStorage.setItem('escola', users[0].escola);
-      localStorage.setItem('perfil', users[0].perfil);
+      // localStorage.setItem('perfil', users[0].perfil);
+
+      setTitleQuill(users[0].perfil);
+
       localStorage.setItem('auth_token', users[0].token);
       localStorage.setItem('userId', users[0].id);
       Cookies.set('auth_token', users[0].token);
@@ -63,6 +71,7 @@ function SignIn() {
         msg: error.response.data.mensagem,
         show: true,
       });
+      setLoaded(false);
       hideWarningAfterDelay();
     }
   }
@@ -100,6 +109,7 @@ function SignIn() {
           </button>
           <div className={styles.boxWarning}>
             <span className={styles.error}>{warning.show && warning.msg}</span>
+            {loaded ? <Loader /> : ''}
           </div>
         </form>
       </div>

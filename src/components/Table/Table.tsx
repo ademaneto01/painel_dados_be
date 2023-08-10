@@ -211,7 +211,11 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
         </>
       );
     } else {
-      return <ErrorComponent />;
+      return (
+        <ErrorComponent
+          message={'Erro inesperado, tente novamente mais tarde...'}
+        />
+      );
     }
   } else {
     return <Loader />;

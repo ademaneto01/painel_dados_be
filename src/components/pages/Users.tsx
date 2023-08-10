@@ -7,6 +7,7 @@ import { ModalAddUser } from '../modal';
 import EntitiesUsers from '@/entities/EntitiesUsers';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
+
 const columns = [
   new Column('Nome', 'nome'),
   new Column('E-mail', 'email'),
@@ -65,6 +66,7 @@ function PageUsers() {
         />
         {showModalUser && (
           <ModalAddUser
+            titleModal={'Novo usuário'}
             userId={''}
             onCancel={() => handleClickCloseModalAdd()}
           />

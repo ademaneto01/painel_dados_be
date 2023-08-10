@@ -19,12 +19,14 @@ interface FormData {
 interface ModalProps {
   onCancel: () => void;
   userId: string;
+  titleModal: string;
   isEditing?: boolean;
 }
 const ModalAddUser: React.FC<ModalProps> = ({
   onCancel,
   userId,
   isEditing,
+  titleModal,
 }) => {
   const { usersUpdated, setUsersUpdated } = useGlobalContext();
   const [formData, setFormData] = useState<FormData>({
@@ -41,6 +43,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
+
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -50,6 +53,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
       [name]: value,
     }));
   };
+
   function getPasswordClass(isPasswordMatch: boolean): string {
     return isPasswordMatch ? styles.inputStandard : styles.inputStandardError;
   }
@@ -208,7 +212,14 @@ const ModalAddUser: React.FC<ModalProps> = ({
     <>
       <div className={styles.background}>
         <form className={styles.container} onSubmit={handleSubmit}>
-          <h2>Novo Usuário</h2>
+          <h1
+            style={{
+              fontSize: '20px',
+              color: 'gray',
+            }}
+          >
+            {titleModal}
+          </h1>
           <div className={styles.boxStandard}>
             <label className={styles.labelStandard}>
               Nome
