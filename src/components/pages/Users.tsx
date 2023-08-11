@@ -61,7 +61,7 @@ function PageUsers() {
         <CreateButton
           color={'var(--white'}
           colorBackGround={'var(--blue-300)'}
-          text="Nova usuário"
+          text="Novo usuário"
           onClick={() => handleClickOpenModalAdd()}
         />
         {showModalUser && (
