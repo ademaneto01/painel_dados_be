@@ -25,7 +25,7 @@ export default class BackendApiMock implements BackendApiInterface {
   constructor(accessToken?: string) {
     this.accessToken = accessToken || undefined;
     this.api = axios.create({
-      baseURL: 'http://45.231.135.54:3001',
+      baseURL: 'http://45.231.135.54:3000',
       timeout: 30000,
       headers: {
         'Content-Type': 'application/json',
