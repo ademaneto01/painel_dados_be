@@ -55,6 +55,7 @@ export function SignIn() {
         email: form.email,
         senha: form.password,
       });
+      console.log(users, 'aquiii89181981 18918191 auqiuqiuqi');
       setLoaded(true);
       localStorage.setItem('userNome', users[0].nome);
       localStorage.setItem('escola', users[0].escola);
