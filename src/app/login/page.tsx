@@ -55,17 +55,14 @@ export function SignIn() {
         email: form.email,
         senha: form.password,
       });
-      if (users[0].nome !== undefined) {
-        setLoaded(true);
-        localStorage.setItem('userNome', users[0].nome);
-        localStorage.setItem('escola', users[0].escola);
-        localStorage.setItem('auth_token', users[0].token);
-        localStorage.setItem('userId', users[0].id);
-        Cookies.set('auth_token', users[0].token);
-        router.push('/');
-      } else {
-        router.push('/login');
-      }
+
+      setLoaded(true);
+      localStorage.setItem('userNome', users[0].nome);
+      localStorage.setItem('escola', users[0].escola);
+      localStorage.setItem('auth_token', users[0].token);
+      localStorage.setItem('userId', users[0].id);
+      Cookies.set('auth_token', users[0].token);
+      router.push('/');
     } catch (error: any) {
       setWarning({
         msg: error.response.data.mensagem,
