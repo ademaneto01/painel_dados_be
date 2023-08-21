@@ -6,7 +6,6 @@ import styles from '@/styles/Login.module.css';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import { Loader } from '@/components/shared';
-import { useGlobalContext } from '@/context/store';
 
 interface FormState {
   email: string;
@@ -20,7 +19,6 @@ interface WarningState {
 
 export function SignIn() {
   const router = useRouter();
-  const { titleQuill, setTitleQuill } = useGlobalContext();
   const [loaded, setLoaded] = useState(false);
   const [form, setForm] = useState<FormState>({ email: '', password: '' });
   const [warning, setWarning] = useState<WarningState>({

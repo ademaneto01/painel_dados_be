@@ -6,9 +6,8 @@ import { ImUser, ImDisplay, ImLock } from 'react-icons/im';
 import SideNavBarButton from './SideNavBarButton';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import { useGlobalContext } from '@/context/store';
 import BackendApiMock from '@/backendApi';
-import router from 'next/router';
+import { PageLoader } from '../shared';
 
 function reactIcon(icon: IconType): JSX.Element {
   return icon({ style: { fontSize: '1.15em' } });
@@ -23,11 +22,7 @@ interface SideNavBarProps {
 export default function SideNavBar(props: SideNavBarProps) {
   const router = useRouter();
   const [perfil, setPerfil] = useState('');
-
-  // useEffect(() => {
-  //   const perfilValue = localStorage.getItem('perfil');
-  //   setPerfil(perfilValue || '');
-  // }, []);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
@@ -58,41 +53,45 @@ export default function SideNavBar(props: SideNavBarProps) {
   }
 
   function logOut() {
+    setLoaded(true);
     localStorage.clear();
     Cookies.remove('auth_token');
     router.replace('/login');
   }
 
   return (
-    <div className={hidable(styles.navBar)}>
-      <div className={styles.buttonsContainer}>
-        <SideNavBarButton
-          text="Usuários"
-          onClick={() => {
-            props.setPage(PageEnum.users);
-          }}
-          icon={reactIcon(ImUser)}
-          active={isActive(PageEnum.users)}
-          hidden={perfil === 'Administrador' ? true : false}
-        />
-        <SideNavBarButton
-          text="Recursos Digitais"
-          onClick={() => {
-            props.setPage(PageEnum.digitalResources);
-          }}
-          icon={reactIcon(ImDisplay)}
-          active={isActive(PageEnum.digitalResources)}
-          hidden={true}
-        />
+    <>
+      <div className={hidable(styles.navBar)}>
+        <div className={styles.buttonsContainer}>
+          <SideNavBarButton
+            text="Usuários"
+            onClick={() => {
+              props.setPage(PageEnum.users);
+            }}
+            icon={reactIcon(ImUser)}
+            active={isActive(PageEnum.users)}
+            hidden={perfil === 'Administrador' ? true : false}
+          />
+          <SideNavBarButton
+            text="Recursos Digitais"
+            onClick={() => {
+              props.setPage(PageEnum.digitalResources);
+            }}
+            icon={reactIcon(ImDisplay)}
+            active={isActive(PageEnum.digitalResources)}
+            hidden={true}
+          />
 
-        <SideNavBarButton
-          text="Logout"
-          onClick={() => logOut()}
-          icon={reactIcon(ImLock)}
-          active={false}
-          hidden={true}
-        />
+          <SideNavBarButton
+            text="Logout"
+            onClick={() => logOut()}
+            icon={reactIcon(ImLock)}
+            active={false}
+            hidden={true}
+          />
+        </div>
       </div>
-    </div>
+      {loaded ? <PageLoader /> : ''}
+    </>
   );
 }

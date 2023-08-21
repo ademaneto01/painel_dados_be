@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import styles from '@/styles/TopNavBar.module.css';
 import { TfiMenu } from 'react-icons/tfi';
-// import { HiChevronDown } from 'react-icons/hi';
 import { useState, useEffect } from 'react';
 
 interface TopNavBarProps {
@@ -37,10 +36,7 @@ export default function TopNavBar(props: TopNavBarProps) {
 
       <div className={styles.spacer} />
 
-      <a className={styles.user}>
-        {`${nome} - ${escola}`}
-        {/* <HiChevronDown /> */}
-      </a>
+      <a className={styles.user}>{`${nome} - ${escola}`}</a>
     </div>
   );
 }
