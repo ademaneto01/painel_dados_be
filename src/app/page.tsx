@@ -20,6 +20,8 @@ export default function Home(): JSX.Element {
         return <pages.Users />;
       case PageEnum.digitalResources:
         return <pages.DigitalResources />;
+      case PageEnum.contratos:
+        return <pages.Contratos />;
       default:
         return <></>;
     }

@@ -173,7 +173,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
             >
               <option value="">Todos os perfis</option>
               <option value="Administrador">Administrador</option>
-              <option value="Estudante">Estudante</option>
+              <option value="Pedagógico">Pedagógico</option>
               <option value="Professor">Professor</option>
             </select>
           </div>

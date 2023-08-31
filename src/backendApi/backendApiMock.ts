@@ -1,9 +1,14 @@
 import {
+  EntitiesContratos,
   EntitiesDeletUser,
+  EntitiesEntidadesEscolares,
   EntitiesOneUser,
+  EntitiesRegisterContract,
+  EntitiesRegisterEntidadeEscolar,
   EntitiesUrl,
   EntitiesUserLogin,
   EntitiesUsers,
+  EntitiesUsersPDG,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterface, SerializerInterface } from '@/interfaces';
@@ -14,7 +19,13 @@ import {
   MockDeleteUserSerializers,
   MockCadastroSerializers,
   MockUrlSerializers,
+  MockRegisterContractSerializers,
+  MockDeleteContratoSerializers,
+  MockUsersPDG,
+  MockRegisterEntitiesEscolaresSerializers,
 } from '@/serializers/mocks';
+import MockContratosSerializers from '@/serializers/mocks/MockContratosSerializers';
+import MockEntidadesEscolaresSerializers from '@/serializers/mocks/MockEntidadesEscolaresSerializers';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
@@ -42,6 +53,20 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockUsersSerializers(),
     );
   }
+
+  public async getUsersPDG(): Promise<EntitiesUsersPDG[]> {
+    return await this.get<EntitiesUsersPDG>(
+      '/findUsersPDG',
+      new MockUsersPDG(),
+    );
+  }
+
+  public async findContratos(): Promise<EntitiesContratos[]> {
+    return await this.get<EntitiesContratos>(
+      '/findContracts',
+      new MockContratosSerializers(),
+    );
+  }
   public async getUrl(userId: any): Promise<EntitiesUrl[]> {
     return await this.post<EntitiesUrl>(
       '/findDadosUser',
@@ -56,11 +81,61 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockOneUserSerializers(),
     );
   }
+  public async registerEntidadeEscolar(
+    userData: any,
+  ): Promise<EntitiesRegisterEntidadeEscolar[]> {
+    return await this.post<EntitiesRegisterEntidadeEscolar>(
+      '/registerEntidadeEscolar',
+      userData,
+      new MockRegisterEntitiesEscolaresSerializers(),
+    );
+  }
+  public async findOneContract(id: any): Promise<EntitiesContratos[]> {
+    return await this.post<EntitiesContratos>(
+      '/findOneContract',
+      id,
+      new MockContratosSerializers(),
+    );
+  }
+  public async registerContract(
+    userData: any,
+  ): Promise<EntitiesRegisterContract[]> {
+    return await this.post<EntitiesRegisterContract>(
+      '/registerContract',
+      userData,
+      new MockRegisterContractSerializers(),
+    );
+  }
+  public async updateContract(
+    userData: any,
+  ): Promise<EntitiesRegisterContract[]> {
+    return await this.post<EntitiesRegisterContract>(
+      '/updateContract',
+      userData,
+      new MockRegisterContractSerializers(),
+    );
+  }
   public async deleteUser(userId: any): Promise<EntitiesDeletUser[]> {
     return await this.post<EntitiesDeletUser>(
       '/deleteUser',
       userId,
       new MockDeleteUserSerializers(),
+    );
+  }
+  public async deleteContract(id_contrato: any): Promise<EntitiesContratos[]> {
+    return await this.post<EntitiesContratos>(
+      '/deleteContract',
+      id_contrato,
+      new MockDeleteContratoSerializers(),
+    );
+  }
+  public async deleteEntidadeEscolar(
+    id_escola: any,
+  ): Promise<EntitiesEntidadesEscolares[]> {
+    return await this.post<EntitiesEntidadesEscolares>(
+      '/deleteEntidadeEscolar',
+      id_escola,
+      new MockEntidadesEscolaresSerializers(),
     );
   }
   public async findOneUser(userId: any): Promise<EntitiesOneUser[]> {
@@ -70,6 +145,15 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockOneUserSerializers(),
     );
   }
+  public async getEntitadesEscolares(
+    id_contrato: any,
+  ): Promise<EntitiesEntidadesEscolares[]> {
+    return await this.post<EntitiesEntidadesEscolares>(
+      '/findEntidadesEscolares',
+      id_contrato,
+      new MockEntidadesEscolaresSerializers(),
+    );
+  }
   public async userLogin(userData: any): Promise<EntitiesUserLogin[]> {
     return await this.post<EntitiesUserLogin>(
       '/login',
@@ -77,6 +161,7 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockUserLogin(),
     );
   }
+
   public async cadastroUser(userData: any): Promise<EntitiesOneUser[]> {
     return await this.post<EntitiesOneUser>(
       '/cadastroUser',

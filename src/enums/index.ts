@@ -1,2 +1,3 @@
 import PageEnum from './pageEnum';
-export { PageEnum };
+import PageEnumContratos from './pageEnumContratos';
+export { PageEnum, PageEnumContratos };

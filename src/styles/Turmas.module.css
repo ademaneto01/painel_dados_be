@@ -1,0 +1,31 @@
+.boxButtonsNav {
+  display: flex;
+  gap: 0.3rem;
+  margin-top: 1.7em;
+  margin-bottom: -1.7em;
+}
+.boxButtonsNav button {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.87em;
+  color: var(--gray-300);
+  width: 10rem;
+  height: 2rem;
+}
+#classSelected {
+  border-bottom: 0.1rem solid black;
+  font-weight: bold;
+  width: 10rem;
+}
+.boxBtns {
+  display: flex;
+  justify-content: flex-end;
+}
+.pageContainer {
+  width: 100%;
+  min-height: 20vh;
+  margin-bottom: 5em;
+}

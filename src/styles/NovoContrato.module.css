@@ -1,0 +1,77 @@
+.boxBtns {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.boxForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.labelStandard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.inputStandard {
+  all: unset;
+  text-align: start;
+  width: 100%;
+  padding-left: 0.7rem;
+  height: 2.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--gray-200);
+  margin-top: 0.2rem;
+  cursor: text;
+}
+
+.inputSelect {
+  text-align: start;
+  width: 101%;
+  padding-left: 0.7rem;
+  height: 2.5rem;
+  color: #7286a2;
+  border-radius: 5px;
+  border: 1px solid var(--gray-200);
+  margin-top: 0.2rem;
+  cursor: pointer;
+}
+
+.inputSelect:focus-within {
+  box-shadow: 0 0 5px var(--gray-200);
+}
+.inputSelect:focus {
+  outline: transparent;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.confirmButton,
+.cancelButton {
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.confirmButton {
+  background-color: #27ae60;
+  color: #ffffff;
+}
+.cancelButton {
+  background-color: #c0392b;
+  color: #ffffff;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}

@@ -1,7 +1,7 @@
 import BackendApiMock from '@/backendApi';
 import { EntitiesUrl } from '@/entities';
 import { FailedToFetchError } from '@/errors';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styles from '@/styles/DigitalResources.module.css';
 export default function DigitalResources() {
   const [data, setData] = useState([] as EntitiesUrl[]);

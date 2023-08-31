@@ -2,7 +2,7 @@ import { PageEnum } from '@/enums';
 import styles from '@/styles/SideNavBar.module.css';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { IconType } from 'react-icons';
-import { ImUser, ImDisplay, ImLock } from 'react-icons/im';
+import { ImUser, ImDisplay, ImLock, ImList2 } from 'react-icons/im';
 import SideNavBarButton from './SideNavBarButton';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
@@ -70,6 +70,15 @@ export default function SideNavBar(props: SideNavBarProps) {
             }}
             icon={reactIcon(ImUser)}
             active={isActive(PageEnum.users)}
+            hidden={perfil === 'Administrador' ? true : false}
+          />
+          <SideNavBarButton
+            text="Contratos"
+            onClick={() => {
+              props.setPage(PageEnum.contratos);
+            }}
+            icon={reactIcon(ImList2)}
+            active={isActive(PageEnum.contratos)}
             hidden={perfil === 'Administrador' ? true : false}
           />
           <SideNavBarButton

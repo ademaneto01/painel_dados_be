@@ -17,7 +17,10 @@ export default function TableRow<T>(props: TableRowProps<T>): JSX.Element {
   }
 
   const handleClick = (accessor: keyof T) => {
-    if (props.onClickRow && accessor === 'nome') {
+    if (
+      (props.onClickRow && accessor === 'nome') ||
+      (props.onClickRow && accessor === 'nome_simplificado')
+    ) {
       props.onClickRow(props.item, accessor);
     }
   };
@@ -28,7 +31,10 @@ export default function TableRow<T>(props: TableRowProps<T>): JSX.Element {
         <td
           key={getKey(accessor)}
           className={
-            accessor === 'nome' && props.onClickRow ? styles.pointer : ''
+            (accessor === 'nome' && props.onClickRow) ||
+            (accessor === 'nome_simplificado' && props.onClickRow)
+              ? styles.pointer
+              : ''
           }
           onClick={() => handleClick(accessor)}
         >

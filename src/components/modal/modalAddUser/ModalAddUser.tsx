@@ -69,7 +69,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
       const response = await backendApi.findOneUser({ userId });
-      console.log(response, 'aqui data');
+
       setFormData({
         nome: response[0]?.nome || '',
         email: response[0]?.email || '',
@@ -303,7 +303,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
               >
                 <option value="">-</option>
                 <option value="Administrador">Administrator</option>
-                <option value="Estudante">Estudante</option>
+                <option value="Pedagógico">Pedagógico</option>
                 <option value="Professor">Professor</option>
               </select>
             </label>

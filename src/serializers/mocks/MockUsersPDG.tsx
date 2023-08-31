@@ -1,4 +1,4 @@
-import { EntitiesCadastroUser } from '@/entities';
+import { EntitiesUsersPDG } from '@/entities';
 import { SerializerInterface } from '@/interfaces';
 
 interface UsersMockPayload {
@@ -9,9 +9,9 @@ interface UsersMockPayload {
   escola: string;
 }
 
-export default class MockCadastroSerializers implements SerializerInterface {
-  toEntity(otd: UsersMockPayload): EntitiesCadastroUser {
-    return new EntitiesCadastroUser({
+export default class MockUsersPDG implements SerializerInterface {
+  toEntity(otd: UsersMockPayload): EntitiesUsersPDG {
+    return new EntitiesUsersPDG({
       id: otd.id,
       nome: otd.nome,
       email: otd.email,
