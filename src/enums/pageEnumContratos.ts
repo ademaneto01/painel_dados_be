@@ -3,6 +3,7 @@ enum PageEnumContratos {
   entidadesContratuais = 'entidadesContratuais',
   novoContrato = 'novoContrato',
   editContrato = 'editContrato',
+  editEntidade = 'editEntidade',
   novaEntidade = 'novaEntidade',
 }
 

@@ -1,19 +1,10 @@
-import React, {
-  useState,
-  ChangeEvent,
-  FormEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-} from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, CreateButton } from '@/components/shared';
-import { BiCloudDownload } from 'react-icons/bi';
-import { IconType, IconBaseProps } from 'react-icons';
 import { useGlobalContext } from '@/context/store';
 
 interface pageContratosProps {}
@@ -30,14 +21,6 @@ interface FormData {
   complemento: string | null;
 }
 
-function reactIcon(icon: IconType, color?: string): JSX.Element {
-  const options: IconBaseProps = {};
-
-  options.fontSize = '1.3em';
-  options.color = color;
-
-  return icon(options);
-}
 export default function EditContrato(props: pageContratosProps): JSX.Element {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);

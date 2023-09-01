@@ -1,14 +1,15 @@
 import styles from '@/styles/Action.module.css';
-import Action from '../Action';
 import { FiEdit } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
-import { ModalDelete, ModalAddUser } from '../../modal';
+import { ModalDelete, ModalDadosEntidadeEscolar } from '../../modal';
+import { ImEyePlus } from 'react-icons/im';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumContratos } from '@/enums';
+import Action from '../Action';
 
 interface PropsForFxclusion {
   id: string;
@@ -36,7 +37,7 @@ export default function TableActionEntidadeEscolar(
 
   async function deleteEntidadeEscolar(id: string) {
     const token = Cookies.get('auth_token');
-    console.log(props.id, 'id escola');
+
     try {
       const backendApi = new BackendApiMock(`${token}`);
 
@@ -50,7 +51,10 @@ export default function TableActionEntidadeEscolar(
 
   function handleClickOpenModalAddEditSchool(id: string): void {
     setIdContrato(props.id);
-    setPage(PageEnumContratos.editContrato);
+    setPage(PageEnumContratos.editEntidade);
+  }
+  function verMais(id: string): void {
+    setShowModalAddEditSchool(id);
   }
 
   return (
@@ -62,14 +66,18 @@ export default function TableActionEntidadeEscolar(
         }}
       />
       <Action
+        icon={reactIcon(ImEyePlus)}
+        onClick={() => {
+          verMais(props.id);
+        }}
+      />
+      <Action
         icon={reactIcon(FaTrashAlt, '#f1646c')}
         onClick={() => handleClickOpenModalExcluir(props.id)}
       />
       {showModalAddEditSchool === props.id && (
-        <ModalAddUser
-          titleModal={'Editar usuário'}
-          userId={props.id}
-          isEditing={true}
+        <ModalDadosEntidadeEscolar
+          idEntidade={props.id}
           onCancel={() => setShowModalAddEditSchool('')}
         />
       )}

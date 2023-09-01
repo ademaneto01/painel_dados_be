@@ -5,10 +5,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
 import { IconType, IconBaseProps } from 'react-icons';
-import { BiCloudDownload, BiCloudUpload } from 'react-icons/bi';
 import { EntitiesContratos } from '@/entities';
 import BackendApiMock from '@/backendApi';
-import pageComponentsContratos from '..';
 import { useGlobalContext } from '@/context/store';
 
 interface pageContratosProps {
@@ -23,15 +21,6 @@ const columns = [
   new Column('Ações', 'acoes'),
 ];
 
-function reactIcon(icon: IconType, color?: string): JSX.Element {
-  const options: IconBaseProps = {};
-
-  options.fontSize = '1.3em';
-  options.color = color;
-
-  return icon(options);
-}
-
 export default function EntidadesContratuais(
   props: pageContratosProps,
 ): JSX.Element {
@@ -39,7 +28,6 @@ export default function EntidadesContratuais(
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const { setUsersUpdated, usersUpdated } = useGlobalContext();
-  const [showModalAddEscola, setShowModalAddEscola] = useState(false);
 
   const handleRowClick = (rowData: EntitiesContratos) => {
     props.setPage(PageEnumContratos.entidadesEscolares);
@@ -47,7 +35,6 @@ export default function EntidadesContratuais(
   };
 
   useEffect(() => {
-    console.log('entou no useEffect');
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
       try {

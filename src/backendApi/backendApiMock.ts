@@ -122,6 +122,7 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockDeleteUserSerializers(),
     );
   }
+
   public async deleteContract(id_contrato: any): Promise<EntitiesContratos[]> {
     return await this.post<EntitiesContratos>(
       '/deleteContract',
@@ -143,6 +144,25 @@ export default class BackendApiMock implements BackendApiInterface {
       '/findOneUser',
       userId,
       new MockOneUserSerializers(),
+    );
+  }
+
+  public async getEntitadeEscolar(
+    id: any,
+  ): Promise<EntitiesEntidadesEscolares[]> {
+    return await this.post<EntitiesEntidadesEscolares>(
+      '/findEntidadeEscolar',
+      id,
+      new MockEntidadesEscolaresSerializers(),
+    );
+  }
+  public async updateEntitadeEscolar(
+    userData: any,
+  ): Promise<EntitiesEntidadesEscolares[]> {
+    return await this.post<EntitiesEntidadesEscolares>(
+      '/updateEscola',
+      userData,
+      new MockEntidadesEscolaresSerializers(),
     );
   }
   public async getEntitadesEscolares(
@@ -175,7 +195,6 @@ export default class BackendApiMock implements BackendApiInterface {
     serializer: SerializerInterface,
   ): Promise<T[]> {
     const response = await this.api.post(route, data);
-    console.log(response);
     return this.serializeOrError<T>(response, serializer);
   }
 

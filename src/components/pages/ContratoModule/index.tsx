@@ -3,11 +3,13 @@ import EntidadesEscolares from './entidadesEscolares/EntidadesEscolares';
 import NovoContrato from './CRUDcrontratos/NovoContrato';
 import NovaEntidade from './CRUDentidades/NovaEntidade';
 import EditContrato from './CRUDcrontratos/EditContrato';
+import EditEntidade from './CRUDentidades/EditEntidade';
 const pageComponentsContratos = {
   EntidadesContratuais,
   EntidadesEscolares,
   NovoContrato,
   NovaEntidade,
   EditContrato,
+  EditEntidade,
 };
 export default pageComponentsContratos;

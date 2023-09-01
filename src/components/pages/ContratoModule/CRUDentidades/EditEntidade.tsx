@@ -14,27 +14,23 @@ import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, CreateButton } from '@/components/shared';
 import { BiCloudDownload } from 'react-icons/bi';
 import { IconType, IconBaseProps } from 'react-icons';
-import { EntitiesUsersPDG } from '@/entities';
+import { useGlobalContext } from '@/context/store';
 
-interface pageContratosProps {
-  setPage: Dispatch<SetStateAction<PageEnumContratos>>;
-  setIdContrato: Dispatch<SetStateAction<string>>;
-  idContrato: string;
-}
+interface pageContratosProps {}
 
 interface FormData {
-  nome_contratual: string;
-  tipo_rede: string;
-  nome_operacional: string;
+  id: string | null;
+  condicao: string | null;
+  nome_contratual: string | null;
+  tipo_rede: string | null;
+  nome_operacional: string | null;
   cnpj_escola: string;
-  cep: string;
-  endereco: string;
-  cidade: string;
-  uf: string;
-  bairro: string;
-  complemento: string;
-  id_usuarios_pg: string;
-  id_contrato: string;
+  cep: string | null;
+  endereco: string | null;
+  cidade: string | null;
+  uf: string | null;
+  bairro: string | null;
+  complemento: string | null;
 }
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
@@ -45,14 +41,15 @@ function reactIcon(icon: IconType, color?: string): JSX.Element {
 
   return icon(options);
 }
-export default function NovaEntidade(props: pageContratosProps): JSX.Element {
+export default function EditEntidade(props: pageContratosProps): JSX.Element {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const [userPDG, setUserPDG] = useState<EntitiesUsersPDG[]>([]);
-
+  const { idContrato, setPage } = useGlobalContext();
   const [formData, setFormData] = useState<FormData>({
+    id: '',
     nome_contratual: '',
+    condicao: '',
     tipo_rede: '',
     nome_operacional: '',
     cnpj_escola: '',
@@ -62,17 +59,49 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
     uf: '',
     bairro: '',
     complemento: '',
-    id_usuarios_pg: '',
-    id_contrato: '',
   });
+  useEffect(() => {
+    fetchDataInitial();
+  }, []);
+
+  async function fetchDataInitial() {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const backendApi = new BackendApiMock(`${token}`);
+      const response = await backendApi.getEntitadeEscolar({ id: idContrato });
+
+      setFormData({
+        id: idContrato,
+        nome_contratual: response[0]?.nome_contratual || '',
+        condicao: response[0].condicao || '',
+        tipo_rede: response[0]?.tipo_rede || '',
+        nome_operacional: response[0]?.nome_operacional || '',
+        cnpj_escola: response[0]?.cnpj_escola || '',
+        cep: response[0]?.cep || '',
+        endereco: response[0]?.endereco || '',
+        cidade: response[0]?.cidade || '',
+        uf: response[0]?.uf || '',
+        bairro: response[0]?.bairro || '',
+        complemento: response[0]?.complemento || '',
+      });
+    } catch (error) {
+      if (error instanceof FailedToFetchError) {
+        setError(true);
+      } else {
+        throw error;
+      }
+    }
+  }
 
   async function fetchData() {
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
 
-      await backendApi.registerEntidadeEscolar({
+      await backendApi.updateEntitadeEscolar({
+        id: idContrato,
         nome_contratual: formData.nome_contratual,
+        condicao: formData.condicao,
         tipo_rede: formData.tipo_rede,
         nome_operacional: formData.nome_operacional,
         cnpj_escola: formData.cnpj_escola,
@@ -82,8 +111,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
         uf: formData.uf,
         bairro: formData.bairro,
         complemento: formData.complemento,
-        id_contrato: props.idContrato,
-        id_usuarios_pg: formData.id_usuarios_pg,
+        id_usuario_pg: '',
       });
     } catch (error) {
       if (error instanceof FailedToFetchError) {
@@ -94,7 +122,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
     } finally {
       setLoaded(true);
     }
-    props.setPage(PageEnumContratos.entidadesEscolares);
+    setPage(PageEnumContratos.entidadesEscolares);
   }
 
   const handleInputChange = (
@@ -111,8 +139,9 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
     e.preventDefault();
 
     if (
-      formData.nome_contratual == '' ||
+      formData.nome_contratual === '' ||
       formData.tipo_rede == '' ||
+      formData.condicao == '' ||
       formData.nome_operacional == '' ||
       formData.cnpj_escola == '' ||
       formData.cep == '' ||
@@ -122,7 +151,6 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
       formData.bairro == '' ||
       formData.complemento == ''
     ) {
-      setError(true);
       setMsgError('Todos campos são obrigatórios...');
       setTimeout(() => {
         setError(false);
@@ -133,28 +161,9 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
     }
   };
 
-  useEffect(() => {
-    findUsersPDG();
-  }, []);
-
-  async function findUsersPDG() {
-    try {
-      const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
-      const response = await backendApi.getUsersPDG();
-      setUserPDG(response);
-    } catch (error) {
-      if (error instanceof FailedToFetchError) {
-        setError(true);
-      } else {
-        throw error;
-      }
-    }
-  }
-
   return (
     <div className={styles.pageContainer}>
-      <h4>Nova Entidade</h4>
+      <h4>Editar Entidade Escolar</h4>
 
       <PageContentContainer>
         <div className={styles.boxBtns}>
@@ -163,7 +172,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
             colorBackGround={'var(--white)'}
             text="Voltar"
             size="8rem"
-            onClick={() => props.setPage(PageEnumContratos.entidadesEscolares)}
+            onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
           />
         </div>
 
@@ -174,7 +183,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
               type="text"
               placeholder="Nome Contratual"
               name="nome_contratual"
-              value={formData.nome_contratual}
+              value={formData.nome_contratual ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -185,7 +194,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
               type="text"
               placeholder="Tipo Rede"
               name="tipo_rede"
-              value={formData.tipo_rede}
+              value={formData.tipo_rede ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -196,26 +205,21 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
               type="text"
               placeholder="Nome Operacional"
               name="nome_operacional"
-              value={formData.nome_operacional}
+              value={formData.nome_operacional ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
           </label>
           <label className={styles.labelStandard}>
-            Responsavel Pedagógico
-            <select
-              value={formData.id_usuarios_pg}
+            Condicação
+            <input
+              type="text"
+              placeholder="Condicação"
+              name="condicao"
+              value={formData.condicao ?? ''}
               onChange={handleInputChange}
-              name="id_usuarios_pg"
-              className={styles.inputSelect}
-            >
-              <option value="">-</option>
-              {userPDG.map((user) => (
-                <option key={user.id} value={user.id}>
-                  {user.nome}
-                </option>
-              ))}
-            </select>
+              className={styles.inputStandard}
+            />
           </label>
           <label className={styles.labelStandard}>
             CNPJ Escola
@@ -223,7 +227,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
               type="text"
               placeholder="CNPJ Escola"
               name="cnpj_escola"
-              value={formData.cnpj_escola}
+              value={formData.cnpj_escola ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -234,7 +238,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
               type="text"
               placeholder="CEP"
               name="cep"
-              value={formData.cep}
+              value={formData.cep ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -245,7 +249,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
               type="text"
               placeholder="Endereço"
               name="endereco"
-              value={formData.endereco}
+              value={formData.endereco ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -256,7 +260,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
               type="text"
               placeholder="Cidade"
               name="cidade"
-              value={formData.cidade}
+              value={formData.cidade ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -267,7 +271,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
               type="text"
               placeholder="UF"
               name="uf"
-              value={formData.uf}
+              value={formData.uf ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -278,7 +282,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
               type="text"
               placeholder="Bairro"
               name="bairro"
-              value={formData.bairro}
+              value={formData.bairro ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -289,12 +293,11 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
               type="text"
               placeholder="Complemente"
               name="complemento"
-              value={formData.complemento}
+              value={formData.complemento ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
           </label>
-
           <div className={styles.buttonContainer}>
             <button
               className={styles.confirmButton}
@@ -306,9 +309,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
             <button
               className={styles.cancelButton}
               type="button"
-              onClick={() =>
-                props.setPage(PageEnumContratos.entidadesContratuais)
-              }
+              onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
             >
               Cancelar
             </button>

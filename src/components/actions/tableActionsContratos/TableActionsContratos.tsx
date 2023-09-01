@@ -2,9 +2,10 @@ import styles from '@/styles/Action.module.css';
 import Action from '../Action';
 import { FiEdit } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
+import { ImEyePlus } from 'react-icons/im';
 import { IconBaseProps, IconType } from 'react-icons';
-import { ModalDelete, ModalAddUser } from '../../modal';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { ModalDelete, ModalAddUser, ModalDadosContrato } from '../../modal';
+import { useState } from 'react';
 import Cookies from 'js-cookie';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
@@ -52,7 +53,9 @@ export default function TableActionsContratos(
     setIdContrato(props.id);
     setPage(PageEnumContratos.editContrato);
   }
-
+  function verMais(id: string): void {
+    setShowModalAddEditSchool(id);
+  }
   return (
     <div className={styles.container}>
       <Action
@@ -62,14 +65,18 @@ export default function TableActionsContratos(
         }}
       />
       <Action
+        icon={reactIcon(ImEyePlus)}
+        onClick={() => {
+          verMais(props.id);
+        }}
+      />
+      <Action
         icon={reactIcon(FaTrashAlt, '#f1646c')}
         onClick={() => handleClickOpenModalExcluir(props.id)}
       />
       {showModalAddEditSchool === props.id && (
-        <ModalAddUser
-          titleModal={'Editar usuário'}
-          userId={props.id}
-          isEditing={true}
+        <ModalDadosContrato
+          idContrato={props.id}
           onCancel={() => setShowModalAddEditSchool('')}
         />
       )}

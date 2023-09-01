@@ -20,6 +20,7 @@ export default interface BackendApiInterface {
   cadastroUser(userData: any): Promise<EntitiesOneUser[]>;
   findContratos(userData: any): Promise<EntitiesContratos[]>;
   getEntitadesEscolares(userData: any): Promise<EntitiesEntidadesEscolares[]>;
+  getEntitadeEscolar(id: any): Promise<EntitiesEntidadesEscolares[]>;
   registerEntidadeEscolar(
     userData: any,
   ): Promise<EntitiesRegisterEntidadeEscolar[]>;
