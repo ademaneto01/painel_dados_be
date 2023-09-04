@@ -53,6 +53,11 @@ export default function TableActionsContratos(
     setIdContrato(props.id);
     setPage(PageEnumContratos.editContrato);
   }
+  function handleClickOpenModalSobreescreContrato(id: string): void {
+    setIdContrato(props.id);
+    setPage(PageEnumContratos.sobreescreverContrato);
+  }
+
   function verMais(id: string): void {
     setShowModalAddEditSchool(id);
   }
@@ -62,6 +67,12 @@ export default function TableActionsContratos(
         icon={reactIcon(FiEdit)}
         onClick={() => {
           handleClickOpenModalAddEditSchool(props.id);
+        }}
+      />
+      <Action
+        icon={reactIcon(FiEdit, '#f1646c')}
+        onClick={() => {
+          handleClickOpenModalSobreescreContrato(props.id);
         }}
       />
       <Action

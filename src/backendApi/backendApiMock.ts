@@ -97,6 +97,16 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockContratosSerializers(),
     );
   }
+
+  public async sobrescreverContrato(
+    userData: any,
+  ): Promise<EntitiesContratos[]> {
+    return await this.post<EntitiesContratos>(
+      '/sobrescreverContrato',
+      userData,
+      new MockContratosSerializers(),
+    );
+  }
   public async registerContract(
     userData: any,
   ): Promise<EntitiesRegisterContract[]> {

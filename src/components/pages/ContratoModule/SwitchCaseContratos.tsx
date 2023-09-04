@@ -28,6 +28,13 @@ export default function SwitchCaseContratos() {
         return (
           <pages.NovoContrato setIdContrato={setIdContrato} setPage={setPage} />
         );
+      case PageEnumContratos.sobreescreverContrato:
+        return (
+          <pages.SobreescreverContrato
+            setIdContrato={setIdContrato}
+            setPage={setPage}
+          />
+        );
       case PageEnumContratos.editContrato:
         return <pages.EditContrato />;
       case PageEnumContratos.editEntidade:

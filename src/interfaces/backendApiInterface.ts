@@ -26,6 +26,7 @@ export default interface BackendApiInterface {
   ): Promise<EntitiesRegisterEntidadeEscolar[]>;
   registerContract(userData: any): Promise<EntitiesRegisterContract[]>;
   deleteContract(id_contrato: any): Promise<EntitiesContratos[]>;
+  sobrescreverContrato(userData: any): Promise<EntitiesContratos[]>;
   getUsersPDG(): Promise<EntitiesUsersPDG[]>;
   findOneContract(id: any): Promise<EntitiesContratos[]>;
   deleteEntidadeEscolar(id_escola: any): Promise<EntitiesEntidadesEscolares[]>;
