@@ -2,25 +2,25 @@ interface UserProps {
   id: string;
   nome: string;
   email: string;
+  senha: string;
   perfil: string;
-  escola: string;
-  url_dados: string;
+  id_ee: string;
 }
 
 export default class EntitiesOneUser {
   readonly id: string;
   readonly nome: string;
   readonly email: string;
+  readonly senha: string;
   readonly perfil: string;
-  readonly escola: string;
-  readonly url_dados: string;
+  readonly id_ee: string;
 
-  constructor({ id, nome, email, perfil, escola, url_dados }: UserProps) {
+  constructor({ id, nome, email, senha, perfil, id_ee }: UserProps) {
     this.id = id;
     this.nome = nome;
     this.email = email;
+    this.senha = senha;
     this.perfil = perfil;
-    this.escola = escola;
-    this.url_dados = url_dados;
+    this.id_ee = id_ee;
   }
 }

@@ -6,7 +6,7 @@ interface UsersMockPayload {
   nome: string;
   email: string;
   perfil: string;
-  escola: string;
+  id_ee: string;
 }
 
 export default class MockCadastroSerializers implements SerializerInterface {
@@ -16,7 +16,7 @@ export default class MockCadastroSerializers implements SerializerInterface {
       nome: otd.nome,
       email: otd.email,
       perfil: otd.perfil,
-      escola: otd.escola,
+      id_ee: otd.id_ee,
     });
   }
 }

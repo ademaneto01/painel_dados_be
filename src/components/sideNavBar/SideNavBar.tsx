@@ -1,4 +1,5 @@
 import { PageEnum } from '@/enums';
+import React from 'react';
 import styles from '@/styles/SideNavBar.module.css';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { IconType } from 'react-icons';
@@ -30,9 +31,10 @@ export default function SideNavBar(props: SideNavBarProps) {
     const backendApi = new BackendApiMock(`${token}`);
     const fetchUserData = async () => {
       try {
-        const user = await backendApi.findOneUser({
+        const user = await backendApi.localizarUsuario({
           userId,
         });
+
         if (user && user.length > 0) {
           setPerfil(user[0].perfil || '');
         }
@@ -88,7 +90,7 @@ export default function SideNavBar(props: SideNavBarProps) {
             }}
             icon={reactIcon(ImDisplay)}
             active={isActive(PageEnum.digitalResources)}
-            hidden={true}
+            hidden={perfil === 'Pedagógico' ? true : false}
           />
 
           <SideNavBarButton

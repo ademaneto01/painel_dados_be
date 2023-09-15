@@ -3,7 +3,7 @@ interface UserProps {
   nome: string;
   email: string;
   perfil: string;
-  escola: string;
+  id_ee: string;
 }
 
 export default class EntitiesDeletUser {
@@ -11,13 +11,13 @@ export default class EntitiesDeletUser {
   readonly nome: string;
   readonly email: string;
   readonly perfil: string;
-  readonly escola: string;
+  readonly id_ee: string;
 
-  constructor({ id, nome, email, perfil, escola }: UserProps) {
+  constructor({ id, nome, email, perfil, id_ee }: UserProps) {
     this.id = id;
     this.nome = nome;
     this.email = email;
     this.perfil = perfil;
-    this.escola = escola;
+    this.id_ee = id_ee;
   }
 }

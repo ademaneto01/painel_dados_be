@@ -1,11 +1,10 @@
 import { TableActionEntidadeEscolar } from '@/components/actions';
+import React from 'react';
 
 interface EntidadesEscolaresProps {
   id: string;
-  condicao: string;
-  codigo_be: string;
-  nome_contratual: string;
-  tipo_rede: string;
+  uuid_ec: string;
+  id_ec: string;
   nome_operacional: string;
   cnpj_escola: string;
   cep: string;
@@ -14,15 +13,13 @@ interface EntidadesEscolaresProps {
   uf: string;
   bairro: string;
   complemento: string;
-  id_contrato: string;
+  ativo: boolean;
 }
 
 export default class EntitiesEntidadesEscolares {
   readonly id: string;
-  readonly condicao: string;
-  readonly codigo_be: string;
-  readonly nome_contratual: string;
-  readonly tipo_rede: string;
+  readonly uuid_ec: string;
+  readonly id_ec: string;
   readonly nome_operacional: string;
   readonly cnpj_escola: string;
   readonly cep: string;
@@ -31,14 +28,12 @@ export default class EntitiesEntidadesEscolares {
   readonly uf: string;
   readonly bairro: string;
   readonly complemento: string;
-  readonly id_contrato: string;
+  readonly ativo: boolean;
 
   constructor({
     id,
-    condicao,
-    codigo_be,
-    nome_contratual,
-    tipo_rede,
+    uuid_ec,
+    id_ec,
     nome_operacional,
     cnpj_escola,
     cep,
@@ -47,13 +42,11 @@ export default class EntitiesEntidadesEscolares {
     uf,
     bairro,
     complemento,
-    id_contrato,
+    ativo,
   }: EntidadesEscolaresProps) {
     this.id = id;
-    this.condicao = condicao;
-    this.codigo_be = codigo_be;
-    this.nome_contratual = nome_contratual;
-    this.tipo_rede = tipo_rede;
+    this.uuid_ec = uuid_ec;
+    this.id_ec = id_ec;
     this.nome_operacional = nome_operacional;
     this.cnpj_escola = cnpj_escola;
     this.cep = cep;
@@ -62,11 +55,11 @@ export default class EntitiesEntidadesEscolares {
     this.uf = uf;
     this.bairro = bairro;
     this.complemento = complemento;
-    this.id_contrato = id_contrato;
+    this.ativo = ativo;
   }
   public get acoes(): JSX.Element {
     return (
-      <TableActionEntidadeEscolar id={this.id} nome={this.nome_contratual} />
+      <TableActionEntidadeEscolar id={this.id} nome={this.nome_operacional} />
     );
   }
 }

@@ -47,9 +47,25 @@ export default class BackendApiMock implements BackendApiInterface {
     });
   }
 
-  public async getUsers(): Promise<EntitiesUsers[]> {
+  public async userLogin(userData: any): Promise<EntitiesUserLogin[]> {
+    return await this.post<EntitiesUserLogin>(
+      '/login',
+      userData,
+      new MockUserLogin(),
+    );
+  }
+
+  public async registrarUsuario(userData: any): Promise<EntitiesOneUser[]> {
+    return await this.post<EntitiesOneUser>(
+      '/registrarUsuario',
+      userData,
+      new MockCadastroSerializers(),
+    );
+  }
+
+  public async localizarUsuarios(): Promise<EntitiesUsers[]> {
     return await this.get<EntitiesUsers>(
-      '/findUsers',
+      '/localizarUsuarios',
       new MockUsersSerializers(),
     );
   }
@@ -61,9 +77,17 @@ export default class BackendApiMock implements BackendApiInterface {
     );
   }
 
-  public async findContratos(): Promise<EntitiesContratos[]> {
+  public async todasEntidadesEscolares(): Promise<
+    EntitiesEntidadesEscolares[]
+  > {
+    return await this.get<EntitiesEntidadesEscolares>(
+      '/todasEntidadesEscolares',
+      new MockEntidadesEscolaresSerializers(),
+    );
+  }
+  public async localizarContratos(): Promise<EntitiesContratos[]> {
     return await this.get<EntitiesContratos>(
-      '/findContracts',
+      '/localizarContratos',
       new MockContratosSerializers(),
     );
   }
@@ -74,9 +98,9 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockUrlSerializers(),
     );
   }
-  public async updateUser(userData: any): Promise<EntitiesOneUser[]> {
+  public async editarUsuario(userData: any): Promise<EntitiesOneUser[]> {
     return await this.post<EntitiesOneUser>(
-      '/update',
+      '/editarUsuario',
       userData,
       new MockOneUserSerializers(),
     );
@@ -125,9 +149,9 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockRegisterContractSerializers(),
     );
   }
-  public async deleteUser(userId: any): Promise<EntitiesDeletUser[]> {
+  public async deletarUsuario(userId: any): Promise<EntitiesDeletUser[]> {
     return await this.post<EntitiesDeletUser>(
-      '/deleteUser',
+      '/deletarUsuario',
       userId,
       new MockDeleteUserSerializers(),
     );
@@ -149,19 +173,19 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockEntidadesEscolaresSerializers(),
     );
   }
-  public async findOneUser(userId: any): Promise<EntitiesOneUser[]> {
-    return await this.post<EntitiesOneUser>(
-      '/findOneUser',
+  public async localizarUsuario(userId: any): Promise<EntitiesUsers[]> {
+    return await this.post<EntitiesUsers>(
+      '/localizarUsuario',
       userId,
-      new MockOneUserSerializers(),
+      new MockUsersSerializers(),
     );
   }
 
-  public async getEntitadeEscolar(
+  public async localizarEntitadeEscolar(
     id: any,
   ): Promise<EntitiesEntidadesEscolares[]> {
     return await this.post<EntitiesEntidadesEscolares>(
-      '/findEntidadeEscolar',
+      '/localizarEntidadeEscolar',
       id,
       new MockEntidadesEscolaresSerializers(),
     );
@@ -175,30 +199,16 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockEntidadesEscolaresSerializers(),
     );
   }
-  public async getEntitadesEscolares(
-    id_contrato: any,
+  public async localizarEntidadesEscolares(
+    uuid_ec: any,
   ): Promise<EntitiesEntidadesEscolares[]> {
     return await this.post<EntitiesEntidadesEscolares>(
-      '/findEntidadesEscolares',
-      id_contrato,
+      '/localizarEntidadesEscolares',
+      uuid_ec,
       new MockEntidadesEscolaresSerializers(),
     );
   }
-  public async userLogin(userData: any): Promise<EntitiesUserLogin[]> {
-    return await this.post<EntitiesUserLogin>(
-      '/login',
-      userData,
-      new MockUserLogin(),
-    );
-  }
 
-  public async cadastroUser(userData: any): Promise<EntitiesOneUser[]> {
-    return await this.post<EntitiesOneUser>(
-      '/cadastroUser',
-      userData,
-      new MockCadastroSerializers(),
-    );
-  }
   private async post<T>(
     route: string,
     data: any,

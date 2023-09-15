@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import styles from '@/styles/Home.module.css';
 import { PageEnum } from '@/enums';
 import { useState } from 'react';

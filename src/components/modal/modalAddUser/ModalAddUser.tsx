@@ -12,9 +12,13 @@ interface FormData {
   senha: string | null;
   confirmPassword: string | null;
   perfil: string | null;
-  url_dados: string | null;
   escola: string | null;
+  id_ee: string | null;
   isPasswordMatch: boolean;
+}
+interface EntidadesEscolaresData {
+  id: string | null;
+  nome_operacional: string | null;
 }
 interface ModalProps {
   onCancel: () => void;
@@ -36,12 +40,20 @@ const ModalAddUser: React.FC<ModalProps> = ({
     senha: '',
     confirmPassword: '',
     perfil: '',
-    url_dados: '',
     escola: '',
+    id_ee: '',
     isPasswordMatch: true,
   });
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [entidadesEscolaresData, setEntidadesEscolaresData] = useState<
+    EntidadesEscolaresData[]
+  >([
+    {
+      id: '',
+      nome_operacional: '',
+    },
+  ]);
   const [msgError, setMsgError] = useState('');
 
   const handleInputChange = (
@@ -61,26 +73,55 @@ const ModalAddUser: React.FC<ModalProps> = ({
   useEffect(() => {
     if (isEditing) {
       fetchDataInitial();
+    } else {
+      fetchDataEntidadesEscolares();
     }
   }, []);
-
+  async function fetchDataEntidadesEscolares() {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const backendApi = new BackendApiMock(`${token}`);
+      const response = await backendApi.todasEntidadesEscolares();
+      setEntidadesEscolaresData(
+        response.map((school) => ({
+          id: school.id || '',
+          nome_operacional: school.nome_operacional || '',
+        })),
+      );
+    } catch (error) {}
+  }
   async function fetchDataInitial() {
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
-      const response = await backendApi.findOneUser({ userId });
-
+      const response = await backendApi.localizarUsuario({ userId });
+      const escolaStorageId = localStorage.getItem('escola');
       setFormData({
         nome: response[0]?.nome || '',
         email: response[0]?.email || '',
         confirmEmail: response[0]?.email || '',
         senha: '',
         confirmPassword: '',
+        id_ee: response[0]?.id_ee || '',
         perfil: response[0]?.perfil || '',
-        url_dados: response[0]?.url_dados || '',
         escola: response[0]?.escola || '',
         isPasswordMatch: true,
       });
+
+      const entiadeContratual = await backendApi.localizarEntitadeEscolar({
+        id: escolaStorageId,
+      });
+
+      const entidadesEscolares = await backendApi.localizarEntidadesEscolares({
+        uuid_ec: entiadeContratual[0].uuid_ec,
+      });
+
+      setEntidadesEscolaresData(
+        entidadesEscolares.map((school) => ({
+          id: school.id || '',
+          nome_operacional: school.nome_operacional || '',
+        })),
+      );
     } catch (error) {
       if (error instanceof FailedToFetchError) {
         setError(true);
@@ -98,7 +139,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
         formData.email == '' ||
         formData.senha == '' ||
         formData.confirmPassword == '' ||
-        formData.escola == '' ||
+        formData.id_ee == '' ||
         formData.perfil == ''
       ) {
         setError(true);
@@ -130,7 +171,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
         formData.email == '' ||
         formData.senha == '' ||
         formData.confirmPassword == '' ||
-        formData.escola == '' ||
+        formData.id_ee == '' ||
         formData.perfil == ''
       ) {
         setError(true);
@@ -162,14 +203,13 @@ const ModalAddUser: React.FC<ModalProps> = ({
         const token = localStorage.getItem('auth_token');
         const backendApi = new BackendApiMock(`${token}`);
 
-        await backendApi.updateUser({
+        await backendApi.editarUsuario({
           id: userId,
           nome: formData.nome,
           email: formData.email,
           senha: formData.senha,
           perfil: formData.perfil,
-          url_dados: formData.url_dados,
-          escola: formData.escola,
+          id_ee: formData.id_ee,
         });
       } catch (error) {
         if (error instanceof FailedToFetchError) {
@@ -187,13 +227,12 @@ const ModalAddUser: React.FC<ModalProps> = ({
         const token = localStorage.getItem('auth_token');
         const backendApi = new BackendApiMock(`${token}`);
 
-        await backendApi.cadastroUser({
+        await backendApi.registrarUsuario({
           nome: formData.nome,
           email: formData.email,
           senha: formData.senha,
           perfil: formData.perfil,
-          url_dados: formData.url_dados,
-          escola: formData.escola,
+          id_ee: formData.id_ee,
         });
       } catch (error) {
         if (error instanceof FailedToFetchError) {
@@ -272,29 +311,23 @@ const ModalAddUser: React.FC<ModalProps> = ({
               </div>
             </div>
             <label className={styles.labelStandard}>
-              URL
-              <input
-                type="text"
-                placeholder="URL Dados"
-                name="url_dados"
-                value={formData.url_dados ?? ''}
-                onChange={handleInputChange}
-                className={styles.inputStandard}
-              />
-            </label>
-            <label className={styles.labelStandard}>
               Escola
-              <input
-                type="text"
-                placeholder="Escola"
-                name="escola"
-                value={formData.escola ?? ''}
+              <select
+                value={formData.id_ee ?? ''}
                 onChange={handleInputChange}
-                className={styles.inputStandard}
-              />
+                name="id_ee"
+                className={styles.inputSelect}
+              >
+                <option value="">-</option>
+                {entidadesEscolaresData.map((school) => (
+                  <option key={school.id} value={school.id || ''}>
+                    {school.nome_operacional}
+                  </option>
+                ))}
+              </select>
             </label>
             <label className={styles.labelStandard}>
-              Permissão
+              Perfil
               <select
                 value={formData.perfil ?? ''}
                 onChange={handleInputChange}

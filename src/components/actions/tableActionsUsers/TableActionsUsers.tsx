@@ -38,7 +38,7 @@ export default function TableActionsUsers(
     try {
       const backendApi = new BackendApiMock(`${token}`);
 
-      await backendApi.deleteUser({ userId: id });
+      await backendApi.deletarUsuario({ userId: id });
       setShowModalDelete('');
       setUsersUpdated(true);
     } catch (error) {

@@ -1,7 +1,9 @@
 import Image from 'next/image';
+import React from 'react';
 import styles from '@/styles/TopNavBar.module.css';
 import { TfiMenu } from 'react-icons/tfi';
 import { useState, useEffect } from 'react';
+import BackendApiMock from '@/backendApi';
 
 interface TopNavBarProps {
   toggleSideNavBar: VoidFunction;
@@ -13,9 +15,23 @@ export default function TopNavBar(props: TopNavBarProps) {
 
   useEffect(() => {
     const nomeStorage = localStorage.getItem('userNome');
-    const escolaStorage = localStorage.getItem('escola');
+    const escolaStorageId = localStorage.getItem('escola');
+    const token = localStorage.getItem('authToken');
+
+    const backendApi = new BackendApiMock(`${token}`);
+    const fetchUserData = async () => {
+      try {
+        const user = await backendApi.localizarEntitadeEscolar({
+          id: escolaStorageId,
+        });
+
+        setEscola(user[0].nome_operacional || '');
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    fetchUserData();
     setNome(nomeStorage || '');
-    setEscola(escolaStorage || '');
   }, []);
 
   return (

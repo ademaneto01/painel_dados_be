@@ -9,18 +9,23 @@ import {
   EntitiesRegisterContract,
   EntitiesUsersPDG,
   EntitiesRegisterEntidadeEscolar,
+  EntitiesCadastroUser,
 } from '@/entities';
+import { promises } from 'dns';
 
 export default interface BackendApiInterface {
-  getUsers(): Promise<EntitiesUsers[]>;
+  localizarUsuarios(): Promise<EntitiesUsers[]>;
   getUrl(userId: any): Promise<EntitiesUrl[]>;
-  deleteUser(userId: any): Promise<EntitiesDeletUser[]>;
-  findOneUser(userId: any): Promise<EntitiesOneUser[]>;
+  deletarUsuario(userId: any): Promise<EntitiesDeletUser[]>;
+  localizarUsuario(userId: any): Promise<EntitiesUsers[]>;
   userLogin(userData: any): Promise<EntitiesUserLogin[]>;
-  cadastroUser(userData: any): Promise<EntitiesOneUser[]>;
-  findContratos(userData: any): Promise<EntitiesContratos[]>;
-  getEntitadesEscolares(userData: any): Promise<EntitiesEntidadesEscolares[]>;
-  getEntitadeEscolar(id: any): Promise<EntitiesEntidadesEscolares[]>;
+  registrarUsuario(userData: any): Promise<EntitiesCadastroUser[]>;
+  localizarContratos(): Promise<EntitiesContratos[]>;
+  todasEntidadesEscolares(): Promise<EntitiesEntidadesEscolares[]>;
+  localizarEntidadesEscolares(
+    uuid_ec: any,
+  ): Promise<EntitiesEntidadesEscolares[]>;
+  localizarEntitadeEscolar(id: any): Promise<EntitiesEntidadesEscolares[]>;
   registerEntidadeEscolar(
     userData: any,
   ): Promise<EntitiesRegisterEntidadeEscolar[]>;

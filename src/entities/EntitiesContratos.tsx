@@ -1,11 +1,10 @@
 import { TableActionsContratos } from '@/components/actions';
-import { useGlobalContext } from '@/context/store';
 
 interface ContractProps {
   id: string;
   nome_simplificado: string;
   razao_social: string;
-  cnpj: string;
+  cnpj_cont: string;
   cep: string;
   endereco: string;
   cidade: string;
@@ -13,6 +12,8 @@ interface ContractProps {
   bairro: string;
   situacao: string;
   complemento: string;
+  ativo: boolean;
+  bo_rede: boolean;
   qtdescolas: string;
 }
 
@@ -20,7 +21,7 @@ export default class EntitiesContratos {
   readonly id: string;
   readonly nome_simplificado: string;
   readonly razao_social: string;
-  readonly cnpj: string;
+  readonly cnpj_cont: string;
   readonly cep: string;
   readonly endereco: string;
   readonly cidade: string;
@@ -28,13 +29,15 @@ export default class EntitiesContratos {
   readonly bairro: string;
   readonly situacao: string;
   readonly complemento: string;
+  readonly ativo: boolean;
+  readonly bo_rede: boolean;
   readonly qtdescolas: string;
 
   constructor({
     id,
     nome_simplificado,
     razao_social,
-    cnpj,
+    cnpj_cont,
     cep,
     endereco,
     cidade,
@@ -42,12 +45,14 @@ export default class EntitiesContratos {
     bairro,
     situacao,
     complemento,
+    ativo,
+    bo_rede,
     qtdescolas,
   }: ContractProps) {
     this.id = id;
     this.nome_simplificado = nome_simplificado;
     this.razao_social = razao_social;
-    this.cnpj = cnpj;
+    this.cnpj_cont = cnpj_cont;
     this.cep = cep;
     this.endereco = endereco;
     this.cidade = cidade;
@@ -55,6 +60,8 @@ export default class EntitiesContratos {
     this.bairro = bairro;
     this.situacao = situacao;
     this.complemento = complemento;
+    this.ativo = ativo;
+    this.bo_rede = bo_rede;
     this.qtdescolas = qtdescolas;
   }
   public get acoes(): JSX.Element {

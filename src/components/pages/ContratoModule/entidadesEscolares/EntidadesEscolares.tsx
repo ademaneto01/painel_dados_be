@@ -17,8 +17,8 @@ interface pageContratosProps {
 }
 
 const columns = [
-  new Column('Nome Contratual', 'nome_contratual'),
-  new Column('Condição', 'condicao'),
+  new Column('Nome Contratual', 'nome_operacional'),
+  new Column('Cidade', 'cidade'),
   new Column('Ações', 'acoes'),
 ];
 
@@ -46,8 +46,8 @@ export default function EntidadesEscolares(
 
       try {
         const backendApi = new BackendApiMock(`${token}`);
-        const escolas = await backendApi.getEntitadesEscolares({
-          id_contrato: props.idContrato,
+        const escolas = await backendApi.localizarEntidadesEscolares({
+          uuid_ec: props.idContrato,
         });
 
         setData(escolas);

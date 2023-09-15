@@ -16,7 +16,7 @@ interface pageContratosProps {
 
 const columns = [
   new Column('Nome Simplificado', 'nome_simplificado'),
-  new Column('CNPJ', 'cnpj'),
+  new Column('CNPJ', 'cnpj_cont'),
   new Column('QTD. Escolas', 'qtdescolas'),
   new Column('Ações', 'acoes'),
 ];
@@ -40,7 +40,7 @@ export default function EntidadesContratuais(
       try {
         const backendApi = new BackendApiMock(`${token}`);
 
-        const contratos = await backendApi.findContratos();
+        const contratos = await backendApi.localizarContratos();
         setData(contratos);
         setUsersUpdated(false);
       } catch (error) {

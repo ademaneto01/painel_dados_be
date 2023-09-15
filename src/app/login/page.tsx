@@ -6,6 +6,7 @@ import styles from '@/styles/Login.module.css';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import { Loader } from '@/components/shared';
+import React from 'react';
 
 interface FormState {
   email: string;
@@ -56,7 +57,7 @@ export function SignIn() {
 
       setLoaded(true);
       localStorage.setItem('userNome', users[0].nome);
-      localStorage.setItem('escola', users[0].escola);
+      localStorage.setItem('escola', users[0].id_ee);
       localStorage.setItem('auth_token', users[0].token);
       localStorage.setItem('userId', users[0].id);
       Cookies.set('auth_token', users[0].token);

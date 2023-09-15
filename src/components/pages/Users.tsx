@@ -1,4 +1,5 @@
 import styles from '@/styles/Page.module.css';
+import React from 'react';
 import { CreateButton, PageContentContainer } from '../shared';
 import { Column, Table } from '../Table';
 import { useEffect, useState } from 'react';
@@ -32,10 +33,11 @@ function PageUsers() {
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
+      const escolaStorageId = localStorage.getItem('escola');
       try {
         const backendApi = new BackendApiMock(`${token}`);
 
-        const users = await backendApi.getUsers();
+        const users = await backendApi.localizarUsuarios();
 
         setData(users);
       } catch (error) {

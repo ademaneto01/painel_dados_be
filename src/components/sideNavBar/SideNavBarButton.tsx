@@ -1,4 +1,5 @@
 import styles from '@/styles/SideNavBar.module.css';
+import React from 'react';
 
 interface SideNavBarButtonProps {
   text: string;
