@@ -41,7 +41,7 @@ export default function TableActionEntidadeEscolar(
     try {
       const backendApi = new BackendApiMock(`${token}`);
 
-      await backendApi.deleteEntidadeEscolar({ id_escola: props.id });
+      await backendApi.deletarEntidadeEscolar({ id: props.id });
       setShowModalDelete('');
       setUsersUpdated(true);
     } catch (error) {

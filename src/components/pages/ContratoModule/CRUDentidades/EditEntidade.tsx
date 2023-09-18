@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  ChangeEvent,
-  FormEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-} from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
@@ -15,22 +8,25 @@ import { PageContentContainer, CreateButton } from '@/components/shared';
 import { BiCloudDownload } from 'react-icons/bi';
 import { IconType, IconBaseProps } from 'react-icons';
 import { useGlobalContext } from '@/context/store';
+import { EntitiesUsuariosPDG } from '@/entities';
+import error from 'next/error';
 
 interface pageContratosProps {}
 
 interface FormData {
   id: string | null;
-  condicao: string | null;
-  nome_contratual: string | null;
-  tipo_rede: string | null;
   nome_operacional: string | null;
-  cnpj_escola: string;
+  cnpj_escola: string | null;
   cep: string | null;
   endereco: string | null;
   cidade: string | null;
   uf: string | null;
   bairro: string | null;
   complemento: string | null;
+  url_dados: string | null;
+  uuid_ec: string | null;
+  id_usuario_pdg: string | null;
+  ativo: boolean | null;
 }
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
@@ -46,11 +42,9 @@ export default function EditEntidade(props: pageContratosProps): JSX.Element {
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const { idContrato, setPage } = useGlobalContext();
+  const [userPDG, setUserPDG] = useState<EntitiesUsuariosPDG[]>([]);
   const [formData, setFormData] = useState<FormData>({
     id: '',
-    nome_contratual: '',
-    condicao: '',
-    tipo_rede: '',
     nome_operacional: '',
     cnpj_escola: '',
     cep: '',
@@ -59,6 +53,10 @@ export default function EditEntidade(props: pageContratosProps): JSX.Element {
     uf: '',
     bairro: '',
     complemento: '',
+    url_dados: '',
+    uuid_ec: '',
+    id_usuario_pdg: '',
+    ativo: true,
   });
   useEffect(() => {
     fetchDataInitial();
@@ -68,26 +66,32 @@ export default function EditEntidade(props: pageContratosProps): JSX.Element {
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
-      const response = await backendApi.getEntitadeEscolar({ id: idContrato });
+      const response = await backendApi.localizarEntitadeEscolar({
+        id: idContrato,
+      });
+      const responseUserPdg = await backendApi.localizarUsuariosPDG();
+      setUserPDG(responseUserPdg);
 
       setFormData({
         id: idContrato,
-        nome_contratual: response[0]?.nome_contratual || '',
-        condicao: response[0].condicao || '',
-        tipo_rede: response[0]?.tipo_rede || '',
         nome_operacional: response[0]?.nome_operacional || '',
-        cnpj_escola: response[0]?.cnpj_escola || '',
+        cnpj_escola: response[0].cnpj_escola || '',
         cep: response[0]?.cep || '',
         endereco: response[0]?.endereco || '',
         cidade: response[0]?.cidade || '',
         uf: response[0]?.uf || '',
         bairro: response[0]?.bairro || '',
         complemento: response[0]?.complemento || '',
+        url_dados: response[0]?.url_dados || '',
+        uuid_ec: response[0]?.uuid_ec || '',
+        id_usuario_pdg: response[0]?.id_usuario_pdg || '',
+        ativo: response[0]?.ativo || null,
       });
     } catch (error) {
       if (error instanceof FailedToFetchError) {
         setError(true);
       } else {
+        setMsgError('resre');
         throw error;
       }
     }
@@ -98,11 +102,8 @@ export default function EditEntidade(props: pageContratosProps): JSX.Element {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
 
-      await backendApi.updateEntitadeEscolar({
+      await backendApi.editarEntidadeEscolar({
         id: idContrato,
-        nome_contratual: formData.nome_contratual,
-        condicao: formData.condicao,
-        tipo_rede: formData.tipo_rede,
         nome_operacional: formData.nome_operacional,
         cnpj_escola: formData.cnpj_escola,
         cep: formData.cep,
@@ -111,7 +112,9 @@ export default function EditEntidade(props: pageContratosProps): JSX.Element {
         uf: formData.uf,
         bairro: formData.bairro,
         complemento: formData.complemento,
-        id_usuario_pg: '',
+        url_dados: formData.url_dados,
+        id_usuario_pdg: formData.id_usuario_pdg,
+        ativo: formData.ativo,
       });
     } catch (error) {
       if (error instanceof FailedToFetchError) {
@@ -139,17 +142,17 @@ export default function EditEntidade(props: pageContratosProps): JSX.Element {
     e.preventDefault();
 
     if (
-      formData.nome_contratual === '' ||
-      formData.tipo_rede == '' ||
-      formData.condicao == '' ||
-      formData.nome_operacional == '' ||
+      formData.nome_operacional === '' ||
       formData.cnpj_escola == '' ||
       formData.cep == '' ||
       formData.endereco == '' ||
       formData.cidade == '' ||
       formData.uf == '' ||
       formData.bairro == '' ||
-      formData.complemento == ''
+      formData.complemento == '' ||
+      formData.url_dados == '' ||
+      formData.id_usuario_pdg == '' ||
+      formData.ativo == null
     ) {
       setMsgError('Todos campos são obrigatórios...');
       setTimeout(() => {
@@ -178,28 +181,6 @@ export default function EditEntidade(props: pageContratosProps): JSX.Element {
 
         <form className={styles.boxForm} onSubmit={handleSubmit}>
           <label className={styles.labelStandard}>
-            Nome Contratual
-            <input
-              type="text"
-              placeholder="Nome Contratual"
-              name="nome_contratual"
-              value={formData.nome_contratual ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Tipo Rede
-            <input
-              type="text"
-              placeholder="Tipo Rede"
-              name="tipo_rede"
-              value={formData.tipo_rede ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
             Nome Operacional
             <input
               type="text"
@@ -211,15 +192,20 @@ export default function EditEntidade(props: pageContratosProps): JSX.Element {
             />
           </label>
           <label className={styles.labelStandard}>
-            Condicação
-            <input
-              type="text"
-              placeholder="Condicação"
-              name="condicao"
-              value={formData.condicao ?? ''}
+            Responsavel Pedagógico
+            <select
+              value={formData.id_usuario_pdg ?? ''}
               onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
+              name="id_usuario_pdg"
+              className={styles.inputSelect}
+            >
+              <option value="">-</option>
+              {userPDG.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.nome}
+                </option>
+              ))}
+            </select>
           </label>
           <label className={styles.labelStandard}>
             CNPJ Escola
@@ -298,6 +284,31 @@ export default function EditEntidade(props: pageContratosProps): JSX.Element {
               className={styles.inputStandard}
             />
           </label>
+          <label className={styles.labelStandard}>
+            URL Dados
+            <input
+              type="text"
+              placeholder="url_dados"
+              name="url_dados"
+              value={formData.url_dados ?? ''}
+              onChange={handleInputChange}
+              className={styles.inputStandard}
+            />
+          </label>
+          <label className={styles.labelStandard}>
+            Status
+            <select
+              value={formData.ativo === null ? '' : formData.ativo.toString()}
+              onChange={handleInputChange}
+              name="ativo"
+              className={styles.inputSelect}
+            >
+              <option value="">-</option>
+              <option value="true">Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+          </label>
+
           <div className={styles.buttonContainer}>
             <button
               className={styles.confirmButton}

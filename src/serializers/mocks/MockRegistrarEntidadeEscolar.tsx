@@ -1,12 +1,10 @@
-import { EntitiesRegisterEntidadeEscolar } from '@/entities';
+import { EntitiesRegistrarEntidadeEscolar } from '@/entities';
 import { SerializerInterface } from '@/interfaces';
 
 interface UsersMockPayload {
   id: string;
-  condicao: string;
-  codigo_be: string;
-  nome_contratual: string;
-  tipo_rede: string;
+  uuid_ec: string;
+  id_ec: string;
   nome_operacional: string;
   cnpj_escola: string;
   cep: string;
@@ -15,20 +13,17 @@ interface UsersMockPayload {
   uf: string;
   bairro: string;
   complemento: string;
-  situacao: string;
-  id_contrato: string;
+  ativo: boolean;
 }
 
 export default class MockRegisterEntitiesEscolaresSerializers
   implements SerializerInterface
 {
-  toEntity(otd: UsersMockPayload): EntitiesRegisterEntidadeEscolar {
-    return new EntitiesRegisterEntidadeEscolar({
+  toEntity(otd: UsersMockPayload): EntitiesRegistrarEntidadeEscolar {
+    return new EntitiesRegistrarEntidadeEscolar({
       id: otd.id,
-      condicao: otd.condicao,
-      codigo_be: otd.codigo_be,
-      nome_contratual: otd.nome_contratual,
-      tipo_rede: otd.tipo_rede,
+      uuid_ec: otd.uuid_ec,
+      id_ec: otd.id_ec,
       nome_operacional: otd.nome_operacional,
       cnpj_escola: otd.cnpj_escola,
       cep: otd.cep,
@@ -37,8 +32,7 @@ export default class MockRegisterEntitiesEscolaresSerializers
       uf: otd.uf,
       bairro: otd.bairro,
       complemento: otd.complemento,
-      situacao: otd.situacao,
-      id_contrato: otd.id_contrato,
+      ativo: otd.ativo,
     });
   }
 }

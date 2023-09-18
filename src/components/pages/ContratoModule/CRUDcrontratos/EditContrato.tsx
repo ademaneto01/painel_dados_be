@@ -12,13 +12,15 @@ interface pageContratosProps {}
 interface FormData {
   nome_simplificado: string | null;
   razao_social: string | null;
-  cnpj: string | null;
+  cnpj_cont: string | null;
   cep: string | null;
   endereco: string | null;
   cidade: string | null;
-  uf: string | null;
+  uf: string;
   bairro: string | null;
   complemento: string | null;
+  ativo: boolean | null;
+  bo_rede: boolean | null;
 }
 
 export default function EditContrato(props: pageContratosProps): JSX.Element {
@@ -29,13 +31,15 @@ export default function EditContrato(props: pageContratosProps): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
     nome_simplificado: '',
     razao_social: '',
-    cnpj: '',
+    cnpj_cont: '',
     cep: '',
     endereco: '',
     cidade: '',
     uf: '',
     bairro: '',
     complemento: '',
+    ativo: null,
+    bo_rede: null,
   });
   useEffect(() => {
     fetchDataInitial();
@@ -45,18 +49,20 @@ export default function EditContrato(props: pageContratosProps): JSX.Element {
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
-      const response = await backendApi.findOneContract({ id: idContrato });
+      const response = await backendApi.localizarContrato({ id: idContrato });
 
       setFormData({
         nome_simplificado: response[0]?.nome_simplificado || '',
         razao_social: response[0]?.razao_social || '',
-        cnpj: response[0]?.cnpj || '',
+        cnpj_cont: response[0]?.cnpj_cont || '',
         cep: response[0]?.cep || '',
         endereco: response[0]?.endereco || '',
         cidade: response[0]?.cidade || '',
         uf: response[0]?.uf || '',
         bairro: response[0]?.bairro || '',
         complemento: response[0]?.complemento || '',
+        ativo: response[0]?.ativo || null,
+        bo_rede: response[0]?.bo_rede || null,
       });
     } catch (error) {
       if (error instanceof FailedToFetchError) {
@@ -72,17 +78,19 @@ export default function EditContrato(props: pageContratosProps): JSX.Element {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
 
-      await backendApi.updateContract({
+      await backendApi.editarEntidadeContratual({
         id: idContrato,
         nome_simplificado: formData.nome_simplificado,
         razao_social: formData.razao_social,
-        cnpj: formData.cnpj,
+        cnpj_cont: formData.cnpj_cont,
         cep: formData.cep,
         endereco: formData.endereco,
         cidade: formData.cidade,
         uf: formData.uf,
         bairro: formData.bairro,
         complemento: formData.complemento,
+        ativo: formData.ativo,
+        bo_rede: formData.bo_rede,
       });
     } catch (error) {
       if (error instanceof FailedToFetchError) {
@@ -100,10 +108,19 @@ export default function EditContrato(props: pageContratosProps): JSX.Element {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name === 'ativo' || name === 'bo_rede') {
+      const booleanValue =
+        value === 'true' ? true : value === 'false' ? false : null;
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: booleanValue,
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -112,16 +129,25 @@ export default function EditContrato(props: pageContratosProps): JSX.Element {
     if (
       formData.nome_simplificado === '' ||
       formData.razao_social == '' ||
-      formData.cnpj == '' ||
+      formData.cnpj_cont == '' ||
       formData.cep == '' ||
       formData.endereco == '' ||
       formData.cidade == '' ||
       formData.uf == '' ||
       formData.bairro == '' ||
-      formData.complemento == ''
+      formData.complemento == '' ||
+      formData.ativo == null ||
+      formData.bo_rede == null
     ) {
       setError(true);
       setMsgError('Todos campos são obrigatórios...');
+      setTimeout(() => {
+        setError(false);
+      }, 6000);
+      return;
+    } else if (formData.uf.length > 2) {
+      setError(true);
+      setMsgError('Campo UF é permitido somente dois caracteres...');
       setTimeout(() => {
         setError(false);
       }, 6000);
@@ -175,7 +201,7 @@ export default function EditContrato(props: pageContratosProps): JSX.Element {
               type="text"
               placeholder="CNPJ"
               name="cnpj"
-              value={formData.cnpj ?? ''}
+              value={formData.cnpj_cont ?? ''}
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
@@ -245,6 +271,34 @@ export default function EditContrato(props: pageContratosProps): JSX.Element {
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
+          </label>
+          <label className={styles.labelStandard}>
+            Status
+            <select
+              value={formData.ativo === null ? '' : formData.ativo.toString()}
+              onChange={handleInputChange}
+              name="ativo"
+              className={styles.inputSelect}
+            >
+              <option value="">-</option>
+              <option value="true">Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
+          </label>
+          <label className={styles.labelStandard}>
+            Rede
+            <select
+              value={
+                formData.bo_rede === null ? '' : formData.bo_rede.toString()
+              }
+              onChange={handleInputChange}
+              name="bo_rede"
+              className={styles.inputSelect}
+            >
+              <option value="">-</option>
+              <option value="true">Ativa</option>
+              <option value="false">Inativa</option>
+            </select>
           </label>
           <div className={styles.buttonContainer}>
             <button

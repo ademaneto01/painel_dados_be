@@ -41,7 +41,7 @@ export default function TableActionsContratos(
     try {
       const backendApi = new BackendApiMock(`${token}`);
 
-      await backendApi.deleteContract({ id_contrato: props.id });
+      await backendApi.deletarContrato({ uuid_ec: props.id });
       setShowModalDelete('');
       setUsersUpdated(true);
     } catch (error) {

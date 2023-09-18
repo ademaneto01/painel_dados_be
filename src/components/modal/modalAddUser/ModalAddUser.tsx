@@ -95,7 +95,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
       const response = await backendApi.localizarUsuario({ userId });
-      const escolaStorageId = localStorage.getItem('escola');
+
       setFormData({
         nome: response[0]?.nome || '',
         email: response[0]?.email || '',
@@ -108,13 +108,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
         isPasswordMatch: true,
       });
 
-      const entiadeContratual = await backendApi.localizarEntitadeEscolar({
-        id: escolaStorageId,
-      });
-
-      const entidadesEscolares = await backendApi.localizarEntidadesEscolares({
-        uuid_ec: entiadeContratual[0].uuid_ec,
-      });
+      const entidadesEscolares = await backendApi.todasEntidadesEscolares();
 
       setEntidadesEscolaresData(
         entidadesEscolares.map((school) => ({
@@ -359,7 +353,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
           </div>
         </form>
       </div>
-      {error ? <ErrorComponent message={msgError} /> : ''}
+      {error ? <ErrorComponent message={'teste'} /> : ''}
     </>
   );
 };

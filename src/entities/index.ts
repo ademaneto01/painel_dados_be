@@ -7,8 +7,9 @@ import EntitiesContratos from './EntitiesContratos';
 import EntitiesCadastroUser from './EntitiesCadastroUser';
 import EntitiesEntidadesEscolares from './EntitiesEntidadesEscolares';
 import EntitiesRegisterContract from './EntitiesRegisterContract';
-import EntitiesUsersPDG from './EntitiesUsersPDG';
-import EntitiesRegisterEntidadeEscolar from './EntitiesRegisterEntidadeEscolar';
+import EntitiesUsuariosPDG from './EntitiesUsuariosPDG';
+import EntitiesRegistrarEntidadeEscolar from './EntitiesRegistrarEntidadeEscolar';
+import EntitiesEditarEntidadeEscolar from './EntitiesEditarEntidadeEscolar';
 export {
   EntitiesUsers,
   EntitiesUserLogin,
@@ -19,6 +20,7 @@ export {
   EntitiesCadastroUser,
   EntitiesEntidadesEscolares,
   EntitiesRegisterContract,
-  EntitiesUsersPDG,
-  EntitiesRegisterEntidadeEscolar,
+  EntitiesUsuariosPDG,
+  EntitiesRegistrarEntidadeEscolar,
+  EntitiesEditarEntidadeEscolar,
 };

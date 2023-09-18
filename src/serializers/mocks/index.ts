@@ -6,8 +6,8 @@ import MockCadastroSerializers from './MockCadastroSerializers';
 import MockUrlSerializers from './MockUrlSerializers';
 import MockRegisterContractSerializers from './MockRegisterContractSerializers';
 import MockDeleteContratoSerializers from './MockDeleteContratoSerializers';
-import MockUsersPDG from './MockUsersPDG';
-import MockRegisterEntitiesEscolaresSerializers from './MockRegisterEntitiesEscolaresSerializers';
+import MockUsuariosPDG from './MockUsuariosPDG';
+import MockRegistrarEntidadeEscolar from './MockRegistrarEntidadeEscolar';
 export {
   MockUsersSerializers,
   MockUserLogin,
@@ -17,6 +17,6 @@ export {
   MockUrlSerializers,
   MockRegisterContractSerializers,
   MockDeleteContratoSerializers,
-  MockUsersPDG,
-  MockRegisterEntitiesEscolaresSerializers,
+  MockUsuariosPDG,
+  MockRegistrarEntidadeEscolar,
 };

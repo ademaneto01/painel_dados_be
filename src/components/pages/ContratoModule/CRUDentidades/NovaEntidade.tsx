@@ -14,7 +14,7 @@ import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, CreateButton } from '@/components/shared';
 import { BiCloudDownload } from 'react-icons/bi';
 import { IconType, IconBaseProps } from 'react-icons';
-import { EntitiesUsersPDG } from '@/entities';
+import { EntitiesUsuariosPDG } from '@/entities';
 
 interface pageContratosProps {
   setPage: Dispatch<SetStateAction<PageEnumContratos>>;
@@ -23,8 +23,6 @@ interface pageContratosProps {
 }
 
 interface FormData {
-  nome_contratual: string;
-  tipo_rede: string;
   nome_operacional: string;
   cnpj_escola: string;
   cep: string;
@@ -33,8 +31,10 @@ interface FormData {
   uf: string;
   bairro: string;
   complemento: string;
-  id_usuarios_pg: string;
-  id_contrato: string;
+  url_dados: string;
+  uuid_ec: string;
+  id_usuario_pdg: string;
+  ativo: boolean | null;
 }
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
@@ -49,11 +49,9 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const [userPDG, setUserPDG] = useState<EntitiesUsersPDG[]>([]);
+  const [userPDG, setUserPDG] = useState<EntitiesUsuariosPDG[]>([]);
 
   const [formData, setFormData] = useState<FormData>({
-    nome_contratual: '',
-    tipo_rede: '',
     nome_operacional: '',
     cnpj_escola: '',
     cep: '',
@@ -62,8 +60,10 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
     uf: '',
     bairro: '',
     complemento: '',
-    id_usuarios_pg: '',
-    id_contrato: '',
+    url_dados: '',
+    uuid_ec: '',
+    id_usuario_pdg: '',
+    ativo: true,
   });
 
   async function fetchData() {
@@ -71,9 +71,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
 
-      await backendApi.registerEntidadeEscolar({
-        nome_contratual: formData.nome_contratual,
-        tipo_rede: formData.tipo_rede,
+      await backendApi.registrarEntidadeEscolar({
         nome_operacional: formData.nome_operacional,
         cnpj_escola: formData.cnpj_escola,
         cep: formData.cep,
@@ -82,8 +80,10 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
         uf: formData.uf,
         bairro: formData.bairro,
         complemento: formData.complemento,
-        id_contrato: props.idContrato,
-        id_usuarios_pg: formData.id_usuarios_pg,
+        url_dados: formData.url_dados,
+        uuid_ec: props.idContrato,
+        id_usuario_pg: formData.id_usuario_pdg,
+        ativo: formData.ativo,
       });
     } catch (error) {
       if (error instanceof FailedToFetchError) {
@@ -101,18 +101,26 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+
+    if (name === 'ativo') {
+      const booleanValue =
+        value === 'true' ? true : value === 'false' ? false : null;
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: booleanValue,
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if (
-      formData.nome_contratual == '' ||
-      formData.tipo_rede == '' ||
       formData.nome_operacional == '' ||
       formData.cnpj_escola == '' ||
       formData.cep == '' ||
@@ -120,10 +128,20 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
       formData.cidade == '' ||
       formData.uf == '' ||
       formData.bairro == '' ||
-      formData.complemento == ''
+      formData.complemento == '' ||
+      formData.url_dados == '' ||
+      formData.ativo == null ||
+      formData.id_usuario_pdg == ''
     ) {
       setError(true);
       setMsgError('Todos campos são obrigatórios...');
+      setTimeout(() => {
+        setError(false);
+      }, 6000);
+      return;
+    } else if (formData.uf.length > 2) {
+      setError(true);
+      setMsgError('Campo UF é permitido somente dois caracteres...');
       setTimeout(() => {
         setError(false);
       }, 6000);
@@ -141,7 +159,8 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
-      const response = await backendApi.getUsersPDG();
+      const response = await backendApi.localizarUsuariosPDG();
+      console.log(response);
       setUserPDG(response);
     } catch (error) {
       if (error instanceof FailedToFetchError) {
@@ -169,28 +188,6 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
 
         <form className={styles.boxForm} onSubmit={handleSubmit}>
           <label className={styles.labelStandard}>
-            Nome Contratual
-            <input
-              type="text"
-              placeholder="Nome Contratual"
-              name="nome_contratual"
-              value={formData.nome_contratual}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Tipo Rede
-            <input
-              type="text"
-              placeholder="Tipo Rede"
-              name="tipo_rede"
-              value={formData.tipo_rede}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
             Nome Operacional
             <input
               type="text"
@@ -204,9 +201,9 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
           <label className={styles.labelStandard}>
             Responsavel Pedagógico
             <select
-              value={formData.id_usuarios_pg}
+              value={formData.id_usuario_pdg}
               onChange={handleInputChange}
-              name="id_usuarios_pg"
+              name="id_usuario_pdg"
               className={styles.inputSelect}
             >
               <option value="">-</option>
@@ -293,6 +290,30 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
               onChange={handleInputChange}
               className={styles.inputStandard}
             />
+          </label>
+          <label className={styles.labelStandard}>
+            URL Dados
+            <input
+              type="text"
+              placeholder="url_dados"
+              name="url_dados"
+              value={formData.url_dados}
+              onChange={handleInputChange}
+              className={styles.inputStandard}
+            />
+          </label>
+          <label className={styles.labelStandard}>
+            Status
+            <select
+              value={formData.ativo === null ? '' : formData.ativo.toString()}
+              onChange={handleInputChange}
+              name="ativo"
+              className={styles.inputSelect}
+            >
+              <option value="">-</option>
+              <option value="true">Ativo</option>
+              <option value="false">Inativo</option>
+            </select>
           </label>
 
           <div className={styles.buttonContainer}>
