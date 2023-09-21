@@ -4,15 +4,13 @@ import { Column, Table } from '@/components/Table';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
 import { IconType, IconBaseProps } from 'react-icons';
-import { PageEnumContratos } from '@/enums';
-import { EntitiesEntidadesEscolares } from '@/entities';
+import { BiCloudDownload, BiCloudUpload } from 'react-icons/bi';
+import { PageEnum } from '@/enums';
+import { EntitiesEntidadesEscolaresPDG } from '@/entities';
 import BackendApiMock from '@/backendApi';
-import { useGlobalContext } from '@/context/store';
 
 interface pageContratosProps {
-  setPage: Dispatch<SetStateAction<PageEnumContratos>>;
-  setIdContrato: Dispatch<SetStateAction<string>>;
-  idContrato: string;
+  setPage: Dispatch<SetStateAction<PageEnum>>;
 }
 
 const columns = [
@@ -30,27 +28,25 @@ function reactIcon(icon: IconType, color?: string): JSX.Element {
   return icon(options);
 }
 
-export default function EntidadesEscolares(
-  props: pageContratosProps,
-): JSX.Element {
-  const [data, setData] = useState([] as EntitiesEntidadesEscolares[]);
+export default function EscolasPDG(props: pageContratosProps): JSX.Element {
+  const [data, setData] = useState([] as EntitiesEntidadesEscolaresPDG[]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const { setUsersUpdated, usersUpdated } = useGlobalContext();
-  const [showModalAddEscola, setShowModalAddEscola] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
+      const idUsuario = localStorage.getItem('userId');
 
       try {
         const backendApi = new BackendApiMock(`${token}`);
-        const escolas = await backendApi.localizarEntidadesEscolares({
-          uuid_ec: props.idContrato,
-        });
+        const escolas = await backendApi.localizarEntidadesEscolaresUsuariosPDG(
+          {
+            userId: idUsuario,
+          },
+        );
 
         setData(escolas);
-        setUsersUpdated(false);
       } catch (error) {
         if (error instanceof FailedToFetchError) {
           setError(true);
@@ -64,33 +60,16 @@ export default function EntidadesEscolares(
     if (!loaded) {
       fetchData();
     }
-  }, [loaded, usersUpdated]);
+  }, [loaded]);
 
   return (
     <div className={styles.pageContainer}>
-      <h4>Contratos</h4>
+      <h4>Pegagógico</h4>
       <nav className={styles.boxButtonsNav}>
         <button>Entidades Escolares</button>
       </nav>
       <PageContentContainer>
-        <div className={styles.boxBtns}>
-          <CreateButton
-            color={'var(--white'}
-            colorBackGround={'var(--blue-300)'}
-            text="Nova Entidade"
-            onClick={() => props.setPage(PageEnumContratos.novaEntidade)}
-          />
-          <CreateButton
-            color={'var(--gray-300'}
-            colorBackGround={'var(--white)'}
-            text="Voltar"
-            size="8rem"
-            onClick={() =>
-              props.setPage(PageEnumContratos.entidadesContratuais)
-            }
-          />
-        </div>
-        <Table<EntitiesEntidadesEscolares>
+        <Table<EntitiesEntidadesEscolaresPDG>
           data={data}
           columns={columns}
           loaded={loaded}

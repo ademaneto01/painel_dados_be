@@ -8,6 +8,7 @@ import MockRegisterContractSerializers from './MockRegisterContractSerializers';
 import MockDeleteContratoSerializers from './MockDeleteContratoSerializers';
 import MockUsuariosPDG from './MockUsuariosPDG';
 import MockRegistrarEntidadeEscolar from './MockRegistrarEntidadeEscolar';
+import MockEntidadeEscolarPDGSerializers from './MockEntidadeEscolarPDGSerializers';
 export {
   MockUsersSerializers,
   MockUserLogin,
@@ -19,4 +20,5 @@ export {
   MockDeleteContratoSerializers,
   MockUsuariosPDG,
   MockRegistrarEntidadeEscolar,
+  MockEntidadeEscolarPDGSerializers,
 };

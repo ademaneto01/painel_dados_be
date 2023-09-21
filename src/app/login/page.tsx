@@ -1,12 +1,11 @@
 'use client';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import BackendApiMock from '@/backendApi';
 import styles from '@/styles/Login.module.css';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import { Loader } from '@/components/shared';
-import React from 'react';
 
 interface FormState {
   email: string;
@@ -18,7 +17,7 @@ interface WarningState {
   show: boolean;
 }
 
-export function SignIn() {
+export default function SignIn() {
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
   const [form, setForm] = useState<FormState>({ email: '', password: '' });
@@ -27,24 +26,40 @@ export function SignIn() {
     show: false,
   });
 
-  function onChange(evt: ChangeEvent<HTMLInputElement>) {
-    const value = evt.target.value;
-    const key = evt.target.name;
-
+  const updateForm = (key: string, value: string) => {
     setForm((old) => ({
       ...old,
       [key]: value,
     }));
-  }
-  function hideWarningAfterDelay() {
+  };
+
+  const saveUserToLocalStorage = (user: any) => {
+    localStorage.setItem('userNome', user.nome);
+    localStorage.setItem('escola', user.id_ee);
+    localStorage.setItem('auth_token', user.token);
+    localStorage.setItem('userId', user.id);
+    Cookies.set('auth_token', user.token);
+  };
+
+  const handleLoginError = (error: any) => {
+    setWarning({
+      msg: error.response.data.mensagem,
+      show: true,
+    });
+    setLoaded(false);
+    hideWarningAfterDelay();
+  };
+
+  const hideWarningAfterDelay = () => {
     setTimeout(() => {
       setWarning(() => ({
         msg: '',
         show: false,
       }));
     }, 6000);
-  }
-  async function handleSignIn(evt: FormEvent<HTMLFormElement>) {
+  };
+
+  const handleSignIn = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     try {
@@ -56,21 +71,18 @@ export function SignIn() {
       });
 
       setLoaded(true);
-      localStorage.setItem('userNome', users[0].nome);
-      localStorage.setItem('escola', users[0].id_ee);
-      localStorage.setItem('auth_token', users[0].token);
-      localStorage.setItem('userId', users[0].id);
-      Cookies.set('auth_token', users[0].token);
+      saveUserToLocalStorage(users[0]);
       router.push('/');
     } catch (error: any) {
-      setWarning({
-        msg: error.response.data.mensagem,
-        show: true,
-      });
-      setLoaded(false);
-      hideWarningAfterDelay();
+      handleLoginError(error);
     }
-  }
+  };
+
+  const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const value = evt.target.value;
+    const key = evt.target.name;
+    updateForm(key, value);
+  };
 
   return (
     <div className={styles.containerSignIn}>
@@ -121,4 +133,3 @@ export function SignIn() {
     </div>
   );
 }
-export default SignIn;

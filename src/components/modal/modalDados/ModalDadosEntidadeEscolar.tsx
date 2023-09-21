@@ -4,15 +4,13 @@ import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
 import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
+import EntitiesUsersPDG from '@/entities/EntitiesUsuariosPDG';
 
 interface FormData {
-  condicao: string;
-  codigo_be: string;
-  nome_contratual: string;
-  tipo_rede: string;
   nome_operacional: string;
   cnpj_escola: string;
   cep: string;
+  url_dados: string;
   endereco: string;
   cidade: string;
   uf: string;
@@ -37,19 +35,17 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
   idEntidade,
 }) => {
   const [formData, setFormData] = useState<FormData>({
-    condicao: '',
-    codigo_be: '',
-    nome_contratual: '',
-    tipo_rede: '',
     nome_operacional: '',
     cnpj_escola: '',
     cep: '',
+    url_dados: '',
     endereco: '',
     cidade: '',
     uf: '',
     bairro: '',
     complemento: '',
   });
+  const [usuarioPDG, setUsuarioPDG] = useState<EntitiesUsersPDG[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -61,14 +57,13 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
 
-      const response = await backendApi.getEntitadeEscolar({ id: idEntidade });
+      const response = await backendApi.localizarEntitadeEscolar({
+        id: idEntidade,
+      });
       setFormData({
-        condicao: response[0].condicao,
-        codigo_be: response[0].codigo_be,
-        nome_contratual: response[0].nome_contratual,
         nome_operacional: response[0].nome_operacional,
-        tipo_rede: response[0].tipo_rede,
         cnpj_escola: response[0].cnpj_escola,
+        url_dados: response[0].url_dados,
         cep: response[0].cep,
         endereco: response[0].endereco,
         cidade: response[0].cidade,
@@ -76,6 +71,12 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
         bairro: response[0].bairro,
         complemento: response[0].complemento,
       });
+      //LOCALIZAR USUARIO PEDAGÓGICO
+      const usuariosPDG = await backendApi.localizarUsuariosPDG();
+      const usuarioEncontrado = usuariosPDG.find((user) => {
+        return user.id === response[0].id_usuario_pdg;
+      });
+      setUsuarioPDG(usuarioEncontrado ? [usuarioEncontrado] : []);
     } catch (error) {
       if (error instanceof FailedToFetchError) {
         console.log(error);
@@ -100,28 +101,20 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
           <div className={styles.boxDados}>
             <div className={styles.dados}>
               <p>
-                <span className={styles.label}>Nome Contratual:</span>{' '}
-                {formData.nome_contratual}
-              </p>
-              <p>
                 <span className={styles.label}>Nome Operacional:</span>{' '}
                 {formData.nome_operacional}
               </p>
               <p>
-                <span className={styles.label}>Condição:</span>{' '}
-                {formData.condicao}
-              </p>
-              <p>
-                <span className={styles.label}>Tipo Rede:</span>{' '}
-                {formData.tipo_rede}
-              </p>
-              <p>
-                <span className={styles.label}>Código Be:</span>{' '}
-                {formData.codigo_be}
-              </p>
-              <p>
                 <span className={styles.label}>CNPJ Escola:</span>{' '}
                 {formData.cnpj_escola}
+              </p>
+              <p>
+                <span className={styles.label}>RESP. Pedagógico:</span>{' '}
+                {usuarioPDG.length > 0 ? usuarioPDG[0].nome : 'N/A'}
+              </p>
+              <p>
+                <span className={styles.label}>URL Dados:</span>{' '}
+                {formData.url_dados}
               </p>
             </div>
             <div className={styles.dados}>

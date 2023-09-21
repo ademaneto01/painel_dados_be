@@ -7,8 +7,6 @@ import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, CreateButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 
-interface pageContratosProps {}
-
 interface FormData {
   nome_simplificado: string | null;
   razao_social: string | null;
@@ -23,7 +21,7 @@ interface FormData {
   bo_rede: boolean | null;
 }
 
-export default function EditContrato(props: pageContratosProps): JSX.Element {
+export default function EditContrato(): JSX.Element {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
@@ -41,16 +39,14 @@ export default function EditContrato(props: pageContratosProps): JSX.Element {
     ativo: null,
     bo_rede: null,
   });
+
   useEffect(() => {
     fetchDataInitial();
   }, []);
 
-  async function fetchDataInitial() {
-    try {
-      const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
-      const response = await backendApi.localizarContrato({ id: idContrato });
-
+  const fetchDataInitial = async () => {
+    const response = await fetchContractData(idContrato);
+    if (response) {
       setFormData({
         nome_simplificado: response[0]?.nome_simplificado || '',
         razao_social: response[0]?.razao_social || '',
@@ -64,20 +60,32 @@ export default function EditContrato(props: pageContratosProps): JSX.Element {
         ativo: response[0]?.ativo || null,
         bo_rede: response[0]?.bo_rede || null,
       });
-    } catch (error) {
-      if (error instanceof FailedToFetchError) {
-        setError(true);
-      } else {
-        throw error;
-      }
     }
-  }
+  };
 
-  async function fetchData() {
+  const fetchContractData = async (id: string) => {
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
+      return await backendApi.localizarContrato({ id });
+    } catch (error) {
+      handleApiErrors(error);
+      return null;
+    }
+  };
 
+  const handleApiErrors = (error: any) => {
+    if (error instanceof FailedToFetchError) {
+      setError(true);
+    } else {
+      throw error;
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const backendApi = new BackendApiMock(`${token}`);
       await backendApi.editarEntidadeContratual({
         id: idContrato,
         nome_simplificado: formData.nome_simplificado,
@@ -93,39 +101,14 @@ export default function EditContrato(props: pageContratosProps): JSX.Element {
         bo_rede: formData.bo_rede,
       });
     } catch (error) {
-      if (error instanceof FailedToFetchError) {
-        setError(true);
-      } else {
-        throw error;
-      }
+      handleApiErrors(error);
     } finally {
       setLoaded(true);
     }
     setPage(PageEnumContratos.entidadesContratuais);
-  }
-
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const { name, value } = e.target;
-    if (name === 'ativo' || name === 'bo_rede') {
-      const booleanValue =
-        value === 'true' ? true : value === 'false' ? false : null;
-      setFormData((prevState) => ({
-        ...prevState,
-        [name]: booleanValue,
-      }));
-    } else {
-      setFormData((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    }
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
+  const validateForm = () => {
     if (
       formData.nome_simplificado === '' ||
       formData.razao_social == '' ||
@@ -153,172 +136,210 @@ export default function EditContrato(props: pageContratosProps): JSX.Element {
       }, 6000);
       return;
     } else {
+      return true;
+    }
+  };
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target;
+    if (name === 'ativo' || name === 'bo_rede') {
+      const booleanValue =
+        value === 'true' ? true : value === 'false' ? false : null;
+      setFormData((prevState) => ({ ...prevState, [name]: booleanValue }));
+    } else {
+      setFormData((prevState) => ({ ...prevState, [name]: value }));
+    }
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (validateForm()) {
       fetchData();
     }
   };
 
   return (
     <div className={styles.pageContainer}>
-      <h4>Editar Contrato</h4>
-
+      <HeaderComponent />
       <PageContentContainer>
-        <div className={styles.boxBtns}>
-          <CreateButton
-            color={'var(--gray-300'}
-            colorBackGround={'var(--white)'}
-            text="Voltar"
-            size="8rem"
-            onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
-          />
-        </div>
-
-        <form className={styles.boxForm} onSubmit={handleSubmit}>
-          <label className={styles.labelStandard}>
-            Nome Simplificado
-            <input
-              type="text"
-              placeholder="Nome Simplificado"
-              name="nome_simplificado"
-              value={formData.nome_simplificado ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Razão Social
-            <input
-              type="text"
-              placeholder="Razão Sociala"
-              name="razao_social"
-              value={formData.razao_social ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            CNPJ
-            <input
-              type="text"
-              placeholder="CNPJ"
-              name="cnpj"
-              value={formData.cnpj_cont ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            CEP
-            <input
-              type="text"
-              placeholder="CEP"
-              name="cep"
-              value={formData.cep ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Endereço
-            <input
-              type="text"
-              placeholder="Endereço"
-              name="endereco"
-              value={formData.endereco ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Cidade
-            <input
-              type="text"
-              placeholder="Cidade"
-              name="cidade"
-              value={formData.cidade ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            UF
-            <input
-              type="text"
-              placeholder="UF"
-              name="uf"
-              value={formData.uf ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Bairro
-            <input
-              type="text"
-              placeholder="Bairro"
-              name="bairro"
-              value={formData.bairro ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Complemento
-            <input
-              type="text"
-              placeholder="Complemente"
-              name="complemento"
-              value={formData.complemento ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Status
-            <select
-              value={formData.ativo === null ? '' : formData.ativo.toString()}
-              onChange={handleInputChange}
-              name="ativo"
-              className={styles.inputSelect}
-            >
-              <option value="">-</option>
-              <option value="true">Ativo</option>
-              <option value="false">Inativo</option>
-            </select>
-          </label>
-          <label className={styles.labelStandard}>
-            Rede
-            <select
-              value={
-                formData.bo_rede === null ? '' : formData.bo_rede.toString()
-              }
-              onChange={handleInputChange}
-              name="bo_rede"
-              className={styles.inputSelect}
-            >
-              <option value="">-</option>
-              <option value="true">Ativa</option>
-              <option value="false">Inativa</option>
-            </select>
-          </label>
-          <div className={styles.buttonContainer}>
-            <button
-              className={styles.confirmButton}
-              type="button"
-              onClick={handleSubmit}
-            >
-              Salvar
-            </button>
-            <button
-              className={styles.cancelButton}
-              type="button"
-              onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
-            >
-              Cancelar
-            </button>
-          </div>
-        </form>
-        {error ? <ErrorComponent message={msgError} /> : ''}
+        <NavigationButtons setPage={setPage} />
+        <FormComponent
+          formData={formData}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          setPage={setPage}
+        />
+        {error && <ErrorComponent message={msgError} />}
       </PageContentContainer>
     </div>
   );
 }
+
+const HeaderComponent: React.FC = () => <h4>Editar Contrato</h4>;
+
+const NavigationButtons: React.FC<any> = ({ setPage }) => (
+  <div className={styles.boxBtns}>
+    <CreateButton
+      color={'var(--gray-300'}
+      colorBackGround={'var(--white)'}
+      text="Voltar"
+      size="8rem"
+      onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
+    />
+  </div>
+);
+
+const FormComponent: React.FC<any> = ({
+  formData,
+  handleInputChange,
+  handleSubmit,
+  setPage,
+}) => {
+  return (
+    <form className={styles.boxForm} onSubmit={handleSubmit}>
+      <label className={styles.labelStandard}>
+        Nome Simplificado
+        <input
+          type="text"
+          placeholder="Nome Simplificado"
+          name="nome_simplificado"
+          value={formData.nome_simplificado ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Razão Social
+        <input
+          type="text"
+          placeholder="Razão Sociala"
+          name="razao_social"
+          value={formData.razao_social ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        CNPJ
+        <input
+          type="text"
+          placeholder="CNPJ"
+          name="cnpj_cont"
+          value={formData.cnpj_cont ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        CEP
+        <input
+          type="text"
+          placeholder="CEP"
+          name="cep"
+          value={formData.cep ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Endereço
+        <input
+          type="text"
+          placeholder="Endereço"
+          name="endereco"
+          value={formData.endereco ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Cidade
+        <input
+          type="text"
+          placeholder="Cidade"
+          name="cidade"
+          value={formData.cidade ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        UF
+        <input
+          type="text"
+          placeholder="UF"
+          name="uf"
+          value={formData.uf ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Bairro
+        <input
+          type="text"
+          placeholder="Bairro"
+          name="bairro"
+          value={formData.bairro ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Complemento
+        <input
+          type="text"
+          placeholder="Complemente"
+          name="complemento"
+          value={formData.complemento ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Status
+        <select
+          value={formData.ativo === null ? '' : formData.ativo.toString()}
+          onChange={handleInputChange}
+          name="ativo"
+          className={styles.inputSelect}
+        >
+          <option value="">-</option>
+          <option value="true">Ativo</option>
+          <option value="false">Inativo</option>
+        </select>
+      </label>
+      <label className={styles.labelStandard}>
+        Rede
+        <select
+          value={formData.bo_rede === null ? '' : formData.bo_rede.toString()}
+          onChange={handleInputChange}
+          name="bo_rede"
+          className={styles.inputSelect}
+        >
+          <option value="">-</option>
+          <option value="true">Ativa</option>
+          <option value="false">Inativa</option>
+        </select>
+      </label>
+      <div className={styles.buttonContainer}>
+        <button
+          className={styles.confirmButton}
+          type="button"
+          onClick={handleSubmit}
+        >
+          Salvar
+        </button>
+        <button
+          className={styles.cancelButton}
+          type="button"
+          onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  );
+};

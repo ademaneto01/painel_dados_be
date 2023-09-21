@@ -3,6 +3,7 @@ import {
   EntitiesDeletUser,
   EntitiesEditarEntidadeEscolar,
   EntitiesEntidadesEscolares,
+  EntitiesEntidadesEscolaresPDG,
   EntitiesOneUser,
   EntitiesRegistrarEntidadeEscolar,
   EntitiesUrl,
@@ -22,6 +23,7 @@ import {
   MockDeleteContratoSerializers,
   MockRegistrarEntidadeEscolar,
   MockUsuariosPDG,
+  MockEntidadeEscolarPDGSerializers,
 } from '@/serializers/mocks';
 import MockContratosSerializers from '@/serializers/mocks/MockContratosSerializers';
 import MockEditarEntidadeEscolar from '@/serializers/mocks/MockEditarEntidadeEscolar';
@@ -189,6 +191,15 @@ export default class BackendApiMock implements BackendApiInterface {
     );
   }
 
+  public async localizarEntidadesEscolaresUsuariosPDG(
+    userId: any,
+  ): Promise<EntitiesEntidadesEscolaresPDG[]> {
+    return await this.post<EntitiesEntidadesEscolaresPDG>(
+      '/localizarEntidadesEscolaresUsuariosPDG',
+      userId,
+      new MockEntidadeEscolarPDGSerializers(),
+    );
+  }
   public async editarEntidadeEscolar(
     userData: any,
   ): Promise<EntitiesEntidadesEscolares[]> {

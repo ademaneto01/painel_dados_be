@@ -130,8 +130,7 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
       formData.bairro == '' ||
       formData.complemento == '' ||
       formData.url_dados == '' ||
-      formData.ativo == null ||
-      formData.id_usuario_pdg == ''
+      formData.ativo == null
     ) {
       setError(true);
       setMsgError('Todos campos são obrigatórios...');
@@ -160,7 +159,6 @@ export default function NovaEntidade(props: pageContratosProps): JSX.Element {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
       const response = await backendApi.localizarUsuariosPDG();
-      console.log(response);
       setUserPDG(response);
     } catch (error) {
       if (error instanceof FailedToFetchError) {

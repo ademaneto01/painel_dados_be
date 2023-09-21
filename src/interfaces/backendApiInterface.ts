@@ -9,6 +9,7 @@ import {
   EntitiesRegistrarEntidadeEscolar,
   EntitiesCadastroUser,
   EntitiesEditarEntidadeEscolar,
+  EntitiesEntidadesEscolaresPDG,
 } from '@/entities';
 
 export default interface BackendApiInterface {
@@ -20,6 +21,10 @@ export default interface BackendApiInterface {
   registrarUsuario(userData: any): Promise<EntitiesCadastroUser[]>;
   localizarContratos(): Promise<EntitiesContratos[]>;
   todasEntidadesEscolares(): Promise<EntitiesEntidadesEscolares[]>;
+  localizarEntidadesEscolaresUsuariosPDG(
+    userId: any,
+  ): Promise<EntitiesEntidadesEscolaresPDG[]>;
+
   localizarEntidadesEscolares(
     uuid_ec: any,
   ): Promise<EntitiesEntidadesEscolares[]>;

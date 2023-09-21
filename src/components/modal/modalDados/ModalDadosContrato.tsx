@@ -8,7 +8,7 @@ import { IconType, IconBaseProps } from 'react-icons';
 interface FormData {
   nome_simplificado: string;
   razao_social: string;
-  cnpj: string;
+  cnpj_cont: string;
   cep: string;
   endereco: string;
   cidade: string;
@@ -35,7 +35,7 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
   const [formData, setFormData] = useState<FormData>({
     nome_simplificado: '',
     razao_social: '',
-    cnpj: '',
+    cnpj_cont: '',
     cep: '',
     endereco: '',
     cidade: '',
@@ -56,11 +56,11 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
 
-      const response = await backendApi.findOneContract({ id: idContrato });
+      const response = await backendApi.localizarContrato({ id: idContrato });
       setFormData({
         nome_simplificado: response[0].nome_simplificado,
         razao_social: response[0].razao_social,
-        cnpj: response[0].cnpj,
+        cnpj_cont: response[0].cnpj_cont,
         cep: response[0].cep,
         endereco: response[0].endereco,
         cidade: response[0].cidade,
@@ -102,7 +102,8 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
                 {formData.razao_social}
               </p>
               <p>
-                <span className={styles.label}>CNPJ:</span> {formData.cnpj}
+                <span className={styles.label}>CNPJ Contratual:</span>{' '}
+                {formData.cnpj_cont}
               </p>
               <p>
                 <span className={styles.label}>QTD. Escolas:</span>{' '}

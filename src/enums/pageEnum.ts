@@ -3,6 +3,7 @@ enum PageEnum {
   users = 'users',
   contratos = 'contratos',
   entidadesEscolares = 'entidadesEscolares',
+  escolasPDG = 'escolasPDG',
 }
 
 export default PageEnum;

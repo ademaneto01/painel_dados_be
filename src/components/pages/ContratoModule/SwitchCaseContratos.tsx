@@ -25,9 +25,7 @@ export default function SwitchCaseContratos() {
           />
         );
       case PageEnumContratos.novoContrato:
-        return (
-          <pages.NovoContrato setIdContrato={setIdContrato} setPage={setPage} />
-        );
+        return <pages.NovoContrato setPage={setPage} />;
       case PageEnumContratos.sobreescreverContrato:
         return (
           <pages.SobreescreverContrato

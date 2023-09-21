@@ -16,32 +16,31 @@ interface PropsForFxclusion {
   nome?: string;
 }
 
-function reactIcon(icon: IconType, color?: string): JSX.Element {
-  const options: IconBaseProps = {};
-
-  options.fontSize = '1.3em';
-  options.color = color;
-
-  return icon(options);
-}
-
 export default function TableActionEntidadeEscolar(
   props: PropsForFxclusion,
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
-  const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
+  const [showModalVermais, setShowModalVermais] = useState('');
   const { setUsersUpdated, setIdContrato, setPage } = useGlobalContext();
-  function handleClickOpenModalExcluir(id: string): void {
-    setShowModalDelete(props.id);
+
+  const handleEditClick = () => handleClickOpenModalAddEditSchool(props.id);
+  const handleViewMoreClick = () => verMais(props.id);
+  const handleDeleteClick = () => handleClickOpenModalExcluir(props.id);
+
+  function renderIcon(icon: IconType, color?: string): JSX.Element {
+    const options: IconBaseProps = {
+      fontSize: '1.3em',
+      color: color,
+    };
+
+    return icon(options);
   }
 
   async function deleteEntidadeEscolar(id: string) {
     const token = Cookies.get('auth_token');
-
+    const backendApi = new BackendApiMock(`${token}`);
     try {
-      const backendApi = new BackendApiMock(`${token}`);
-
-      await backendApi.deletarEntidadeEscolar({ id: props.id });
+      await backendApi.deletarEntidadeEscolar({ id });
       setShowModalDelete('');
       setUsersUpdated(true);
     } catch (error) {
@@ -49,36 +48,32 @@ export default function TableActionEntidadeEscolar(
     }
   }
 
+  function handleClickOpenModalExcluir(id: string): void {
+    setShowModalDelete(id);
+  }
+
   function handleClickOpenModalAddEditSchool(id: string): void {
-    setIdContrato(props.id);
+    setIdContrato(id);
     setPage(PageEnumContratos.editEntidade);
   }
+
   function verMais(id: string): void {
-    setShowModalAddEditSchool(id);
+    setShowModalVermais(id);
   }
 
   return (
     <div className={styles.container}>
+      <Action icon={renderIcon(FiEdit)} onClick={handleEditClick} />
+      <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
       <Action
-        icon={reactIcon(FiEdit)}
-        onClick={() => {
-          handleClickOpenModalAddEditSchool(props.id);
-        }}
+        icon={renderIcon(FaTrashAlt, '#f1646c')}
+        onClick={handleDeleteClick}
       />
-      <Action
-        icon={reactIcon(ImEyePlus)}
-        onClick={() => {
-          verMais(props.id);
-        }}
-      />
-      <Action
-        icon={reactIcon(FaTrashAlt, '#f1646c')}
-        onClick={() => handleClickOpenModalExcluir(props.id)}
-      />
-      {showModalAddEditSchool === props.id && (
+
+      {showModalVermais === props.id && (
         <ModalDadosEntidadeEscolar
           idEntidade={props.id}
-          onCancel={() => setShowModalAddEditSchool('')}
+          onCancel={() => setShowModalVermais('')}
         />
       )}
 

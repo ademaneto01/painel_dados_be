@@ -4,7 +4,6 @@ import { Column, Table } from '@/components/Table';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
-import { IconType, IconBaseProps } from 'react-icons';
 import { EntitiesContratos } from '@/entities';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';

@@ -23,6 +23,8 @@ export default function Home(): JSX.Element {
         return <pages.DigitalResources />;
       case PageEnum.contratos:
         return <pages.Contratos />;
+      case PageEnum.escolasPDG:
+        return <pages.EscolasPDG setPage={setPage} />;
       default:
         return <></>;
     }

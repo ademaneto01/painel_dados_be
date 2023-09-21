@@ -84,13 +84,22 @@ export default function SideNavBar(props: SideNavBarProps) {
             hidden={perfil === 'Administrador' ? true : false}
           />
           <SideNavBarButton
+            text="Escolas"
+            onClick={() => {
+              props.setPage(PageEnum.escolasPDG);
+            }}
+            icon={reactIcon(ImList2)}
+            active={isActive(PageEnum.escolasPDG)}
+            hidden={perfil === 'Pedagógico' ? true : false}
+          />
+          <SideNavBarButton
             text="Recursos Digitais"
             onClick={() => {
               props.setPage(PageEnum.digitalResources);
             }}
             icon={reactIcon(ImDisplay)}
             active={isActive(PageEnum.digitalResources)}
-            hidden={perfil === 'Pedagógico' ? true : false}
+            hidden={perfil === 'Escola' ? true : false}
           />
 
           <SideNavBarButton

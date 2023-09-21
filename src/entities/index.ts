@@ -10,6 +10,7 @@ import EntitiesRegisterContract from './EntitiesRegisterContract';
 import EntitiesUsuariosPDG from './EntitiesUsuariosPDG';
 import EntitiesRegistrarEntidadeEscolar from './EntitiesRegistrarEntidadeEscolar';
 import EntitiesEditarEntidadeEscolar from './EntitiesEditarEntidadeEscolar';
+import EntitiesEntidadesEscolaresPDG from './EntitiesEntidadesEscolaresPDG';
 export {
   EntitiesUsers,
   EntitiesUserLogin,
@@ -23,4 +24,5 @@ export {
   EntitiesUsuariosPDG,
   EntitiesRegistrarEntidadeEscolar,
   EntitiesEditarEntidadeEscolar,
+  EntitiesEntidadesEscolaresPDG,
 };

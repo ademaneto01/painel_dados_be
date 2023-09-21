@@ -4,7 +4,7 @@ import { FiEdit } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { ImEyePlus } from 'react-icons/im';
 import { IconBaseProps, IconType } from 'react-icons';
-import { ModalDelete, ModalAddUser, ModalDadosContrato } from '../../modal';
+import { ModalDelete, ModalDadosContrato } from '../../modal';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import BackendApiMock from '@/backendApi';
@@ -16,32 +16,33 @@ interface PropsForFxclusion {
   nome?: string;
 }
 
-function reactIcon(icon: IconType, color?: string): JSX.Element {
-  const options: IconBaseProps = {};
-
-  options.fontSize = '1.3em';
-  options.color = color;
-
-  return icon(options);
-}
-
 export default function TableActionsContratos(
   props: PropsForFxclusion,
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
   const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
   const { setUsersUpdated, setIdContrato, setPage } = useGlobalContext();
-  function handleClickOpenModalExcluir(id: string): void {
-    setShowModalDelete(props.id);
-  }
 
+  const handleEditClick = () => handleClickOpenModalAddEditSchool(props.id);
+  const handleOverwriteClick = () =>
+    handleClickOpenModalSobreescreContrato(props.id);
+  const handleViewMoreClick = () => verMais(props.id);
+  const handleDeleteClick = () => handleClickOpenModalExcluir(props.id);
+
+  function renderIcon(icon: IconType, color?: string): JSX.Element {
+    const options: IconBaseProps = {};
+
+    options.fontSize = '1.3em';
+    options.color = color;
+
+    return icon(options);
+  }
   async function deleteUser(id: string) {
     const token = Cookies.get('auth_token');
+    const backendApi = new BackendApiMock(token);
 
     try {
-      const backendApi = new BackendApiMock(`${token}`);
-
-      await backendApi.deletarContrato({ uuid_ec: props.id });
+      await backendApi.deletarContrato({ uuid_ec: id });
       setShowModalDelete('');
       setUsersUpdated(true);
     } catch (error) {
@@ -49,42 +50,37 @@ export default function TableActionsContratos(
     }
   }
 
+  function handleClickOpenModalExcluir(id: string): void {
+    setShowModalDelete(id);
+  }
+
   function handleClickOpenModalAddEditSchool(id: string): void {
-    setIdContrato(props.id);
+    setIdContrato(id);
     setPage(PageEnumContratos.editContrato);
   }
+
   function handleClickOpenModalSobreescreContrato(id: string): void {
-    setIdContrato(props.id);
+    setIdContrato(id);
     setPage(PageEnumContratos.sobreescreverContrato);
   }
 
   function verMais(id: string): void {
     setShowModalAddEditSchool(id);
   }
+
   return (
     <div className={styles.container}>
+      <Action icon={renderIcon(FiEdit)} onClick={handleEditClick} />
       <Action
-        icon={reactIcon(FiEdit)}
-        onClick={() => {
-          handleClickOpenModalAddEditSchool(props.id);
-        }}
+        icon={renderIcon(FiEdit, '#f1646c')}
+        onClick={handleOverwriteClick}
       />
+      <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
       <Action
-        icon={reactIcon(FiEdit, '#f1646c')}
-        onClick={() => {
-          handleClickOpenModalSobreescreContrato(props.id);
-        }}
+        icon={renderIcon(FaTrashAlt, '#f1646c')}
+        onClick={handleDeleteClick}
       />
-      <Action
-        icon={reactIcon(ImEyePlus)}
-        onClick={() => {
-          verMais(props.id);
-        }}
-      />
-      <Action
-        icon={reactIcon(FaTrashAlt, '#f1646c')}
-        onClick={() => handleClickOpenModalExcluir(props.id)}
-      />
+
       {showModalAddEditSchool === props.id && (
         <ModalDadosContrato
           idContrato={props.id}
