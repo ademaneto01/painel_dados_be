@@ -14,7 +14,7 @@ interface FormData {
   cep: string | null;
   endereco: string | null;
   cidade: string | null;
-  uf: string;
+  uf: string | null;
   bairro: string | null;
   complemento: string | null;
   ativo: boolean | null;
@@ -108,36 +108,21 @@ export default function EditContrato(): JSX.Element {
     setPage(PageEnumContratos.entidadesContratuais);
   };
 
-  const validateForm = () => {
-    if (
-      formData.nome_simplificado === '' ||
-      formData.razao_social == '' ||
-      formData.cnpj_cont == '' ||
-      formData.cep == '' ||
-      formData.endereco == '' ||
-      formData.cidade == '' ||
-      formData.uf == '' ||
-      formData.bairro == '' ||
-      formData.complemento == '' ||
-      formData.ativo == null ||
-      formData.bo_rede == null
-    ) {
-      setError(true);
-      setMsgError('Todos campos são obrigatórios...');
-      setTimeout(() => {
-        setError(false);
-      }, 6000);
-      return;
-    } else if (formData.uf.length > 2) {
-      setError(true);
-      setMsgError('Campo UF é permitido somente dois caracteres...');
-      setTimeout(() => {
-        setError(false);
-      }, 6000);
-      return;
-    } else {
-      return true;
+  const validateForm = (): boolean => {
+    const errors: string[] = [];
+    if (Object.values(formData).some((v) => v === '' || v === null)) {
+      errors.push('Todos campos são obrigatórios...');
     }
+    if (formData.uf && formData.uf.length > 2) {
+      errors.push('Campo UF é permitido somente dois caracteres...');
+    }
+    if (errors.length) {
+      setError(true);
+      setMsgError(errors.join(' '));
+      setTimeout(() => setError(false), 6000);
+      return false;
+    }
+    return true;
   };
 
   const handleInputChange = (

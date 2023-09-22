@@ -5,13 +5,8 @@ import BackendApiMock from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, CreateButton } from '@/components/shared';
-import { BiCloudDownload } from 'react-icons/bi';
-import { IconType, IconBaseProps } from 'react-icons';
 import { useGlobalContext } from '@/context/store';
 import { EntitiesUsuariosPDG } from '@/entities';
-import error from 'next/error';
-
-interface pageContratosProps {}
 
 interface FormData {
   id: string | null;
@@ -29,19 +24,11 @@ interface FormData {
   ativo: boolean | null;
 }
 
-function reactIcon(icon: IconType, color?: string): JSX.Element {
-  const options: IconBaseProps = {};
-
-  options.fontSize = '1.3em';
-  options.color = color;
-
-  return icon(options);
-}
-export default function EditEntidade(props: pageContratosProps): JSX.Element {
+export default function EditEntidadeEscolar(): JSX.Element {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const { idContrato, setPage } = useGlobalContext();
+  const { idEntidadeEscolar, setPage } = useGlobalContext();
   const [userPDG, setUserPDG] = useState<EntitiesUsuariosPDG[]>([]);
   const [formData, setFormData] = useState<FormData>({
     id: '',
@@ -58,22 +45,21 @@ export default function EditEntidade(props: pageContratosProps): JSX.Element {
     id_usuario_pdg: '',
     ativo: true,
   });
+
   useEffect(() => {
     fetchDataInitial();
   }, []);
 
-  async function fetchDataInitial() {
-    try {
-      const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
-      const response = await backendApi.localizarEntitadeEscolar({
-        id: idContrato,
-      });
-      const responseUserPdg = await backendApi.localizarUsuariosPDG();
+  const fetchDataInitial = async () => {
+    const response = await fetchEntidadeEscolarData(idEntidadeEscolar);
+    const responseUserPdg = await fetchUserPDGData();
+    if (responseUserPdg) {
       setUserPDG(responseUserPdg);
+    }
 
+    if (response) {
       setFormData({
-        id: idContrato,
+        id: idEntidadeEscolar,
         nome_operacional: response[0]?.nome_operacional || '',
         cnpj_escola: response[0].cnpj_escola || '',
         cep: response[0]?.cep || '',
@@ -87,23 +73,44 @@ export default function EditEntidade(props: pageContratosProps): JSX.Element {
         id_usuario_pdg: response[0]?.id_usuario_pdg || '',
         ativo: response[0]?.ativo || null,
       });
-    } catch (error) {
-      if (error instanceof FailedToFetchError) {
-        setError(true);
-      } else {
-        setMsgError('resre');
-        throw error;
-      }
     }
-  }
-
-  async function fetchData() {
+  };
+  const fetchUserPDGData = async () => {
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
+      return await backendApi.localizarUsuariosPDG();
+    } catch (error) {
+      handleApiErrors(error);
+      return null;
+    }
+  };
 
+  const fetchEntidadeEscolarData = async (id: string) => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const backendApi = new BackendApiMock(`${token}`);
+      return await backendApi.localizarEntitadeEscolar({ id });
+    } catch (error) {
+      handleApiErrors(error);
+      return null;
+    }
+  };
+
+  const handleApiErrors = (error: any) => {
+    if (error instanceof FailedToFetchError) {
+      setError(true);
+    } else {
+      throw error;
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const backendApi = new BackendApiMock(`${token}`);
       await backendApi.editarEntidadeEscolar({
-        id: idContrato,
+        id: idEntidadeEscolar,
         nome_operacional: formData.nome_operacional,
         cnpj_escola: formData.cnpj_escola,
         cep: formData.cep,
@@ -117,217 +124,236 @@ export default function EditEntidade(props: pageContratosProps): JSX.Element {
         ativo: formData.ativo,
       });
     } catch (error) {
-      if (error instanceof FailedToFetchError) {
-        setError(true);
-      } else {
-        throw error;
-      }
+      handleApiErrors(error);
     } finally {
       setLoaded(true);
     }
     setPage(PageEnumContratos.entidadesEscolares);
-  }
+  };
+
+  const validateForm = (): boolean => {
+    const errors: string[] = [];
+    if (Object.values(formData).some((v) => v === '' || v === null)) {
+      errors.push('Todos campos são obrigatórios...');
+    }
+    if (formData.uf && formData.uf.length > 2) {
+      errors.push('Campo UF é permitido somente dois caracteres...');
+    }
+    if (errors.length) {
+      setError(true);
+      setMsgError(errors.join(' '));
+      setTimeout(() => setError(false), 6000);
+      return false;
+    }
+    return true;
+  };
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name === 'bo_rede') {
+      const booleanValue =
+        value === 'true' ? true : value === 'false' ? false : null;
+      setFormData((prevState) => ({ ...prevState, [name]: booleanValue }));
+    } else {
+      setFormData((prevState) => ({ ...prevState, [name]: value }));
+    }
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
-    if (
-      formData.nome_operacional === '' ||
-      formData.cnpj_escola == '' ||
-      formData.cep == '' ||
-      formData.endereco == '' ||
-      formData.cidade == '' ||
-      formData.uf == '' ||
-      formData.bairro == '' ||
-      formData.complemento == '' ||
-      formData.url_dados == '' ||
-      formData.id_usuario_pdg == '' ||
-      formData.ativo == null
-    ) {
-      setMsgError('Todos campos são obrigatórios...');
-      setTimeout(() => {
-        setError(false);
-      }, 6000);
-      return;
-    } else {
+    if (validateForm()) {
       fetchData();
     }
   };
 
   return (
     <div className={styles.pageContainer}>
-      <h4>Editar Entidade Escolar</h4>
-
+      <HeaderComponent />
       <PageContentContainer>
-        <div className={styles.boxBtns}>
-          <CreateButton
-            color={'var(--gray-300'}
-            colorBackGround={'var(--white)'}
-            text="Voltar"
-            size="8rem"
-            onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
-          />
-        </div>
-
-        <form className={styles.boxForm} onSubmit={handleSubmit}>
-          <label className={styles.labelStandard}>
-            Nome Operacional
-            <input
-              type="text"
-              placeholder="Nome Operacional"
-              name="nome_operacional"
-              value={formData.nome_operacional ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Responsavel Pedagógico
-            <select
-              value={formData.id_usuario_pdg ?? ''}
-              onChange={handleInputChange}
-              name="id_usuario_pdg"
-              className={styles.inputSelect}
-            >
-              <option value="">-</option>
-              {userPDG.map((user) => (
-                <option key={user.id} value={user.id}>
-                  {user.nome}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className={styles.labelStandard}>
-            CNPJ Escola
-            <input
-              type="text"
-              placeholder="CNPJ Escola"
-              name="cnpj_escola"
-              value={formData.cnpj_escola ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            CEP
-            <input
-              type="text"
-              placeholder="CEP"
-              name="cep"
-              value={formData.cep ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Endereço
-            <input
-              type="text"
-              placeholder="Endereço"
-              name="endereco"
-              value={formData.endereco ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Cidade
-            <input
-              type="text"
-              placeholder="Cidade"
-              name="cidade"
-              value={formData.cidade ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            UF
-            <input
-              type="text"
-              placeholder="UF"
-              name="uf"
-              value={formData.uf ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Bairro
-            <input
-              type="text"
-              placeholder="Bairro"
-              name="bairro"
-              value={formData.bairro ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Complemento
-            <input
-              type="text"
-              placeholder="Complemente"
-              name="complemento"
-              value={formData.complemento ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            URL Dados
-            <input
-              type="text"
-              placeholder="url_dados"
-              name="url_dados"
-              value={formData.url_dados ?? ''}
-              onChange={handleInputChange}
-              className={styles.inputStandard}
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Status
-            <select
-              value={formData.ativo === null ? '' : formData.ativo.toString()}
-              onChange={handleInputChange}
-              name="ativo"
-              className={styles.inputSelect}
-            >
-              <option value="">-</option>
-              <option value="true">Ativo</option>
-              <option value="false">Inativo</option>
-            </select>
-          </label>
-
-          <div className={styles.buttonContainer}>
-            <button
-              className={styles.confirmButton}
-              type="button"
-              onClick={handleSubmit}
-            >
-              Salvar
-            </button>
-            <button
-              className={styles.cancelButton}
-              type="button"
-              onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
-            >
-              Cancelar
-            </button>
-          </div>
-        </form>
-        {error ? <ErrorComponent message={msgError} /> : ''}
+        <NavigationButtons setPage={setPage} />
+        <FormComponent
+          formData={formData}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          setPage={setPage}
+          userPDG={userPDG}
+        />
+        {error && <ErrorComponent message={msgError} />}
       </PageContentContainer>
     </div>
   );
 }
+
+const HeaderComponent: React.FC = () => <h4>Editar Entidade Escolar</h4>;
+
+const NavigationButtons: React.FC<any> = ({ setPage }) => (
+  <div className={styles.boxBtns}>
+    <CreateButton
+      color={'var(--gray-300'}
+      colorBackGround={'var(--white)'}
+      text="Voltar"
+      size="8rem"
+      onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
+    />
+  </div>
+);
+
+const FormComponent: React.FC<any> = ({
+  formData,
+  handleInputChange,
+  handleSubmit,
+  setPage,
+  userPDG,
+}) => {
+  return (
+    <form className={styles.boxForm} onSubmit={handleSubmit}>
+      <label className={styles.labelStandard}>
+        Nome Operacional
+        <input
+          type="text"
+          placeholder="Nome Operacional"
+          name="nome_operacional"
+          value={formData.nome_operacional ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Responsavel Pedagógico
+        <select
+          value={formData.id_usuario_pdg ?? ''}
+          onChange={handleInputChange}
+          name="id_usuario_pdg"
+          className={styles.inputSelect}
+        >
+          <option value="">-</option>
+          {userPDG.map((user: any) => (
+            <option key={user.id} value={user.id}>
+              {user.nome}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className={styles.labelStandard}>
+        CNPJ Escola
+        <input
+          type="text"
+          placeholder="CNPJ Escola"
+          name="cnpj_escola"
+          value={formData.cnpj_escola ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        CEP
+        <input
+          type="text"
+          placeholder="CEP"
+          name="cep"
+          value={formData.cep ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Endereço
+        <input
+          type="text"
+          placeholder="Endereço"
+          name="endereco"
+          value={formData.endereco ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Cidade
+        <input
+          type="text"
+          placeholder="Cidade"
+          name="cidade"
+          value={formData.cidade ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        UF
+        <input
+          type="text"
+          placeholder="UF"
+          name="uf"
+          value={formData.uf ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Bairro
+        <input
+          type="text"
+          placeholder="Bairro"
+          name="bairro"
+          value={formData.bairro ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Complemento
+        <input
+          type="text"
+          placeholder="Complemente"
+          name="complemento"
+          value={formData.complemento ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        URL Dados
+        <input
+          type="text"
+          placeholder="url_dados"
+          name="url_dados"
+          value={formData.url_dados ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Status
+        <select
+          value={formData.ativo === null ? '' : formData.ativo.toString()}
+          onChange={handleInputChange}
+          name="ativo"
+          className={styles.inputSelect}
+        >
+          <option value="">-</option>
+          <option value="true">Ativo</option>
+          <option value="false">Inativo</option>
+        </select>
+      </label>
+
+      <div className={styles.buttonContainer}>
+        <button
+          className={styles.confirmButton}
+          type="button"
+          onClick={handleSubmit}
+        >
+          Salvar
+        </button>
+        <button
+          className={styles.cancelButton}
+          type="button"
+          onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  );
+};

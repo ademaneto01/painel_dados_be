@@ -16,6 +16,8 @@ interface ContextProps {
   setPage: Dispatch<SetStateAction<PageEnumContratos>>;
   idContrato: string;
   setIdContrato: Dispatch<SetStateAction<string>>;
+  idEntidadeEscolar: string;
+  setIdEntidadeEscolar: Dispatch<SetStateAction<string>>;
 }
 
 export const GlobalContext = createContext<ContextProps>({
@@ -25,6 +27,8 @@ export const GlobalContext = createContext<ContextProps>({
   setPage: () => {},
   idContrato: '',
   setIdContrato: () => {},
+  idEntidadeEscolar: '',
+  setIdEntidadeEscolar: () => {},
 });
 
 export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
@@ -33,6 +37,7 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   const [usersUpdated, setUsersUpdated] = useState(false);
   const [page, setPage] = useState(PageEnumContratos.entidadesContratuais);
   const [idContrato, setIdContrato] = useState('');
+  const [idEntidadeEscolar, setIdEntidadeEscolar] = useState('');
   return (
     <GlobalContext.Provider
       value={{
@@ -42,6 +47,8 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
         setPage,
         idContrato,
         setIdContrato,
+        idEntidadeEscolar,
+        setIdEntidadeEscolar,
       }}
     >
       {children}

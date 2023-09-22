@@ -64,7 +64,7 @@ export default function EscolasPDG(props: pageContratosProps): JSX.Element {
 
   return (
     <div className={styles.pageContainer}>
-      <h4>Pegagógico</h4>
+      <h4>Pedagógico</h4>
       <nav className={styles.boxButtonsNav}>
         <button>Entidades Escolares</button>
       </nav>

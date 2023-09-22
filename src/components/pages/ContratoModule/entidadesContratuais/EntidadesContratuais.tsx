@@ -26,10 +26,11 @@ export default function EntidadesContratuais(
   const [data, setData] = useState([] as EntitiesContratos[]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const { setUsersUpdated, usersUpdated } = useGlobalContext();
+  const { setUsersUpdated, usersUpdated, setIdContrato } = useGlobalContext();
 
   const handleRowClick = (rowData: EntitiesContratos) => {
     props.setPage(PageEnumContratos.entidadesEscolares);
+    setIdContrato(rowData.id);
     props.setIdContrato(rowData.id);
   };
 

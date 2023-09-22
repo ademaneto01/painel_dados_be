@@ -36,7 +36,7 @@ export default function EntidadesEscolares(
   const [data, setData] = useState([] as EntitiesEntidadesEscolares[]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const { setUsersUpdated, usersUpdated } = useGlobalContext();
+  const { setUsersUpdated, usersUpdated, idContrato } = useGlobalContext();
   const [showModalAddEscola, setShowModalAddEscola] = useState(false);
 
   useEffect(() => {

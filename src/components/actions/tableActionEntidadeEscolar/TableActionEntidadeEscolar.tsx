@@ -21,7 +21,8 @@ export default function TableActionEntidadeEscolar(
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
   const [showModalVermais, setShowModalVermais] = useState('');
-  const { setUsersUpdated, setIdContrato, setPage } = useGlobalContext();
+  const { setUsersUpdated, setIdContrato, setIdEntidadeEscolar, setPage } =
+    useGlobalContext();
 
   const handleEditClick = () => handleClickOpenModalAddEditSchool(props.id);
   const handleViewMoreClick = () => verMais(props.id);
@@ -53,7 +54,7 @@ export default function TableActionEntidadeEscolar(
   }
 
   function handleClickOpenModalAddEditSchool(id: string): void {
-    setIdContrato(id);
+    setIdEntidadeEscolar(id);
     setPage(PageEnumContratos.editEntidade);
   }
 
