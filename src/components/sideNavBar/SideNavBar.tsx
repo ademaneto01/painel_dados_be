@@ -1,7 +1,7 @@
 import { PageEnum } from '@/enums';
 import React from 'react';
 import styles from '@/styles/SideNavBar.module.css';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IconType } from 'react-icons';
 import { ImUser, ImDisplay, ImLock, ImList2 } from 'react-icons/im';
 import SideNavBarButton from './SideNavBarButton';

@@ -7,10 +7,6 @@ import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, CreateButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 
-interface PageContratosProps {
-  setPage: React.Dispatch<React.SetStateAction<PageEnumContratos>>;
-}
-
 interface FormData {
   nome_simplificado: string;
   razao_social: string;
@@ -25,7 +21,7 @@ interface FormData {
   bo_rede: boolean | null;
 }
 
-export default function NovoContrato(props: PageContratosProps): JSX.Element {
+export default function NovoContrato(): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
     nome_simplificado: '',
     razao_social: '',
@@ -57,7 +53,7 @@ export default function NovoContrato(props: PageContratosProps): JSX.Element {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
       await backendApi.registrarContrato(formData);
-      props.setPage(PageEnumContratos.entidadesContratuais);
+      setPage(PageEnumContratos.entidadesContratuais);
     } catch (error) {
       handleApiErrors(error);
     }
@@ -104,7 +100,7 @@ export default function NovoContrato(props: PageContratosProps): JSX.Element {
     <div className={styles.pageContainer}>
       <HeaderComponent />
       <PageContentContainer>
-        <NavigationButtons setPage={props.setPage} />
+        <NavigationButtons setPage={setPage} />
         <FormComponent
           formData={formData}
           handleInputChange={handleInputChange}

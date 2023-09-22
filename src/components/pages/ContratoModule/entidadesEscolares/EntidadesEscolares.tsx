@@ -9,35 +9,18 @@ import { EntitiesEntidadesEscolares } from '@/entities';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 
-interface pageContratosProps {
-  setPage: Dispatch<SetStateAction<PageEnumContratos>>;
-  setIdContrato: Dispatch<SetStateAction<string>>;
-  idContrato: string;
-}
-
 const columns = [
   new Column('Nome Operacional', 'nome_operacional'),
   new Column('Cidade', 'cidade'),
   new Column('Ações', 'acoes'),
 ];
 
-function reactIcon(icon: IconType, color?: string): JSX.Element {
-  const options: IconBaseProps = {};
-
-  options.fontSize = '1.3em';
-  options.color = color;
-
-  return icon(options);
-}
-
-export default function EntidadesEscolares(
-  props: pageContratosProps,
-): JSX.Element {
+export default function EntidadesEscolares(): JSX.Element {
   const [data, setData] = useState([] as EntitiesEntidadesEscolares[]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const { setUsersUpdated, usersUpdated, idContrato } = useGlobalContext();
-  const [showModalAddEscola, setShowModalAddEscola] = useState(false);
+  const { setUsersUpdated, usersUpdated, idContrato, setPage } =
+    useGlobalContext();
 
   useEffect(() => {
     async function fetchData() {
@@ -46,7 +29,7 @@ export default function EntidadesEscolares(
       try {
         const backendApi = new BackendApiMock(`${token}`);
         const escolas = await backendApi.localizarEntidadesEscolares({
-          uuid_ec: props.idContrato,
+          uuid_ec: idContrato,
         });
 
         setData(escolas);
@@ -78,16 +61,14 @@ export default function EntidadesEscolares(
             color={'var(--white'}
             colorBackGround={'var(--blue-300)'}
             text="Nova Entidade"
-            onClick={() => props.setPage(PageEnumContratos.novaEntidade)}
+            onClick={() => setPage(PageEnumContratos.novaEntidade)}
           />
           <CreateButton
             color={'var(--gray-300'}
             colorBackGround={'var(--white)'}
             text="Voltar"
             size="8rem"
-            onClick={() =>
-              props.setPage(PageEnumContratos.entidadesContratuais)
-            }
+            onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
           />
         </div>
         <Table<EntitiesEntidadesEscolares>

@@ -14,12 +14,7 @@ import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, CreateButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { EntitiesUsuariosPDG } from '@/entities';
-
-interface pageEntidadesProps {
-  setPage: Dispatch<SetStateAction<PageEnumContratos>>;
-  setIdContrato: Dispatch<SetStateAction<string>>;
-  idContrato: string;
-}
+import { Element } from 'slate';
 
 interface FormData {
   nome_operacional: string;
@@ -35,7 +30,7 @@ interface FormData {
   ativo: boolean | null;
 }
 
-export default function NovaEntidade(props: pageEntidadesProps): JSX.Element {
+export default function NovaEntidade(): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
     nome_operacional: '',
     cnpj_escola: '',
@@ -53,7 +48,7 @@ export default function NovaEntidade(props: pageEntidadesProps): JSX.Element {
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const [userPDG, setUserPDG] = useState<EntitiesUsuariosPDG[]>([]);
-  const { setPage } = useGlobalContext();
+  const { setPage, idContrato } = useGlobalContext();
 
   const handleApiErrors = (error: any) => {
     if (error instanceof FailedToFetchError) {
@@ -73,10 +68,10 @@ export default function NovaEntidade(props: pageEntidadesProps): JSX.Element {
     try {
       const requestBody = {
         ...formData,
-        uuid_ec: props.idContrato,
+        uuid_ec: idContrato,
       };
       await backendApi.registrarEntidadeEscolar(requestBody);
-      props.setPage(PageEnumContratos.entidadesContratuais);
+      setPage(PageEnumContratos.entidadesContratuais);
     } catch (error) {
       handleApiErrors(error);
     }
@@ -137,7 +132,7 @@ export default function NovaEntidade(props: pageEntidadesProps): JSX.Element {
     <div className={styles.pageContainer}>
       <HeaderComponent />
       <PageContentContainer>
-        <NavigationButtons setPage={props.setPage} />
+        <NavigationButtons setPage={setPage} />
         <FormComponent
           formData={formData}
           handleInputChange={handleInputChange}

@@ -8,11 +8,6 @@ import { EntitiesContratos } from '@/entities';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 
-interface pageContratosProps {
-  setPage: Dispatch<SetStateAction<PageEnumContratos>>;
-  setIdContrato: Dispatch<SetStateAction<string>>;
-}
-
 const columns = [
   new Column('Nome Simplificado', 'nome_simplificado'),
   new Column('CNPJ', 'cnpj_cont'),
@@ -20,18 +15,16 @@ const columns = [
   new Column('Ações', 'acoes'),
 ];
 
-export default function EntidadesContratuais(
-  props: pageContratosProps,
-): JSX.Element {
+export default function EntidadesContratuais(): JSX.Element {
   const [data, setData] = useState([] as EntitiesContratos[]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const { setUsersUpdated, usersUpdated, setIdContrato } = useGlobalContext();
+  const { setUsersUpdated, usersUpdated, setIdContrato, setPage } =
+    useGlobalContext();
 
   const handleRowClick = (rowData: EntitiesContratos) => {
-    props.setPage(PageEnumContratos.entidadesEscolares);
+    setPage(PageEnumContratos.entidadesEscolares);
     setIdContrato(rowData.id);
-    props.setIdContrato(rowData.id);
   };
 
   useEffect(() => {
@@ -70,7 +63,7 @@ export default function EntidadesContratuais(
             color={'var(--white'}
             colorBackGround={'var(--blue-300)'}
             text="Novo Contrato"
-            onClick={() => props.setPage(PageEnumContratos.novoContrato)}
+            onClick={() => setPage(PageEnumContratos.novoContrato)}
           />
         </div>
         <Table<EntitiesContratos>
