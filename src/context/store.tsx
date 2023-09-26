@@ -1,5 +1,5 @@
 'use client';
-import { PageEnumContratos } from '@/enums';
+import { PageEnumContratos, PageEnumEscolasPDG } from '@/enums';
 import React, {
   createContext,
   useContext,
@@ -14,6 +14,8 @@ interface ContextProps {
   setUsersUpdated: Dispatch<SetStateAction<boolean>>;
   page: string;
   setPage: Dispatch<SetStateAction<PageEnumContratos>>;
+  pageEscolasPDG: string;
+  setPageEscolasPDG: Dispatch<SetStateAction<PageEnumEscolasPDG>>;
   idContrato: string;
   setIdContrato: Dispatch<SetStateAction<string>>;
   idEntidadeEscolar: string;
@@ -25,6 +27,8 @@ export const GlobalContext = createContext<ContextProps>({
   setUsersUpdated: () => {},
   page: PageEnumContratos.entidadesContratuais,
   setPage: () => {},
+  pageEscolasPDG: PageEnumEscolasPDG.escolasPDG,
+  setPageEscolasPDG: () => {},
   idContrato: '',
   setIdContrato: () => {},
   idEntidadeEscolar: '',
@@ -36,6 +40,9 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [usersUpdated, setUsersUpdated] = useState(false);
   const [page, setPage] = useState(PageEnumContratos.entidadesContratuais);
+  const [pageEscolasPDG, setPageEscolasPDG] = useState(
+    PageEnumEscolasPDG.escolasPDG,
+  );
   const [idContrato, setIdContrato] = useState('');
   const [idEntidadeEscolar, setIdEntidadeEscolar] = useState('');
   return (
@@ -45,6 +52,8 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
         setUsersUpdated,
         page,
         setPage,
+        pageEscolasPDG,
+        setPageEscolasPDG,
         idContrato,
         setIdContrato,
         idEntidadeEscolar,

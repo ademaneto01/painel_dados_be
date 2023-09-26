@@ -1,38 +1,44 @@
 import { PageContentContainer, CreateButton } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
-import { Column, Table } from '@/components/Table';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Table } from '@/components/Table';
+import { useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
-import { IconType, IconBaseProps } from 'react-icons';
 import { PageEnumContratos } from '@/enums';
 import { EntitiesEntidadesEscolares } from '@/entities';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 
-const columns = [
-  new Column('Nome Operacional', 'nome_operacional'),
-  new Column('Cidade', 'cidade'),
-  new Column('Ações', 'acoes'),
+class Column<T> {
+  constructor(public header: string, public accessor: keyof T) {}
+}
+
+type RowData = {
+  nome_operacional: any;
+  cidade: any;
+  acoes: any;
+};
+
+const columns: Column<RowData>[] = [
+  new Column<RowData>('Nome Operacional', 'nome_operacional'),
+  new Column<RowData>('Cidade', 'cidade'),
+  new Column<RowData>('Ações', 'acoes'),
 ];
 
-export default function EntidadesEscolares(): JSX.Element {
-  const [data, setData] = useState([] as EntitiesEntidadesEscolares[]);
+function useFetchEntidadesEscolares() {
+  const [data, setData] = useState<EntitiesEntidadesEscolares[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const { setUsersUpdated, usersUpdated, idContrato, setPage } =
-    useGlobalContext();
+  const { setUsersUpdated, usersUpdated, idContrato } = useGlobalContext();
 
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
-
       try {
         const backendApi = new BackendApiMock(`${token}`);
-        const escolas = await backendApi.localizarEntidadesEscolares({
+        const entidadesEscola = await backendApi.localizarEntidadesEscolares({
           uuid_ec: idContrato,
         });
-
-        setData(escolas);
+        setData(entidadesEscola);
         setUsersUpdated(false);
       } catch (error) {
         if (error instanceof FailedToFetchError) {
@@ -49,12 +55,38 @@ export default function EntidadesEscolares(): JSX.Element {
     }
   }, [loaded, usersUpdated]);
 
+  return { data, loaded, error };
+}
+
+function Navbar() {
+  return (
+    <nav className={styles.boxButtonsNav}>
+      <button>Entidades Escolares</button>
+    </nav>
+  );
+}
+
+function EntidadesEscolaresTable({ data, loaded, error }: any) {
+  return (
+    <Table
+      data={data}
+      columns={columns}
+      loaded={loaded}
+      error={error}
+      searchInputNone={'none'}
+      searchInputNoneNome={'none'}
+    />
+  );
+}
+
+export default function EntidadesEscolares(): JSX.Element {
+  const { data, loaded, error } = useFetchEntidadesEscolares();
+  const { setPage } = useGlobalContext();
+
   return (
     <div className={styles.pageContainer}>
       <h4>Contratos</h4>
-      <nav className={styles.boxButtonsNav}>
-        <button>Entidades Escolares</button>
-      </nav>
+      <Navbar />
       <PageContentContainer>
         <div className={styles.boxBtns}>
           <CreateButton
@@ -71,14 +103,7 @@ export default function EntidadesEscolares(): JSX.Element {
             onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
           />
         </div>
-        <Table<EntitiesEntidadesEscolares>
-          data={data}
-          columns={columns}
-          loaded={loaded}
-          error={error}
-          searchInputNone={'none'}
-          searchInputNoneNome={'none'}
-        />
+        <EntidadesEscolaresTable data={data} loaded={loaded} error={error} />
       </PageContentContainer>
     </div>
   );

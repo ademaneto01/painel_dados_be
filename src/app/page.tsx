@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect } from 'react';
 import styles from '@/styles/Home.module.css';
-import { PageEnum } from '@/enums';
+import { PageEnum, PageEnumEscolasPDG } from '@/enums';
 import { useState } from 'react';
 import SideNavBar from '@/components/sideNavBar';
 import TopNavBar from '@/components/topNavBaR';
@@ -24,6 +24,16 @@ export default function Home(): JSX.Element {
 
         if (user && user.length > 0) {
           setPerfil(user[0].perfil || '');
+
+          if (user[0].perfil === 'Administrador') {
+            setPage(PageEnum.users);
+          } else if (user[0].perfil === 'Pedagógico') {
+            setPage(PageEnum.escolasPDG);
+          } else if (user[0].perfil === 'Escola') {
+            setPage(PageEnum.digitalResources);
+          } else {
+            setPage(PageEnum.digitalResources);
+          }
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -33,9 +43,7 @@ export default function Home(): JSX.Element {
     fetchUserData();
   }, []);
 
-  const [page, setPage] = useState(
-    perfil === 'Administrador' ? PageEnum.digitalResources : PageEnum.users,
-  );
+  const [page, setPage] = useState(PageEnum.digitalResources);
 
   function toggleSideNavBar(): void {
     setSideNavBarHidden(!sideNavBarHidden);
@@ -50,7 +58,7 @@ export default function Home(): JSX.Element {
       case PageEnum.contratos:
         return <pages.Contratos />;
       case PageEnum.escolasPDG:
-        return <pages.EscolasPDG setPage={setPage} />;
+        return <pages.EscolasPDG />;
       default:
         return <></>;
     }

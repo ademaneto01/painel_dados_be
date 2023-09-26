@@ -1,41 +1,44 @@
 import { PageContentContainer, CreateButton } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
-import { Column, Table } from '@/components/Table';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Table } from '@/components/Table';
+import { useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
 import { EntitiesContratos } from '@/entities';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 
-const columns = [
-  new Column('Nome Simplificado', 'nome_simplificado'),
-  new Column('CNPJ', 'cnpj_cont'),
-  new Column('QTD. Escolas', 'qtdescolas'),
-  new Column('Ações', 'acoes'),
+class Column<T> {
+  constructor(public header: string, public accessor: keyof T) {}
+}
+
+type RowData = {
+  nome_simplificado: any;
+  cnpj_cont: any;
+  qtdescolas: any;
+  acoes: any;
+};
+
+const columns: Column<RowData>[] = [
+  new Column<RowData>('Nome Simplificado', 'nome_simplificado'),
+  new Column<RowData>('CNPJ', 'cnpj_cont'),
+  new Column<RowData>('QTD. Escolas', 'qtdescolas'),
+  new Column<RowData>('Ações', 'acoes'),
 ];
 
-export default function EntidadesContratuais(): JSX.Element {
-  const [data, setData] = useState([] as EntitiesContratos[]);
+function useFetchContratos() {
+  const [data, setData] = useState<EntitiesContratos[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const { setUsersUpdated, usersUpdated, setIdContrato, setPage } =
-    useGlobalContext();
-
-  const handleRowClick = (rowData: EntitiesContratos) => {
-    setPage(PageEnumContratos.entidadesEscolares);
-    setIdContrato(rowData.id);
-  };
+  const { usersUpdated } = useGlobalContext();
 
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
       try {
         const backendApi = new BackendApiMock(`${token}`);
-
         const contratos = await backendApi.localizarContratos();
         setData(contratos);
-        setUsersUpdated(false);
       } catch (error) {
         if (error instanceof FailedToFetchError) {
           setError(true);
@@ -51,12 +54,44 @@ export default function EntidadesContratuais(): JSX.Element {
     }
   }, [loaded, usersUpdated]);
 
+  return { data, loaded, error };
+}
+
+function Navbar() {
+  return (
+    <nav className={styles.boxButtonsNav}>
+      <button>Entidades Contratuais</button>
+    </nav>
+  );
+}
+
+function ContratosTable({ data, loaded, error, onClickRow }: any) {
+  return (
+    <Table
+      data={data}
+      columns={columns}
+      loaded={loaded}
+      error={error}
+      searchInputNone={'none'}
+      searchInputNoneNome={'none'}
+      onClickRow={onClickRow}
+    />
+  );
+}
+
+export default function EntidadesContratuais(): JSX.Element {
+  const { data, loaded, error } = useFetchContratos();
+  const { setPage, setIdContrato } = useGlobalContext();
+
+  const handleRowClick = (rowData: EntitiesContratos) => {
+    setPage(PageEnumContratos.entidadesEscolares);
+    setIdContrato(rowData.id);
+  };
+
   return (
     <div className={styles.pageContainer}>
       <h4>Contratos</h4>
-      <nav className={styles.boxButtonsNav}>
-        <button>Entidades Contratuais</button>
-      </nav>
+      <Navbar />
       <PageContentContainer>
         <div className={styles.boxBtns}>
           <CreateButton
@@ -66,13 +101,10 @@ export default function EntidadesContratuais(): JSX.Element {
             onClick={() => setPage(PageEnumContratos.novoContrato)}
           />
         </div>
-        <Table<EntitiesContratos>
+        <ContratosTable
           data={data}
-          columns={columns}
           loaded={loaded}
           error={error}
-          searchInputNone={'none'}
-          searchInputNoneNome={'none'}
           onClickRow={handleRowClick}
         />
       </PageContentContainer>

@@ -33,7 +33,6 @@ function PageUsers() {
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
-      const escolaStorageId = localStorage.getItem('escola');
       try {
         const backendApi = new BackendApiMock(`${token}`);
 
