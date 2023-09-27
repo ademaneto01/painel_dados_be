@@ -1,4 +1,5 @@
 import {
+  EntitiesAgenteExterno,
   EntitiesContratos,
   EntitiesDeletUser,
   EntitiesEditarEntidadeEscolar,
@@ -10,6 +11,7 @@ import {
   EntitiesUserLogin,
   EntitiesUsers,
   EntitiesUsuariosPDG,
+  EntitiesVincularAgente,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterface, SerializerInterface } from '@/interfaces';
@@ -24,6 +26,8 @@ import {
   MockRegistrarEntidadeEscolar,
   MockUsuariosPDG,
   MockEntidadeEscolarPDGSerializers,
+  MockAgenteExterno,
+  MockVincularAgente,
 } from '@/serializers/mocks';
 import MockContratosSerializers from '@/serializers/mocks/MockContratosSerializers';
 import MockEditarEntidadeEscolar from '@/serializers/mocks/MockEditarEntidadeEscolar';
@@ -190,7 +194,22 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockEditarEntidadeEscolar(),
     );
   }
+  public async listarAgenteRelacionadoEscola(
+    id_ee: any,
+  ): Promise<EntitiesAgenteExterno[]> {
+    return await this.post<EntitiesAgenteExterno>(
+      '/ListarAgentesRelacionadoEscola',
+      id_ee,
+      new MockAgenteExterno(),
+    );
+  }
 
+  public async listarTodosAgentes(): Promise<EntitiesAgenteExterno[]> {
+    return await this.get<EntitiesAgenteExterno>(
+      '/listarTodosAgentes',
+      new MockAgenteExterno(),
+    );
+  }
   public async localizarEntidadesEscolaresUsuariosPDG(
     userId: any,
   ): Promise<EntitiesEntidadesEscolaresPDG[]> {
@@ -198,6 +217,24 @@ export default class BackendApiMock implements BackendApiInterface {
       '/localizarEntidadesEscolaresUsuariosPDG',
       userId,
       new MockEntidadeEscolarPDGSerializers(),
+    );
+  }
+  public async vincularAgente(
+    userData: any,
+  ): Promise<EntitiesVincularAgente[]> {
+    return await this.post<EntitiesVincularAgente>(
+      '/vincularAgente',
+      userData,
+      new MockVincularAgente(),
+    );
+  }
+  public async deletarVinculoAgente(
+    userData: any,
+  ): Promise<EntitiesVincularAgente[]> {
+    return await this.post<EntitiesVincularAgente>(
+      '/deletarVinculoAgente',
+      userData,
+      new MockVincularAgente(),
     );
   }
   public async editarEntidadeEscolar(
@@ -240,6 +277,7 @@ export default class BackendApiMock implements BackendApiInterface {
     response: AxiosResponse,
     serializer: SerializerInterface,
   ): T[] {
+    console.log(response);
     if (response.status === 200) {
       const entities: T[] = [];
 
@@ -247,6 +285,7 @@ export default class BackendApiMock implements BackendApiInterface {
         const entity = serializer.toEntity(otd);
         entities.push(entity);
       }
+
       return entities;
     } else {
       throw new FailedToFetchError();

@@ -10,7 +10,9 @@ import {
   EntitiesCadastroUser,
   EntitiesEditarEntidadeEscolar,
   EntitiesEntidadesEscolaresPDG,
+  EntitiesAgenteExterno,
 } from '@/entities';
+import EntitiesVincularAgente from '@/entities/EntitiesVincularAgente';
 
 export default interface BackendApiInterface {
   localizarUsuarios(): Promise<EntitiesUsers[]>;
@@ -38,4 +40,8 @@ export default interface BackendApiInterface {
   localizarUsuariosPDG(): Promise<EntitiesUsuariosPDG[]>;
   localizarContrato(id: any): Promise<EntitiesContratos[]>;
   deletarEntidadeEscolar(id: any): Promise<EntitiesEntidadesEscolares[]>;
+  listarAgenteRelacionadoEscola(id_ee: any): Promise<EntitiesAgenteExterno[]>;
+  listarTodosAgentes(): Promise<EntitiesAgenteExterno[]>;
+  vincularAgente(userData: any): Promise<EntitiesVincularAgente[]>;
+  deletarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
 }

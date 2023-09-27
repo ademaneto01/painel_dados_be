@@ -1,4 +1,4 @@
-import { PageContentContainer } from '@/components/shared';
+import { CreateButton, PageContentContainer } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Column, Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
@@ -6,7 +6,7 @@ import { FailedToFetchError } from '@/errors';
 import { EntitiesEntidadesEscolaresPDG } from '@/entities';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
-import { PageEnumEscolasPDG } from '@/enums';
+import { PageEnumContratos, PageEnumEscolasPDG } from '@/enums';
 
 const COLUMNS = [
   new Column('Nome Operacional', 'nome_operacional'),
@@ -18,10 +18,11 @@ export default function EscolasPDG(): JSX.Element {
   const [data, setData] = useState<EntitiesEntidadesEscolaresPDG[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const { setPageEscolasPDG } = useGlobalContext();
+  const { setPageEscolasPDG, setIdEntidadeEscolar } = useGlobalContext();
 
   const handleRowClick = (rowData: EntitiesEntidadesEscolaresPDG) => {
     setPageEscolasPDG(PageEnumEscolasPDG.professoresEscola);
+    setIdEntidadeEscolar(rowData.id);
   };
 
   useEffect(() => {

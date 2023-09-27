@@ -3,10 +3,12 @@ import TableActionsUsers from './tableActionsUsers/TableActionsUsers';
 import TableActionsContratos from './tableActionsContratos/TableActionsContratos';
 import TableActionEntidadeEscolar from './tableActionEntidadeEscolar/TableActionEntidadeEscolar';
 import TableActionEntidadeEscolarPDG from './tableActionEntidadeEscolarPDG/TableActionEntidadeEscolarPDG';
+import TableActionAgentesRelacionadoEscola from './tableActionAgentesRelacionadoEscola/TableActionAgentesRelacionadoEscola';
 export {
   Action,
   TableActionsUsers,
   TableActionsContratos,
   TableActionEntidadeEscolar,
   TableActionEntidadeEscolarPDG,
+  TableActionAgentesRelacionadoEscola,
 };
