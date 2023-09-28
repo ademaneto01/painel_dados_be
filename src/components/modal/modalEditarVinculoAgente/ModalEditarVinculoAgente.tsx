@@ -4,64 +4,65 @@ import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { useGlobalContext } from '@/context/store';
-import { EntitiesAgenteExterno } from '@/entities';
 
 interface FormData {
-  id_escola: string;
-  id_prof: string;
+  id_escola: string | null;
+  id_prof: string | null;
   especialista: boolean;
-  bo_3EI: boolean;
-  bo_4EI: boolean;
-  bo_5EI: boolean;
-  bo_1AI: boolean;
-  bo_2AI: boolean;
-  bo_3AI: boolean;
-  bo_4AI: boolean;
-  bo_5AI: boolean;
-  bo_6Af: boolean;
-  bo_7AF: boolean;
-  bo_8AF: boolean;
-  bo_9AF: boolean;
+  bo_3ei: boolean;
+  bo_4ei: boolean;
+  bo_5ei: boolean;
+  bo_1ai: boolean;
+  bo_2ai: boolean;
+  bo_3ai: boolean;
+  bo_4ai: boolean;
+  bo_5ai: boolean;
+  bo_6af: boolean;
+  bo_7af: boolean;
+  bo_8af: boolean;
+  bo_9af: boolean;
 }
 
 interface ModalProps {
   onCancel: () => void;
+  userId: string;
 }
 
 const OPTIONS = [
-  'bo_3EI',
-  'bo_4EI',
-  'bo_5EI',
-  'bo_1AI',
-  'bo_2AI',
-  'bo_3AI',
-  'bo_4AI',
-  'bo_5AI',
-  'bo_6Af',
-  'bo_7AF',
-  'bo_8AF',
-  'bo_9AF',
+  'bo_3ei',
+  'bo_4ei',
+  'bo_5ei',
+  'bo_1ai',
+  'bo_2ai',
+  'bo_3ai',
+  'bo_4ai',
+  'bo_5ai',
+  'bo_6af',
+  'bo_7af',
+  'bo_8af',
+  'bo_9af',
 ];
 
-export default function ModalVicularAgente({
+export default function ModalEditarVinculoAgente({
   onCancel,
+  userId,
 }: ModalProps): JSX.Element {
   const initialFormData: FormData = {
     id_escola: '',
     id_prof: '',
     especialista: false,
-    bo_3EI: false,
-    bo_4EI: false,
-    bo_5EI: false,
-    bo_1AI: false,
-    bo_2AI: false,
-    bo_3AI: false,
-    bo_4AI: false,
-    bo_5AI: false,
-    bo_6Af: false,
-    bo_7AF: false,
-    bo_8AF: false,
-    bo_9AF: false,
+    bo_3ei: false,
+    bo_4ei: false,
+    bo_5ei: false,
+    bo_1ai: false,
+    bo_2ai: false,
+    bo_3ai: false,
+    bo_4ai: false,
+    bo_5ai: false,
+    bo_6af: false,
+    bo_7af: false,
+    bo_8af: false,
+    bo_9af: false,
   };
   const [isProfessor, setIsProfessor] = useState(false);
   const [formData, setFormData] = useState<FormData>(initialFormData);
@@ -69,7 +70,8 @@ export default function ModalVicularAgente({
   const [msgError, setMsgError] = useState('');
   const { setPageEscolasPDG, idEntidadeEscolar, setUsersUpdated } =
     useGlobalContext();
-  const [agenteData, setAgenteData] = useState<EntitiesAgenteExterno[]>([]);
+  const [nomeAgente, setNomeAgente] = useState('');
+
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleApiErrors = (error: any) => {
@@ -81,59 +83,19 @@ export default function ModalVicularAgente({
   };
 
   useEffect(() => {
-    fetchUserAgente();
+    fetchDataInitialAgente();
+    fetchUserVinculoAgenteInitial();
   }, []);
 
-  const fetchData = async () => {
-    try {
-      formData.id_escola = idEntidadeEscolar;
-      const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
-      const responseAgentes = await backendApi.listarAgenteRelacionadoEscola({
-        id_ee: idEntidadeEscolar,
-      });
-      const isAgentPresent = responseAgentes.some((agente) => {
-        return agente.uuid_agente === formData.id_prof;
-      });
-
-      if (!isAgentPresent) {
-        await backendApi.vincularAgente(formData);
-        setUsersUpdated(true);
-        onCancel();
-      } else {
-        setError(true);
-        setMsgError('Usuário já vinculado.');
-        setTimeout(() => setError(false), 6000);
-        return;
-      }
-    } catch (error) {
-      handleApiErrors(error);
-    }
-    onCancel();
-  };
-
-  const fetchUserAgente = async () => {
+  const fetchDataInitialAgente = async () => {
     const token = localStorage.getItem('auth_token');
     const backendApi = new BackendApiMock(`${token}`);
 
     try {
-      const responseUserPdg = await backendApi.listarTodosAgentes();
-      if (responseUserPdg) {
-        setAgenteData(responseUserPdg);
-      }
-      return responseUserPdg;
-    } catch (error) {
-      handleApiErrors(error);
-      return null;
-    }
-  };
-
-  const getUserCargoById = async (value: any) => {
-    const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
-
-    try {
-      const responseUserPdg = await backendApi.localizarAgenteId({ id: value });
+      const responseUserPdg = await backendApi.localizarAgenteId({
+        id: userId,
+      });
+      setNomeAgente(responseUserPdg[0].nome);
       if (responseUserPdg[0].cargo === 'Professor') {
         setIsProfessor(true);
       } else {
@@ -146,18 +108,51 @@ export default function ModalVicularAgente({
     }
   };
 
+  const fetchUserVinculoAgenteInitial = async () => {
+    const token = localStorage.getItem('auth_token');
+    const backendApi = new BackendApiMock(`${token}`);
+
+    const dataReq = {
+      userId,
+      id_ee: idEntidadeEscolar,
+    };
+    try {
+      const responseUserPdg = await backendApi.listarVinculoAgente(dataReq);
+
+      const mappedData: FormData = {
+        id_escola: responseUserPdg[0].id_escola,
+        id_prof: responseUserPdg[0].id_prof,
+        especialista: responseUserPdg[0].especialista,
+        bo_3ei: responseUserPdg[0].bo_3ei,
+        bo_4ei: responseUserPdg[0].bo_4ei,
+        bo_5ei: responseUserPdg[0].bo_5ei,
+        bo_1ai: responseUserPdg[0].bo_1ai,
+        bo_2ai: responseUserPdg[0].bo_2ai,
+        bo_3ai: responseUserPdg[0].bo_3ai,
+        bo_4ai: responseUserPdg[0].bo_4ai,
+        bo_5ai: responseUserPdg[0].bo_5ai,
+        bo_6af: responseUserPdg[0].bo_6af,
+        bo_7af: responseUserPdg[0].bo_7af,
+        bo_8af: responseUserPdg[0].bo_8af,
+        bo_9af: responseUserPdg[0].bo_9af,
+      };
+
+      setFormData(mappedData);
+      return;
+    } catch (error) {
+      handleApiErrors(error);
+      return null;
+    }
+  };
+
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    if (name === 'id_prof' && value !== '') {
-      getUserCargoById(value);
-    }
+
     const booleanValue =
       value === 'true' ? true : value === 'false' ? false : null;
-    const updatedValue = ['escpecialista'].includes(name)
-      ? booleanValue
-      : value;
+    const updatedValue = ['especialista'].includes(name) ? booleanValue : value;
     setFormData((prev) => ({ ...prev, [name]: updatedValue }));
   };
 
@@ -166,27 +161,40 @@ export default function ModalVicularAgente({
     setFormData((prev) => ({ ...prev, [name]: checked }));
   };
 
-  const validateForm = (): boolean => {
-    const errors: string[] = [];
-    if (!formData.id_prof) {
-      errors.push('Campo Agente é obrigatorio...');
-    }
+  //   const validateForm = (): boolean => {
+  //     const errors: string[] = [];
+  //     if (!formData.id_prof) {
+  //       errors.push('Campo Agente é obrigatorio...');
+  //     }
 
-    if (errors.length) {
-      setError(true);
-      setMsgError(errors.join(' '));
-      setTimeout(() => setError(false), 6000);
-      return false;
+  //     if (errors.length) {
+  //       setError(true);
+  //       setMsgError(errors.join(' '));
+  //       setTimeout(() => setError(false), 6000);
+  //       return false;
+  //     }
+  //     return true;
+  //   };
+
+  const fetchData = async () => {
+    const token = localStorage.getItem('auth_token');
+    const backendApi = new BackendApiMock(`${token}`);
+
+    try {
+      await backendApi.editarVinculoAgente(formData);
+      setUsersUpdated(true);
+      onCancel();
+      return;
+    } catch (error) {
+      handleApiErrors(error);
+      return null;
     }
-    return true;
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      fetchData();
-    }
+    fetchData();
   };
 
   return (
@@ -194,7 +202,6 @@ export default function ModalVicularAgente({
       <HeaderComponent />
       <FormComponent
         formData={formData}
-        agenteData={agenteData}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
         setPageEscolasPDG={setPageEscolasPDG}
@@ -202,6 +209,7 @@ export default function ModalVicularAgente({
         handleCheckboxChange={handleCheckboxChange}
         selectedOptions={selectedOptions}
         isProfessor={isProfessor}
+        nomeAgente={nomeAgente}
         titleModal={'Vincular Agente'}
       />
       {error && <ErrorComponent message={msgError} />}
@@ -209,7 +217,7 @@ export default function ModalVicularAgente({
   );
 }
 
-const HeaderComponent: React.FC = () => <h4>Novo Contrato</h4>;
+const HeaderComponent: React.FC = () => <h4>Editar Vinculo Agente</h4>;
 
 const FormComponent: React.FC<any> = ({
   formData,
@@ -217,9 +225,9 @@ const FormComponent: React.FC<any> = ({
   handleSubmit,
   titleModal,
   onCancel,
-  agenteData,
   handleCheckboxChange,
   isProfessor,
+  nomeAgente,
 }) => {
   return (
     <>
@@ -235,26 +243,19 @@ const FormComponent: React.FC<any> = ({
         <div className={styles.boxStandard}>
           <label className={styles.labelStandard}>
             Agente
-            <select
-              value={formData.id_prof}
-              onChange={handleInputChange}
-              name="id_prof"
-              className={styles.inputSelect}
-            >
-              <option value="">-</option>
-              {agenteData
-                .sort((a: any, b: any) => a.nome.localeCompare(b.nome))
-                .map((user: any) => (
-                  <option key={user.uuid_agente} value={user.uuid_agente}>
-                    {user.nome}
-                  </option>
-                ))}
-            </select>
+            <input
+              type="text"
+              placeholder="agente"
+              name="agente"
+              value={nomeAgente}
+              className={styles.inputStandard}
+              readOnly
+            />
           </label>
           <label className={styles.labelStandard}>
             Especialista
             <select
-              value={formData.escpecialista}
+              value={formData.especialista ?? ''}
               onChange={handleInputChange}
               name="especialista"
               className={styles.inputSelect}
@@ -279,7 +280,7 @@ const FormComponent: React.FC<any> = ({
                         type="checkbox"
                         value={option}
                         name={option}
-                        checked={formData[option]}
+                        checked={formData[option] ?? ''}
                         onChange={handleCheckboxChange}
                       />
                       {option.slice(3)}

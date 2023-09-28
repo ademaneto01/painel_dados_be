@@ -6,18 +6,18 @@ interface VincularAgenteMockPayload {
   id_prof: string;
   id_escola: string;
   especialista: boolean;
-  readonly bo_3EI: boolean;
-  readonly bo_4EI: boolean;
-  readonly bo_5EI: boolean;
-  readonly bo_1AI: boolean;
-  readonly bo_2AI: boolean;
-  readonly bo_3AI: boolean;
-  readonly bo_4AI: boolean;
-  readonly bo_5AI: boolean;
-  readonly bo_6Af: boolean;
-  readonly bo_7AF: boolean;
-  readonly bo_8AF: boolean;
-  readonly bo_9AF: boolean;
+  bo_3ei: boolean;
+  bo_4ei: boolean;
+  bo_5ei: boolean;
+  bo_1ai: boolean;
+  bo_2ai: boolean;
+  bo_3ai: boolean;
+  bo_4ai: boolean;
+  bo_5ai: boolean;
+  bo_6af: boolean;
+  bo_7af: boolean;
+  bo_8af: boolean;
+  bo_9af: boolean;
 }
 
 export default class MockVincularAgente implements SerializerInterface {
@@ -27,18 +27,18 @@ export default class MockVincularAgente implements SerializerInterface {
       id_prof: otd.id_prof,
       id_escola: otd.id_escola,
       especialista: otd.especialista,
-      bo_3EI: otd.bo_3EI,
-      bo_4EI: otd.bo_4EI,
-      bo_5EI: otd.bo_5EI,
-      bo_1AI: otd.bo_1AI,
-      bo_2AI: otd.bo_2AI,
-      bo_3AI: otd.bo_3AI,
-      bo_4AI: otd.bo_4AI,
-      bo_5AI: otd.bo_5AI,
-      bo_6Af: otd.bo_6Af,
-      bo_7AF: otd.bo_7AF,
-      bo_8AF: otd.bo_8AF,
-      bo_9AF: otd.bo_9AF,
+      bo_3ei: otd.bo_3ei,
+      bo_4ei: otd.bo_4ei,
+      bo_5ei: otd.bo_5ei,
+      bo_1ai: otd.bo_1ai,
+      bo_2ai: otd.bo_2ai,
+      bo_3ai: otd.bo_3ai,
+      bo_4ai: otd.bo_4ai,
+      bo_5ai: otd.bo_5ai,
+      bo_6af: otd.bo_6af,
+      bo_7af: otd.bo_7af,
+      bo_8af: otd.bo_8af,
+      bo_9af: otd.bo_9af,
     });
   }
 }

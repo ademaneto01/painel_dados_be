@@ -44,4 +44,7 @@ export default interface BackendApiInterface {
   listarTodosAgentes(): Promise<EntitiesAgenteExterno[]>;
   vincularAgente(userData: any): Promise<EntitiesVincularAgente[]>;
   deletarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
+  localizarAgenteId(id: any): Promise<EntitiesAgenteExterno[]>;
+  listarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
+  editarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
 }

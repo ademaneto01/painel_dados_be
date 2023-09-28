@@ -3,18 +3,18 @@ interface VinculoAgenteProps {
   id_prof: string;
   id_escola: string;
   especialista: boolean;
-  readonly bo_3EI: boolean;
-  readonly bo_4EI: boolean;
-  readonly bo_5EI: boolean;
-  readonly bo_1AI: boolean;
-  readonly bo_2AI: boolean;
-  readonly bo_3AI: boolean;
-  readonly bo_4AI: boolean;
-  readonly bo_5AI: boolean;
-  readonly bo_6Af: boolean;
-  readonly bo_7AF: boolean;
-  readonly bo_8AF: boolean;
-  readonly bo_9AF: boolean;
+  bo_3ei: boolean;
+  bo_4ei: boolean;
+  bo_5ei: boolean;
+  bo_1ai: boolean;
+  bo_2ai: boolean;
+  bo_3ai: boolean;
+  bo_4ai: boolean;
+  bo_5ai: boolean;
+  bo_6af: boolean;
+  bo_7af: boolean;
+  bo_8af: boolean;
+  bo_9af: boolean;
 }
 
 export default class EntitiesVincularAgente {
@@ -22,52 +22,52 @@ export default class EntitiesVincularAgente {
   readonly id_prof: string;
   readonly id_escola: string;
   readonly especialista: boolean;
-  readonly bo_3EI: boolean;
-  readonly bo_4EI: boolean;
-  readonly bo_5EI: boolean;
-  readonly bo_1AI: boolean;
-  readonly bo_2AI: boolean;
-  readonly bo_3AI: boolean;
-  readonly bo_4AI: boolean;
-  readonly bo_5AI: boolean;
-  readonly bo_6Af: boolean;
-  readonly bo_7AF: boolean;
-  readonly bo_8AF: boolean;
-  readonly bo_9AF: boolean;
+  readonly bo_3ei: boolean;
+  readonly bo_4ei: boolean;
+  readonly bo_5ei: boolean;
+  readonly bo_1ai: boolean;
+  readonly bo_2ai: boolean;
+  readonly bo_3ai: boolean;
+  readonly bo_4ai: boolean;
+  readonly bo_5ai: boolean;
+  readonly bo_6af: boolean;
+  readonly bo_7af: boolean;
+  readonly bo_8af: boolean;
+  readonly bo_9af: boolean;
 
   constructor({
     id,
     id_prof,
     id_escola,
     especialista,
-    bo_3EI,
-    bo_4EI,
-    bo_5EI,
-    bo_1AI,
-    bo_2AI,
-    bo_3AI,
-    bo_4AI,
-    bo_5AI,
-    bo_6Af,
-    bo_7AF,
-    bo_8AF,
-    bo_9AF,
+    bo_3ei,
+    bo_4ei,
+    bo_5ei,
+    bo_1ai,
+    bo_2ai,
+    bo_3ai,
+    bo_4ai,
+    bo_5ai,
+    bo_6af,
+    bo_7af,
+    bo_8af,
+    bo_9af,
   }: VinculoAgenteProps) {
     this.id = id;
     this.id_prof = id_prof;
     this.id_escola = id_escola;
     this.especialista = especialista;
-    this.bo_3EI = bo_3EI;
-    this.bo_4EI = bo_4EI;
-    this.bo_5EI = bo_5EI;
-    this.bo_1AI = bo_1AI;
-    this.bo_2AI = bo_2AI;
-    this.bo_3AI = bo_3AI;
-    this.bo_4AI = bo_4AI;
-    this.bo_5AI = bo_5AI;
-    this.bo_6Af = bo_6Af;
-    this.bo_7AF = bo_7AF;
-    this.bo_8AF = bo_8AF;
-    this.bo_9AF = bo_9AF;
+    this.bo_3ei = bo_3ei;
+    this.bo_4ei = bo_4ei;
+    this.bo_5ei = bo_5ei;
+    this.bo_1ai = bo_1ai;
+    this.bo_2ai = bo_2ai;
+    this.bo_3ai = bo_3ai;
+    this.bo_4ai = bo_4ai;
+    this.bo_5ai = bo_5ai;
+    this.bo_6af = bo_6af;
+    this.bo_7af = bo_7af;
+    this.bo_8af = bo_8af;
+    this.bo_9af = bo_9af;
   }
 }

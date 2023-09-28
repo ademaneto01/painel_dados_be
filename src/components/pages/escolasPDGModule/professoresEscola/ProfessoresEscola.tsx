@@ -11,8 +11,9 @@ import ModalVicularAgente from '@/components/modal/modalVincularAgente/ModalVinc
 
 const COLUMNS = [
   new Column('Nome Operacional', 'nome'),
-  new Column('E-mail Primario', 'email_primario'),
-  new Column('E-mail Secundario', 'email_secundario'),
+  new Column('E-mail Primario', 'no_email_primario'),
+  new Column('Telefone', 'nu_telefone'),
+  new Column('Cargo', 'cargo'),
   new Column('Ações', 'acoes'),
 ];
 

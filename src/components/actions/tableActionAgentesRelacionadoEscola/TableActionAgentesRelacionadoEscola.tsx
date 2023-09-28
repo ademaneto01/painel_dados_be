@@ -8,9 +8,10 @@ import { useState } from 'react';
 import Cookies from 'js-cookie';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
+import ModalEditarVinculoAgente from '@/components/modal/modalEditarVinculoAgente/ModalEditarVinculoAgente';
 
 interface PropsForFxclusion {
-  id: string;
+  uuid_agente: string;
   nome?: string;
 }
 interface FormData {
@@ -31,16 +32,16 @@ export default function TableActionAgentesRelacionadoEscola(
   props: PropsForFxclusion,
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
-  const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
+  const [showModalEditAgente, setShowModalEditAgente] = useState('');
   const { setUsersUpdated, idEntidadeEscolar } = useGlobalContext();
   const initialFormData: FormData = {
-    userId: props.id,
+    userId: props.uuid_agente,
     id_ee: idEntidadeEscolar,
   };
 
   const [formData, setFormData] = useState<FormData>(initialFormData);
   function handleClickOpenModalExcluir(id: string): void {
-    setShowModalDelete(props.id);
+    setShowModalDelete(props.uuid_agente);
   }
   async function deleteUser() {
     const token = Cookies.get('auth_token');
@@ -56,30 +57,28 @@ export default function TableActionAgentesRelacionadoEscola(
     }
   }
 
-  function handleClickOpenModalAddEditSchool(id: string): void {
-    setShowModalAddEditSchool(props.id);
+  function handleClickOpenModalEditAgente(id: string): void {
+    setShowModalEditAgente(props.uuid_agente);
   }
 
   return (
     <div className={styles.container}>
       <Action
         icon={reactIcon(FiEdit)}
-        onClick={() => handleClickOpenModalAddEditSchool(props.id)}
+        onClick={() => handleClickOpenModalEditAgente(props.uuid_agente)}
       />
       <Action
         icon={reactIcon(FaTrashAlt, '#f1646c')}
-        onClick={() => handleClickOpenModalExcluir(props.id)}
+        onClick={() => handleClickOpenModalExcluir(props.uuid_agente)}
       />
-      {showModalAddEditSchool === props.id && (
-        <ModalAddUser
-          titleModal={'Editar usuário'}
-          userId={props.id}
-          isEditing={true}
-          onCancel={() => setShowModalAddEditSchool('')}
+      {showModalEditAgente === props.uuid_agente && (
+        <ModalEditarVinculoAgente
+          userId={props.uuid_agente}
+          onCancel={() => setShowModalEditAgente('')}
         />
       )}
 
-      {showModalDelete === props.id && (
+      {showModalDelete === props.uuid_agente && (
         <ModalDelete
           title={'Excluir'}
           message={`Realmente deseja excluir ${props.nome} ?`}

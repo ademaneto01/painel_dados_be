@@ -210,6 +210,14 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockAgenteExterno(),
     );
   }
+  public async localizarAgenteId(id: any): Promise<EntitiesAgenteExterno[]> {
+    return await this.post<EntitiesAgenteExterno>(
+      '/localizarAgenteId',
+      id,
+      new MockAgenteExterno(),
+    );
+  }
+
   public async localizarEntidadesEscolaresUsuariosPDG(
     userId: any,
   ): Promise<EntitiesEntidadesEscolaresPDG[]> {
@@ -246,6 +254,24 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockEntidadesEscolaresSerializers(),
     );
   }
+  public async editarVinculoAgente(
+    userData: any,
+  ): Promise<EntitiesVincularAgente[]> {
+    return await this.post<EntitiesVincularAgente>(
+      '/editarVinculoAgente',
+      userData,
+      new MockVincularAgente(),
+    );
+  }
+  public async listarVinculoAgente(
+    userData: any,
+  ): Promise<EntitiesVincularAgente[]> {
+    return await this.post<EntitiesVincularAgente>(
+      '/listarVinculoAgente',
+      userData,
+      new MockVincularAgente(),
+    );
+  }
   public async localizarEntidadesEscolares(
     uuid_ec: any,
   ): Promise<EntitiesEntidadesEscolares[]> {
@@ -277,12 +303,12 @@ export default class BackendApiMock implements BackendApiInterface {
     response: AxiosResponse,
     serializer: SerializerInterface,
   ): T[] {
-    console.log(response);
     if (response.status === 200) {
       const entities: T[] = [];
 
       for (let otd of response.data) {
         const entity = serializer.toEntity(otd);
+
         entities.push(entity);
       }
 

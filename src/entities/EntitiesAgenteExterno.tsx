@@ -1,36 +1,47 @@
 import { TableActionAgentesRelacionadoEscola } from '@/components/actions';
 import React from 'react';
 interface UserProps {
-  id: string;
+  uuid_agente: string;
   nome: string;
-  ativo: boolean;
-  email_primario: string;
-  email_secundario: string;
+  cargo: string;
+  bo_ativo: boolean;
+  nu_telefone: number;
+  no_email_primario: string;
+  no_email_secundario: string;
 }
 
 export default class EntitiesAgenteExterno {
-  readonly id: string;
+  readonly uuid_agente: string;
   readonly nome: string;
-  readonly ativo: boolean;
-  readonly email_primario: string;
-  readonly email_secundario: string;
+  readonly cargo: string;
+  readonly bo_ativo: boolean;
+  readonly nu_telefone: number;
+  readonly no_email_primario: string;
+  readonly no_email_secundario: string;
 
   constructor({
-    id,
+    uuid_agente,
     nome,
-    ativo,
-    email_primario,
-    email_secundario,
+    cargo,
+    bo_ativo,
+    nu_telefone,
+    no_email_primario,
+    no_email_secundario,
   }: UserProps) {
-    this.id = id;
+    this.uuid_agente = uuid_agente;
     this.nome = nome;
-    this.ativo = ativo;
-    this.email_primario = email_primario;
-    this.email_secundario = email_secundario;
+    this.cargo = cargo;
+    this.bo_ativo = bo_ativo;
+    this.nu_telefone = nu_telefone;
+    this.no_email_primario = no_email_primario;
+    this.no_email_secundario = no_email_secundario;
   }
   public get acoes(): JSX.Element {
     return (
-      <TableActionAgentesRelacionadoEscola id={this.id} nome={this.nome} />
+      <TableActionAgentesRelacionadoEscola
+        uuid_agente={this.uuid_agente}
+        nome={this.nome}
+      />
     );
   }
 }

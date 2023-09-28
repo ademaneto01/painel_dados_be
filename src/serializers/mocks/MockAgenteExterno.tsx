@@ -2,21 +2,25 @@ import { EntitiesAgenteExterno } from '@/entities';
 import { SerializerInterface } from '@/interfaces';
 
 interface AgenteExternoMockPayload {
-  id: string;
+  uuid_agente: string;
   nome: string;
-  ativo: boolean;
-  email_primario: string;
-  email_secundario: string;
+  cargo: string;
+  bo_ativo: boolean;
+  nu_telefone: number;
+  no_email_primario: string;
+  no_email_secundario: string;
 }
 
 export default class MockAgenteExterno implements SerializerInterface {
   toEntity(otd: AgenteExternoMockPayload): EntitiesAgenteExterno {
     return new EntitiesAgenteExterno({
-      id: otd.id,
+      uuid_agente: otd.uuid_agente,
       nome: otd.nome,
-      ativo: otd.ativo,
-      email_primario: otd.email_primario,
-      email_secundario: otd.email_secundario,
+      cargo: otd.cargo,
+      bo_ativo: otd.bo_ativo,
+      nu_telefone: otd.nu_telefone,
+      no_email_primario: otd.no_email_primario,
+      no_email_secundario: otd.no_email_secundario,
     });
   }
 }
