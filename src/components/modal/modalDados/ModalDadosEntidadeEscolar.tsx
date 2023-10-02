@@ -71,7 +71,7 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
         bairro: response[0].bairro,
         complemento: response[0].complemento,
       });
-      //LOCALIZAR USUARIO PEDAGÓGICO
+
       const usuariosPDG = await backendApi.localizarUsuariosPDG();
       const usuarioEncontrado = usuariosPDG.find((user) => {
         return user.id === response[0].id_usuario_pdg;

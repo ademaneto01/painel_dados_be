@@ -191,7 +191,6 @@ export default function ModalVicularAgente({
 
   return (
     <div className={styles.background}>
-      <HeaderComponent />
       <FormComponent
         formData={formData}
         agenteData={agenteData}
@@ -208,8 +207,6 @@ export default function ModalVicularAgente({
     </div>
   );
 }
-
-const HeaderComponent: React.FC = () => <h4>Novo Contrato</h4>;
 
 const FormComponent: React.FC<any> = ({
   formData,

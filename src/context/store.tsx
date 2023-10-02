@@ -1,5 +1,10 @@
 'use client';
-import { PageEnumContratos, PageEnumEscolasPDG } from '@/enums';
+import {
+  PageEnumContratos,
+  PageEnumEscolasPDG,
+  PageEnumAgentesExterno,
+} from '@/enums';
+
 import React, {
   createContext,
   useContext,
@@ -14,12 +19,16 @@ interface ContextProps {
   setUsersUpdated: Dispatch<SetStateAction<boolean>>;
   page: string;
   setPage: Dispatch<SetStateAction<PageEnumContratos>>;
+  pageAgentesExterno: string;
+  setPageAgentesExterno: Dispatch<SetStateAction<PageEnumAgentesExterno>>;
   pageEscolasPDG: string;
   setPageEscolasPDG: Dispatch<SetStateAction<PageEnumEscolasPDG>>;
   idContrato: string;
   setIdContrato: Dispatch<SetStateAction<string>>;
   idEntidadeEscolar: string;
   setIdEntidadeEscolar: Dispatch<SetStateAction<string>>;
+  idAgente: string;
+  setIdAgente: Dispatch<SetStateAction<string>>;
 }
 
 export const GlobalContext = createContext<ContextProps>({
@@ -28,6 +37,10 @@ export const GlobalContext = createContext<ContextProps>({
   page: PageEnumContratos.entidadesContratuais,
   setPage: () => {},
   pageEscolasPDG: PageEnumEscolasPDG.escolasPDG,
+  idAgente: '',
+  setIdAgente: () => {},
+  setPageAgentesExterno: () => {},
+  pageAgentesExterno: PageEnumAgentesExterno.agentes,
   setPageEscolasPDG: () => {},
   idContrato: '',
   setIdContrato: () => {},
@@ -40,10 +53,14 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [usersUpdated, setUsersUpdated] = useState(false);
   const [page, setPage] = useState(PageEnumContratos.entidadesContratuais);
+  const [pageAgentesExterno, setPageAgentesExterno] = useState(
+    PageEnumAgentesExterno.agentes,
+  );
   const [pageEscolasPDG, setPageEscolasPDG] = useState(
     PageEnumEscolasPDG.escolasPDG,
   );
   const [idContrato, setIdContrato] = useState('');
+  const [idAgente, setIdAgente] = useState('');
   const [idEntidadeEscolar, setIdEntidadeEscolar] = useState('');
   return (
     <GlobalContext.Provider
@@ -52,6 +69,10 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
         setUsersUpdated,
         page,
         setPage,
+        idAgente,
+        setIdAgente,
+        pageAgentesExterno,
+        setPageAgentesExterno,
         pageEscolasPDG,
         setPageEscolasPDG,
         idContrato,

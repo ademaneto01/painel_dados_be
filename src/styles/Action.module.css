@@ -7,3 +7,34 @@
   margin: 0.2em;
   cursor: pointer;
 }
+
+.modal {
+  padding: 0.5rem;
+  background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+}
+.fullScreenDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+
+.modalWrapper {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.iconTriangulo {
+  position: absolute;
+  top: -15px;
+}

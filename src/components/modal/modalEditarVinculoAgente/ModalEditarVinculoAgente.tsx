@@ -210,7 +210,7 @@ export default function ModalEditarVinculoAgente({
         selectedOptions={selectedOptions}
         isProfessor={isProfessor}
         nomeAgente={nomeAgente}
-        titleModal={'Vincular Agente'}
+        titleModal={'Editar Vinculo Agente'}
       />
       {error && <ErrorComponent message={msgError} />}
     </div>

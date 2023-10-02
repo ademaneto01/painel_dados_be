@@ -4,6 +4,7 @@ import TableActionsContratos from './tableActionsContratos/TableActionsContratos
 import TableActionEntidadeEscolar from './tableActionEntidadeEscolar/TableActionEntidadeEscolar';
 import TableActionEntidadeEscolarPDG from './tableActionEntidadeEscolarPDG/TableActionEntidadeEscolarPDG';
 import TableActionAgentesRelacionadoEscola from './tableActionAgentesRelacionadoEscola/TableActionAgentesRelacionadoEscola';
+import TableActionsAgentesExterno from './tableActionsAgentesExterno/TableActionsAgentesExterno';
 export {
   Action,
   TableActionsUsers,
@@ -11,4 +12,5 @@ export {
   TableActionEntidadeEscolar,
   TableActionEntidadeEscolarPDG,
   TableActionAgentesRelacionadoEscola,
+  TableActionsAgentesExterno,
 };

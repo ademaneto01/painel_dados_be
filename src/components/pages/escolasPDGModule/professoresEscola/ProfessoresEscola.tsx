@@ -3,7 +3,7 @@ import styles from '@/styles/Turmas.module.css';
 import { Column, Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
-import { EntitiesAgenteExterno } from '@/entities';
+import { EntitiesAgenteExternoVinculo } from '@/entities';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumEscolasPDG } from '@/enums';
@@ -18,7 +18,7 @@ const COLUMNS = [
 ];
 
 export default function EscolasPDG(): JSX.Element {
-  const [data, setData] = useState<EntitiesAgenteExterno[]>([]);
+  const [data, setData] = useState<EntitiesAgenteExternoVinculo[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const {
@@ -75,7 +75,7 @@ export default function EscolasPDG(): JSX.Element {
         {showModalVincularAgente && (
           <ModalVicularAgente onCancel={() => handleClickCloseModalAdd()} />
         )}
-        <Table<EntitiesAgenteExterno>
+        <Table<EntitiesAgenteExternoVinculo>
           data={data}
           columns={COLUMNS}
           loaded={loaded}

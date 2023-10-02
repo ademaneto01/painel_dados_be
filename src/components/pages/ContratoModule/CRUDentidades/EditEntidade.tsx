@@ -133,8 +133,15 @@ export default function EditEntidadeEscolar(): JSX.Element {
 
   const validateForm = (): boolean => {
     const errors: string[] = [];
-    if (Object.values(formData).some((v) => v === '' || v === null)) {
-      errors.push('Todos campos são obrigatórios...');
+    // if (Object.values(formData).some((v) => v === '' || v === null)) {
+    //   errors.push('Todos campos são obrigatórios...');
+    // }
+
+    for (const [key, value] of Object.entries(formData)) {
+      if (key !== 'url_dados' && (value === '' || value === null)) {
+        errors.push('Todos campos são obrigatórios...');
+        break; // Uma mensagem genérica para todos os campos é suficiente
+      }
     }
     if (formData.uf && formData.uf.length > 2) {
       errors.push('Campo UF é permitido somente dois caracteres...');

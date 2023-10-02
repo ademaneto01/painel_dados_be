@@ -1,5 +1,6 @@
 import {
   EntitiesAgenteExterno,
+  EntitiesAgenteExternoVinculo,
   EntitiesContratos,
   EntitiesDeletUser,
   EntitiesEditarEntidadeEscolar,
@@ -29,6 +30,7 @@ import {
   MockAgenteExterno,
   MockVincularAgente,
 } from '@/serializers/mocks';
+import MockAgenteExternoVinculo from '@/serializers/mocks/MockAgenteExternoVinculo';
 import MockContratosSerializers from '@/serializers/mocks/MockContratosSerializers';
 import MockEditarEntidadeEscolar from '@/serializers/mocks/MockEditarEntidadeEscolar';
 import MockEntidadesEscolaresSerializers from '@/serializers/mocks/MockEntidadesEscolaresSerializers';
@@ -196,11 +198,11 @@ export default class BackendApiMock implements BackendApiInterface {
   }
   public async listarAgenteRelacionadoEscola(
     id_ee: any,
-  ): Promise<EntitiesAgenteExterno[]> {
-    return await this.post<EntitiesAgenteExterno>(
+  ): Promise<EntitiesAgenteExternoVinculo[]> {
+    return await this.post<EntitiesAgenteExternoVinculo>(
       '/ListarAgentesRelacionadoEscola',
       id_ee,
-      new MockAgenteExterno(),
+      new MockAgenteExternoVinculo(),
     );
   }
 
@@ -210,6 +212,31 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockAgenteExterno(),
     );
   }
+  public async registrarAgente(
+    userData: any,
+  ): Promise<EntitiesAgenteExterno[]> {
+    return await this.post<EntitiesAgenteExterno>(
+      '/registrarAgente',
+      userData,
+      new MockAgenteExterno(),
+    );
+  }
+  public async editarAgente(userData: any): Promise<EntitiesAgenteExterno[]> {
+    return await this.post<EntitiesAgenteExterno>(
+      '/editarAgente',
+      userData,
+      new MockAgenteExterno(),
+    );
+  }
+
+  public async deletarAgente(userId: any): Promise<EntitiesAgenteExterno[]> {
+    return await this.post<EntitiesAgenteExterno>(
+      '/deletarAgente',
+      userId,
+      new MockAgenteExterno(),
+    );
+  }
+
   public async localizarAgenteId(id: any): Promise<EntitiesAgenteExterno[]> {
     return await this.post<EntitiesAgenteExterno>(
       '/localizarAgenteId',
@@ -281,7 +308,13 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockEntidadesEscolaresSerializers(),
     );
   }
-
+  public async localizarUrlPainel(id_ee: any): Promise<EntitiesUrl[]> {
+    return await this.post<EntitiesUrl>(
+      '/localizarUrlPainel',
+      id_ee,
+      new MockUrlSerializers(),
+    );
+  }
   private async post<T>(
     route: string,
     data: any,

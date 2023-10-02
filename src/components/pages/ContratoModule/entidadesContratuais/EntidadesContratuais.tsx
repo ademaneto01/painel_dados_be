@@ -72,8 +72,10 @@ function ContratosTable({ data, loaded, error, onClickRow }: any) {
       columns={columns}
       loaded={loaded}
       error={error}
-      searchInputNone={'none'}
-      searchInputNoneNome={'none'}
+      // searchInputNone={'none'}
+      // searchInputNoneNome={'none'}
+      searchInputNoneEscola={'none'}
+      labelInput={'Buscar pelo nome'}
       onClickRow={onClickRow}
     />
   );

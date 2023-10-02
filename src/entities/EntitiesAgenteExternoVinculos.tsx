@@ -1,21 +1,21 @@
-import { TableActionsAgentesExterno } from '@/components/actions';
+import { TableActionAgentesRelacionadoEscola } from '@/components/actions';
 import React from 'react';
 interface UserProps {
   uuid_agente: string;
   nome: string;
   cargo: string;
   bo_ativo: boolean;
-  nu_telefone: string;
+  nu_telefone: number;
   no_email_primario: string;
   no_email_secundario: string;
 }
 
-export default class EntitiesAgenteExterno {
+export default class EntitiesAgenteExternoVinculos {
   readonly uuid_agente: string;
   readonly nome: string;
   readonly cargo: string;
   readonly bo_ativo: boolean;
-  readonly nu_telefone: string;
+  readonly nu_telefone: number;
   readonly no_email_primario: string;
   readonly no_email_secundario: string;
 
@@ -38,7 +38,7 @@ export default class EntitiesAgenteExterno {
   }
   public get acoes(): JSX.Element {
     return (
-      <TableActionsAgentesExterno
+      <TableActionAgentesRelacionadoEscola
         uuid_agente={this.uuid_agente}
         nome={this.nome}
       />

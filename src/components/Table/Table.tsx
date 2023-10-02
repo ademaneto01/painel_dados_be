@@ -14,8 +14,10 @@ export interface TableProps<T> {
   error?: boolean;
   loaded?: boolean;
   searchInputNone?: string;
+  searchInputNoneEscola?: string;
   searchInputNoneNome?: string;
   labelInput?: string;
+  inputSelectAgente?: boolean;
   onClickRow?: (item: T) => void;
 }
 
@@ -37,7 +39,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
   const [filterNameOrEmail, setFilterNameOrEmail] = useState('');
   const [filterSchool, setFilterSchool] = useState('');
   const [filterProfile, setFilterProfile] = useState('');
-
+  const [filterCargo, setFilterCargo] = useState('');
   const itemsPerPage = 6;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -51,6 +53,9 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
     [props.columns],
   );
 
+  const styleInputEscola: React.CSSProperties = {
+    display: props.searchInputNoneEscola,
+  };
   const styleInput: React.CSSProperties = {
     display: props.searchInputNone,
   };
@@ -63,6 +68,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
       filterNameOrEmail: string,
       filterSchool: string,
       filterProfile: string,
+      filterCargo: string,
     ): T[] => {
       const normalizedFilterNameOrEmail = filterNameOrEmail
         .toLowerCase()
@@ -74,6 +80,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
         const itemEmail = (item as any).email?.toLowerCase();
         const itemSchool = (item as any).escola?.toLowerCase();
         const itemProfile = (item as any).perfil;
+        const itemCargo = (item as any).cargo;
 
         const nameMatch =
           itemName && itemName.includes(normalizedFilterNameOrEmail);
@@ -84,8 +91,12 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
           (itemSchool && itemSchool.includes(normalizedFilterSchool));
         const profileMatch =
           !filterProfile || (itemProfile && itemProfile === filterProfile);
+        const cargoMatch =
+          !filterCargo || (itemCargo && itemCargo === filterCargo);
 
-        return (nameMatch || emailMatch) && schoolMatch && profileMatch;
+        return (
+          (nameMatch || emailMatch) && schoolMatch && profileMatch && cargoMatch
+        );
       });
     },
     [],
@@ -95,7 +106,8 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
     if (
       filterNameOrEmail.trim() === '' &&
       filterSchool.trim() === '' &&
-      filterProfile === ''
+      filterProfile === '' &&
+      filterCargo === ''
     ) {
       return props.data;
     } else {
@@ -104,9 +116,17 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
         filterNameOrEmail,
         filterSchool,
         filterProfile,
+        filterCargo,
       );
     }
-  }, [props.data, filterNameOrEmail, filterSchool, filterProfile, filterData]);
+  }, [
+    props.data,
+    filterNameOrEmail,
+    filterSchool,
+    filterProfile,
+    filterData,
+    filterCargo,
+  ]);
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
@@ -142,6 +162,13 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
     setCurrentPage(1);
   };
 
+  const handleFilterCargoChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setFilterCargo(event.target.value);
+    setCurrentPage(1);
+  };
+
   const paginatedData = filteredData.slice(startIndex, endIndex);
 
   if (loaded) {
@@ -160,22 +187,36 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
             <input
               className={styles.inputFilter}
               type="text"
-              style={styleInput}
+              style={styleInputEscola}
               placeholder="Buscar pela escola"
               value={filterSchool}
               onChange={handleFilterSchoolChange}
             />
-            <select
-              style={styleInput}
-              className={styles.inputSelect}
-              value={filterProfile}
-              onChange={handleFilterProfileChange}
-            >
-              <option value="">Todos os perfis</option>
-              <option value="Administrador">Administrador</option>
-              <option value="Pedagógico">Pedagógico</option>
-              <option value="Professor">Professor</option>
-            </select>
+            {props.inputSelectAgente ? (
+              <select
+                style={styleInput}
+                className={styles.inputSelect}
+                value={filterCargo}
+                onChange={handleFilterCargoChange}
+              >
+                <option value="">Todos os Cargos</option>
+                <option value="Professor">Professor</option>
+                <option value="Coordenador">Coordenador</option>
+                <option value="Secretario">Secretario(a)</option>
+              </select>
+            ) : (
+              <select
+                style={styleInput}
+                className={styles.inputSelect}
+                value={filterProfile}
+                onChange={handleFilterProfileChange}
+              >
+                <option value="">Todos os perfis</option>
+                <option value="Administrador">Administrador</option>
+                <option value="Pedagógico">Pedagógico</option>
+                <option value="Escola">Escola</option>
+              </select>
+            )}
           </div>
           <div className={styles.table}>
             <table>

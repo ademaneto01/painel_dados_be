@@ -331,7 +331,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
                 <option value="">-</option>
                 <option value="Administrador">Administrator</option>
                 <option value="Pedagógico">Pedagógico</option>
-                <option value="Professor">Professor</option>
+                <option value="Escola">Escola</option>
               </select>
             </label>
           </div>

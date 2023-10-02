@@ -3,20 +3,21 @@ import Action from '../Action';
 import { FiEdit } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
-import { ModalDelete, ModalAddUser } from '../../modal';
+import {
+  ModalDadosAgente,
+  ModalDadosEntidadeEscolar,
+  ModalDelete,
+} from '../../modal';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
-import ModalEditarVinculoAgente from '@/components/modal/modalEditarVinculoAgente/ModalEditarVinculoAgente';
+import { PageEnumAgentesExterno } from '@/enums';
+import { ImEyePlus } from 'react-icons/im';
 
 interface PropsForFxclusion {
   uuid_agente: string;
   nome?: string;
-}
-interface FormData {
-  userId: string;
-  id_ee: string;
 }
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
@@ -28,18 +29,14 @@ function reactIcon(icon: IconType, color?: string): JSX.Element {
   return icon(options);
 }
 
-export default function TableActionAgentesRelacionadoEscola(
+export default function TableActionsAgentesExterno(
   props: PropsForFxclusion,
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
-  const [showModalEditAgente, setShowModalEditAgente] = useState('');
-  const { setUsersUpdated, idEntidadeEscolar } = useGlobalContext();
-  const initialFormData: FormData = {
-    userId: props.uuid_agente,
-    id_ee: idEntidadeEscolar,
-  };
+  const [showModalVermais, setShowModalVermais] = useState('');
+  const { setUsersUpdated, setIdAgente, setPageAgentesExterno } =
+    useGlobalContext();
 
-  const [formData, setFormData] = useState<FormData>(initialFormData);
   function handleClickOpenModalExcluir(id: string): void {
     setShowModalDelete(props.uuid_agente);
   }
@@ -48,7 +45,7 @@ export default function TableActionAgentesRelacionadoEscola(
 
     try {
       const backendApi = new BackendApiMock(`${token}`);
-      await backendApi.deletarVinculoAgente(formData);
+      await backendApi.deletarAgente({ userId: props.uuid_agente });
       setShowModalDelete('');
       setUsersUpdated(true);
     } catch (error) {
@@ -56,24 +53,33 @@ export default function TableActionAgentesRelacionadoEscola(
     }
   }
 
-  function handleClickOpenModalEditAgente(id: string): void {
-    setShowModalEditAgente(props.uuid_agente);
+  const handleViewMoreClick = () => verMais(props.uuid_agente);
+
+  function handleClickOpenEditAgente(id: string): void {
+    setIdAgente(props.uuid_agente);
+    setPageAgentesExterno(PageEnumAgentesExterno.editarAgente);
+  }
+
+  function verMais(uuid_agente: string): void {
+    setShowModalVermais(uuid_agente);
   }
 
   return (
     <div className={styles.container}>
       <Action
         icon={reactIcon(FiEdit)}
-        onClick={() => handleClickOpenModalEditAgente(props.uuid_agente)}
+        onClick={() => handleClickOpenEditAgente(props.uuid_agente)}
       />
+      <Action icon={reactIcon(ImEyePlus)} onClick={handleViewMoreClick} />
       <Action
         icon={reactIcon(FaTrashAlt, '#f1646c')}
         onClick={() => handleClickOpenModalExcluir(props.uuid_agente)}
       />
-      {showModalEditAgente === props.uuid_agente && (
-        <ModalEditarVinculoAgente
-          userId={props.uuid_agente}
-          onCancel={() => setShowModalEditAgente('')}
+
+      {showModalVermais === props.uuid_agente && (
+        <ModalDadosAgente
+          uuid_agente={props.uuid_agente}
+          onCancel={() => setShowModalVermais('')}
         />
       )}
 

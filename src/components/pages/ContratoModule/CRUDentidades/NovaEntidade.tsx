@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  ChangeEvent,
-  FormEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-} from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
@@ -14,7 +7,6 @@ import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, CreateButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { EntitiesUsuariosPDG } from '@/entities';
-import { Element } from 'slate';
 
 interface FormData {
   nome_operacional: string;
@@ -25,7 +17,7 @@ interface FormData {
   uf: string;
   bairro: string;
   complemento: string;
-  url_dados: string;
+  url_dados: string | null;
   id_usuario_pdg: string;
   ativo: boolean | null;
 }
@@ -101,13 +93,23 @@ export default function NovaEntidade(): JSX.Element {
     const booleanValue =
       value === 'true' ? true : value === 'false' ? false : null;
     const updatedValue = ['ativo'].includes(name) ? booleanValue : value;
+
+    if (name === 'url_dados' && value === '') {
+      setFormData((prev) => ({ ...prev, url_dados: null }));
+      return;
+    }
+
     setFormData((prev) => ({ ...prev, [name]: updatedValue }));
   };
 
   const validateForm = (): boolean => {
     const errors: string[] = [];
-    if (Object.values(formData).some((v) => v === '' || v === null)) {
-      errors.push('Todos campos são obrigatórios...');
+
+    for (const [key, value] of Object.entries(formData)) {
+      if (key !== 'url_dados' && (value === '' || value === null)) {
+        errors.push('Todos campos são obrigatórios...');
+        break;
+      }
     }
     if (formData.uf.length > 2) {
       errors.push('Campo UF é permitido somente dois caracteres...');

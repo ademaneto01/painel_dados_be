@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect } from 'react';
 import styles from '@/styles/Home.module.css';
-import { PageEnum, PageEnumEscolasPDG } from '@/enums';
+import { PageEnum } from '@/enums';
 import { useState } from 'react';
 import SideNavBar from '@/components/sideNavBar';
 import TopNavBar from '@/components/topNavBaR';
@@ -59,6 +59,8 @@ export default function Home(): JSX.Element {
         return <pages.Contratos />;
       case PageEnum.escolasPDG:
         return <pages.EscolasPDG />;
+      case PageEnum.agentesExterno:
+        return <pages.AgentesExterno />;
       default:
         return <></>;
     }

@@ -10,9 +10,10 @@ import {
   EntitiesCadastroUser,
   EntitiesEditarEntidadeEscolar,
   EntitiesEntidadesEscolaresPDG,
+  EntitiesAgenteExternoVinculo,
   EntitiesAgenteExterno,
+  EntitiesVincularAgente,
 } from '@/entities';
-import EntitiesVincularAgente from '@/entities/EntitiesVincularAgente';
 
 export default interface BackendApiInterface {
   localizarUsuarios(): Promise<EntitiesUsers[]>;
@@ -40,11 +41,17 @@ export default interface BackendApiInterface {
   localizarUsuariosPDG(): Promise<EntitiesUsuariosPDG[]>;
   localizarContrato(id: any): Promise<EntitiesContratos[]>;
   deletarEntidadeEscolar(id: any): Promise<EntitiesEntidadesEscolares[]>;
-  listarAgenteRelacionadoEscola(id_ee: any): Promise<EntitiesAgenteExterno[]>;
+  listarAgenteRelacionadoEscola(
+    id_ee: any,
+  ): Promise<EntitiesAgenteExternoVinculo[]>;
   listarTodosAgentes(): Promise<EntitiesAgenteExterno[]>;
   vincularAgente(userData: any): Promise<EntitiesVincularAgente[]>;
   deletarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
   localizarAgenteId(id: any): Promise<EntitiesAgenteExterno[]>;
   listarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
   editarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
+  localizarUrlPainel(id_ee: any): Promise<EntitiesUrl[]>;
+  registrarAgente(userData: any): Promise<EntitiesAgenteExterno[]>;
+  deletarAgente(userId: any): Promise<EntitiesAgenteExterno[]>;
+  editarAgente(userData: any): Promise<EntitiesAgenteExterno[]>;
 }

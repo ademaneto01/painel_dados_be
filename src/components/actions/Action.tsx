@@ -1,7 +1,7 @@
 import styles from '@/styles/Action.module.css';
 
 interface ActionProps {
-  onClick: VoidFunction;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   icon: JSX.Element;
 }
 

@@ -75,6 +75,19 @@ export default function SideNavBar(props: SideNavBarProps) {
             hidden={perfil === 'Administrador' ? true : false}
           />
           <SideNavBarButton
+            text="Agentes Externo"
+            onClick={() => {
+              props.setPage(PageEnum.agentesExterno);
+            }}
+            icon={reactIcon(ImUser)}
+            active={isActive(PageEnum.agentesExterno)}
+            hidden={
+              perfil === 'Administrador' || perfil === 'Pedagógico'
+                ? true
+                : false
+            }
+          />
+          <SideNavBarButton
             text="Contratos"
             onClick={() => {
               props.setPage(PageEnum.contratos);

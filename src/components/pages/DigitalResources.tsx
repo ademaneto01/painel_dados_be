@@ -6,6 +6,7 @@ import styles from '@/styles/DigitalResources.module.css';
 export default function DigitalResources() {
   const [data, setData] = useState([] as EntitiesUrl[]);
   const [loaded, setLoaded] = useState(false);
+  const [naoContemDados, setNaoContemDados] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -15,9 +16,17 @@ export default function DigitalResources() {
 
       try {
         const backendApi = new BackendApiMock(`${token}`);
+        const user = await backendApi.localizarUsuario({ userId });
 
-        const users = await backendApi.getUrl({ userId });
-        setData(users);
+        const dadosEntidade = await backendApi.localizarUrlPainel({
+          id_ee: user[0].id_ee,
+        });
+
+        if (dadosEntidade.length > 0 && dadosEntidade[0].url_dados !== '') {
+          setData(dadosEntidade);
+        } else {
+          setNaoContemDados(true);
+        }
       } catch (error) {
         if (error instanceof FailedToFetchError) {
           setError(true);
@@ -32,16 +41,26 @@ export default function DigitalResources() {
       fetchData();
     }
   }, []);
-  return (
-    <div className={styles.containerDigitaResources}>
-      {data.map((entityUrl) => (
-        <iframe
-          key={entityUrl.id}
-          width="100%"
-          height="100%"
-          src={entityUrl.url_dados}
-        />
-      ))}
-    </div>
-  );
+  if (!naoContemDados) {
+    return (
+      <div className={styles.containerDigitaResources}>
+        {data.map((entityUrl) => (
+          <iframe
+            key={entityUrl.id}
+            width="100%"
+            height="100%"
+            src={entityUrl.url_dados}
+          />
+        ))}
+      </div>
+    );
+  } else if (naoContemDados) {
+    return (
+      <div className={styles.containerNaoContemDados}>
+        <span className={styles.spanText}>
+          Ainda não existe dados cadastrado para sua Entidade Escolar....
+        </span>
+      </div>
+    );
+  }
 }

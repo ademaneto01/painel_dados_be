@@ -11,8 +11,9 @@ import EntitiesUsuariosPDG from './EntitiesUsuariosPDG';
 import EntitiesRegistrarEntidadeEscolar from './EntitiesRegistrarEntidadeEscolar';
 import EntitiesEditarEntidadeEscolar from './EntitiesEditarEntidadeEscolar';
 import EntitiesEntidadesEscolaresPDG from './EntitiesEntidadesEscolaresPDG';
-import EntitiesAgenteExterno from './EntitiesAgenteExterno';
+import EntitiesAgenteExternoVinculo from './EntitiesAgenteExternoVinculos';
 import EntitiesVincularAgente from './EntitiesVincularAgente';
+import EntitiesAgenteExterno from './EntitiesAgenteExterno';
 export {
   EntitiesUsers,
   EntitiesUserLogin,
@@ -27,6 +28,7 @@ export {
   EntitiesRegistrarEntidadeEscolar,
   EntitiesEditarEntidadeEscolar,
   EntitiesEntidadesEscolaresPDG,
-  EntitiesAgenteExterno,
+  EntitiesAgenteExternoVinculo,
   EntitiesVincularAgente,
+  EntitiesAgenteExterno,
 };
