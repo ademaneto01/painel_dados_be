@@ -9,14 +9,28 @@
 }
 
 .modal {
-  padding: 0.5rem;
-  background-color: aqua;
+  padding: 1rem 0.5rem 1rem 0.5rem;
+  background-color: var(--white);
+  border: 0.3px solid var(--gray-300);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   position: relative;
   width: 10rem;
-  height: 10rem;
+  height: auto;
+  border-radius: 0.3rem;
+}
+
+.modal button {
+  all: unset;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--gray-300);
+  padding: 0.5rem;
+}
+.modal button:hover {
+  background-color: var(--blue-300);
+  color: var(--white);
 }
 .fullScreenDiv {
   position: absolute;
@@ -31,7 +45,7 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .iconTriangulo {

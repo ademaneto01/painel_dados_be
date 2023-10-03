@@ -7,6 +7,7 @@ import {
   EntitiesEntidadesEscolares,
   EntitiesEntidadesEscolaresPDG,
   EntitiesOneUser,
+  EntitiesRegistrarDocContrato,
   EntitiesRegistrarEntidadeEscolar,
   EntitiesUrl,
   EntitiesUserLogin,
@@ -29,6 +30,7 @@ import {
   MockEntidadeEscolarPDGSerializers,
   MockAgenteExterno,
   MockVincularAgente,
+  MockRegistrarDocContrato,
 } from '@/serializers/mocks';
 import MockAgenteExternoVinculo from '@/serializers/mocks/MockAgenteExternoVinculo';
 import MockContratosSerializers from '@/serializers/mocks/MockContratosSerializers';
@@ -127,6 +129,15 @@ export default class BackendApiMock implements BackendApiInterface {
       '/localizarContrato',
       id,
       new MockContratosSerializers(),
+    );
+  }
+  public async registrarDocContrato(
+    userData: any,
+  ): Promise<EntitiesRegistrarDocContrato[]> {
+    return await this.post<EntitiesRegistrarDocContrato>(
+      '/registrarDocContrato',
+      userData,
+      new MockRegistrarDocContrato(),
     );
   }
 

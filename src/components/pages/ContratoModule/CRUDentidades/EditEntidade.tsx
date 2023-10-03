@@ -140,7 +140,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
     for (const [key, value] of Object.entries(formData)) {
       if (key !== 'url_dados' && (value === '' || value === null)) {
         errors.push('Todos campos são obrigatórios...');
-        break; // Uma mensagem genérica para todos os campos é suficiente
+        break;
       }
     }
     if (formData.uf && formData.uf.length > 2) {

@@ -4,7 +4,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { ImEyePlus } from 'react-icons/im';
 import { BsFillTriangleFill } from 'react-icons/bs';
 import { IconBaseProps, IconType } from 'react-icons';
-import { ModalDelete, ModalDadosContrato } from '../../modal';
+import { ModalDelete, ModalDadosContrato, ModalAddDoc } from '../../modal';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import BackendApiMock from '@/backendApi';
@@ -25,15 +25,17 @@ export default function TableActionsContratos(
     y: number;
   } | null>(null);
   const [showModalDelete, setShowModalDelete] = useState('');
+  const [showModalAddDoc, setShowModalAddDoc] = useState('');
   const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
   const { setUsersUpdated, setIdContrato, setPage } = useGlobalContext();
   const [modalInfos, setModalInfos] = useState('');
+
   const handleEditClick = () => handleClickOpenModalAddEditSchool(props.id);
   const handleOverwriteClick = () =>
     handleClickOpenModalSobreescreContrato(props.id);
   const handleViewMoreClick = () => verMais(props.id);
   const handleDeleteClick = () => handleClickOpenModalExcluir(props.id);
-
+  const handleAdicionarDoc = () => adicionarDocFunc(props.id);
   function renderIcon(icon: IconType, color?: string): JSX.Element {
     const options: IconBaseProps = {};
 
@@ -67,6 +69,11 @@ export default function TableActionsContratos(
     setShowModalDelete(id);
   }
 
+  function adicionarDocFunc(id: string): void {
+    setModalInfos('');
+    setShowModalAddDoc(id);
+    setIdContrato(id);
+  }
   function handleClickOpenModalAddEditSchool(id: string): void {
     setIdContrato(id);
     setModalInfos('');
@@ -85,6 +92,11 @@ export default function TableActionsContratos(
 
   return (
     <div className={styles.container}>
+      <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
+      <Action
+        icon={renderIcon(FaTrashAlt, '#f1646c')}
+        onClick={handleDeleteClick}
+      />
       <Action
         icon={
           modalInfos ? renderIcon(FiMoreVertical) : renderIcon(FiMoreHorizontal)
@@ -104,38 +116,25 @@ export default function TableActionsContratos(
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className={styles.iconTriangulo}>
-              <Action icon={renderIcon(BsFillTriangleFill)} />
-            </div>
             <div className={styles.modal}>
               <button onClick={handleEditClick}>Editar Contrato</button>
               <button onClick={handleOverwriteClick}>
                 Sobreescrever Contrato
               </button>
-              <button onClick={handleViewMoreClick}>Ver Mais</button>
-              <button onClick={handleDeleteClick}>Deletar Contrato</button>
+              <button onClick={handleAdicionarDoc}>Adicionar Documento</button>
             </div>
           </div>
         </div>
       )}
-
-      {/* (
-      <Action icon={renderIcon(FiEdit)} onClick={handleEditClick} />
-      <Action
-        icon={renderIcon(FiEdit, '#f1646c')}
-        onClick={handleOverwriteClick}
-      />
-      <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
-      <Action
-        icon={renderIcon(FaTrashAlt, '#f1646c')}
-        onClick={handleDeleteClick}
-      />) */}
 
       {showModalAddEditSchool === props.id && (
         <ModalDadosContrato
           idContrato={props.id}
           onCancel={() => setShowModalAddEditSchool('')}
         />
+      )}
+      {showModalAddDoc === props.id && (
+        <ModalAddDoc isOpen={true} onClose={() => setShowModalAddDoc('')} />
       )}
 
       {showModalDelete === props.id && (

@@ -13,6 +13,7 @@ import {
   EntitiesAgenteExternoVinculo,
   EntitiesAgenteExterno,
   EntitiesVincularAgente,
+  EntitiesRegistrarDocContrato,
 } from '@/entities';
 
 export default interface BackendApiInterface {
@@ -54,4 +55,5 @@ export default interface BackendApiInterface {
   registrarAgente(userData: any): Promise<EntitiesAgenteExterno[]>;
   deletarAgente(userId: any): Promise<EntitiesAgenteExterno[]>;
   editarAgente(userData: any): Promise<EntitiesAgenteExterno[]>;
+  registrarDocContrato(userData: any): Promise<EntitiesRegistrarDocContrato[]>;
 }

@@ -14,6 +14,7 @@ import EntitiesEntidadesEscolaresPDG from './EntitiesEntidadesEscolaresPDG';
 import EntitiesAgenteExternoVinculo from './EntitiesAgenteExternoVinculos';
 import EntitiesVincularAgente from './EntitiesVincularAgente';
 import EntitiesAgenteExterno from './EntitiesAgenteExterno';
+import EntitiesRegistrarDocContrato from './EntitiesRegistrarDocContrato';
 export {
   EntitiesUsers,
   EntitiesUserLogin,
@@ -31,4 +32,5 @@ export {
   EntitiesAgenteExternoVinculo,
   EntitiesVincularAgente,
   EntitiesAgenteExterno,
+  EntitiesRegistrarDocContrato,
 };

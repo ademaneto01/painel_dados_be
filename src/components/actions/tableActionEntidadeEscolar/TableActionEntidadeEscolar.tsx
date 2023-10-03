@@ -1,5 +1,5 @@
 import styles from '@/styles/Action.module.css';
-import { FiEdit } from 'react-icons/fi';
+import { FiEdit, FiMoreHorizontal, FiMoreVertical } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ModalDelete, ModalDadosEntidadeEscolar } from '../../modal';
@@ -19,6 +19,11 @@ interface PropsForFxclusion {
 export default function TableActionEntidadeEscolar(
   props: PropsForFxclusion,
 ): JSX.Element {
+  const [actionPosition, setActionPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
+  const [modalInfos, setModalInfos] = useState('');
   const [showModalDelete, setShowModalDelete] = useState('');
   const [showModalVermais, setShowModalVermais] = useState('');
   const { setUsersUpdated, setIdContrato, setIdEntidadeEscolar, setPage } =
@@ -49,8 +54,16 @@ export default function TableActionEntidadeEscolar(
     }
   }
 
+  const handleModalInfos = (id: string, event: React.MouseEvent) => {
+    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    setActionPosition({ x: rect.left, y: rect.bottom + scrollTop });
+    setModalInfos(id);
+  };
+
   function handleClickOpenModalExcluir(id: string): void {
     setShowModalDelete(id);
+    setModalInfos('');
   }
 
   function handleClickOpenModalAddEditSchool(id: string): void {
@@ -60,16 +73,45 @@ export default function TableActionEntidadeEscolar(
 
   function verMais(id: string): void {
     setShowModalVermais(id);
+    setModalInfos('');
   }
 
   return (
     <div className={styles.container}>
-      <Action icon={renderIcon(FiEdit)} onClick={handleEditClick} />
+      <Action
+        icon={
+          modalInfos ? renderIcon(FiMoreVertical) : renderIcon(FiMoreHorizontal)
+        }
+        onClick={(event) => {
+          handleModalInfos(props.id, event);
+        }}
+      />
+
+      {modalInfos === props.id && (
+        <div className={styles.fullScreenDiv} onClick={() => setModalInfos('')}>
+          <div
+            className={styles.modalWrapper}
+            style={{
+              left: actionPosition?.x,
+              top: actionPosition?.y,
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.modal}>
+              <button onClick={handleEditClick}>Editar Entidade</button>
+              <button onClick={handleViewMoreClick}>Ver Mais</button>
+              <button onClick={handleDeleteClick}>Deletar Entidade</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* <Action icon={renderIcon(FiEdit)} onClick={handleEditClick} />
       <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
       <Action
         icon={renderIcon(FaTrashAlt, '#f1646c')}
         onClick={handleDeleteClick}
-      />
+      /> */}
 
       {showModalVermais === props.id && (
         <ModalDadosEntidadeEscolar
