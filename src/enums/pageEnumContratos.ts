@@ -6,6 +6,7 @@ enum PageEnumContratos {
   editEntidade = 'editEntidade',
   novaEntidade = 'novaEntidade',
   sobreescreverContrato = 'sobreescreverContrato',
+  registrarDoc = 'registrarDoc',
 }
 
 export default PageEnumContratos;

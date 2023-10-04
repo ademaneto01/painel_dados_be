@@ -4,11 +4,10 @@ import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { FailedToFetchError } from '@/errors';
 interface ModalProps {
-  isOpen: boolean;
   onClose: () => void;
 }
 
-const ModalAddDoc: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const ModalAddDoc: React.FC<ModalProps> = ({ onClose }) => {
   const [nomeDocInputs, setNomeDocInputs] = useState<string[]>(['']);
   const [urlDocInputs, setUrlDocInputs] = useState<string[]>(['']);
   const [error, setError] = useState(false);
@@ -77,35 +76,39 @@ const ModalAddDoc: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  return isOpen ? (
+  return (
     <div className={styles.backgroundModal} onClick={onClose}>
       <div className={styles.container} onClick={(e) => e.stopPropagation()}>
         {nomeDocInputs.map((input, index) => (
-          <div key={index} className={styles.boxStandard}>
-            <label className={styles.labelStandard}>
-              Nome Documento
-              <input
-                type="text"
-                placeholder="Nome Documento"
-                name="nome_doc"
-                value={input}
-                onChange={(e) =>
-                  handleNomeDocInputChange(index, e.target.value)
-                }
-                className={styles.inputStandard}
-              />
-            </label>
-            <label className={styles.labelStandard}>
-              URL Documento
-              <input
-                type="text"
-                placeholder="URL Documento"
-                name="url_doc"
-                value={urlDocInputs[index]}
-                onChange={(e) => handleUrlDocInputChange(index, e.target.value)}
-                className={styles.inputStandard}
-              />
-            </label>
+          <div key={index} className={styles.borderBoxInputs}>
+            <div className={styles.boxStandard}>
+              <label className={styles.labelStandard}>
+                Nome Documento
+                <input
+                  type="text"
+                  placeholder="Nome Documento"
+                  name="nome_doc"
+                  value={input}
+                  onChange={(e) =>
+                    handleNomeDocInputChange(index, e.target.value)
+                  }
+                  className={styles.inputStandard}
+                />
+              </label>
+              <label className={styles.labelStandard}>
+                URL Documento
+                <input
+                  type="text"
+                  placeholder="URL Documento"
+                  name="url_doc"
+                  value={urlDocInputs[index]}
+                  onChange={(e) =>
+                    handleUrlDocInputChange(index, e.target.value)
+                  }
+                  className={styles.inputStandard}
+                />
+              </label>
+            </div>
           </div>
         ))}
 
@@ -127,7 +130,7 @@ const ModalAddDoc: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         </div>
       </div>
     </div>
-  ) : null;
+  );
 };
 
 export default ModalAddDoc;

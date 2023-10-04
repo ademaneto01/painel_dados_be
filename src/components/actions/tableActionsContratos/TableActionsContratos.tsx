@@ -1,8 +1,7 @@
 import styles from '@/styles/Action.module.css';
-import { FiEdit, FiMoreHorizontal, FiMoreVertical } from 'react-icons/fi';
+import { FiMoreHorizontal, FiMoreVertical } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { ImEyePlus } from 'react-icons/im';
-import { BsFillTriangleFill } from 'react-icons/bs';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ModalDelete, ModalDadosContrato, ModalAddDoc } from '../../modal';
 import { useState } from 'react';
@@ -71,8 +70,8 @@ export default function TableActionsContratos(
 
   function adicionarDocFunc(id: string): void {
     setModalInfos('');
-    setShowModalAddDoc(id);
-    setIdContrato(id);
+    setPage(PageEnumContratos.registrarDoc);
+    setIdContrato(props.id);
   }
   function handleClickOpenModalAddEditSchool(id: string): void {
     setIdContrato(id);
@@ -107,7 +106,12 @@ export default function TableActionsContratos(
       />
 
       {modalInfos === props.id && (
-        <div className={styles.fullScreenDiv} onClick={() => setModalInfos('')}>
+        <div
+          className={styles.fullScreenDiv}
+          onClick={() => {
+            setModalInfos('');
+          }}
+        >
           <div
             className={styles.modalWrapper}
             style={{
@@ -134,7 +138,7 @@ export default function TableActionsContratos(
         />
       )}
       {showModalAddDoc === props.id && (
-        <ModalAddDoc isOpen={true} onClose={() => setShowModalAddDoc('')} />
+        <ModalAddDoc onClose={() => setShowModalAddDoc('')} />
       )}
 
       {showModalDelete === props.id && (
