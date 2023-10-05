@@ -3,12 +3,12 @@ import ModalAddUser from './modalAddUser/ModalAddUser';
 import ModalDadosContrato from './modalDados/ModalDadosContrato';
 import ModalDadosEntidadeEscolar from './modalDados/ModalDadosEntidadeEscolar';
 import ModalDadosAgente from './modalDados/ModalDadosAgente';
-import ModalAddDoc from './modalAddDoc/ModalAddDoc';
+import ModalVisualizarDoc from './modalVisualizarDoc/ModalVisualizarDoc';
 export {
   ModalDelete,
   ModalAddUser,
   ModalDadosContrato,
   ModalDadosEntidadeEscolar,
   ModalDadosAgente,
-  ModalAddDoc,
+  ModalVisualizarDoc,
 };

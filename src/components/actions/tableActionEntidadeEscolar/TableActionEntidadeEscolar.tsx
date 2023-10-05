@@ -32,7 +32,7 @@ export default function TableActionEntidadeEscolar(
   const handleEditClick = () => handleClickOpenModalAddEditSchool(props.id);
   const handleViewMoreClick = () => verMais(props.id);
   const handleDeleteClick = () => handleClickOpenModalExcluir(props.id);
-
+  const handleVisualizarDocClick = () => visualizarDocumentos(props.id);
   function renderIcon(icon: IconType, color?: string): JSX.Element {
     const options: IconBaseProps = {
       fontSize: '1.3em',
@@ -70,7 +70,10 @@ export default function TableActionEntidadeEscolar(
     setIdEntidadeEscolar(id);
     setPage(PageEnumContratos.editEntidade);
   }
-
+  function visualizarDocumentos(id: string): void {
+    setIdEntidadeEscolar(id);
+    setPage(PageEnumContratos.docsEntidade);
+  }
   function verMais(id: string): void {
     setShowModalVermais(id);
     setModalInfos('');
@@ -78,6 +81,11 @@ export default function TableActionEntidadeEscolar(
 
   return (
     <div className={styles.container}>
+      <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
+      <Action
+        icon={renderIcon(FaTrashAlt, '#f1646c')}
+        onClick={handleDeleteClick}
+      />
       <Action
         icon={
           modalInfos ? renderIcon(FiMoreVertical) : renderIcon(FiMoreHorizontal)
@@ -99,19 +107,13 @@ export default function TableActionEntidadeEscolar(
           >
             <div className={styles.modal}>
               <button onClick={handleEditClick}>Editar Entidade</button>
-              <button onClick={handleViewMoreClick}>Ver Mais</button>
-              <button onClick={handleDeleteClick}>Deletar Entidade</button>
+              <button onClick={handleVisualizarDocClick}>
+                Visualizar Documentos
+              </button>
             </div>
           </div>
         </div>
       )}
-
-      {/* <Action icon={renderIcon(FiEdit)} onClick={handleEditClick} />
-      <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
-      <Action
-        icon={renderIcon(FaTrashAlt, '#f1646c')}
-        onClick={handleDeleteClick}
-      /> */}
 
       {showModalVermais === props.id && (
         <ModalDadosEntidadeEscolar

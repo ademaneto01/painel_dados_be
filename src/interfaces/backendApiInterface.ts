@@ -14,6 +14,8 @@ import {
   EntitiesAgenteExterno,
   EntitiesVincularAgente,
   EntitiesRegistrarDocContrato,
+  EntitiesDocsContrato,
+  EntitiesDocsEntidade,
 } from '@/entities';
 
 export default interface BackendApiInterface {
@@ -56,4 +58,9 @@ export default interface BackendApiInterface {
   deletarAgente(userId: any): Promise<EntitiesAgenteExterno[]>;
   editarAgente(userData: any): Promise<EntitiesAgenteExterno[]>;
   registrarDocContrato(userData: any): Promise<EntitiesRegistrarDocContrato[]>;
+  listarDocsContrato(uuid_ec: any): Promise<EntitiesDocsContrato[]>;
+  deletarDocContrato(id: any): Promise<EntitiesDocsContrato[]>;
+  listarDocsEntidade(uuid_ee: any): Promise<EntitiesDocsEntidade[]>;
+  deletarDocEntidade(id: any): Promise<EntitiesDocsEntidade[]>;
+  registrarDocEntidade(userData: any): Promise<EntitiesDocsEntidade[]>;
 }

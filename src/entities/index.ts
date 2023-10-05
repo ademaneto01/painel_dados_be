@@ -15,6 +15,8 @@ import EntitiesAgenteExternoVinculo from './EntitiesAgenteExternoVinculos';
 import EntitiesVincularAgente from './EntitiesVincularAgente';
 import EntitiesAgenteExterno from './EntitiesAgenteExterno';
 import EntitiesRegistrarDocContrato from './EntitiesRegistrarDocContrato';
+import EntitiesDocsContrato from './EntitiesDocsContrato';
+import EntitiesDocsEntidade from './EntitiesDocsEntidade';
 export {
   EntitiesUsers,
   EntitiesUserLogin,
@@ -33,4 +35,6 @@ export {
   EntitiesVincularAgente,
   EntitiesAgenteExterno,
   EntitiesRegistrarDocContrato,
+  EntitiesDocsContrato,
+  EntitiesDocsEntidade,
 };

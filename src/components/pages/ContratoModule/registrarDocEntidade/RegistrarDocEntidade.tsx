@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import styles from '@/styles/ModalAddDoc.module.css';
-import BackendApiMock from '@/backendApi';
-import { useGlobalContext } from '@/context/store';
 import { FailedToFetchError } from '@/errors';
-interface ModalProps {
-  onClose: () => void;
-}
+import BackendApiMock from '@/backendApi';
+import { PageEnumContratos } from '@/enums';
+import { PageContentContainer, CreateButton } from '@/components/shared';
+import { useGlobalContext } from '@/context/store';
+import ErrorComponent from '@/components/ErrorComponent';
 
-const ModalAddDoc: React.FC<ModalProps> = ({ onClose }) => {
+export default function RegistrarDocEntidade(): JSX.Element {
   const [nomeDocInputs, setNomeDocInputs] = useState<string[]>(['']);
   const [urlDocInputs, setUrlDocInputs] = useState<string[]>(['']);
   const [error, setError] = useState(false);
-  const { idContrato } = useGlobalContext();
+  const [msgError, setMsgError] = useState('');
+  const { idEntidadeEscolar, setPage } = useGlobalContext();
   const addInput = () => {
     setNomeDocInputs([...nomeDocInputs, '']);
     setUrlDocInputs([...urlDocInputs, '']);
@@ -45,10 +46,18 @@ const ModalAddDoc: React.FC<ModalProps> = ({ onClose }) => {
     for (let i = 0; i < nomeDocInputs.length; i++) {
       const nome_doc = nomeDocInputs[i];
       const url_doc = urlDocInputs[i];
-      await fetchDocData(nome_doc, url_doc);
+
+      if (!nome_doc || !url_doc) {
+        setError(true);
+        setMsgError('Todos os campos são obrigatórios...');
+        setTimeout(() => setError(false), 6000);
+        return;
+      } else {
+        await fetchDocData(nome_doc, url_doc);
+      }
     }
 
-    onClose();
+    setPage(PageEnumContratos.docsEntidade);
   };
 
   const handleApiErrors = (error: any) => {
@@ -63,13 +72,13 @@ const ModalAddDoc: React.FC<ModalProps> = ({ onClose }) => {
     const token = localStorage.getItem('auth_token');
     const backendApi = new BackendApiMock(`${token}`);
     const bodyReq = {
-      uuid_ec: idContrato,
+      uuid_ee: idEntidadeEscolar,
       nome_doc,
       url_doc,
     };
-    console.log(bodyReq);
+
     try {
-      return await backendApi.registrarDocContrato(bodyReq);
+      return await backendApi.registrarDocEntidade(bodyReq);
     } catch (error) {
       handleApiErrors(error);
       return null;
@@ -77,9 +86,56 @@ const ModalAddDoc: React.FC<ModalProps> = ({ onClose }) => {
   };
 
   return (
-    <div className={styles.backgroundModal} onClick={onClose}>
-      <div className={styles.container} onClick={(e) => e.stopPropagation()}>
-        {nomeDocInputs.map((input, index) => (
+    <div className={styles.pageContainer}>
+      <HeaderComponent />
+      <PageContentContainer>
+        <NavigationButtons setPage={setPage} />
+        <FormComponent
+          nomeDocInputs={nomeDocInputs}
+          urlDocInputs={urlDocInputs}
+          addInput={addInput}
+          handleNomeDocInputChange={handleNomeDocInputChange}
+          handleUrlDocInputChange={handleUrlDocInputChange}
+          removeLastInput={removeLastInput}
+          handleSubmit={handleSubmit}
+          setPage={setPage}
+        />
+        {error && <ErrorComponent message={msgError} />}
+      </PageContentContainer>
+    </div>
+  );
+}
+
+const HeaderComponent: React.FC = () => <h4>Cadastrar Documento Entidade</h4>;
+
+const NavigationButtons: React.FC<{
+  setPage: React.Dispatch<React.SetStateAction<PageEnumContratos>>;
+}> = ({ setPage }) => (
+  <div className={styles.boxBtns}>
+    <CreateButton
+      color={'var(--gray-300'}
+      colorBackGround={'var(--white)'}
+      text="Voltar"
+      size="8rem"
+      onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
+    />
+  </div>
+);
+
+const FormComponent: React.FC<any> = ({
+  handleNomeDocInputChange,
+  handleUrlDocInputChange,
+  nomeDocInputs,
+  urlDocInputs,
+  addInput,
+  removeLastInput,
+  handleSubmit,
+  setPage,
+}) => {
+  return (
+    <form className={styles.boxForm} onSubmit={handleSubmit}>
+      <div className={styles.container}>
+        {nomeDocInputs.map((input: any, index: any) => (
           <div key={index} className={styles.borderBoxInputs}>
             <div className={styles.boxStandard}>
               <label className={styles.labelStandard}>
@@ -111,26 +167,40 @@ const ModalAddDoc: React.FC<ModalProps> = ({ onClose }) => {
             </div>
           </div>
         ))}
-
-        <div className={styles.buttonContainer}>
-          {nomeDocInputs.length > 1 && (
-            <button className={styles.cancelButton} onClick={removeLastInput}>
-              Remover Documento
-            </button>
-          )}
-          <button className={styles.confirmButton} onClick={addInput}>
-            Adicionar Documento
-          </button>
-          <button className={styles.confirmButton} onClick={handleSubmit}>
-            Salvar
-          </button>
-          <button className={styles.cancelButton} onClick={onClose}>
-            Fechar
-          </button>
-        </div>
       </div>
-    </div>
+
+      <div className={styles.buttonContainer}>
+        {nomeDocInputs.length > 1 && (
+          <button
+            type="button"
+            className={styles.cancelButton}
+            onClick={removeLastInput}
+          >
+            Remover Documento
+          </button>
+        )}
+        <button
+          type="button"
+          className={styles.confirmButton}
+          onClick={addInput}
+        >
+          Adicionar Documento
+        </button>
+        <button
+          type="button"
+          className={styles.confirmButton}
+          onClick={handleSubmit}
+        >
+          Salvar
+        </button>
+        <button
+          type="button"
+          className={styles.cancelButton}
+          onClick={() => setPage(PageEnumContratos.docsEntidade)}
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
   );
 };
-
-export default ModalAddDoc;

@@ -3,7 +3,7 @@ import { FiMoreHorizontal, FiMoreVertical } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { ImEyePlus } from 'react-icons/im';
 import { IconBaseProps, IconType } from 'react-icons';
-import { ModalDelete, ModalDadosContrato, ModalAddDoc } from '../../modal';
+import { ModalDelete, ModalDadosContrato } from '../../modal';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import BackendApiMock from '@/backendApi';
@@ -34,7 +34,7 @@ export default function TableActionsContratos(
     handleClickOpenModalSobreescreContrato(props.id);
   const handleViewMoreClick = () => verMais(props.id);
   const handleDeleteClick = () => handleClickOpenModalExcluir(props.id);
-  const handleAdicionarDoc = () => adicionarDocFunc(props.id);
+  const handleVisualizarDocs = () => visualizarDocs(props.id);
   function renderIcon(icon: IconType, color?: string): JSX.Element {
     const options: IconBaseProps = {};
 
@@ -68,11 +68,6 @@ export default function TableActionsContratos(
     setShowModalDelete(id);
   }
 
-  function adicionarDocFunc(id: string): void {
-    setModalInfos('');
-    setPage(PageEnumContratos.registrarDoc);
-    setIdContrato(props.id);
-  }
   function handleClickOpenModalAddEditSchool(id: string): void {
     setIdContrato(id);
     setModalInfos('');
@@ -83,7 +78,11 @@ export default function TableActionsContratos(
     setIdContrato(id);
     setPage(PageEnumContratos.sobreescreverContrato);
   }
-
+  function visualizarDocs(id: string): void {
+    setIdContrato(id);
+    setModalInfos('');
+    setPage(PageEnumContratos.docsContrato);
+  }
   function verMais(id: string): void {
     setModalInfos('');
     setShowModalAddEditSchool(id);
@@ -125,7 +124,9 @@ export default function TableActionsContratos(
               <button onClick={handleOverwriteClick}>
                 Sobreescrever Contrato
               </button>
-              <button onClick={handleAdicionarDoc}>Adicionar Documento</button>
+              <button onClick={handleVisualizarDocs}>
+                Visualizar Documentos
+              </button>
             </div>
           </div>
         </div>
@@ -136,9 +137,6 @@ export default function TableActionsContratos(
           idContrato={props.id}
           onCancel={() => setShowModalAddEditSchool('')}
         />
-      )}
-      {showModalAddDoc === props.id && (
-        <ModalAddDoc onClose={() => setShowModalAddDoc('')} />
       )}
 
       {showModalDelete === props.id && (

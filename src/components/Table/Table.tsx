@@ -62,6 +62,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
   const styleInputNome: React.CSSProperties = {
     display: props.searchInputNoneNome,
   };
+
   const filterData = useCallback(
     (
       data: T[],
@@ -148,6 +149,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
     setFilterNameOrEmail(event.target.value);
     setCurrentPage(1);
   };
+
   const handleFilterSchoolChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -184,6 +186,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
               value={filterNameOrEmail}
               onChange={handleFilterNameOrEmailChange}
             />
+
             <input
               className={styles.inputFilter}
               type="text"

@@ -3,6 +3,8 @@ import {
   EntitiesAgenteExternoVinculo,
   EntitiesContratos,
   EntitiesDeletUser,
+  EntitiesDocsContrato,
+  EntitiesDocsEntidade,
   EntitiesEditarEntidadeEscolar,
   EntitiesEntidadesEscolares,
   EntitiesEntidadesEscolaresPDG,
@@ -31,6 +33,8 @@ import {
   MockAgenteExterno,
   MockVincularAgente,
   MockRegistrarDocContrato,
+  MockDocsContrato,
+  MockDocsEntitade,
 } from '@/serializers/mocks';
 import MockAgenteExternoVinculo from '@/serializers/mocks/MockAgenteExternoVinculo';
 import MockContratosSerializers from '@/serializers/mocks/MockContratosSerializers';
@@ -138,6 +142,51 @@ export default class BackendApiMock implements BackendApiInterface {
       '/registrarDocContrato',
       userData,
       new MockRegistrarDocContrato(),
+    );
+  }
+  public async listarDocsContrato(
+    uuid_ec: any,
+  ): Promise<EntitiesDocsContrato[]> {
+    return await this.post<EntitiesDocsContrato>(
+      '/listarDocsContrato',
+      uuid_ec,
+      new MockDocsContrato(),
+    );
+  }
+
+  public async listarDocsEntidade(
+    uuid_ee: any,
+  ): Promise<EntitiesDocsEntidade[]> {
+    return await this.post<EntitiesDocsEntidade>(
+      '/listarDocsEntidade',
+      uuid_ee,
+      new MockDocsEntitade(),
+    );
+  }
+
+  public async registrarDocEntidade(
+    userData: any,
+  ): Promise<EntitiesDocsEntidade[]> {
+    return await this.post<EntitiesDocsEntidade>(
+      '/registrarDocEntidade',
+      userData,
+      new MockDocsEntitade(),
+    );
+  }
+
+  public async deletarDocEntidade(id: any): Promise<EntitiesDocsEntidade[]> {
+    return await this.post<EntitiesDocsEntidade>(
+      '/deletarDocEntidade',
+      id,
+      new MockDocsEntitade(),
+    );
+  }
+
+  public async deletarDocContrato(id: any): Promise<EntitiesDocsContrato[]> {
+    return await this.post<EntitiesDocsContrato>(
+      '/deletarDocContrato',
+      id,
+      new MockDocsContrato(),
     );
   }
 

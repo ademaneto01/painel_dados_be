@@ -12,6 +12,8 @@ import MockEntidadeEscolarPDGSerializers from './MockEntidadeEscolarPDGSerialize
 import MockAgenteExterno from './MockAgenteExternoVinculo';
 import MockVincularAgente from './MockVincularAgente';
 import MockRegistrarDocContrato from './MockRegistrarDocContrato';
+import MockDocsContrato from './MockDocsContrato';
+import MockDocsEntitade from './MockDocsEntidade';
 export {
   MockUsersSerializers,
   MockUserLogin,
@@ -27,4 +29,6 @@ export {
   MockAgenteExterno,
   MockVincularAgente,
   MockRegistrarDocContrato,
+  MockDocsContrato,
+  MockDocsEntitade,
 };

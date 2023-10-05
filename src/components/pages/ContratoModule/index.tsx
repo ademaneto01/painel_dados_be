@@ -6,6 +6,9 @@ import EditContrato from './CRUDcrontratos/EditContrato';
 import EditEntidade from './CRUDentidades/EditEntidade';
 import SobreescreverContrato from './CRUDcrontratos/SobreescreverContrato';
 import RegistrarDoc from './registrarDoc/RegistrarDoc';
+import DocsContrato from './docsContrato/DocsContrato';
+import DocsEntidade from './docsEntidade/DocsEntidade';
+import RegistrarDocEntidade from './registrarDocEntidade/RegistrarDocEntidade';
 const pageComponentsContratos = {
   EntidadesContratuais,
   EntidadesEscolares,
@@ -15,5 +18,8 @@ const pageComponentsContratos = {
   EditEntidade,
   SobreescreverContrato,
   RegistrarDoc,
+  DocsContrato,
+  RegistrarDocEntidade,
+  DocsEntidade,
 };
 export default pageComponentsContratos;
