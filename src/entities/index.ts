@@ -17,6 +17,7 @@ import EntitiesAgenteExterno from './EntitiesAgenteExterno';
 import EntitiesRegistrarDocContrato from './EntitiesRegistrarDocContrato';
 import EntitiesDocsContrato from './EntitiesDocsContrato';
 import EntitiesDocsEntidade from './EntitiesDocsEntidade';
+import EntitiesInfosContrato from './EntitiesInfosContrato';
 export {
   EntitiesUsers,
   EntitiesUserLogin,
@@ -37,4 +38,5 @@ export {
   EntitiesRegistrarDocContrato,
   EntitiesDocsContrato,
   EntitiesDocsEntidade,
+  EntitiesInfosContrato,
 };

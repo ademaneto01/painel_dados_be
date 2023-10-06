@@ -14,6 +14,7 @@ import MockVincularAgente from './MockVincularAgente';
 import MockRegistrarDocContrato from './MockRegistrarDocContrato';
 import MockDocsContrato from './MockDocsContrato';
 import MockDocsEntitade from './MockDocsEntidade';
+import MockInfosContrato from './MockInfosContrato';
 export {
   MockUsersSerializers,
   MockUserLogin,
@@ -31,4 +32,5 @@ export {
   MockRegistrarDocContrato,
   MockDocsContrato,
   MockDocsEntitade,
+  MockInfosContrato,
 };

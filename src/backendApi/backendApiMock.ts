@@ -8,6 +8,7 @@ import {
   EntitiesEditarEntidadeEscolar,
   EntitiesEntidadesEscolares,
   EntitiesEntidadesEscolaresPDG,
+  EntitiesInfosContrato,
   EntitiesOneUser,
   EntitiesRegistrarDocContrato,
   EntitiesRegistrarEntidadeEscolar,
@@ -35,6 +36,7 @@ import {
   MockRegistrarDocContrato,
   MockDocsContrato,
   MockDocsEntitade,
+  MockInfosContrato,
 } from '@/serializers/mocks';
 import MockAgenteExternoVinculo from '@/serializers/mocks/MockAgenteExternoVinculo';
 import MockContratosSerializers from '@/serializers/mocks/MockContratosSerializers';
@@ -246,6 +248,24 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockUsersSerializers(),
     );
   }
+  public async listarInfosContrato(
+    uuid_ec: any,
+  ): Promise<EntitiesInfosContrato[]> {
+    return await this.post<EntitiesInfosContrato>(
+      '/listarInfosContrato',
+      uuid_ec,
+      new MockInfosContrato(),
+    );
+  }
+  public async registrarInfosContrato(
+    userData: any,
+  ): Promise<EntitiesInfosContrato[]> {
+    return await this.post<EntitiesInfosContrato>(
+      '/registrarInfosContrato',
+      userData,
+      new MockInfosContrato(),
+    );
+  }
 
   public async localizarEntitadeEscolar(
     id: any,
@@ -341,6 +361,14 @@ export default class BackendApiMock implements BackendApiInterface {
       new MockEntidadesEscolaresSerializers(),
     );
   }
+  public async deletarInfosContrato(id: any): Promise<EntitiesInfosContrato[]> {
+    return await this.post<EntitiesInfosContrato>(
+      '/deletarInfosContrato',
+      id,
+      new MockInfosContrato(),
+    );
+  }
+
   public async editarVinculoAgente(
     userData: any,
   ): Promise<EntitiesVincularAgente[]> {
@@ -381,6 +409,7 @@ export default class BackendApiMock implements BackendApiInterface {
     serializer: SerializerInterface,
   ): Promise<T[]> {
     const response = await this.api.post(route, data);
+
     return this.serializeOrError<T>(response, serializer);
   }
 

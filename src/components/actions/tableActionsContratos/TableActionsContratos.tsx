@@ -33,6 +33,7 @@ export default function TableActionsContratos(
   const handleOverwriteClick = () =>
     handleClickOpenModalSobreescreContrato(props.id);
   const handleViewMoreClick = () => verMais(props.id);
+  const handleInfosContratoClick = () => InfosContrato(props.id);
   const handleDeleteClick = () => handleClickOpenModalExcluir(props.id);
   const handleVisualizarDocs = () => visualizarDocs(props.id);
   function renderIcon(icon: IconType, color?: string): JSX.Element {
@@ -73,7 +74,11 @@ export default function TableActionsContratos(
     setModalInfos('');
     setPage(PageEnumContratos.editContrato);
   }
-
+  function InfosContrato(id: string): void {
+    setIdContrato(props.id);
+    setModalInfos('');
+    setPage(PageEnumContratos.infosContrato);
+  }
   function handleClickOpenModalSobreescreContrato(id: string): void {
     setIdContrato(id);
     setPage(PageEnumContratos.sobreescreverContrato);
@@ -124,6 +129,7 @@ export default function TableActionsContratos(
               <button onClick={handleOverwriteClick}>
                 Sobreescrever Contrato
               </button>
+              <button onClick={handleInfosContratoClick}>Infos Contrato</button>
               <button onClick={handleVisualizarDocs}>
                 Visualizar Documentos
               </button>

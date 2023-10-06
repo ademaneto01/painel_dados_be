@@ -9,6 +9,8 @@ import RegistrarDoc from './registrarDoc/RegistrarDoc';
 import DocsContrato from './docsContrato/DocsContrato';
 import DocsEntidade from './docsEntidade/DocsEntidade';
 import RegistrarDocEntidade from './registrarDocEntidade/RegistrarDocEntidade';
+import InfosContrato from './infosContrato/InfosContrato';
+import RegistrarInfosContrato from './infosContrato/RegistrarInfosContrato';
 const pageComponentsContratos = {
   EntidadesContratuais,
   EntidadesEscolares,
@@ -21,5 +23,7 @@ const pageComponentsContratos = {
   DocsContrato,
   RegistrarDocEntidade,
   DocsEntidade,
+  InfosContrato,
+  RegistrarInfosContrato,
 };
 export default pageComponentsContratos;
