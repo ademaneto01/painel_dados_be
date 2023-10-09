@@ -1,4 +1,4 @@
-import { TableActionsAgentesExterno } from '@/components/actions';
+import { TableActionsTeste } from '@/components/actions';
 import React from 'react';
 interface UserProps {
   uuid_agente: string;
@@ -10,7 +10,7 @@ interface UserProps {
   no_email_secundario: string;
 }
 
-export default class EntitiesAgenteExterno {
+export default class EntitiesTeste {
   readonly uuid_agente: string;
   readonly nome: string;
   readonly cargo: string;
@@ -38,10 +38,7 @@ export default class EntitiesAgenteExterno {
   }
   public get acoes(): JSX.Element {
     return (
-      <TableActionsAgentesExterno
-        uuid_agente={this.uuid_agente}
-        nome={this.nome}
-      />
+      <TableActionsTeste uuid_agente={this.uuid_agente} nome={this.nome} />
     );
   }
 }

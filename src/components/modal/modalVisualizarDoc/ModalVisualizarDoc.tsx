@@ -11,8 +11,13 @@ const ModalVisualizarDoc: React.FC<ModalValidationProps> = ({
   onCancel,
 }) => {
   return (
-    <div className={styles.background}>
-      <div className={styles.container}>
+    <div className={styles.background} onClick={onCancel}>
+      <div
+        className={styles.container}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <div className={styles.boxBtns}>
           <button className={styles.btnClose} onClick={onCancel}>
             X

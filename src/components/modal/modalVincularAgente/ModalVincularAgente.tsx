@@ -190,7 +190,7 @@ export default function ModalVicularAgente({
   };
 
   return (
-    <div className={styles.background}>
+    <div className={styles.background} onClick={onCancel}>
       <FormComponent
         formData={formData}
         agenteData={agenteData}
@@ -220,7 +220,13 @@ const FormComponent: React.FC<any> = ({
 }) => {
   return (
     <>
-      <form className={styles.container} onSubmit={handleSubmit}>
+      <form
+        className={styles.container}
+        onSubmit={handleSubmit}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <h1
           style={{
             fontSize: '20px',

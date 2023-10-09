@@ -10,8 +10,8 @@ import {
   EntitiesCadastroUser,
   EntitiesEditarEntidadeEscolar,
   EntitiesEntidadesEscolaresPDG,
-  EntitiesAgenteExternoVinculo,
-  EntitiesAgenteExterno,
+  EntitiesVinculosAgentesExterno,
+  EntitiesTeste,
   EntitiesVincularAgente,
   EntitiesRegistrarDocContrato,
   EntitiesDocsContrato,
@@ -47,17 +47,17 @@ export default interface BackendApiInterface {
   deletarEntidadeEscolar(id: any): Promise<EntitiesEntidadesEscolares[]>;
   listarAgenteRelacionadoEscola(
     id_ee: any,
-  ): Promise<EntitiesAgenteExternoVinculo[]>;
-  listarTodosAgentes(): Promise<EntitiesAgenteExterno[]>;
+  ): Promise<EntitiesVinculosAgentesExterno[]>;
+  listarTodosAgentes(): Promise<EntitiesTeste[]>;
   vincularAgente(userData: any): Promise<EntitiesVincularAgente[]>;
   deletarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
-  localizarAgenteId(id: any): Promise<EntitiesAgenteExterno[]>;
+  localizarAgenteId(id: any): Promise<EntitiesTeste[]>;
   listarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
   editarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
   localizarUrlPainel(id_ee: any): Promise<EntitiesUrl[]>;
-  registrarAgente(userData: any): Promise<EntitiesAgenteExterno[]>;
-  deletarAgente(userId: any): Promise<EntitiesAgenteExterno[]>;
-  editarAgente(userData: any): Promise<EntitiesAgenteExterno[]>;
+  registrarAgente(userData: any): Promise<EntitiesTeste[]>;
+  deletarAgente(userId: any): Promise<EntitiesTeste[]>;
+  editarAgente(userData: any): Promise<EntitiesTeste[]>;
   registrarDocContrato(userData: any): Promise<EntitiesRegistrarDocContrato[]>;
   listarDocsContrato(uuid_ec: any): Promise<EntitiesDocsContrato[]>;
   deletarDocContrato(id: any): Promise<EntitiesDocsContrato[]>;
@@ -67,4 +67,5 @@ export default interface BackendApiInterface {
   listarInfosContrato(uuid_ec: any): Promise<EntitiesInfosContrato[]>;
   registrarInfosContrato(userData: any): Promise<EntitiesInfosContrato[]>;
   deletarInfosContrato(id: any): Promise<EntitiesInfosContrato[]>;
+  editarInfosContrato(userData: any): Promise<EntitiesInfosContrato[]>;
 }

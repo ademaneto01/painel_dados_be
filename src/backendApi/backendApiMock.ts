@@ -1,6 +1,5 @@
 import {
-  EntitiesAgenteExterno,
-  EntitiesAgenteExternoVinculo,
+  EntitiesVinculosAgentesExterno,
   EntitiesContratos,
   EntitiesDeletUser,
   EntitiesDocsContrato,
@@ -17,6 +16,7 @@ import {
   EntitiesUsers,
   EntitiesUsuariosPDG,
   EntitiesVincularAgente,
+  EntitiesTeste,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterface, SerializerInterface } from '@/interfaces';
@@ -31,17 +31,17 @@ import {
   MockRegistrarEntidadeEscolar,
   MockUsuariosPDG,
   MockEntidadeEscolarPDGSerializers,
-  MockAgenteExterno,
+  MockTeste,
   MockVincularAgente,
   MockRegistrarDocContrato,
   MockDocsContrato,
   MockDocsEntitade,
+  MockAgenteExternoVinculo,
+  MockEditarEntidadeEscolar,
+  MockContratosSerializers,
+  MockEntidadesEscolaresSerializers,
   MockInfosContrato,
 } from '@/serializers/mocks';
-import MockAgenteExternoVinculo from '@/serializers/mocks/MockAgenteExternoVinculo';
-import MockContratosSerializers from '@/serializers/mocks/MockContratosSerializers';
-import MockEditarEntidadeEscolar from '@/serializers/mocks/MockEditarEntidadeEscolar';
-import MockEntidadesEscolaresSerializers from '@/serializers/mocks/MockEntidadesEscolaresSerializers';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
@@ -278,50 +278,48 @@ export default class BackendApiMock implements BackendApiInterface {
   }
   public async listarAgenteRelacionadoEscola(
     id_ee: any,
-  ): Promise<EntitiesAgenteExternoVinculo[]> {
-    return await this.post<EntitiesAgenteExternoVinculo>(
+  ): Promise<EntitiesVinculosAgentesExterno[]> {
+    return await this.post<EntitiesVinculosAgentesExterno>(
       '/ListarAgentesRelacionadoEscola',
       id_ee,
       new MockAgenteExternoVinculo(),
     );
   }
 
-  public async listarTodosAgentes(): Promise<EntitiesAgenteExterno[]> {
-    return await this.get<EntitiesAgenteExterno>(
+  public async listarTodosAgentes(): Promise<EntitiesTeste[]> {
+    return await this.get<EntitiesTeste>(
       '/listarTodosAgentes',
-      new MockAgenteExterno(),
+      new MockTeste(),
     );
   }
-  public async registrarAgente(
-    userData: any,
-  ): Promise<EntitiesAgenteExterno[]> {
-    return await this.post<EntitiesAgenteExterno>(
+  public async registrarAgente(userData: any): Promise<EntitiesTeste[]> {
+    return await this.post<EntitiesTeste>(
       '/registrarAgente',
       userData,
-      new MockAgenteExterno(),
+      new MockTeste(),
     );
   }
-  public async editarAgente(userData: any): Promise<EntitiesAgenteExterno[]> {
-    return await this.post<EntitiesAgenteExterno>(
+  public async editarAgente(userData: any): Promise<EntitiesTeste[]> {
+    return await this.post<EntitiesTeste>(
       '/editarAgente',
       userData,
-      new MockAgenteExterno(),
+      new MockTeste(),
     );
   }
 
-  public async deletarAgente(userId: any): Promise<EntitiesAgenteExterno[]> {
-    return await this.post<EntitiesAgenteExterno>(
+  public async deletarAgente(userId: any): Promise<EntitiesTeste[]> {
+    return await this.post<EntitiesTeste>(
       '/deletarAgente',
       userId,
-      new MockAgenteExterno(),
+      new MockTeste(),
     );
   }
 
-  public async localizarAgenteId(id: any): Promise<EntitiesAgenteExterno[]> {
-    return await this.post<EntitiesAgenteExterno>(
+  public async localizarAgenteId(id: any): Promise<EntitiesTeste[]> {
+    return await this.post<EntitiesTeste>(
       '/localizarAgenteId',
       id,
-      new MockAgenteExterno(),
+      new MockTeste(),
     );
   }
 
@@ -365,6 +363,15 @@ export default class BackendApiMock implements BackendApiInterface {
     return await this.post<EntitiesInfosContrato>(
       '/deletarInfosContrato',
       id,
+      new MockInfosContrato(),
+    );
+  }
+  public async editarInfosContrato(
+    userData: any,
+  ): Promise<EntitiesInfosContrato[]> {
+    return await this.post<EntitiesInfosContrato>(
+      '/editarInfosContrato',
+      userData,
       new MockInfosContrato(),
     );
   }

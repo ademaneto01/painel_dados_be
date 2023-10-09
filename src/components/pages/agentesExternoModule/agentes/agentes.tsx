@@ -1,4 +1,4 @@
-import { EntitiesAgenteExterno } from '@/entities';
+import { EntitiesTeste } from '@/entities';
 import styles from '@/styles/Page.module.css';
 import { Column, Table } from '../../../Table';
 import { PageContentContainer, CreateButton } from '../../../shared';
@@ -16,7 +16,7 @@ const columns = [
 ];
 
 export default function AgentesExterno() {
-  const [data, setData] = useState([] as EntitiesAgenteExterno[]);
+  const [data, setData] = useState<EntitiesTeste[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
@@ -61,7 +61,7 @@ export default function AgentesExterno() {
           }
         />
 
-        <Table<EntitiesAgenteExterno>
+        <Table<EntitiesTeste>
           data={data}
           columns={columns}
           loaded={loaded}

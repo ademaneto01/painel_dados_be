@@ -10,7 +10,7 @@ interface UserProps {
   no_email_secundario: string;
 }
 
-export default class EntitiesAgenteExternoVinculos {
+export default class EntitiesVinculosAgentesExterno {
   readonly uuid_agente: string;
   readonly nome: string;
   readonly cargo: string;

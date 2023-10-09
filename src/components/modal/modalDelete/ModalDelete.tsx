@@ -15,8 +15,13 @@ const ModalDelete: React.FC<ModalValidationProps> = ({
   onCancel,
 }) => {
   return (
-    <div className={styles.background}>
-      <div className={styles.container}>
+    <div className={styles.background} onClick={onCancel}>
+      <div
+        className={styles.container}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <h2 className={styles.title}>{title}</h2>
         <p id={styles.text}>{message}</p>
         <div className={styles.buttonContainer}>

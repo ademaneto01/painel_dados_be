@@ -29,7 +29,7 @@ function reactIcon(icon: IconType, color?: string): JSX.Element {
   return icon(options);
 }
 
-export default function TableActionsAgentesExterno(
+export default function TableActionsTeste(
   props: PropsForFxclusion,
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
@@ -57,6 +57,7 @@ export default function TableActionsAgentesExterno(
 
   function handleClickOpenEditAgente(id: string): void {
     setIdAgente(props.uuid_agente);
+    console.log('ok');
     setPageAgentesExterno(PageEnumAgentesExterno.editarAgente);
   }
 

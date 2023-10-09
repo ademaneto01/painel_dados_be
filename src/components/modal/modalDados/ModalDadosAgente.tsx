@@ -1,11 +1,9 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '@/styles/ModalDados.module.css';
 import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
 import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
-
-import ModalDadosEntidadeEscolar from './ModalDadosEntidadeEscolar';
 
 interface FormData {
   nome: string;

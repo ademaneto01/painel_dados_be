@@ -136,7 +136,7 @@ export default function InfosContrato(): JSX.Element {
                 size={'10rem'}
                 colorBackGround={'var(--blue-300)'}
                 text="Editar Informações"
-                onClick={() => setPage(PageEnumContratos.registrarDocEntidade)}
+                onClick={() => setPage(PageEnumContratos.editarInfosContrato)}
               />
             </>
           ) : (

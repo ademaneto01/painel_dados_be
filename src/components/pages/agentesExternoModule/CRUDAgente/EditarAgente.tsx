@@ -8,18 +8,16 @@ import { useGlobalContext } from '@/context/store';
 import { CreateButton, PageContentContainer } from '@/components/shared';
 
 interface FormData {
-  uuid_agente: string | null;
   nome: string | null;
   cargo: string | null;
   email_primario: string | null;
   email_secundario: string | null;
   telefone: string | null;
-  ativo: boolean | null;
+  ativo: boolean;
 }
 
 export default function EditarAgente(): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
-    uuid_agente: '',
     nome: '',
     cargo: '',
     email_primario: '',
@@ -40,47 +38,48 @@ export default function EditarAgente(): JSX.Element {
       throw error;
     }
   };
-  useEffect(() => {
-    fetchDataInitial();
-  }, []);
-
-  const fetchDataInitial = async () => {
-    const response = await fetchAgenteData();
-    if (response) {
-      setFormData({
-        uuid_agente: idAgente,
-        nome: response[0]?.nome || '',
-        cargo: response[0]?.cargo || '',
-        email_primario: response[0]?.no_email_primario || '',
-        email_secundario: response[0]?.no_email_secundario || '',
-        telefone: response[0]?.nu_telefone || '',
-        ativo: response[0]?.bo_ativo || null,
-      });
-    }
-  };
-
-  const fetchAgenteData = async () => {
-    const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
-    try {
-      return await backendApi.localizarAgenteId({ id: idAgente });
-    } catch (error) {
-      handleApiErrors(error);
-      return null;
-    }
-  };
 
   const fetchData = async () => {
+    const token = localStorage.getItem('auth_token');
+    const backendApi = new BackendApiMock(`${token}`);
+    const requestBody = {
+      id: idAgente,
+      ...formData,
+    };
     try {
-      const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
-      await backendApi.editarAgente(formData);
+      await backendApi.editarAgente(requestBody);
       setUsersUpdated(true);
       setPageAgentesExterno(PageEnumAgentesExterno.agentes);
     } catch (error) {
       handleApiErrors(error);
     }
     setPageAgentesExterno(PageEnumAgentesExterno.agentes);
+  };
+
+  useEffect(() => {
+    fetchDataInitial();
+  }, []);
+
+  const fetchDataInitial = async () => {
+    const token = localStorage.getItem('auth_token');
+    const backendApi = new BackendApiMock(`${token}`);
+
+    try {
+      const infosContratoData = await backendApi.localizarAgenteId({
+        id: idAgente,
+      });
+
+      setFormData({
+        nome: infosContratoData[0].nome,
+        cargo: infosContratoData[0].cargo,
+        email_primario: infosContratoData[0].no_email_primario,
+        email_secundario: infosContratoData[0].no_email_secundario,
+        telefone: infosContratoData[0].nu_telefone,
+        ativo: infosContratoData[0].bo_ativo,
+      });
+    } catch (error) {
+      handleApiErrors(error);
+    }
   };
 
   const handleInputChange = (
@@ -132,7 +131,7 @@ export default function EditarAgente(): JSX.Element {
   );
 }
 
-const HeaderComponent: React.FC = () => <h4>Novo Agente</h4>;
+const HeaderComponent: React.FC = () => <h4>Editar Agente</h4>;
 
 const NavigationButtons: React.FC<{
   setPageAgentesExterno: React.Dispatch<
@@ -165,7 +164,7 @@ const FormComponent: React.FC<any> = ({
             type="text"
             placeholder="Nome"
             name="nome"
-            value={formData.nome}
+            value={formData.nome ?? ''}
             onChange={handleInputChange}
             className={styles.inputStandard}
           />
@@ -173,7 +172,7 @@ const FormComponent: React.FC<any> = ({
         <label className={styles.labelStandard}>
           Cargo
           <select
-            value={formData.cargo}
+            value={formData.cargo ?? ''}
             onChange={handleInputChange}
             name="cargo"
             className={styles.inputSelect}
@@ -190,7 +189,7 @@ const FormComponent: React.FC<any> = ({
             type="text"
             placeholder="E-mail Primário"
             name="email_primario"
-            value={formData.email_primario}
+            value={formData.email_primario ?? ''}
             onChange={handleInputChange}
             className={styles.inputStandard}
           />
@@ -201,7 +200,7 @@ const FormComponent: React.FC<any> = ({
             type="text"
             placeholder="E-mail Secundário"
             name="email_secundario"
-            value={formData.email_secundario}
+            value={formData.email_secundario ?? ''}
             onChange={handleInputChange}
             className={styles.inputStandard}
           />
@@ -212,7 +211,7 @@ const FormComponent: React.FC<any> = ({
             type="text"
             placeholder="Telefone"
             name="telefone"
-            value={formData.telefone}
+            value={formData.telefone ?? ''}
             onChange={handleInputChange}
             className={styles.inputStandard}
           />

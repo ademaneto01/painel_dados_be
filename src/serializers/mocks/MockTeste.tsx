@@ -1,4 +1,4 @@
-import { EntitiesAgenteExterno } from '@/entities';
+import { EntitiesTeste } from '@/entities';
 import { SerializerInterface } from '@/interfaces';
 
 interface AgenteExternoMockPayload {
@@ -11,9 +11,9 @@ interface AgenteExternoMockPayload {
   no_email_secundario: string;
 }
 
-export default class MockAgenteExternoVinculo implements SerializerInterface {
-  toEntity(otd: AgenteExternoMockPayload): EntitiesAgenteExterno {
-    return new EntitiesAgenteExterno({
+export default class MockTeste implements SerializerInterface {
+  toEntity(otd: AgenteExternoMockPayload): EntitiesTeste {
+    return new EntitiesTeste({
       uuid_agente: otd.uuid_agente,
       nome: otd.nome,
       cargo: otd.cargo,

@@ -147,7 +147,7 @@ const FormComponent: React.FC<any> = ({
             className={styles.inputSelect}
           >
             <option value="">-</option>
-            <option value="Administrador">Coordenador</option>
+            <option value="Coordenador">Coordenador</option>
             <option value="Professor">Professor</option>
             <option value="Secretario">Secretário(a)</option>
           </select>

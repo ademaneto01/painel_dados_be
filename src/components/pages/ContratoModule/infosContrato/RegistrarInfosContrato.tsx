@@ -31,7 +31,6 @@ export default function RegistrarInfosContrato(): JSX.Element {
 
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const [userPDG, setUserPDG] = useState<EntitiesInfosContrato[]>([]);
   const { setPage, idContrato } = useGlobalContext();
 
   const handleApiErrors = (error: any) => {
@@ -62,9 +61,22 @@ export default function RegistrarInfosContrato(): JSX.Element {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    const booleanValue =
-      value === 'true' ? true : value === 'false' ? false : null;
-    const updatedValue = ['ativo'].includes(name) ? booleanValue : value;
+
+    let updatedValue: any;
+    if (
+      ['ano_assinatura', 'ano_operacao', 'ano_termino', 'pedido_min'].includes(
+        name,
+      )
+    ) {
+      updatedValue = value ? parseInt(value, 10) : null;
+    } else if (
+      ['ativo'].includes(name) ||
+      ['reajuste_igpm_ipca'].includes(name)
+    ) {
+      updatedValue = value === 'true' ? true : value === 'false' ? false : null;
+    } else {
+      updatedValue = value;
+    }
 
     setFormData((prev) => ({ ...prev, [name]: updatedValue }));
   };
@@ -173,7 +185,7 @@ const FormComponent: React.FC<any> = ({
       <label className={styles.labelStandard}>
         Responsavel pelo Frete
         <input
-          type="number"
+          type="text"
           placeholder="Responsavel pelo Frete"
           name="resp_frete"
           value={formData.resp_frete}
