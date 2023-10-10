@@ -18,6 +18,7 @@ export interface TableProps<T> {
   searchInputNoneNome?: string;
   labelInput?: string;
   inputSelectAgente?: boolean;
+  styleInputSelect?: string;
   onClickRow?: (item: T) => void;
 }
 
@@ -56,6 +57,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
   const styleInputEscola: React.CSSProperties = {
     display: props.searchInputNoneEscola,
   };
+
   const styleInput: React.CSSProperties = {
     display: props.searchInputNone,
   };
@@ -78,6 +80,8 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
 
       return data.filter((item) => {
         const itemName = (item as any).nome?.toLowerCase();
+        const itemNameContrato = (item as any).nome_simplificado?.toLowerCase();
+        const itemNameEscola = (item as any).nome_operacional?.toLowerCase();
         const itemEmail = (item as any).email?.toLowerCase();
         const itemSchool = (item as any).escola?.toLowerCase();
         const itemProfile = (item as any).perfil;
@@ -85,6 +89,12 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
 
         const nameMatch =
           itemName && itemName.includes(normalizedFilterNameOrEmail);
+        const nameContratoMatch =
+          itemNameContrato &&
+          itemNameContrato.includes(normalizedFilterNameOrEmail);
+        const nameEscolaMatch =
+          itemNameEscola &&
+          itemNameEscola.includes(normalizedFilterNameOrEmail);
         const emailMatch =
           itemEmail && itemEmail.includes(normalizedFilterNameOrEmail);
         const schoolMatch =
@@ -96,7 +106,10 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
           !filterCargo || (itemCargo && itemCargo === filterCargo);
 
         return (
-          (nameMatch || emailMatch) && schoolMatch && profileMatch && cargoMatch
+          (nameMatch || emailMatch || nameContratoMatch || nameEscolaMatch) &&
+          schoolMatch &&
+          profileMatch &&
+          cargoMatch
         );
       });
     },

@@ -74,7 +74,8 @@ function EntidadesEscolaresTable({ data, loaded, error }: any) {
       loaded={loaded}
       error={error}
       searchInputNone={'none'}
-      searchInputNoneNome={'none'}
+      searchInputNoneEscola={'none'}
+      labelInput={'Buscar pelo Nome Operacional'}
     />
   );
 }

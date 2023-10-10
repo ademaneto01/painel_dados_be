@@ -243,8 +243,14 @@ const ModalAddUser: React.FC<ModalProps> = ({
 
   return (
     <>
-      <div className={styles.background}>
-        <form className={styles.container} onSubmit={handleSubmit}>
+      <div className={styles.background} onClick={onCancel}>
+        <form
+          className={styles.container}
+          onSubmit={handleSubmit}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <h1
             style={{
               fontSize: '20px',
