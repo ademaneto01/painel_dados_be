@@ -78,6 +78,22 @@ export default function SignIn() {
     }
   };
 
+  const [isRotated, setIsRotated] = useState(false);
+
+  const showContainer = () => {
+    const box = document.getElementById('box');
+    const containerMain = document.getElementById('containerMain');
+    if (box && containerMain) {
+      setIsRotated(true); // set the rotated state to true
+      setTimeout(function () {
+        if (box && containerMain) {
+          box.style.display = 'none';
+          containerMain.style.display = 'flex';
+        }
+      }, 800);
+    }
+  };
+
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
     const key = evt.target.name;
@@ -86,6 +102,10 @@ export default function SignIn() {
 
   return (
     <div className={styles.containerSignIn}>
+    <div className={styles.containerFundo}>
+      <div className={styles.logoContainer}>
+        <img src='logo_be_2.png' className={styles.logo} />
+        </div>
       <div className={styles.containerMain}>
         <form
           className={styles.formLogin}
@@ -121,14 +141,6 @@ export default function SignIn() {
           </div>
         </form>
       </div>
-      <div className={styles.containerFundo}>
-        <Image
-          src="/logo-be-vazado.png"
-          alt={'logo-login'}
-          width={200}
-          height={200}
-          priority={true}
-        />
       </div>
     </div>
   );

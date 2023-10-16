@@ -60,12 +60,12 @@
 }
 
 .confirmButton {
-  background-color: #27ae60;
-  color: #ffffff;
+  background-color: var(--verde-learn);
+  color: var(--white);
 }
 .cancelButton {
-  background-color: #c0392b;
-  color: #ffffff;
+  background-color: var(--red-300);
+  color: var(--white);
 }
 
 .buttonContainer {

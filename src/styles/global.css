@@ -1,9 +1,22 @@
 :root {
   --white: #ffffff;
+  --white-200:#eaf0f7;
+  --white-300:#f1f5fa;
+  --rose-200:#f0d7d7;
   --blue-300: #0db4b0;
   --blue-500: #0656ff;
   --gray-200: #bec8db;
   --gray-300: #586571;
+  --dark-gray: rgba(78, 78, 78, 0.2);
+  --azul-tech:#31599C;
+  --verde-tech: rgb(12,182,177);
+  --verde-learn: rgb(0,135,157);
+  --verde-light: rgb(166,206,57);
+  --azul-escuro: rgb(27,41,73);
+  --black-14: rgba(0, 0, 0, 0.14);
+  --black-200: rgba(0, 0, 0, 0.2);
+  --red-300: #ff0000;
+  --brown:brown;
 }
 
 * {

@@ -30,14 +30,14 @@
   height: 3rem;
   width: 9rem;
   color: var(--white);
-  background-color: var(--blue-300);
+  background-color: var(--verde-tech);
   justify-content: center;
   gap: 0.3rem;
   align-items: center;
   padding: 1em 0.8em 1em 0.8em;
   font-family: 'Poppins', sans-serif;
   transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out;
-  box-shadow: 0px 0.3em 1em rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0.3em 1em var(--black-200);
   user-select: none;
 }
 .createButtonTeste {
@@ -52,7 +52,7 @@
   padding: 1em 0.8em 1em 0.8em;
   font-family: 'Poppins', sans-serif;
   transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out;
-  box-shadow: 0px 0.3em 1em rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0.3em 1em var(--black-200);
   user-select: none;
 }
 

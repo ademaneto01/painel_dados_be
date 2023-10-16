@@ -16,7 +16,7 @@
   height: 2rem;
 }
 #classSelected {
-  border-bottom: 0.1rem solid black;
+  border-bottom: 0.1rem solid var(--black-24);
   font-weight: bold;
   width: 10rem;
 }
