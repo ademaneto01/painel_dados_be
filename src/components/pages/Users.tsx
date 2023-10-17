@@ -23,6 +23,7 @@ function PageUsers() {
   const [error, setError] = useState(false);
   const [showModalUser, setShowModalUser] = useState(false);
   const { usersUpdated, setUsersUpdated } = useGlobalContext();
+
   function handleClickOpenModalAdd(): void {
     setShowModalUser(true);
   }
@@ -61,7 +62,7 @@ function PageUsers() {
       <PageContentContainer>
         <CreateButton
           color={'var(--white'}
-          colorBackGround={'var(--blue-300)'}
+          colorBackGround={'var(--verde-tech)'}
           text="Novo usuário"
           onClick={() => handleClickOpenModalAdd()}
         />

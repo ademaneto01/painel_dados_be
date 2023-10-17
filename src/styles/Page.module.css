@@ -9,7 +9,7 @@
   height: 100%;
   margin-top: 1.7em;
   padding: 1.2em;
-  padding-bottom: 0;
+  padding-bottom: 0.9em;
   margin-bottom: 2rem;
 }
 .boxToAlignBtns {
@@ -19,27 +19,82 @@
 }
 
 .createButtonContainer {
-  display: flex;
+  display:flex;
   justify-content: flex-end;
   margin-right: 0.6rem;
 }
 
 .createButton {
+  all: unset;
   display: flex;
   border-radius: 3rem;
-  height: 3rem;
-  width: 9rem;
+  height: 1.2rem;
+  width: 8rem;
   color: var(--white);
   background-color: var(--verde-tech);
   justify-content: center;
-  gap: 0.3rem;
   align-items: center;
   padding: 1em 0.8em 1em 0.8em;
   font-family: 'Poppins', sans-serif;
-  transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out;
-  box-shadow: 0px 0.3em 1em var(--black-200);
-  user-select: none;
+  cursor: pointer;
+  box-shadow: 0 5px 10px var(--black-200);
 }
+
+.createButton:link,
+.createButton:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 40px;
+    display: inline-block;
+    border-radius: 100px;
+    transition: all .2s;
+    position: absolute;
+}
+
+.createButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px var(--black-200);
+}
+
+.createButton:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px var(--black-200);
+}
+
+.createButton::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all .4s;
+}
+
+.createButton:hover::after {
+  transform: scaleX(1.0) scaleY(1.0);
+  opacity: 0;
+}
+
+.createButton-animated {
+  animation: moveInBottom 5s ease-out;
+  animation-fill-mode: backwards;
+}
+@keyframes moveInBottom {
+  0% {
+      opacity: 0;
+      transform: translateY(30px);
+  }
+
+  100% {
+      opacity: 1;
+      transform: translateY(0px);
+  }
+}
+
 .createButtonTeste {
   display: flex;
   border-radius: 3rem;

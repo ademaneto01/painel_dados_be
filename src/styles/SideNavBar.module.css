@@ -37,7 +37,7 @@
 
 .activeNavBarButton {
   background: linear-gradient(to bottom, var(--azul-tech), var(--verde-tech));
-  border-radius: 0.3em;
+  border-radius: 0.9em;
   color: var(--white);
 }
 

@@ -167,7 +167,7 @@ const HeaderComponent: React.FC = () => <h4>Editar Contrato</h4>;
 const NavigationButtons: React.FC<any> = ({ setPage }) => (
   <div className={styles.boxBtns}>
     <CreateButton
-      color={'var(--gray-300'}
+      color={'var(--gray-300)'}
       colorBackGround={'var(--white)'}
       text="Voltar"
       size="8rem"
