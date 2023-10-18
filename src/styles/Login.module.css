@@ -110,6 +110,7 @@
   padding: 1em 0.8em 1em 0.8em;
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
+  box-shadow: 0 5px 10px var(--black-200);
 }
 
 .btnLogin:link,
@@ -146,12 +147,8 @@
   transition: all .4s;
 }
 
-.btnLogin::after {
-  background-color: var(--verde-tech);
-}
-
 .btnLogin:hover::after {
-  transform: scaleX(1.4) scaleY(1.6);
+  transform: scaleX(1.0) scaleY(1.0);
   opacity: 0;
 }
 
