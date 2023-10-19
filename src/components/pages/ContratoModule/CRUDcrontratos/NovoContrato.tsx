@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import InputMask from 'react-input-mask';
 import styles from '@/styles/NovoContrato.module.css';
 import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
@@ -6,6 +7,7 @@ import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, CreateButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
+import validaCNPJ from '@/validations/validaCNPJ';
 
 interface FormData {
   nome_simplificado: string;
@@ -60,10 +62,43 @@ export default function NovoContrato(): JSX.Element {
     setPage(PageEnumContratos.entidadesContratuais);
   };
 
+  const fetchEndereco = async (cep: string) => {
+    try {
+      cep = cep.replace(/-/g, '');
+      if (cep.length !== 8) {
+        return null;
+      }
+      if (cep.length === 8) {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+
+        if (!data.erro) {
+          setFormData((prev) => ({
+            ...prev,
+            endereco: data.logradouro,
+            cidade: data.localidade,
+            uf: data.uf,
+            bairro: data.bairro,
+            complemento: data.complemento,
+          }));
+        } else {
+          setError(true);
+          setMsgError('CEP não encontrato...');
+          setTimeout(() => setError(false), 5000);
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao buscar o CEP:', error);
+    }
+  };
+
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
+    if (name === 'cep') {
+      fetchEndereco(value);
+    }
     const booleanValue =
       value === 'true' ? true : value === 'false' ? false : null;
     const updatedValue = ['ativo', 'bo_rede'].includes(name)
@@ -80,6 +115,11 @@ export default function NovoContrato(): JSX.Element {
     if (formData.uf.length > 2) {
       errors.push('Campo UF é permitido somente dois caracteres...');
     }
+
+    if (!validaCNPJ(formData.cnpj_cont)) {
+      errors.push('CNPJ inválido...');
+    }
+
     if (errors.length) {
       setError(true);
       setMsgError(errors.join(' '));
@@ -161,8 +201,9 @@ const FormComponent: React.FC<any> = ({
       </label>
       <label className={styles.labelStandard}>
         CNPJ
-        <input
+        <InputMask
           type="text"
+          mask="99.999.999/9999-99"
           placeholder="CNPJ"
           name="cnpj_cont"
           value={formData.cnpj_cont}
@@ -172,8 +213,9 @@ const FormComponent: React.FC<any> = ({
       </label>
       <label className={styles.labelStandard}>
         CEP
-        <input
+        <InputMask
           type="text"
+          mask="99999-999"
           placeholder="CEP"
           name="cep"
           value={formData.cep}
