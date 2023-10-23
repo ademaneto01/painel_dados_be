@@ -41,8 +41,8 @@
   left: 50%;
   top: 13%;
   transform: translate(-50%, -50%);
-  width: 3.125rem;
-  height: 3.125rem;
+  width: 10rem;
+  height: 10rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,6 +51,7 @@
 .logo {
   height: 100%;
   width: auto;
+  aspect-ratio: 2;
 }
 
 .containerMain {
@@ -58,10 +59,10 @@
   justify-content: center;
   align-items: center;
   width: 26.25rem;
-  min-width: 26.25rem;
+  min-width: 24rem;
   max-width: 26.25rem;
-  height: 100%;
-  min-height: 18.75rem;
+  height: 26.25rem;
+  min-height: 24rem;
   max-height: 26.25rem;
   background-color: var(--white);
   border-radius: 2.5rem;
