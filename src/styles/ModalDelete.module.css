@@ -46,7 +46,7 @@
   cursor: pointer;
   font-size: 12px;
   margin: 0 10px;
-  box-shadow: 0 5px 10px var(--black-200);
+  box-shadow: 0px 10px 20px 0px var(--black-200);
 }
 
 .confirmButton {
