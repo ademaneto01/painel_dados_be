@@ -167,6 +167,17 @@ const FormComponent: React.FC<any> = ({
           </select>
         </label>
         <label className={styles.labelStandard}>
+          Interlocutor:
+          <input
+            type="checkbox"
+            name="interlocutor"
+
+            value={'sim'}
+            onChange={handleInputChange}
+            // className={styles.inputStandard}
+          />
+        </label>
+        <label className={styles.labelStandard}>
           Data de Nascimento
           <InputMask
             type="text"
