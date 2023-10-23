@@ -14,22 +14,11 @@
   }
 }
 
-.containerSignIn {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-}
-
-.logo {
-  height: 100vh;
-  width: 25rem;
-}
-
 .containerFundo {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background-image: url('/fundo_alternativo2.png');
   background-repeat: no-repeat;
@@ -41,8 +30,8 @@
   left: 50%;
   top: 13%;
   transform: translate(-50%, -50%);
-  width: 10rem;
-  height: 10rem;
+  width: 10em;
+  height: 10em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,22 +48,20 @@
   justify-content: center;
   align-items: center;
   width: 26.25rem;
-  min-width: 24rem;
-  max-width: 26.25rem;
   height: 26.25rem;
-  min-height: 24rem;
-  max-height: 26.25rem;
   background-color: var(--white);
   border-radius: 2.5rem;
-  box-shadow: 0px 0px 1.25rem 0px var(--black-200);
+  box-shadow: 0rem 0rem 1.25rem 0rem var(--black-200);
 }
 
 .formLogin {
+  padding: 0em;
+  margin: 5em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  width: 20rem;
+  gap: 1.5em;
+  width: 20em;
 }
 
 .labelLogin {
@@ -165,7 +152,7 @@
   padding: 1em 0.8em 1em 0.8em;
   font-family: 'Poppins', sans-serif;
   transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out;
-  box-shadow: 0px 0.19rem 0.625rem var(--black-200);
+  box-shadow: 0rem 0.19rem 0.63rem var(--black-200);
   user-select: none;
 }
 

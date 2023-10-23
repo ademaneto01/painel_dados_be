@@ -101,7 +101,6 @@ export default function SignIn() {
   };
 
   return (
-    <div className={styles.containerSignIn}>
     <div className={styles.containerFundo}>
       <div className={styles.logoContainer}>
         <img src='logo_be_2.png' className={styles.logo} />
@@ -142,6 +141,5 @@ export default function SignIn() {
         </form>
       </div>
       </div>
-    </div>
   );
 }
