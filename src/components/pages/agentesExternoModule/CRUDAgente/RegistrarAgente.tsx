@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
+import InputMask from 'react-input-mask';
 import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
@@ -13,6 +14,7 @@ interface FormData {
   email_primario: string;
   email_secundario: string;
   telefone: string;
+  data_nascimento: string;
   ativo: boolean;
 }
 
@@ -23,6 +25,7 @@ export default function RegistrarAgente(): JSX.Element {
     email_primario: '',
     email_secundario: '',
     telefone: '',
+    data_nascimento: '',
     ativo: true,
   });
 
@@ -63,8 +66,17 @@ export default function RegistrarAgente(): JSX.Element {
 
   const validateForm = (): boolean => {
     const errors: string[] = [];
-    if (Object.values(formData).some((v) => v === '' || v === null)) {
-      errors.push('Todos campos são obrigatórios...');
+
+    if (!formData.nome.trim()) {
+      errors.push('O campo nome é obrigatório.');
+    }
+
+    if (!formData.cargo) {
+      errors.push('O campo cargo é obrigatório.');
+    }
+
+    if (!formData.email_primario.trim()) {
+      errors.push('O campo e-mail primário é obrigatório.');
     }
 
     if (errors.length) {
@@ -74,7 +86,7 @@ export default function RegistrarAgente(): JSX.Element {
       return false;
     }
     return true;
-  };
+};
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -146,11 +158,25 @@ const FormComponent: React.FC<any> = ({
             name="cargo"
             className={styles.inputSelect}
           >
-            <option value="">-</option>
-            <option value="Coordenador">Coordenador</option>
-            <option value="Professor">Professor</option>
+           <option value="">-</option>
+            <option value="Diretor">Diretor(a)</option>
+            <option value="Mantenedor">Mantenedor(a)</option>
+            <option value="Coordenador">Coordenador(a)</option>
+            <option value="Professor">Professor(a)</option>
             <option value="Secretario">Secretário(a)</option>
           </select>
+        </label>
+        <label className={styles.labelStandard}>
+          Data de Nascimento
+          <InputMask
+            type="text"
+            mask="99/99/9999"
+            placeholder="Data de Nascimento"
+            name="data_nascimento"
+            value={formData.data_nascimento}
+            onChange={handleInputChange}
+            className={styles.inputStandard}
+          />
         </label>
         <label className={styles.labelStandard}>
           E-mail Primário
@@ -176,8 +202,9 @@ const FormComponent: React.FC<any> = ({
         </label>
         <label className={styles.labelStandard}>
           Telefone
-          <input
+          <InputMask
             type="text"
+            mask="(99) 99999-9999"
             placeholder="Telefone"
             name="telefone"
             value={formData.telefone}

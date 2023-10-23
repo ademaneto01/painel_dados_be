@@ -7,6 +7,7 @@ interface AgenteExternoMockPayload {
   cargo: string;
   bo_ativo: boolean;
   nu_telefone: string;
+  data_nascimento: string;
   no_email_primario: string;
   no_email_secundario: string;
 }
@@ -19,6 +20,7 @@ export default class MockTeste implements SerializerInterface {
       cargo: otd.cargo,
       bo_ativo: otd.bo_ativo,
       nu_telefone: otd.nu_telefone,
+      data_nascimento: otd.data_nascimento,
       no_email_primario: otd.no_email_primario,
       no_email_secundario: otd.no_email_secundario,
     });

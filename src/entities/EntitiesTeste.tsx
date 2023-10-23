@@ -6,6 +6,7 @@ interface UserProps {
   cargo: string;
   bo_ativo: boolean;
   nu_telefone: string;
+  data_nascimento: string;
   no_email_primario: string;
   no_email_secundario: string;
 }
@@ -16,6 +17,7 @@ export default class EntitiesTeste {
   readonly cargo: string;
   readonly bo_ativo: boolean;
   readonly nu_telefone: string;
+  readonly data_nascimento: string;
   readonly no_email_primario: string;
   readonly no_email_secundario: string;
 
@@ -25,6 +27,7 @@ export default class EntitiesTeste {
     cargo,
     bo_ativo,
     nu_telefone,
+    data_nascimento,
     no_email_primario,
     no_email_secundario,
   }: UserProps) {
@@ -33,6 +36,7 @@ export default class EntitiesTeste {
     this.cargo = cargo;
     this.bo_ativo = bo_ativo;
     this.nu_telefone = nu_telefone;
+    this.data_nascimento = data_nascimento;
     this.no_email_primario = no_email_primario;
     this.no_email_secundario = no_email_secundario;
   }

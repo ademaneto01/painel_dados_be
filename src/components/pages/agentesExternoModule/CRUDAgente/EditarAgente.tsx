@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
+import InputMask from 'react-input-mask';
 import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
@@ -13,6 +14,7 @@ interface FormData {
   email_primario: string | null;
   email_secundario: string | null;
   telefone: string | null;
+  data_nascimento: string | null;
   ativo: boolean;
 }
 
@@ -23,6 +25,7 @@ export default function EditarAgente(): JSX.Element {
     email_primario: '',
     email_secundario: '',
     telefone: '',
+    data_nascimento: '',
     ativo: true,
   });
 
@@ -68,13 +71,14 @@ export default function EditarAgente(): JSX.Element {
       const infosContratoData = await backendApi.localizarAgenteId({
         id: idAgente,
       });
-
+     
       setFormData({
         nome: infosContratoData[0].nome,
         cargo: infosContratoData[0].cargo,
         email_primario: infosContratoData[0].no_email_primario,
         email_secundario: infosContratoData[0].no_email_secundario,
         telefone: infosContratoData[0].nu_telefone,
+        data_nascimento: infosContratoData[0].data_nascimento,
         ativo: infosContratoData[0].bo_ativo,
       });
     } catch (error) {
@@ -178,10 +182,24 @@ const FormComponent: React.FC<any> = ({
             className={styles.inputSelect}
           >
             <option value="">-</option>
-            <option value="Coordenador">Coordenador</option>
-            <option value="Professor">Professor</option>
+            <option value="Diretor">Diretor(a)</option>
+            <option value="Mantenedor">Mantenedor(a)</option>
+            <option value="Coordenador">Coordenador(a)</option>
+            <option value="Professor">Professor(a)</option>
             <option value="Secretario">Secretário(a)</option>
           </select>
+        </label>
+        <label className={styles.labelStandard}>
+          Data de Nascimento
+          <InputMask
+            type="text"
+            mask="99/99/9999"
+            placeholder="Data de Nascimento"
+            name="data_nascimento"
+            value={formData.data_nascimento ?? ''}
+            onChange={handleInputChange}
+            className={styles.inputStandard}
+          />
         </label>
         <label className={styles.labelStandard}>
           E-mail Primário
