@@ -15,8 +15,9 @@
   --azul-escuro: rgb(27,41,73);
   --black-14: rgba(0, 0, 0, 0.14);
   --black-200: rgba(0, 0, 0, 0.2);
-  --red-300: #ff0000;
+  --red-300: #ca1c1cce;
   --brown:brown;
+  --blue-light: #7286a2;
 }
 
 * {

@@ -54,7 +54,7 @@ export default function AgentesExterno() {
       <PageContentContainer>
         <CreateButton
           color={'var(--white'}
-          colorBackGround={'var(--blue-300)'}
+          colorBackGround={'var(--verde-tech)'}
           text="Novo Agente"
           onClick={() =>
             setPageAgentesExterno(PageEnumAgentesExterno.registrarAgente)

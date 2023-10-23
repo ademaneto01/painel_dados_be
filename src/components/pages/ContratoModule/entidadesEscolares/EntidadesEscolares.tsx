@@ -1,4 +1,4 @@
-import { PageContentContainer, CreateButton } from '@/components/shared';
+import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
@@ -96,7 +96,7 @@ export default function EntidadesEscolares(): JSX.Element {
             text="Nova Entidade"
             onClick={() => setPage(PageEnumContratos.novaEntidade)}
           />
-          <CreateButton
+          <BackButton
             color={'var(--gray-300'}
             colorBackGround={'var(--white)'}
             text="Voltar"

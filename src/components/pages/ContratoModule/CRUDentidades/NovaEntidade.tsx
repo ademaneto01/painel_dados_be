@@ -4,7 +4,7 @@ import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
-import { PageContentContainer, CreateButton } from '@/components/shared';
+import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { EntitiesUsuariosPDG } from '@/entities';
 
@@ -154,7 +154,7 @@ const NavigationButtons: React.FC<{
   setPage: React.Dispatch<React.SetStateAction<PageEnumContratos>>;
 }> = ({ setPage }) => (
   <div className={styles.boxBtns}>
-    <CreateButton
+    <BackButton
       color={'var(--gray-300'}
       colorBackGround={'var(--white)'}
       text="Voltar"

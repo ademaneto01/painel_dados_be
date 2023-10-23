@@ -2,6 +2,7 @@ import {
   PageContentContainer,
   CreateButton,
   Loader,
+  BackButton,
 } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { useEffect, useState } from 'react';
@@ -149,7 +150,7 @@ export default function InfosContrato(): JSX.Element {
             />
           )}
 
-          <CreateButton
+          <BackButton
             color={'var(--gray-300'}
             colorBackGround={'var(--white)'}
             text="Voltar"
