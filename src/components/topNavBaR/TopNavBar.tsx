@@ -4,6 +4,7 @@ import styles from '@/styles/TopNavBar.module.css';
 import { TfiMenu } from 'react-icons/tfi';
 import { useState, useEffect } from 'react';
 import BackendApiMock from '@/backendApi';
+import { ModalTopNavBaR } from '../modal';
 
 interface TopNavBarProps {
   toggleSideNavBar: VoidFunction;
@@ -12,6 +13,12 @@ interface TopNavBarProps {
 export default function TopNavBar(props: TopNavBarProps) {
   const [nome, setNome] = useState('');
   const [escola, setEscola] = useState('');
+  const [modalTopNavBaR, setModalTopNavBaR] = useState(false);
+
+  const handleOpen = () => {
+    setModalTopNavBaR(true)
+    console.log('ok')
+  };
 
   useEffect(() => {
     const nomeStorage = localStorage.getItem('userNome');
@@ -53,6 +60,11 @@ export default function TopNavBar(props: TopNavBarProps) {
       <div className={styles.spacer} />
 
       <a className={styles.user}>{`${nome} - ${escola}`}</a>
+
+      <button onClick={handleOpen}>
+        modalteste
+      </button>
+      {modalTopNavBaR && <ModalTopNavBaR/>}
     </div>
   );
 }

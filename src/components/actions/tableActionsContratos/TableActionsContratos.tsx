@@ -97,7 +97,7 @@ export default function TableActionsContratos(
     <div className={styles.container}>
       <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
       <Action
-        icon={renderIcon(FaTrashAlt, '#f1646c')}
+        icon={renderIcon(FaTrashAlt, 'var(--red-300)')}
         onClick={handleDeleteClick}
       />
       <Action
