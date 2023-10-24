@@ -15,6 +15,7 @@ interface FormData {
   email_secundario: string | null;
   telefone: string | null;
   data_nascimento: string | null;
+  interlocutor: boolean;
   ativo: boolean;
 }
 
@@ -26,6 +27,7 @@ export default function EditarAgente(): JSX.Element {
     email_secundario: '',
     telefone: '',
     data_nascimento: '',
+    interlocutor: false,
     ativo: true,
   });
 
@@ -79,6 +81,7 @@ export default function EditarAgente(): JSX.Element {
         email_secundario: infosContratoData[0].no_email_secundario,
         telefone: infosContratoData[0].nu_telefone,
         data_nascimento: infosContratoData[0].data_nascimento,
+        interlocutor: infosContratoData[0].interlocutor,
         ativo: infosContratoData[0].bo_ativo,
       });
     } catch (error) {
@@ -89,11 +92,23 @@ export default function EditarAgente(): JSX.Element {
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
-    const { name, value } = e.target;
-    const booleanValue =
-      value === 'true' ? true : value === 'false' ? false : null;
-    const updatedValue = ['ativo'].includes(name) ? booleanValue : value;
-    setFormData((prev) => ({ ...prev, [name]: updatedValue }));
+    const { name, type } = e.target;
+    // const booleanValue =
+    //   value === 'true' ? true : value === 'false' ? false : null;
+    // const updatedValue = ['ativo'].includes(name) ? booleanValue : value;
+    // setFormData((prev) => ({ ...prev, [name]: updatedValue }));
+    let value: any;
+
+    if (type === "checkbox") {
+        value = (e.target as HTMLInputElement).checked;
+        
+    } else {
+        value = e.target.value;
+        const booleanValue = value === 'true' ? true : value === 'false' ? false : null;
+        value = ['ativo'].includes(name) ? booleanValue : value;
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const validateForm = (): boolean => {
@@ -246,6 +261,16 @@ const FormComponent: React.FC<any> = ({
             <option value="true">Ativo</option>
             <option value="false">Inativo</option>
           </select>
+        </label>
+        <label className={styles.labelCheckBox}>
+          Interlocutor:
+          <input
+            type="checkbox"
+            name="interlocutor"
+            checked={formData.interlocutor}
+            onChange={handleInputChange}
+            className={styles.inputCheckBox}
+          />
         </label>
         <div className={styles.buttonContainer}>
           <button

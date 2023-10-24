@@ -16,6 +16,7 @@ interface FormData {
   telefone: string;
   data_nascimento: string;
   ativo: boolean;
+  interlocutor: boolean;
 }
 
 export default function RegistrarAgente(): JSX.Element {
@@ -27,6 +28,7 @@ export default function RegistrarAgente(): JSX.Element {
     telefone: '',
     data_nascimento: '',
     ativo: true,
+    interlocutor: false,
   });
 
   const [error, setError] = useState(false);
@@ -57,11 +59,20 @@ export default function RegistrarAgente(): JSX.Element {
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
-    const { name, value } = e.target;
-    const booleanValue =
-      value === 'true' ? true : value === 'false' ? false : null;
-    const updatedValue = ['ativo'].includes(name) ? booleanValue : value;
-    setFormData((prev) => ({ ...prev, [name]: updatedValue }));
+    const { name, type } = e.target;
+    let value: any;
+
+    if (type === "checkbox") {
+        value = (e.target as HTMLInputElement).checked;
+        
+    } else {
+        value = e.target.value;
+        const booleanValue = value === 'true' ? true : value === 'false' ? false : null;
+        value = ['ativo'].includes(name) ? booleanValue : value;
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  
   };
 
   const validateForm = (): boolean => {
@@ -166,17 +177,7 @@ const FormComponent: React.FC<any> = ({
             <option value="Secretario">Secretário(a)</option>
           </select>
         </label>
-        <label className={styles.labelStandard}>
-          Interlocutor:
-          <input
-            type="checkbox"
-            name="interlocutor"
-
-            value={'sim'}
-            onChange={handleInputChange}
-            // className={styles.inputStandard}
-          />
-        </label>
+       
         <label className={styles.labelStandard}>
           Data de Nascimento
           <InputMask
@@ -235,6 +236,16 @@ const FormComponent: React.FC<any> = ({
             <option value="true">Ativo</option>
             <option value="false">Inativo</option>
           </select>
+        </label>
+        <label className={styles.labelCheckBox}>
+          Interlocutor:
+          <input
+            type="checkbox"
+            name="interlocutor"
+            checked={formData.interlocutor}
+            onChange={handleInputChange}
+            className={styles.inputCheckBox}
+          />
         </label>
         <div className={styles.buttonContainer}>
           <button

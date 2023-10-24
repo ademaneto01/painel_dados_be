@@ -11,7 +11,8 @@ interface FormData {
   email_primario: string;
   email_secundario: string;
   telefone: string;
-  data_nascimento: string
+  data_nascimento: string;
+  interlocutor: boolean;
   ativo: boolean;
 }
 interface ModalProps {
@@ -35,6 +36,7 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
     email_secundario: '',
     telefone: '',
     data_nascimento: '',
+    interlocutor: false,
     ativo: true,
   });
 
@@ -59,6 +61,7 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
         email_secundario: response[0].no_email_secundario,
         telefone: response[0].nu_telefone,
         data_nascimento: response[0].data_nascimento,
+        interlocutor: response[0].interlocutor,
         ativo: response[0].bo_ativo,
       });
     } catch (error) {
@@ -95,6 +98,10 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
               <p>
                 <span className={styles.label}>E-mail Secundário:</span>{' '}
                 {formData.email_secundario}
+              </p>
+              <p>
+                <span className={styles.label}>Interlocutor:</span>{' '}
+                {formData.interlocutor === true ? 'Sim' : 'Não'}
               </p>
             </div>
             <div className={styles.dados}>

@@ -7,6 +7,7 @@ interface UserProps {
   bo_ativo: boolean;
   nu_telefone: string;
   data_nascimento: string;
+  interlocutor: boolean;
   no_email_primario: string;
   no_email_secundario: string;
 }
@@ -18,6 +19,7 @@ export default class EntitiesTeste {
   readonly bo_ativo: boolean;
   readonly nu_telefone: string;
   readonly data_nascimento: string;
+  readonly interlocutor: boolean;
   readonly no_email_primario: string;
   readonly no_email_secundario: string;
 
@@ -28,6 +30,7 @@ export default class EntitiesTeste {
     bo_ativo,
     nu_telefone,
     data_nascimento,
+    interlocutor,
     no_email_primario,
     no_email_secundario,
   }: UserProps) {
@@ -37,6 +40,7 @@ export default class EntitiesTeste {
     this.bo_ativo = bo_ativo;
     this.nu_telefone = nu_telefone;
     this.data_nascimento = data_nascimento;
+    this.interlocutor = interlocutor;
     this.no_email_primario = no_email_primario;
     this.no_email_secundario = no_email_secundario;
   }

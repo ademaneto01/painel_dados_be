@@ -216,9 +216,11 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
                 onChange={handleFilterCargoChange}
               >
                 <option value="">Todos os Cargos</option>
-                <option value="Professor">Professor</option>
-                <option value="Coordenador">Coordenador</option>
-                <option value="Secretario">Secretario(a)</option>
+                <option value="Diretor">Diretor(a)</option>
+                <option value="Mantenedor">Mantenedor(a)</option>
+                <option value="Coordenador">Coordenador(a)</option>
+                <option value="Professor">Professor(a)</option>
+                <option value="Secretario">Secretário(a)</option>
               </select>
             ) : (
               <select
