@@ -133,3 +133,13 @@
 .pointer:hover {
   color: var(--black-14);
 }
+.errorNotDados{
+  display: flex;
+  right: 100%;
+  height: 5rem;
+  justify-content: center;
+  align-items: center;
+}
+.errorNotDadosSpan {
+  color: var(--red-300);
+}

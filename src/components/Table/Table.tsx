@@ -240,7 +240,8 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
             <table>
               <TableHeaders headers={headers} />
               <tbody>
-                {paginatedData.map((item) => {
+
+                {paginatedData.length > 0 ? paginatedData.map((item) => {
                   const key = getKey('row-');
                   return (
                     <TableRow<T>
@@ -251,7 +252,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
                       onClickRow={props.onClickRow}
                     />
                   );
-                })}
+                }) : <div className={styles.errorNotDados}><span className={styles.errorNotDadosSpan}>Ainda não existe dados cadastrados...</span></div>}
               </tbody>
             </table>
             <div className={styles.pagination}>

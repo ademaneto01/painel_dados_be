@@ -84,7 +84,9 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
   return (
     <>
       <div className={styles.background} onClick={onCancel}>
-        <div className={styles.container}>
+        <div className={styles.container} onClick={(e) => {
+          e.stopPropagation();
+        }}>
           <div className={styles.boxBtnClose} onClick={onCancel}>
             {reactIcon(ImCross)}
           </div>
