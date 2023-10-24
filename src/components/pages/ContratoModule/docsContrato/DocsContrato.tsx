@@ -1,4 +1,4 @@
-import { PageContentContainer, CreateButton } from '@/components/shared';
+import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
@@ -96,12 +96,12 @@ export default function DocsContrato(): JSX.Element {
           <CreateButton
             color={'var(--white'}
             size={'10rem'}
-            colorBackGround={'var(--blue-300)'}
+            colorBackGround={'var(--verde-tech)'}
             text="Novo Documento"
             onClick={() => setPage(PageEnumContratos.registrarDoc)}
           />
-          <CreateButton
-            color={'var(--gray-300'}
+          <BackButton
+            color={'var(--gray-300)'}
             colorBackGround={'var(--white)'}
             text="Voltar"
             size="8rem"

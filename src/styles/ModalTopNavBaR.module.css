@@ -1,0 +1,61 @@
+.container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .action {
+    margin: 0.2em;
+    cursor: pointer;
+  }
+  
+  .modal {
+    padding: 1rem 0.5rem 1rem 0.5rem;
+    background-color: var(--white);
+    border: 0.3px solid var(--gray-300);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+    width: 10rem;
+    height: auto;
+    border-radius: 0.3rem;
+  }
+  
+  .modal button {
+    all: unset;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--gray-300);
+    padding: 0.5rem;
+  }
+  .modal button:hover {
+    background-color: var(--verde-tech);
+    color: var(--white);
+  }
+  .fullScreenDiv {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+  }
+  
+  .modalWrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem;
+  }
+  
+  .iconTriangulo {
+    position: absolute;
+    top: -15px;
+  }
+  
+  .test {
+  position: relative;
+  width: 10em;
+  height: 10em;
+  background-color: black;
+  }

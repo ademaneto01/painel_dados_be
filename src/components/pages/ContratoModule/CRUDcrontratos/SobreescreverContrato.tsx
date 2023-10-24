@@ -11,7 +11,7 @@
 // import BackendApiMock from '@/backendApi';
 // import ErrorComponent from '@/components/ErrorComponent';
 // import { PageEnumContratos } from '@/enums';
-// import { PageContentContainer, CreateButton } from '@/components/shared';
+// import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
 // import { useGlobalContext } from '@/context/store';
 
 // interface pageContratosProps {
@@ -171,7 +171,7 @@
 
 //       <PageContentContainer>
 //         <div className={styles.boxBtns}>
-//           <CreateButton
+//           <BackButton
 //             color={'var(--gray-300'}
 //             colorBackGround={'var(--white)'}
 //             text="Voltar"
@@ -196,7 +196,7 @@
 //             Razão Social
 //             <input
 //               type="text"
-//               placeholder="Razão Sociala"
+//               placeholder="Razão Social"
 //               name="razao_social"
 //               value={formData.razao_social ?? ''}
 //               onChange={handleInputChange}
@@ -326,7 +326,7 @@ import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
-import { PageContentContainer, CreateButton } from '@/components/shared';
+import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 
 interface FormData {
@@ -484,7 +484,7 @@ const HeaderComponent: React.FC = () => <h4>Sobrescrever Contrato</h4>;
 
 const NavigationButtons: React.FC<any> = ({ setPage }) => (
   <div className={styles.boxBtns}>
-    <CreateButton
+    <BackButton
       color={'var(--gray-300'}
       colorBackGround={'var(--white)'}
       text="Voltar"
@@ -517,7 +517,7 @@ const FormComponent: React.FC<any> = ({
         Razão Social
         <input
           type="text"
-          placeholder="Razão Sociala"
+          placeholder="Razão Social"
           name="razao_social"
           value={formData.razao_social ?? ''}
           onChange={handleInputChange}

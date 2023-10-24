@@ -1,4 +1,4 @@
-import { CreateButton, PageContentContainer } from '@/components/shared';
+import { CreateButton, PageContentContainer, BackButton } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Column, Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
@@ -101,7 +101,7 @@ const NavigationButtons: React.FC<any> = ({
       text="Vincular Agente"
       onClick={onOpenModal}
     />
-    <CreateButton
+    <BackButton
       color={'var(--gray-300'}
       colorBackGround={'var(--white)'}
       text="Voltar"

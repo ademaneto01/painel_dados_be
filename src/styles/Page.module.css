@@ -9,7 +9,7 @@
   height: 100%;
   margin-top: 1.7em;
   padding: 1.2em;
-  padding-bottom: 0;
+  padding-bottom: 0.9em;
   margin-bottom: 2rem;
 }
 .boxToAlignBtns {
@@ -19,27 +19,57 @@
 }
 
 .createButtonContainer {
-  display: flex;
+  display:flex;
   justify-content: flex-end;
   margin-right: 0.6rem;
 }
 
 .createButton {
+  all: unset;
   display: flex;
-  border-radius: 3rem;
+  border-radius: 6.25rem;
   height: 3rem;
-  width: 9rem;
+  width: 8rem;
   color: var(--white);
-  background-color: var(--blue-300);
+  background-color: var(--verde-tech);
   justify-content: center;
-  gap: 0.3rem;
   align-items: center;
-  padding: 1em 0.8em 1em 0.8em;
   font-family: 'Poppins', sans-serif;
-  transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out;
-  box-shadow: 0px 0.3em 1em rgba(0, 0, 0, 0.2);
-  user-select: none;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 5px 10px var(--black-200);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
+
+.createButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px var(--black-200);
+}
+
+.createButton:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px var(--black-200);
+}
+
+.createButton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 6.25rem;
+  background: var(--verde-tech);
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.4s;
+}
+
+.createButton:hover::after {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
 .createButtonTeste {
   display: flex;
   border-radius: 3rem;
@@ -52,7 +82,7 @@
   padding: 1em 0.8em 1em 0.8em;
   font-family: 'Poppins', sans-serif;
   transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out;
-  box-shadow: 0px 0.3em 1em rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0.3em 1em var(--black-200);
   user-select: none;
 }
 
@@ -60,5 +90,80 @@
   cursor: pointer;
 }
 .createButtonTeste:hover {
+  cursor: pointer;
+}
+
+.backButtonContainer {
+  display:flex;
+  justify-content: flex-end;
+  margin-right: 0.6rem;
+}
+
+.backButton {
+  all: unset;
+  display: flex;
+  border-radius: 6.25rem;
+  height: 3rem;
+  width: 8rem;
+  color: var(--black-200);
+  background-color: var(--white);
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 5px 10px var(--black-200);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.backButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px var(--black-200);
+}
+
+.backButton:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px var(--black-200);
+}
+
+.backButton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 6.25rem;
+  background: var(--white);
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.4s;
+}
+
+.backButton:hover::after {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.backButtonTeste {
+  display: flex;
+  border-radius: 3rem;
+  height: 3rem;
+  width: 8rem;
+  color: var(--verde-tech);
+  background-color: var(--white);
+  justify-content: center;
+  align-items: center;
+  padding: 1em 0.8em 1em 0.8em;
+  font-family: 'Poppins', sans-serif;
+  transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out;
+  box-shadow: 0px 0.3em 1em var(--black-200);
+  user-select: none;
+}
+
+.backButton:hover {
+  cursor: pointer;
+}
+.backButtonTeste:hover {
   cursor: pointer;
 }

@@ -64,15 +64,16 @@
   border-radius: 4px;
   padding: 10px 20px;
   cursor: pointer;
+  box-shadow: 0px 10px 20px 0px var(--black-200);
 }
 
 .confirmButton {
-  background-color: #27ae60;
-  color: #ffffff;
+  background-color: var(--verde-learn);
+  color: var(--white);
 }
 .cancelButton {
-  background-color: #c0392b;
-  color: #ffffff;
+  background-color: var(--red-300);
+  color: var(--white);
 }
 
 .buttonContainer {

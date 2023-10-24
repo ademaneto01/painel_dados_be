@@ -12,5 +12,5 @@
 .spanText {
   font-weight: bold;
   font-size: 1.5rem;
-  color: brown;
+  color: var(--brown);
 }

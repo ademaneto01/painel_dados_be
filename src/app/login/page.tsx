@@ -3,7 +3,6 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import BackendApiMock from '@/backendApi';
 import styles from '@/styles/Login.module.css';
-import Image from 'next/image';
 import Cookies from 'js-cookie';
 import { Loader } from '@/components/shared';
 
@@ -85,8 +84,10 @@ export default function SignIn() {
   };
 
   return (
-    <div className={styles.containerSignIn}>
-      <div className={styles.containerMain}>
+    <div className={styles.containerFundo}>
+          <div className={styles.logoContainer}>
+            <img src='logo_be_2.png' className={styles.logo} />
+          </div>
         <form
           className={styles.formLogin}
           onSubmit={(evt) => handleSignIn(evt)}
@@ -120,16 +121,7 @@ export default function SignIn() {
             {loaded ? <Loader /> : ''}
           </div>
         </form>
+    
       </div>
-      <div className={styles.containerFundo}>
-        <Image
-          src="/logo-be-vazado.png"
-          alt={'logo-login'}
-          width={200}
-          height={200}
-          priority={true}
-        />
-      </div>
-    </div>
   );
 }

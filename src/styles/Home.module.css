@@ -5,7 +5,7 @@
   transition: margin-left 0.3s ease-out;
   padding: 2em;
   font-family: 'Roboto', sans-serif;
-  color: #303e67;
+  color: var(--azul-escuro);
 }
 
 .expanded {

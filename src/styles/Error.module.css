@@ -3,11 +3,11 @@
   position: fixed;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #ff0000;
-  color: #ff0000;
+  border: 1px solid var(--red-300);
+  color: var(--red-300);
   font-weight: bold;
-  background-color: #f0d7d7;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: var(--rose-200);
+  box-shadow: 0 2px 4px var(--black-200);
   border-radius: 5px;
   bottom: 2rem;
   left: 2rem;

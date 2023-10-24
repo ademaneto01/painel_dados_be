@@ -6,7 +6,7 @@ import BackendApiMock from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumAgentesExterno } from '@/enums';
 import { useGlobalContext } from '@/context/store';
-import { CreateButton, PageContentContainer } from '@/components/shared';
+import { BackButton, PageContentContainer } from '@/components/shared';
 
 interface FormData {
   nome: string;
@@ -131,7 +131,7 @@ const NavigationButtons: React.FC<{
   >;
 }> = ({ setPageAgentesExterno }) => (
   <div className={styles.boxBtns}>
-    <CreateButton
+    <BackButton
       color={'var(--gray-300'}
       colorBackGround={'var(--white)'}
       text="Voltar"
