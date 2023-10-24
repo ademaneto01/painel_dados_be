@@ -43,25 +43,17 @@
   aspect-ratio: 2;
 }
 
-.containerMain {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 26.25rem;
-  height: 26.25rem;
-  background-color: var(--white);
-  border-radius: 2.5rem;
-  box-shadow: 0rem 0rem 1.25rem 0rem var(--black-200);
-}
-
 .formLogin {
-  padding: 0em;
-  margin: 5em;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 2.5rem;
+  width: 23em;
+  background-color: var(--white);
+  padding: 1rem 3rem 0rem 3rem;
+  margin-top: 7rem;
+  box-shadow: 0rem 0rem 1.25rem 0rem var(--black-200);
   gap: 1.5em;
-  width: 20em;
 }
 
 .labelLogin {

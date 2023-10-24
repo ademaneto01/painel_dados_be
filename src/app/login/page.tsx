@@ -3,7 +3,6 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import BackendApiMock from '@/backendApi';
 import styles from '@/styles/Login.module.css';
-import Image from 'next/image';
 import Cookies from 'js-cookie';
 import { Loader } from '@/components/shared';
 
@@ -78,22 +77,6 @@ export default function SignIn() {
     }
   };
 
-  const [isRotated, setIsRotated] = useState(false);
-
-  const showContainer = () => {
-    const box = document.getElementById('box');
-    const containerMain = document.getElementById('containerMain');
-    if (box && containerMain) {
-      setIsRotated(true); // set the rotated state to true
-      setTimeout(function () {
-        if (box && containerMain) {
-          box.style.display = 'none';
-          containerMain.style.display = 'flex';
-        }
-      }, 800);
-    }
-  };
-
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
     const key = evt.target.name;
@@ -102,10 +85,9 @@ export default function SignIn() {
 
   return (
     <div className={styles.containerFundo}>
-      <div className={styles.logoContainer}>
-        <img src='logo_be_2.png' className={styles.logo} />
-        </div>
-      <div className={styles.containerMain}>
+          <div className={styles.logoContainer}>
+            <img src='logo_be_2.png' className={styles.logo} />
+          </div>
         <form
           className={styles.formLogin}
           onSubmit={(evt) => handleSignIn(evt)}
@@ -139,7 +121,7 @@ export default function SignIn() {
             {loaded ? <Loader /> : ''}
           </div>
         </form>
-      </div>
+    
       </div>
   );
 }
