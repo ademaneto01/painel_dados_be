@@ -1,15 +1,16 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/TopNavBar.module.css';
-import { TfiMenu } from 'react-icons/tfi';
+import {HiOutlineDotsCircleHorizontal} from 'react-icons/hi'
 import { AiOutlineCodepenCircle, AiOutlineCodepen} from 'react-icons/ai';
-import { ImUser, ImDisplay, ImLock, ImList2 } from 'react-icons/im';
+import { TbAtom2Filled} from 'react-icons/tb'
 import BackendApiMock from '@/backendApi';
 import { ModalTopNavBaR } from '../modal';
 import { useRouter } from 'next/router';
 
 interface TopNavBarProps {
   toggleSideNavBar: () => void;
+  hidden: boolean;
 }
 
 export default function TopNavBar(props: TopNavBarProps) {
@@ -48,7 +49,8 @@ export default function TopNavBar(props: TopNavBarProps) {
   return (
     <div className={styles.topNavBar}>
       <a className={styles.toogleTopNav} onClick={props.toggleSideNavBar}>
-        <TfiMenu size="1.1em" />
+        {props.hidden ?  <HiOutlineDotsCircleHorizontal size="2em" /> : <TbAtom2Filled size="2em"/> }
+        
       </a>
       <div className={styles.logoContainer}>
         <Image
