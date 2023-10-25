@@ -72,7 +72,7 @@ export default function Home(): JSX.Element {
 
   return (
     <main>
-      <TopNavBar toggleSideNavBar={toggleSideNavBar} />
+      <TopNavBar toggleSideNavBar={toggleSideNavBar}  hidden={sideNavBarHidden} />
       <SideNavBar
         hidden={sideNavBarHidden}
         activePage={page}
