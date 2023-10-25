@@ -39,6 +39,7 @@
   padding-left: 0.7rem;
   height: 2.5rem;
   color: #7286a2;
+  background-color: var(--white);
   border-radius: 5px;
   border: 1px solid var(--gray-200);
   margin-top: 0.2rem;

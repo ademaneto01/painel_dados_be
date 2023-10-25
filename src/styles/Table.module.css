@@ -115,6 +115,7 @@
   height: 2rem;
   font-size: medium;
   color: var(--gray-300);
+  background-color: var(--white);
   border-radius: 5px;
   border: 0.063em solid var(--gray-200);
   cursor: pointer;

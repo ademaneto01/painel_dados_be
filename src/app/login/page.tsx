@@ -16,7 +16,7 @@ interface WarningState {
   show: boolean;
 }
 
-export default function SignIn() {
+export default function SignIn(): JSX.Element {
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
   const [form, setForm] = useState<FormState>({ email: '', password: '' });
@@ -118,9 +118,9 @@ export default function SignIn() {
           </button>
           <div className={styles.boxWarning}>
             <span className={styles.error}>{warning.show && warning.msg}</span>
-            {loaded ? <Loader /> : ''}
           </div>
         </form>
+        <div className={styles.boxLoaderLogin}>{loaded ?  <Loader />:''}</div>
         
       </div>
   );

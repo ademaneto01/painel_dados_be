@@ -143,15 +143,19 @@ const ModalAddUser: React.FC<ModalProps> = ({
         }, 6000);
         return;
       } else if (formData.senha !== formData.confirmPassword) {
-        setError(true);
-        setMsgError('Confirmação de senha inválida.');
-        setTimeout(() => {
-          setError(false);
-        }, 6000);
         setFormData((prevState) => ({
           ...prevState,
           isPasswordMatch: false,
         }));
+        setError(true);
+        setMsgError('As senhas digitadas não coincidem.');
+        setTimeout(() => {
+          setError(false);
+          setFormData((prevState) => ({
+            ...prevState,
+            isPasswordMatch: true,
+          }));
+        }, 6000);
         return;
       }
       if (!loaded) {
@@ -180,9 +184,13 @@ const ModalAddUser: React.FC<ModalProps> = ({
           isPasswordMatch: false,
         }));
         setError(true);
-        setMsgError('Confirmação de senha inválida.');
+        setMsgError('As senhas digitadas não coincidem.');
         setTimeout(() => {
           setError(false);
+          setFormData((prevState) => ({
+            ...prevState,
+            isPasswordMatch: true,
+          }));
         }, 6000);
         return;
       }
@@ -359,7 +367,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
           </div>
         </form>
       </div>
-      {error ? <ErrorComponent message={'teste'} /> : ''}
+      {error ? <ErrorComponent message={msgError} /> : ''}
     </>
   );
 };

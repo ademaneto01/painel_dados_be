@@ -240,8 +240,9 @@ const FormComponent: React.FC<any> = ({
         </label>
         <label className={styles.labelStandard}>
           Telefone
-          <input
+          <InputMask
             type="text"
+            mask="(99) 99999-9999"
             placeholder="Telefone"
             name="telefone"
             value={formData.telefone ?? ''}
