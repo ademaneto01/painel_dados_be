@@ -1,61 +1,62 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: var(--transparent);
+  justify-content: flex-end;
+  align-items: flex-start;
+  z-index: 2;
+}
+
 .container {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .action {
-    margin: 0.2em;
-    cursor: pointer;
-  }
-  
-  .modal {
-    padding: 1rem 0.5rem 1rem 0.5rem;
-    background-color: var(--white);
-    border: 0.3px solid var(--gray-300);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    position: relative;
-    width: 10rem;
-    height: auto;
-    border-radius: 0.3rem;
-  }
-  
-  .modal button {
-    all: unset;
-    cursor: pointer;
-    font-weight: bold;
-    color: var(--gray-300);
-    padding: 0.5rem;
-  }
-  .modal button:hover {
-    background-color: var(--verde-tech);
-    color: var(--white);
-  }
-  .fullScreenDiv {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 10;
-  }
-  
-  .modalWrapper {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    margin-top: 0.5rem;
-  }
-  
-  .iconTriangulo {
-    position: absolute;
-    top: -15px;
-  }
-  
-  .test {
+  background-color: var(--white);
+  border-radius: 25px;
+  padding: 20px;
+  width: 200px;
+  color: var(--gray-300);
+  text-align: center;
+  box-shadow: 0 0 10px var(--black-200);
+  margin-top: 3.2em;
+  margin-right: 1em;
+}
+
+
+.title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#text {
+  text-align: center;
+  font-size: 0.87rem;
+  margin-bottom: 1em;
+}
+
+.buttonContainer {
+  padding: 1rem 0.5rem 1rem 0.5rem;
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   position: relative;
-  width: 10em;
-  height: 10em;
-  background-color: black;
-  }
+  width: 10rem;
+  height: auto;
+  border-radius: 0.3rem;
+}
+
+.btn {
+  all: unset;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--gray-300);
+  padding: 0.5rem;
+}
+
+.btn:hover {
+  background-color: var(--verde-tech);
+  color: var(--white);
+}
+

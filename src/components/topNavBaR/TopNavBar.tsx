@@ -1,13 +1,15 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '@/styles/TopNavBar.module.css';
 import { TfiMenu } from 'react-icons/tfi';
-import { useState, useEffect } from 'react';
+import { AiOutlineCodepenCircle, AiOutlineCodepen} from 'react-icons/ai';
+import { ImUser, ImDisplay, ImLock, ImList2 } from 'react-icons/im';
 import BackendApiMock from '@/backendApi';
 import { ModalTopNavBaR } from '../modal';
+import { useRouter } from 'next/router';
 
 interface TopNavBarProps {
-  toggleSideNavBar: VoidFunction;
+  toggleSideNavBar: () => void;
 }
 
 export default function TopNavBar(props: TopNavBarProps) {
@@ -16,9 +18,9 @@ export default function TopNavBar(props: TopNavBarProps) {
   const [modalTopNavBaR, setModalTopNavBaR] = useState(false);
 
   const handleOpen = () => {
-    setModalTopNavBaR(true)
-    console.log('ok')
+    setModalTopNavBaR(true);
   };
+
 
   useEffect(() => {
     const nomeStorage = localStorage.getItem('userNome');
@@ -41,6 +43,8 @@ export default function TopNavBar(props: TopNavBarProps) {
     setNome(nomeStorage || '');
   }, []);
 
+  const renderIcon = (IconComponent: React.ElementType) => <IconComponent size="2.3em" />;
+
   return (
     <div className={styles.topNavBar}>
       <a className={styles.toogleTopNav} onClick={props.toggleSideNavBar}>
@@ -61,10 +65,30 @@ export default function TopNavBar(props: TopNavBarProps) {
 
       <a className={styles.user}>{`${nome} - ${escola}`}</a>
 
-      <button onClick={handleOpen}>
-        modalteste
+      <div className={styles.container}>
+      <button
+        onClick={handleOpen}
+        style={{ background: 'none', border: 'none', outline: 'none' }}
+      >
+        {modalTopNavBaR ? (
+          renderIcon(AiOutlineCodepen)
+          ) : (
+        renderIcon(AiOutlineCodepenCircle)
+        )}
       </button>
-      {modalTopNavBaR && <ModalTopNavBaR/>}
+      {modalTopNavBaR && (
+        <ModalTopNavBaR
+          title="Your Title"
+          onCancel={() => {
+            setModalTopNavBaR(false);
+          }}
+          button1={() => {}}
+          button2={() => {}}
+          button3={() => {}}
+          button4={() => {}}
+        />
+      )}
+      </div>
     </div>
   );
 }
