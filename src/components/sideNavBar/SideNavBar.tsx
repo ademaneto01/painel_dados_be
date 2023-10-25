@@ -5,10 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IconType } from 'react-icons';
 import { ImUser, ImDisplay, ImLock, ImList2 } from 'react-icons/im';
 import SideNavBarButton from './SideNavBarButton';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
 import BackendApiMock from '@/backendApi';
-import { PageLoader } from '../shared';
 
 function reactIcon(icon: IconType): JSX.Element {
   return icon({ style: { fontSize: '1.15em' } });
@@ -21,9 +18,7 @@ interface SideNavBarProps {
 }
 
 export default function SideNavBar(props: SideNavBarProps) {
-  const router = useRouter();
   const [perfil, setPerfil] = useState('');
-  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
@@ -54,15 +49,7 @@ export default function SideNavBar(props: SideNavBarProps) {
     return page === props.activePage;
   }
 
-  function logOut() {
-    setLoaded(true);
-    localStorage.clear();
-    Cookies.remove('auth_token');
-    router.replace('/login');
-  }
-
   return (
-    <>
       <div className={hidable(styles.navBar)}>
         <div className={styles.buttonsContainer}>
           <SideNavBarButton
@@ -114,17 +101,7 @@ export default function SideNavBar(props: SideNavBarProps) {
             active={isActive(PageEnum.digitalResources)}
             hidden={perfil === 'Escola' ? true : false}
           />
-
-          <SideNavBarButton
-            text="Logout"
-            onClick={() => logOut()}
-            icon={reactIcon(ImLock)}
-            active={false}
-            hidden={true}
-          />
         </div>
       </div>
-      {loaded ? <PageLoader /> : ''}
-    </>
   );
 }

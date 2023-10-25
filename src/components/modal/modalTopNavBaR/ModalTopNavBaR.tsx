@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
 import styles from '@/styles/ModalTopNavBaR.module.css';
+import { ImLock } from 'react-icons/im';
 
 interface ModalValidationProps {
-    title: string;
     button1: () => void;
-    button2: () => void;
-    button3: () => void;
-    button4: () => void;
     onCancel: () => void;
   }
   
   const ModalTopNavBaR: React.FC<ModalValidationProps> = ({
-    title,
     button1,
-    button2,
-    button3,
-    button4,
     onCancel,
   }) => {
     return (
@@ -26,12 +19,8 @@ interface ModalValidationProps {
             e.stopPropagation();
           }}
         >
-        <h2 className={styles.title}>{title}</h2>
         <div className={styles.buttonContainer}>
-          <button onClick={button1} className={styles.btn}>Button 1</button>
-          <button onClick={button2} className={styles.btn}>Button 2</button>
-          <button onClick={button3} className={styles.btn}>Button 3</button>
-          <button onClick={button4} className={styles.btn}>Button 4</button>
+          <button onClick={button1} className={styles.btn}> <ImLock /> Logout</button>
         </div>
       </div>
     </div>
