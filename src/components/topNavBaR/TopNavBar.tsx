@@ -56,7 +56,7 @@ export default function TopNavBar(props: TopNavBarProps) {
     router.replace('/login');
   }
 
-  const renderIcon = (IconComponent: React.ElementType) => <IconComponent size="2.5em"/>;
+  const renderIcon = (IconComponent: React.ElementType) => <IconComponent size="2em"/>;
 
   return (
     <>

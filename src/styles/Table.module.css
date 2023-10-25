@@ -22,7 +22,7 @@
   border-collapse: collapse;
   padding: 1.1em;
   font-size: 0.8em;
-  color: var(--blue-light);
+  color: var(--azul-tenro);
 }
 
 .odd {
@@ -132,7 +132,7 @@
   cursor: pointer;
 }
 .pointer:hover {
-  color: var(--black-14);
+  color: var(--verde-tech);
 }
 .errorNotDados{
   display: flex;
