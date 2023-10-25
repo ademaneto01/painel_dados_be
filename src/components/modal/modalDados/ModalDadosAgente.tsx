@@ -78,8 +78,7 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
   return (
     <>
       <div className={styles.background} onClick={onCancel}>
-        <div className={styles.container}
-        onClick={(e) => {
+        <div className={styles.container}  onClick={(e) => {
           e.stopPropagation();
         }}>
           <div className={styles.boxBtnClose} onClick={onCancel}>

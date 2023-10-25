@@ -5,7 +5,7 @@ import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
-import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
+import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import validaCNPJ from '@/validations/validaCNPJ';
 
@@ -300,8 +300,8 @@ const FormComponent: React.FC<any> = ({
           className={styles.inputSelect}
         >
           <option value="">-</option>
-          <option value="true">Ativa</option>
-          <option value="false">Inativa</option>
+          <option value="true">Sim</option>
+          <option value="false">Não</option>
         </select>
       </label>
       <div className={styles.buttonContainer}>

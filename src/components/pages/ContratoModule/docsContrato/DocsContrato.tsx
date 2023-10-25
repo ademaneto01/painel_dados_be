@@ -108,12 +108,16 @@ export default function DocsContrato(): JSX.Element {
             onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
           />
         </div>
-        <DocsContratoTable
-          onClickRow={handleRowClick}
-          data={data}
-          loaded={loaded}
-          error={error}
-        />
+     
+            <DocsContratoTable
+            onClickRow={handleRowClick}
+            data={data}
+            loaded={loaded}
+            error={error}
+          />
+        
+        
+        
       </PageContentContainer>
     </div>
   );
