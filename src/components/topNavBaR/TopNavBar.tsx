@@ -86,7 +86,7 @@ export default function TopNavBar(props: TopNavBarProps) {
         style={{ background: 'none', 
         border: 'none', 
         outline: 'none', 
-        color:'var(--azul-tech)', 
+        color:'var(--azul-escuro)', 
        }}
       >
         {modalTopNavBaR ? (

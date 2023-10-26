@@ -22,9 +22,26 @@
   color: var(--gray-300);
   text-decoration: none;
   padding: 1.23em 2em;
+  margin-bottom: 20px;
   user-select: none;
-
+  position: relative;
   transition: background-color 0.3s, color 0.3s;
+}
+
+.navBarButton::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: var(--azul-tech);
+  transition: width 0.5s ease, left 0.5s ease;
+}
+
+.navBarButton:hover::after {
+  width: 90%;
+  left: 5%; 
 }
 
 .navBarButtonHidden {
@@ -43,6 +60,17 @@
 
 .activeNavBarButton:hover {
   color: var(--white);
+}
+
+.activeNavBarButton::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: var(--verde-tech);
+  transition: width 0.5s ease, left 0.5s ease;
 }
 
 .buttonsContainer {

@@ -56,7 +56,13 @@
 }
 
 .btn:hover {
-  background-color: var(--azul-tech);
+  background-color: var(--azul-escuro);
   color: var(--white);
 }
+
+
+
+
+
+
 
