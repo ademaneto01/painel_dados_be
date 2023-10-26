@@ -2,11 +2,14 @@ import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/TopNavBar.module.css';
 import {HiOutlineDotsCircleHorizontal} from 'react-icons/hi'
-import { AiOutlineCodepenCircle, AiOutlineCodepen} from 'react-icons/ai';
 import { TbAtom2Filled} from 'react-icons/tb'
+import { GiPowerButton } from 'react-icons/gi';
+import { PiPowerFill } from 'react-icons/pi';
 import BackendApiMock from '@/backendApi';
 import { ModalTopNavBaR } from '../modal';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+import { PageLoader } from '../shared';
 
 interface TopNavBarProps {
   toggleSideNavBar: () => void;
@@ -14,9 +17,11 @@ interface TopNavBarProps {
 }
 
 export default function TopNavBar(props: TopNavBarProps) {
+  const router = useRouter();
   const [nome, setNome] = useState('');
   const [escola, setEscola] = useState('');
   const [modalTopNavBaR, setModalTopNavBaR] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   const handleOpen = () => {
     setModalTopNavBaR(true);
@@ -44,9 +49,17 @@ export default function TopNavBar(props: TopNavBarProps) {
     setNome(nomeStorage || '');
   }, []);
 
-  const renderIcon = (IconComponent: React.ElementType) => <IconComponent size="2.3em" />;
+  function logOut() {
+    setLoaded(true);
+    localStorage.clear();
+    Cookies.remove('auth_token');
+    router.replace('/login');
+  }
+
+  const renderIcon = (IconComponent: React.ElementType) => <IconComponent size="2em"/>;
 
   return (
+    <>
     <div className={styles.topNavBar}>
       <a className={styles.toogleTopNav} onClick={props.toggleSideNavBar}>
         {props.hidden ?  <HiOutlineDotsCircleHorizontal size="2em" /> : <TbAtom2Filled size="2em"/> }
@@ -70,27 +83,29 @@ export default function TopNavBar(props: TopNavBarProps) {
       <div className={styles.container}>
       <button
         onClick={handleOpen}
-        style={{ background: 'none', border: 'none', outline: 'none' }}
+        style={{ background: 'none', 
+        border: 'none', 
+        outline: 'none', 
+        color:'var(--azul-tech)', 
+       }}
       >
         {modalTopNavBaR ? (
-          renderIcon(AiOutlineCodepen)
+          renderIcon(PiPowerFill)
           ) : (
-        renderIcon(AiOutlineCodepenCircle)
+        renderIcon(GiPowerButton)
         )}
       </button>
       {modalTopNavBaR && (
         <ModalTopNavBaR
-          title="Your Title"
           onCancel={() => {
             setModalTopNavBaR(false);
           }}
-          button1={() => {}}
-          button2={() => {}}
-          button3={() => {}}
-          button4={() => {}}
+          button1={logOut}
         />
       )}
       </div>
     </div>
+    {loaded ? <PageLoader /> : ''}
+    </>
   );
 }

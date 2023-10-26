@@ -78,3 +78,75 @@
   margin-top: 0.2rem;
   cursor: text;
 }
+
+.btnLogin {
+  all: unset;
+  display: flex;
+  border-radius: 6.25rem;
+  height: 3rem;
+  width: 8rem;
+  color: var(--white);
+  background-color: var(--verde-learn);
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 0.3125rem 0.63rem var(--black-200);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btnLogin:hover {
+  transform: translateY(-0.1875rem);
+  box-shadow: 0 0.63rem 1.25rem var(--black-200);
+}
+
+.btnLogin:active {
+  transform: translateY(-0.063rem);
+  box-shadow: 0 0.3125rem 0.63rem var(--black-200);
+}
+
+.btnLogin::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 6.25rem;
+  border: 0.125rem;
+  border-color: var(--verde-light);
+  background: var(--verde-learn);
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.4s;
+}
+
+.btnLogin:hover::after {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.btnLoginTeste {
+  display: flex;
+  border-radius: 3rem;
+  height: 3rem;
+  width: 8rem;
+  color: var(--blue-300);
+  background-color: var(--white);
+  justify-content: center;
+  align-items: center;
+  padding: 1em 0.8em 1em 0.8em;
+  font-family: 'Poppins', sans-serif;
+  transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out;
+  box-shadow: 0rem 0.19rem 0.63rem var(--black-200);
+  user-select: none;
+}
+
+.btnLogin:hover {
+  cursor: pointer;
+}
+
+.btnLoginTeste:hover {
+  cursor: pointer;
+}
