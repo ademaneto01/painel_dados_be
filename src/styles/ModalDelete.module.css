@@ -24,7 +24,7 @@
 
 .title {
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 #text {
@@ -45,13 +45,14 @@
   padding: 10px 20px;
   cursor: pointer;
   box-shadow: 0px 10px 20px 0px var(--black-200);
-  margin-top: -10px;
+  margin-top: 10px;
   transition: all 0.3s ease; 
 }
 
 .confirmButton {
   background-color: var(--verde-learn);
   color: var(--white);
+  margin-right: 10px;
 }
 
 .cancelButton {
