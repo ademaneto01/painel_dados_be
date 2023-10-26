@@ -4,7 +4,7 @@ import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { useGlobalContext } from '@/context/store';
-import { EntitiesAgenteExterno } from '@/entities';
+import { EntitiesTeste } from '@/entities';
 
 interface FormData {
   id_escola: string;
@@ -69,7 +69,7 @@ export default function ModalVicularAgente({
   const [msgError, setMsgError] = useState('');
   const { setPageEscolasPDG, idEntidadeEscolar, setUsersUpdated } =
     useGlobalContext();
-  const [agenteData, setAgenteData] = useState<EntitiesAgenteExterno[]>([]);
+  const [agenteData, setAgenteData] = useState<EntitiesTeste[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleApiErrors = (error: any) => {

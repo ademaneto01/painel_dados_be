@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '@/styles/ModalDados.module.css';
 import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
@@ -115,10 +115,10 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
                 <span className={styles.label}>RESP. Pedagógico:</span>{' '}
                 {usuarioPDG.length > 0 ? usuarioPDG[0].nome : 'N/A'}
               </p>
-              <p>
+              <div className={styles.conteinerUrlDados}>
                 <span className={styles.label}>URL Dados:</span>{' '}
-                {formData.url_dados}
-              </p>
+                <div className={styles.boxUrl}>{formData.url_dados}</div>
+              </div>
             </div>
             <div className={styles.dados}>
               <p>

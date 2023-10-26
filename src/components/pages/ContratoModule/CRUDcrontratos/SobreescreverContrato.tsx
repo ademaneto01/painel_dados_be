@@ -72,35 +72,7 @@ export default function SobreescreverContrato(): JSX.Element {
       return null;
     }
   };
-  const fetchEndereco = async (cep: string) => {
-    try {
-      cep = cep.replace(/-/g, '');
-      if (cep.length !== 8) {
-        return null;
-      }
-      if (cep.length === 8) {
-        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-        const data = await response.json();
-
-        if (!data.erro) {
-          setFormData((prev) => ({
-            ...prev,
-            endereco: data.logradouro,
-            cidade: data.localidade,
-            uf: data.uf,
-            bairro: data.bairro,
-            complemento: data.complemento,
-          }));
-        } else {
-          setError(true);
-          setMsgError('CEP não encontrato...');
-          setTimeout(() => setError(false), 5000);
-        }
-      }
-    } catch (error) {
-      console.error('Erro ao buscar o CEP:', error);
-    }
-  };
+ 
   const handleApiErrors = (error: any) => {
     if (error instanceof FailedToFetchError) {
       setError(true);
@@ -134,6 +106,37 @@ export default function SobreescreverContrato(): JSX.Element {
     setPage(PageEnumContratos.entidadesContratuais);
   };
 
+  const fetchEndereco = async (cep: string) => {
+    try {
+      cep = cep.replace(/-/g, '');
+      if (cep.length !== 8) {
+        return null;
+      }
+      if (cep.length === 8) {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+
+        if (!data.erro) {
+          setFormData((prev) => ({
+            ...prev,
+            endereco: data.logradouro,
+            cidade: data.localidade,
+            uf: data.uf,
+            bairro: data.bairro,
+            complemento: data.complemento,
+          }));
+        } else {
+          setError(true);
+          setMsgError('CEP não encontrato...');
+          setTimeout(() => setError(false), 5000);
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao buscar o CEP:', error);
+    }
+  };
+
+
   const validateForm = (): boolean => {
     const errors: string[] = [];
     if (Object.values(formData).some((v) => v === '' || v === null)) {
@@ -160,9 +163,7 @@ export default function SobreescreverContrato(): JSX.Element {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    if (name === 'cep') {
-      fetchEndereco(value);
-    }
+
 
     if (name === 'cep') {
       fetchEndereco(value);
@@ -245,6 +246,7 @@ const FormComponent: React.FC<any> = ({
       </label>
       <label className={styles.labelStandard}>
         CNPJ
+        
         <InputMask
           type="text"
           mask="99.999.999/9999-99"
