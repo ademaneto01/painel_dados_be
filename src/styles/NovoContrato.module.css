@@ -66,8 +66,8 @@
   padding: 10px 20px;
   cursor: pointer;
   box-shadow: 0px 10px 20px 0px var(--black-200);
-  margin-top: -10px; /* Adjust this value to move the buttons up or down */
-  transition: all 0.3s ease; /* Adding a transition for a smooth effect */
+  margin-top: -10px;
+  transition: all 0.3s ease; 
 }
 
 .confirmButton {
@@ -82,8 +82,8 @@
 
 .confirmButton:hover,
 .cancelButton:hover {
-  transform: translateY(-2px); /* Move the button up slightly on hover */
-  box-shadow: 0px 12px 25px 0px var(--black-200); /* Adjusting the box shadow on hover */
+  transform: translateY(-2px); 
+  box-shadow: 0px 12px 25px 0px var(--black-200);
 }
 
 .buttonContainer {
