@@ -67,7 +67,8 @@ export default function EscolasPDG(): JSX.Element {
           loaded={loaded}
           error={error}
           searchInputNone={'none'}
-          searchInputNoneNome={'none'}
+          searchInputNoneEscola={'none'}
+          labelInput={'Buscar pela escola'}
           onClickRow={handleRowClick}
         />
       </PageContentContainer>

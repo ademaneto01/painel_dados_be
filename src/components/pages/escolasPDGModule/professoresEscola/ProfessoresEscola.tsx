@@ -1,4 +1,8 @@
-import { CreateButton, PageContentContainer, BackButton } from '@/components/shared';
+import {
+  CreateButton,
+  PageContentContainer,
+  BackButton,
+} from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Column, Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
@@ -10,7 +14,7 @@ import { PageEnumEscolasPDG } from '@/enums';
 import ModalVicularAgente from '@/components/modal/modalVincularAgente/ModalVincularAgente';
 
 const COLUMNS = [
-  new Column('Nome Operacional', 'nome'),
+  new Column('Nome', 'nome'),
   new Column('E-mail Primario', 'no_email_primario'),
   new Column('Telefone', 'nu_telefone'),
   new Column('Cargo', 'cargo'),
@@ -81,7 +85,8 @@ export default function EscolasPDG(): JSX.Element {
           loaded={loaded}
           error={error}
           searchInputNone={'none'}
-          searchInputNoneNome={'none'}
+          searchInputNoneEscola={'none'}
+          labelInput={'Buscar pelo nome'}
         />
       </PageContentContainer>
     </div>
