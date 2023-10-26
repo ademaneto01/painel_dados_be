@@ -95,11 +95,6 @@ export default function TableActionsContratos(
 
   return (
     <div className={styles.container}>
-      <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
-      <Action
-        icon={renderIcon(FaTrashAlt, 'var(--red-300)')}
-        onClick={handleDeleteClick}
-      />
       <Action
         icon={
           modalInfos ? renderIcon(FiMoreVertical) : renderIcon(FiMoreHorizontal)
@@ -107,6 +102,12 @@ export default function TableActionsContratos(
         onClick={(event) => {
           handleModalInfos(props.id, event);
         }}
+      />
+
+      <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
+      <Action
+        icon={renderIcon(FaTrashAlt, 'var(--red-300)')}
+        onClick={handleDeleteClick}
       />
 
       {modalInfos === props.id && (

@@ -81,11 +81,6 @@ export default function TableActionEntidadeEscolar(
 
   return (
     <div className={styles.container}>
-      <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
-      <Action
-        icon={renderIcon(FaTrashAlt, '#f1646c')}
-        onClick={handleDeleteClick}
-      />
       <Action
         icon={
           modalInfos ? renderIcon(FiMoreVertical) : renderIcon(FiMoreHorizontal)
@@ -93,6 +88,11 @@ export default function TableActionEntidadeEscolar(
         onClick={(event) => {
           handleModalInfos(props.id, event);
         }}
+      />
+      <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
+      <Action
+        icon={renderIcon(FaTrashAlt, '#f1646c')}
+        onClick={handleDeleteClick}
       />
 
       {modalInfos === props.id && (
