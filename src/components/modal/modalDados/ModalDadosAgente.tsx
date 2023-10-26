@@ -78,9 +78,12 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
   return (
     <>
       <div className={styles.background} onClick={onCancel}>
-        <div className={styles.container}  onClick={(e) => {
-          e.stopPropagation();
-        }}>
+        <div
+          className={styles.container}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <div className={styles.boxBtnClose} onClick={onCancel}>
             {reactIcon(ImCross)}
           </div>
@@ -88,9 +91,12 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
             <h1>Dados Gerais</h1>
           </div>
           <div className={styles.boxDados}>
-            <div className={styles.dados}>
+            <div className={styles.dadosColumn}>
               <p>
-                <span className={styles.label}>Nome:</span> {formData.nome}
+                <div className={styles.conteinerUrlDados}>
+                  <span className={styles.label}>Nome:</span>{' '}
+                  <div className={styles.boxUrl}>{formData.nome}</div>
+                </div>
               </p>
               <p>
                 <span className={styles.label}>E-mail Primário:</span>{' '}
@@ -106,8 +112,8 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
                 {formData.interlocutor === true ? 'Sim' : 'Não'}
               </p>
             </div>
-            <div className={styles.dados}>
-            <p>
+            <div className={styles.dadosColumn}>
+              <p>
                 <span className={styles.label}>Data de Nascimento:</span>{' '}
                 {formData.data_nascimento}
               </p>

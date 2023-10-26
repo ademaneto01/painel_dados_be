@@ -56,7 +56,7 @@ export default function TopNavBar(props: TopNavBarProps) {
     router.replace('/login');
   }
 
-  const renderIcon = (IconComponent: React.ElementType) => <IconComponent size="2em"/>;
+  const renderIcon = (IconComponent: React.ElementType) => <IconComponent size="2em" style={{ cursor: 'pointer'}}/>;
 
   return (
     <>
@@ -86,7 +86,7 @@ export default function TopNavBar(props: TopNavBarProps) {
         style={{ background: 'none', 
         border: 'none', 
         outline: 'none', 
-        color:'var(--azul-tech)', 
+        color:'var(--azul-tech)',
        }}
       >
         {modalTopNavBaR ? (

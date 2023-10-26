@@ -28,16 +28,3 @@ interface ModalValidationProps {
 };
 
 export default ModalTopNavBaR;
-// function logOut() {
-//     setLoaded(true);
-//     localStorage.clear();
-//     Cookies.remove('auth_token');
-//     router.replace('/login');
-//   }
-/* <SideNavBarButton
-            text="Logout"
-            onClick={() => logOut()}
-            icon={reactIcon(ImLock)}
-            active={false}
-            hidden={true}
-          /> */

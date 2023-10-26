@@ -84,10 +84,12 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
   return (
     <>
       <div className={styles.background} onClick={onCancel}>
-        <div className={styles.container}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}>
+        <div
+          className={styles.container}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <div className={styles.boxBtnClose} onClick={onCancel}>
             {reactIcon(ImCross)}
           </div>
@@ -95,14 +97,20 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
             <h1>Dados Gerais</h1>
           </div>
           <div className={styles.boxDados}>
-            <div className={styles.dados}>
+            <div className={styles.dadosColumn}>
               <p>
-                <span className={styles.label}>Nome Simplificado:</span>{' '}
-                {formData.nome_simplificado}
+                <div className={styles.conteinerUrlDados}>
+                  <span className={styles.label}>Nome Simplificado:</span>{' '}
+                  <div className={styles.boxUrl}>
+                    {formData.nome_simplificado}
+                  </div>
+                </div>
               </p>
               <p>
-                <span className={styles.label}>Razao Social:</span>{' '}
-                {formData.razao_social}
+                <div className={styles.conteinerUrlDados}>
+                  <span className={styles.label}>Razao Social:</span>{' '}
+                  <div className={styles.boxUrl}>{formData.razao_social}</div>
+                </div>
               </p>
               <p>
                 <span className={styles.label}>CNPJ Contratual:</span>{' '}
@@ -113,7 +121,7 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
                 {formData.qtdescolas}
               </p>
             </div>
-            <div className={styles.dados}>
+            <div className={styles.dadosColumn}>
               <p>
                 <span className={styles.label}>CEP:</span> {formData.cep}
               </p>
@@ -126,7 +134,6 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
               <p>
                 <span className={styles.label}>Bairro:</span> {formData.bairro}
               </p>
-
               <p>
                 <span className={styles.label}>Complemento:</span>{' '}
                 {formData.complemento}

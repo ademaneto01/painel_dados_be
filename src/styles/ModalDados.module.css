@@ -15,7 +15,7 @@
   background-color: var(--white);
   border-radius: 10px;
   padding: 1.5rem;
-  width: 35rem;
+  width: 40rem;
   max-width: 90%;
   text-align: center;
   box-shadow: 0 0 10px var(--black-200);
@@ -34,32 +34,37 @@
 .boxTitle h1 {
   font-size: medium;
 }
+
 .boxDados {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
   justify-content: space-between;
 }
-.dados {
+
+.dadosColumn {
   display: flex;
-  gap: 0.5rem;
   flex-direction: column;
+  gap: 0.7em;
   align-items: flex-start;
+  max-width: 100%;
 }
+
 .label {
   font-weight: bold;
   color: var(--gray-300);
   white-space: nowrap;
 }
-.conteinerUrlDados{
-  display: flex;         
-  flex-direction: row; 
-  gap: 0.5em;      
-  flex-wrap: wrap;
+.conteinerUrlDados {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
 }
 
 .boxUrl {
   display: flex;
   width: 22em;
-  overflow: auto; 
+  overflow: auto;
 }
 
 .boxUrl::-webkit-scrollbar-thumb {
@@ -69,9 +74,9 @@
 
 .boxUrl::-webkit-scrollbar-track {
   background-color: var(--white);
-  border-radius: 6px; 
+  border-radius: 6px;
 }
 
 .boxUrl::-webkit-scrollbar {
-  height: 5px; 
+  height: 5px;
 }

@@ -91,18 +91,21 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
   return (
     <>
       <div className={styles.background} onClick={onCancel}>
-        <div className={styles.container}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}>
+        <div
+          className={styles.container}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
           <div className={styles.boxBtnClose} onClick={onCancel}>
             {reactIcon(ImCross)}
           </div>
+
           <div className={styles.boxTitle}>
             <h1>Dados Gerais</h1>
           </div>
           <div className={styles.boxDados}>
-            <div className={styles.dados}>
+            <div className={styles.dadosColumn}>
               <p>
                 <span className={styles.label}>Nome Operacional:</span>{' '}
                 {formData.nome_operacional}
@@ -120,7 +123,7 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
                 <div className={styles.boxUrl}>{formData.url_dados}</div>
               </div>
             </div>
-            <div className={styles.dados}>
+            <div className={styles.dadosColumn}>
               <p>
                 <span className={styles.label}>CEP:</span> {formData.cep}
               </p>
