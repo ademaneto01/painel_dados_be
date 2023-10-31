@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from '@/styles/ModalTopNavBaR.module.css';
-import { FaPowerOff } from 'react-icons/fa';
 
 interface ModalValidationProps {
     button1: () => void;
@@ -20,7 +19,7 @@ interface ModalValidationProps {
           }}
         >
         <div className={styles.buttonContainer}>
-          <button onClick={button1} className={styles.btn}> <FaPowerOff />  </button>
+          <button onClick={button1} className={styles.btn}> Logout </button>
         </div>
       </div>
     </div>

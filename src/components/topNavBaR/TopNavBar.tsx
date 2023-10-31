@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import styles from '@/styles/TopNavBar.module.css';
 import { HiOutlineDotsCircleHorizontal } from 'react-icons/hi';
 import { PiDotsThreeCircleFill } from 'react-icons/pi';
-import { TbAdjustmentsFilled } from 'react-icons/tb';
-import { TbAdjustmentsHorizontal } from 'react-icons/tb';
+import { TbLayoutSidebarRightExpand } from 'react-icons/tb';
+import { TbLayoutSidebarRightCollapse } from 'react-icons/tb';
 import BackendApiMock from '@/backendApi';
 import { ModalTopNavBaR } from '../modal';
 import { useRouter } from 'next/navigation';
@@ -64,9 +64,9 @@ export default function TopNavBar(props: TopNavBarProps) {
       <div className={styles.topNavBar}>
         <a className={styles.toogleTopNav} onClick={props.toggleSideNavBar}>
           {props.hidden ? (
-            <TbAdjustmentsHorizontal size="2em" />
+            <TbLayoutSidebarRightCollapse size="2em" />
           ) : (
-            <TbAdjustmentsFilled size="2em" />
+            <TbLayoutSidebarRightExpand size="2em" />
           )}
         </a>
         <div className={styles.logoContainer}>
