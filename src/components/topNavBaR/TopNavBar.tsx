@@ -2,9 +2,9 @@ import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/TopNavBar.module.css';
 import { HiOutlineDotsCircleHorizontal } from 'react-icons/hi';
-import { TbAtom2Filled } from 'react-icons/tb';
-import { GiPowerButton } from 'react-icons/gi';
-import { PiPowerFill } from 'react-icons/pi';
+import { PiDotsThreeCircleFill } from 'react-icons/pi';
+import { TbAdjustmentsFilled } from 'react-icons/tb';
+import { TbAdjustmentsHorizontal } from 'react-icons/tb';
 import BackendApiMock from '@/backendApi';
 import { ModalTopNavBaR } from '../modal';
 import { useRouter } from 'next/navigation';
@@ -64,9 +64,9 @@ export default function TopNavBar(props: TopNavBarProps) {
       <div className={styles.topNavBar}>
         <a className={styles.toogleTopNav} onClick={props.toggleSideNavBar}>
           {props.hidden ? (
-            <HiOutlineDotsCircleHorizontal size="2em" />
+            <TbAdjustmentsHorizontal size="2em" />
           ) : (
-            <TbAtom2Filled size="2em" />
+            <TbAdjustmentsFilled size="2em" />
           )}
         </a>
         <div className={styles.logoContainer}>
@@ -85,19 +85,12 @@ export default function TopNavBar(props: TopNavBarProps) {
         <a className={styles.user}>{`${nome} - ${escola}`}</a>
 
         <div className={styles.container}>
-          <button
-            onClick={handleOpen}
-            style={{
-              background: 'none',
-              border: 'none',
-              outline: 'none',
-              color: 'var(--azul-tech)',
-            }}
-          >
+          <a className={styles.toogleTopNav}
+            onClick={handleOpen}>
             {modalTopNavBaR
-              ? renderIcon(PiPowerFill)
-              : renderIcon(GiPowerButton)}
-          </button>
+              ? renderIcon(PiDotsThreeCircleFill)
+              : renderIcon(HiOutlineDotsCircleHorizontal)}
+          </a>
           {modalTopNavBaR && (
             <ModalTopNavBaR
               onCancel={() => {
