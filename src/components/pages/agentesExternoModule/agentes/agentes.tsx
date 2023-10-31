@@ -2,7 +2,7 @@ import { EntitiesTeste } from '@/entities';
 import styles from '@/styles/Page.module.css';
 import { Column, Table } from '../../../Table';
 import { PageContentContainer, CreateButton } from '../../../shared';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { FailedToFetchError } from '@/errors';
 import { useState, useEffect } from 'react';
@@ -27,7 +27,7 @@ export default function AgentesExterno() {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
       try {
-        const backendApi = new BackendApiMock(`${token}`);
+        const backendApi = new BackendApiGet(`${token}`);
 
         const users = await backendApi.listarTodosAgentes();
 

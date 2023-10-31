@@ -1,11 +1,15 @@
-import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
+import {
+  PageContentContainer,
+  CreateButton,
+  BackButton,
+} from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
 import { EntitiesEntidadesEscolares } from '@/entities';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 
 class Column<T> {
@@ -34,10 +38,10 @@ function useFetchEntidadesEscolares() {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
       try {
-        const backendApi = new BackendApiMock(`${token}`);
-        const entidadesEscola = await backendApi.localizarEntidadesEscolares({
-          uuid_ec: idContrato,
-        });
+        const backendApi = new BackendApiGet(`${token}`);
+        const entidadesEscola = await backendApi.localizarEntidadesEscolares(
+          idContrato,
+        );
         setData(entidadesEscola);
         setUsersUpdated(false);
       } catch (error) {

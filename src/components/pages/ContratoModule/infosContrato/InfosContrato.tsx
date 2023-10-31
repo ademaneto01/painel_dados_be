@@ -10,7 +10,7 @@ import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
 import Cookies from 'js-cookie';
 import { EntitiesInfosContrato } from '@/entities';
-import BackendApiMock from '@/backendApi';
+import { BackendApiDelete, BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { ScreensInfosContrato } from '@/components/screensHTML';
 import { ModalDelete } from '../../../modal';
@@ -27,10 +27,10 @@ function useFetchInfosContrato() {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
       try {
-        const backendApi = new BackendApiMock(`${token}`);
-        const infosContratoData = await backendApi.listarInfosContrato({
-          uuid_ec: idContrato,
-        });
+        const backendApi = new BackendApiGet(`${token}`);
+        const infosContratoData = await backendApi.listarInfosContrato(
+          idContrato,
+        );
         setIdInfos(infosContratoData[0].id);
         setData(infosContratoData);
         setUsersUpdated(false);
@@ -60,7 +60,7 @@ async function deleteInfoContrato(
   setUsersUpdated: Function,
 ) {
   const token = Cookies.get('auth_token');
-  const backendApi = new BackendApiMock(token);
+  const backendApi = new BackendApiDelete(token);
 
   try {
     await backendApi.deletarInfosContrato({ id: idInfos });

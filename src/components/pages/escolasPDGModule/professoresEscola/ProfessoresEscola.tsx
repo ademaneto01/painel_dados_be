@@ -8,7 +8,7 @@ import { Column, Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
 import { EntitiesVinculosAgentesExterno } from '@/entities';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumEscolasPDG } from '@/enums';
 import ModalVicularAgente from '@/components/modal/modalVincularAgente/ModalVincularAgente';
@@ -50,7 +50,7 @@ export default function EscolasPDG(): JSX.Element {
     const token = localStorage.getItem('auth_token');
 
     try {
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiGet(`${token}`);
       const agentesExternosData =
         await backendApi.listarAgenteRelacionadoEscola({
           id_ee: idEntidadeEscolar,

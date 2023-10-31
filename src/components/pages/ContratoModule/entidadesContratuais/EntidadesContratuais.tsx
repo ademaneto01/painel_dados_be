@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
 import { EntitiesContratos } from '@/entities';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 
 class Column<T> {
@@ -36,7 +36,7 @@ function useFetchContratos() {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
       try {
-        const backendApi = new BackendApiMock(`${token}`);
+        const backendApi = new BackendApiGet(`${token}`);
         const contratos = await backendApi.localizarContratos();
         setData(contratos);
       } catch (error) {

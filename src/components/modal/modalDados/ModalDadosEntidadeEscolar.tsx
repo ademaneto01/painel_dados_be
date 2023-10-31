@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/ModalDados.module.css';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
 import EntitiesUsersPDG from '@/entities/EntitiesUsuariosPDG';
@@ -55,11 +55,9 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
   async function fetchData() {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiGet(`${token}`);
 
-      const response = await backendApi.localizarEntitadeEscolar({
-        id: idEntidade,
-      });
+      const response = await backendApi.localizarEntidadeEscolar(idEntidade);
       setFormData({
         nome_operacional: response[0].nome_operacional,
         cnpj_escola: response[0].cnpj_escola,

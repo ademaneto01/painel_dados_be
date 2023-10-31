@@ -2,10 +2,14 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import styles from '@/styles/NovoContrato.module.css';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
-import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
+import {
+  PageContentContainer,
+  CreateButton,
+  BackButton,
+} from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { EntitiesUsuariosPDG } from '@/entities';
 import validaCNPJ from '@/validations/validaCNPJ';
@@ -80,7 +84,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
   const fetchUserPDGData = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiGet(`${token}`);
       return await backendApi.localizarUsuariosPDG();
     } catch (error) {
       handleApiErrors(error);
@@ -91,8 +95,9 @@ export default function EditEntidadeEscolar(): JSX.Element {
   const fetchEntidadeEscolarData = async (id: string) => {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
-      return await backendApi.localizarEntitadeEscolar({ id });
+      const backendApi = new BackendApiGet(`${token}`);
+
+      return await backendApi.localizarEntidadeEscolar(id);
     } catch (error) {
       handleApiErrors(error);
       return null;
@@ -110,7 +115,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiPut(`${token}`);
       await backendApi.editarEntidadeEscolar({
         id: idEntidadeEscolar,
         nome_operacional: formData.nome_operacional,

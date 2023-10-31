@@ -6,7 +6,7 @@ import { ModalDelete, ModalDadosEntidadeEscolar } from '../../modal';
 import { ImEyePlus } from 'react-icons/im';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
-import BackendApiMock from '@/backendApi';
+import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumContratos } from '@/enums';
 import Action from '../Action';
@@ -44,7 +44,7 @@ export default function TableActionEntidadeEscolar(
 
   async function deleteEntidadeEscolar(id: string) {
     const token = Cookies.get('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiDelete(`${token}`);
     try {
       await backendApi.deletarEntidadeEscolar({ id });
       setShowModalDelete('');

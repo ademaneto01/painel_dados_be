@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet, BackendApiPost, BackendApiPut } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import ErrorComponent from '@/components/ErrorComponent';
 
@@ -80,7 +80,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
   async function fetchDataEntidadesEscolares() {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiGet(`${token}`);
       const response = await backendApi.todasEntidadesEscolares();
       setEntidadesEscolaresData(
         response.map((school) => ({
@@ -93,8 +93,8 @@ const ModalAddUser: React.FC<ModalProps> = ({
   async function fetchDataInitial() {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
-      const response = await backendApi.localizarUsuario({ userId });
+      const backendApi = new BackendApiGet(`${token}`);
+      const response = await backendApi.localizarUsuario(userId);
 
       setFormData({
         nome: response[0]?.nome || '',
@@ -203,7 +203,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
     async function fetchDataUpdate() {
       try {
         const token = localStorage.getItem('auth_token');
-        const backendApi = new BackendApiMock(`${token}`);
+        const backendApi = new BackendApiPut(`${token}`);
 
         await backendApi.editarUsuario({
           id: userId,
@@ -227,7 +227,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
     async function fetchData() {
       try {
         const token = localStorage.getItem('auth_token');
-        const backendApi = new BackendApiMock(`${token}`);
+        const backendApi = new BackendApiPost(`${token}`);
 
         await backendApi.registrarUsuario({
           nome: formData.nome,

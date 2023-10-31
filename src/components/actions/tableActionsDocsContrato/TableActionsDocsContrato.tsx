@@ -6,7 +6,7 @@ import { ModalDelete } from '../../modal';
 import { ModalVisualizarDoc } from '../../modal';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
-import BackendApiMock from '@/backendApi';
+import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { ImEyePlus } from 'react-icons/im';
 
@@ -39,7 +39,7 @@ export default function TableActionsDocsContrato(
     const token = Cookies.get('auth_token');
 
     try {
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiDelete(`${token}`);
       await backendApi.deletarDocContrato({ id: props.id });
       setShowModalDelete('');
       setUsersUpdated(true);

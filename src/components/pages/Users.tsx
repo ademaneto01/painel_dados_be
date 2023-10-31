@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
 import { ModalAddUser } from '../modal';
 import EntitiesUsers from '@/entities/EntitiesUsers';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 
 const columns = [
@@ -35,7 +35,7 @@ function PageUsers() {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
       try {
-        const backendApi = new BackendApiMock(`${token}`);
+        const backendApi = new BackendApiGet(`${token}`);
 
         const users = await backendApi.localizarUsuarios();
 

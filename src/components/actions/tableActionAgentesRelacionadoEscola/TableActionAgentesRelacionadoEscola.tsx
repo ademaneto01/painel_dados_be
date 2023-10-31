@@ -6,7 +6,7 @@ import { IconBaseProps, IconType } from 'react-icons';
 import { ModalDelete, ModalAddUser } from '../../modal';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
-import BackendApiMock from '@/backendApi';
+import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import ModalEditarVinculoAgente from '@/components/modal/modalEditarVinculoAgente/ModalEditarVinculoAgente';
 
@@ -47,7 +47,7 @@ export default function TableActionAgentesRelacionadoEscola(
     const token = Cookies.get('auth_token');
 
     try {
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiDelete(`${token}`);
       await backendApi.deletarVinculoAgente(formData);
       setShowModalDelete('');
       setUsersUpdated(true);

@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import styles from '@/styles/NovoContrato.module.css';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
@@ -65,14 +65,14 @@ export default function SobreescreverContrato(): JSX.Element {
   const fetchContractData = async (id: string) => {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
-      return await backendApi.localizarContrato({ id });
+      const backendApi = new BackendApiGet(`${token}`);
+      return await backendApi.localizarContrato(id);
     } catch (error) {
       handleApiErrors(error);
       return null;
     }
   };
- 
+
   const handleApiErrors = (error: any) => {
     if (error instanceof FailedToFetchError) {
       setError(true);
@@ -84,7 +84,7 @@ export default function SobreescreverContrato(): JSX.Element {
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiPut(`${token}`);
       await backendApi.sobrescreverContrato({
         uuid_ec: idContrato,
         nome_simplificado: formData.nome_simplificado,
@@ -136,7 +136,6 @@ export default function SobreescreverContrato(): JSX.Element {
     }
   };
 
-
   const validateForm = (): boolean => {
     const errors: string[] = [];
     if (Object.values(formData).some((v) => v === '' || v === null)) {
@@ -146,9 +145,9 @@ export default function SobreescreverContrato(): JSX.Element {
       errors.push('Campo UF é permitido somente dois caracteres...');
     }
     if (formData.cnpj_cont) {
-    if (!validaCNPJ(formData.cnpj_cont)) {
-      errors.push('CNPJ inválido...');
-    }
+      if (!validaCNPJ(formData.cnpj_cont)) {
+        errors.push('CNPJ inválido...');
+      }
     }
     if (errors.length) {
       setError(true);
@@ -163,7 +162,6 @@ export default function SobreescreverContrato(): JSX.Element {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-
 
     if (name === 'cep') {
       fetchEndereco(value);
@@ -246,7 +244,6 @@ const FormComponent: React.FC<any> = ({
       </label>
       <label className={styles.labelStandard}>
         CNPJ
-        
         <InputMask
           type="text"
           mask="99.999.999/9999-99"

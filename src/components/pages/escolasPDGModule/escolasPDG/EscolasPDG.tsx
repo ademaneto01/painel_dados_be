@@ -4,7 +4,7 @@ import { Column, Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
 import { EntitiesEntidadesEscolaresPDG } from '@/entities';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumContratos, PageEnumEscolasPDG } from '@/enums';
 
@@ -36,7 +36,7 @@ export default function EscolasPDG(): JSX.Element {
     const idUsuario = localStorage.getItem('userId');
 
     try {
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiGet(`${token}`);
       const contentidadesEscolasratos =
         await backendApi.localizarEntidadesEscolaresUsuariosPDG({
           userId: idUsuario,

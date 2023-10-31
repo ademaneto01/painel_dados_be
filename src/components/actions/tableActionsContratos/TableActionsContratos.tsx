@@ -6,7 +6,7 @@ import { IconBaseProps, IconType } from 'react-icons';
 import { ModalDelete, ModalDadosContrato } from '../../modal';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
-import BackendApiMock from '@/backendApi';
+import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumContratos } from '@/enums';
 import Action from '../Action';
@@ -46,7 +46,7 @@ export default function TableActionsContratos(
   }
   async function deleteUser(id: string) {
     const token = Cookies.get('auth_token');
-    const backendApi = new BackendApiMock(token);
+    const backendApi = new BackendApiDelete(token);
 
     try {
       await backendApi.deletarContrato({ uuid_ec: id });

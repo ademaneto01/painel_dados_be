@@ -1,4 +1,4 @@
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { EntitiesUrl } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { useEffect, useMemo, useState } from 'react';
@@ -15,8 +15,8 @@ export default function DigitalResources() {
       const userId = localStorage.getItem('userId');
 
       try {
-        const backendApi = new BackendApiMock(`${token}`);
-        const user = await backendApi.localizarUsuario({ userId });
+        const backendApi = new BackendApiGet(`${token}`);
+        const user = await backendApi.localizarUsuario(userId);
 
         const dadosEntidade = await backendApi.localizarUrlPainel({
           id_ee: user[0].id_ee,

@@ -1,10 +1,10 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
-import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
+import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 
 interface FormData {
@@ -42,7 +42,7 @@ export default function EditarInfosContrato(): JSX.Element {
 
   const fetchData = async () => {
     const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiPut(`${token}`);
 
     const requestBody = {
       id: idInfos,
@@ -63,16 +63,11 @@ export default function EditarInfosContrato(): JSX.Element {
 
   const fetchDataInitial = async () => {
     const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
-
-    const requestBody = {
-      ...formData,
-      uuid_ec: idContrato,
-    };
+    const backendApi = new BackendApiGet(`${token}`);
 
     try {
       const infosContratoData = await backendApi.listarInfosContrato(
-        requestBody,
+        idContrato,
       );
       setIdInfos(infosContratoData[0].id);
       setFormData({

@@ -1,4 +1,13 @@
-import BackendApiInterface from './BackendApiInterface';
-import SerializerInterface from './Serializers';
+import BackendApiInterfacePut from './backendApiInterfacePut';
+import BackendApiInterfaceDelete from './backendApiInterfaceDelete';
+import BackendApiInterfaceGet from './backendApiInterfaceGet';
+import BackendApiInterfacePost from './backendApiInterfacePost';
+import SerializerInterface from './serializers';
 
-export type { BackendApiInterface, SerializerInterface };
+export type {
+  BackendApiInterfacePut,
+  BackendApiInterfaceGet,
+  BackendApiInterfaceDelete,
+  BackendApiInterfacePost,
+  SerializerInterface,
+};

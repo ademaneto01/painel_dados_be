@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet, BackendApiPost } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { useGlobalContext } from '@/context/store';
 import { EntitiesTeste } from '@/entities';
@@ -88,7 +88,7 @@ export default function ModalVicularAgente({
     try {
       formData.id_escola = idEntidadeEscolar;
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiGet(`${token}`);
       const responseAgentes = await backendApi.listarAgenteRelacionadoEscola({
         id_ee: idEntidadeEscolar,
       });
@@ -97,7 +97,8 @@ export default function ModalVicularAgente({
       });
 
       if (!isAgentPresent) {
-        await backendApi.vincularAgente(formData);
+        const backendApiPost = new BackendApiPost(`${token}`);
+        await backendApiPost.vincularAgente(formData);
         setUsersUpdated(true);
         onCancel();
       } else {
@@ -114,7 +115,7 @@ export default function ModalVicularAgente({
 
   const fetchUserAgente = async () => {
     const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiGet(`${token}`);
 
     try {
       const responseUserPdg = await backendApi.listarTodosAgentes();
@@ -130,7 +131,7 @@ export default function ModalVicularAgente({
 
   const getUserCargoById = async (value: any) => {
     const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiGet(`${token}`);
 
     try {
       const responseUserPdg = await backendApi.localizarAgenteId({ id: value });

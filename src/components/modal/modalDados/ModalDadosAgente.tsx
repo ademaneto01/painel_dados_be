@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/ModalDados.module.css';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
 
@@ -49,11 +49,9 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
   async function fetchData() {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiGet(`${token}`);
 
-      const response = await backendApi.localizarAgenteId({
-        id: uuid_agente,
-      });
+      const response = await backendApi.localizarAgenteId(uuid_agente);
       setFormData({
         nome: response[0].nome,
         cargo: response[0].cargo,

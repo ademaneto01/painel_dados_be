@@ -1,11 +1,15 @@
-import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
+import {
+  PageContentContainer,
+  CreateButton,
+  BackButton,
+} from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
 import { EntitiesDocsEntidade } from '@/entities';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 
 class Column<T> {
@@ -26,6 +30,7 @@ function useFetchEntidadesEscolares() {
   const [data, setData] = useState<EntitiesDocsEntidade[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const { setUsersUpdated, usersUpdated, idEntidadeEscolar } =
     useGlobalContext();
 
@@ -33,18 +38,18 @@ function useFetchEntidadesEscolares() {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
       try {
-        const backendApi = new BackendApiMock(`${token}`);
+        const backendApi = new BackendApiGet(`${token}`);
         const docsEntidadeData = await backendApi.listarDocsEntidade({
           uuid_ee: idEntidadeEscolar,
         });
         setData(docsEntidadeData);
         setUsersUpdated(false);
-      } catch (error) {
-        if (error instanceof FailedToFetchError) {
-          setError(true);
-        } else {
-          throw error;
-        }
+      } catch (error: any) {
+        // if (error instanceof FailedToFetchError) {
+        //   setError(true);
+        // } else {
+        setMsgError(error.response.data.mensagem);
+        setError(true);
       } finally {
         setLoaded(true);
       }
@@ -54,7 +59,7 @@ function useFetchEntidadesEscolares() {
     }
   }, [loaded, usersUpdated]);
 
-  return { data, loaded, error };
+  return { data, loaded, error, msgError };
 }
 
 function Navbar() {
@@ -65,13 +70,14 @@ function Navbar() {
   );
 }
 
-function DocsEntidadeTable({ data, loaded, error, onClickRow }: any) {
+function DocsEntidadeTable({ data, loaded, error, msgError }: any) {
   return (
     <Table
       data={data}
       columns={columns}
       loaded={loaded}
       error={error}
+      msgError={msgError}
       searchInputNone={'none'}
       searchInputNoneEscola={'none'}
       searchInputNoneNome={'none'}
@@ -80,7 +86,7 @@ function DocsEntidadeTable({ data, loaded, error, onClickRow }: any) {
 }
 
 export default function DocsEntidade(): JSX.Element {
-  const { data, loaded, error } = useFetchEntidadesEscolares();
+  const { data, loaded, error, msgError } = useFetchEntidadesEscolares();
   const { setPage } = useGlobalContext();
 
   return (
@@ -104,7 +110,12 @@ export default function DocsEntidade(): JSX.Element {
             onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
           />
         </div>
-        <DocsEntidadeTable data={data} loaded={loaded} error={error} />
+        <DocsEntidadeTable
+          data={data}
+          loaded={loaded}
+          error={error}
+          msgError={msgError}
+        />
       </PageContentContainer>
     </div>
   );

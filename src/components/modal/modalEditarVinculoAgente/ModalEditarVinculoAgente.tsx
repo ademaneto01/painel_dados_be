@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { useGlobalContext } from '@/context/store';
 
@@ -89,12 +89,10 @@ export default function ModalEditarVinculoAgente({
 
   const fetchDataInitialAgente = async () => {
     const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiGet(`${token}`);
 
     try {
-      const responseUserPdg = await backendApi.localizarAgenteId({
-        id: userId,
-      });
+      const responseUserPdg = await backendApi.localizarAgenteId(userId);
       setNomeAgente(responseUserPdg[0].nome);
       if (responseUserPdg[0].cargo === 'Professor') {
         setIsProfessor(true);
@@ -110,7 +108,7 @@ export default function ModalEditarVinculoAgente({
 
   const fetchUserVinculoAgenteInitial = async () => {
     const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiGet(`${token}`);
 
     const dataReq = {
       userId,
@@ -161,24 +159,9 @@ export default function ModalEditarVinculoAgente({
     setFormData((prev) => ({ ...prev, [name]: checked }));
   };
 
-  //   const validateForm = (): boolean => {
-  //     const errors: string[] = [];
-  //     if (!formData.id_prof) {
-  //       errors.push('Campo Agente é obrigatorio...');
-  //     }
-
-  //     if (errors.length) {
-  //       setError(true);
-  //       setMsgError(errors.join(' '));
-  //       setTimeout(() => setError(false), 6000);
-  //       return false;
-  //     }
-  //     return true;
-  //   };
-
   const fetchData = async () => {
     const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiPut(`${token}`);
 
     try {
       await backendApi.editarVinculoAgente(formData);

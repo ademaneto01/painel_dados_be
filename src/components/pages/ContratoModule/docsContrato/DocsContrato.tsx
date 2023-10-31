@@ -1,12 +1,17 @@
-import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
+import {
+  PageContentContainer,
+  CreateButton,
+  BackButton,
+} from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
 import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
 import { EntitiesDocsContrato } from '@/entities';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
+import { AxiosError } from 'axios';
 
 class Column<T> {
   constructor(public header: string, public accessor: keyof T) {}
@@ -26,23 +31,26 @@ function useFetchEntidadesEscolares() {
   const [data, setData] = useState<EntitiesDocsContrato[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const { setUsersUpdated, usersUpdated, idContrato } = useGlobalContext();
 
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
       try {
-        const backendApi = new BackendApiMock(`${token}`);
-        const docsContratoData = await backendApi.listarDocsContrato({
-          uuid_ec: idContrato,
-        });
+        const backendApi = new BackendApiGet(`${token}`);
+        const docsContratoData = await backendApi.listarDocsContrato(
+          idContrato,
+        );
+
         setData(docsContratoData);
         setUsersUpdated(false);
-      } catch (error) {
+      } catch (error: any) {
         if (error instanceof FailedToFetchError) {
           setError(true);
         } else {
-          throw error;
+          setMsgError(error.response.data.mensagem);
+          setError(true);
         }
       } finally {
         setLoaded(true);
@@ -53,7 +61,7 @@ function useFetchEntidadesEscolares() {
     }
   }, [loaded, usersUpdated]);
 
-  return { data, loaded, error };
+  return { data, loaded, error, msgError };
 }
 
 function Navbar() {
@@ -64,13 +72,14 @@ function Navbar() {
   );
 }
 
-function DocsContratoTable({ data, loaded, error, onClickRow }: any) {
+function DocsContratoTable({ data, loaded, error, msgError, onClickRow }: any) {
   return (
     <Table
       data={data}
       columns={columns}
       loaded={loaded}
       error={error}
+      msgError={msgError}
       searchInputNone={'none'}
       searchInputNoneEscola={'none'}
       searchInputNoneNome={'none'}
@@ -80,12 +89,8 @@ function DocsContratoTable({ data, loaded, error, onClickRow }: any) {
 }
 
 export default function DocsContrato(): JSX.Element {
-  const { data, loaded, error } = useFetchEntidadesEscolares();
+  const { data, loaded, error, msgError } = useFetchEntidadesEscolares();
   const { setPage } = useGlobalContext();
-
-  const handleRowClick = (rowData: EntitiesDocsContrato) => {
-    console.log(rowData.id);
-  };
 
   return (
     <div className={styles.pageContainer}>
@@ -108,16 +113,13 @@ export default function DocsContrato(): JSX.Element {
             onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
           />
         </div>
-     
-            <DocsContratoTable
-            onClickRow={handleRowClick}
-            data={data}
-            loaded={loaded}
-            error={error}
-          />
-        
-        
-        
+
+        <DocsContratoTable
+          data={data}
+          loaded={loaded}
+          msgError={msgError}
+          error={error}
+        />
       </PageContentContainer>
     </div>
   );

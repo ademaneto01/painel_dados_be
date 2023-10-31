@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import InputMask from 'react-input-mask';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumAgentesExterno } from '@/enums';
 import { useGlobalContext } from '@/context/store';
@@ -46,7 +46,7 @@ export default function EditarAgente(): JSX.Element {
 
   const fetchData = async () => {
     const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiPut(`${token}`);
     const requestBody = {
       id: idAgente,
       ...formData,
@@ -67,13 +67,11 @@ export default function EditarAgente(): JSX.Element {
 
   const fetchDataInitial = async () => {
     const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiGet(`${token}`);
 
     try {
-      const infosContratoData = await backendApi.localizarAgenteId({
-        id: idAgente,
-      });
-     
+      const infosContratoData = await backendApi.localizarAgenteId(idAgente);
+
       setFormData({
         nome: infosContratoData[0].nome,
         cargo: infosContratoData[0].cargo,
@@ -93,19 +91,15 @@ export default function EditarAgente(): JSX.Element {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, type } = e.target;
-    // const booleanValue =
-    //   value === 'true' ? true : value === 'false' ? false : null;
-    // const updatedValue = ['ativo'].includes(name) ? booleanValue : value;
-    // setFormData((prev) => ({ ...prev, [name]: updatedValue }));
     let value: any;
 
-    if (type === "checkbox") {
-        value = (e.target as HTMLInputElement).checked;
-        
+    if (type === 'checkbox') {
+      value = (e.target as HTMLInputElement).checked;
     } else {
-        value = e.target.value;
-        const booleanValue = value === 'true' ? true : value === 'false' ? false : null;
-        value = ['ativo'].includes(name) ? booleanValue : value;
+      value = e.target.value;
+      const booleanValue =
+        value === 'true' ? true : value === 'false' ? false : null;
+      value = ['ativo'].includes(name) ? booleanValue : value;
     }
 
     setFormData((prev) => ({ ...prev, [name]: value }));

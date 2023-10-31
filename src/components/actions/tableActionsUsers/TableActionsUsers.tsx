@@ -6,7 +6,7 @@ import { IconBaseProps, IconType } from 'react-icons';
 import { ModalDelete, ModalAddUser } from '../../modal';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
-import BackendApiMock from '@/backendApi';
+import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 
 interface PropsForFxclusion {
@@ -36,7 +36,7 @@ export default function TableActionsUsers(
     const token = Cookies.get('auth_token');
 
     try {
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiDelete(`${token}`);
 
       await backendApi.deletarUsuario({ userId: id });
       setShowModalDelete('');
