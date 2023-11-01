@@ -1,3 +1,6 @@
+.main {
+  height: calc(100vh - 4.5em);
+}
 .pageContainer {
   margin-top: 4.2em;
   display: flex;
@@ -6,6 +9,7 @@
   padding: 2em;
   font-family: 'Roboto', sans-serif;
   color: var(--azul-escuro);
+  height: 100%;
 }
 
 .expanded {

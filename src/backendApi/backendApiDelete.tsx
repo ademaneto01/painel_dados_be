@@ -54,14 +54,13 @@ export default class BackendApiDelete implements BackendApiInterfaceDelete {
   }
 
   private async delete<T>(route: string, data: any): Promise<T> {
-    const response = await this.api.delete(route, data);
+    const response = await this.api.delete(route, { data });
 
     return this.serializeOrError<T>(response);
   }
 
   private serializeOrError<T>(response: AxiosResponse): T {
     if (response.status === 204 || response.status === 200) {
-      console.log(response.data.mensagem);
       return response.data.mensagem;
     } else {
       throw new FailedToFetchError();

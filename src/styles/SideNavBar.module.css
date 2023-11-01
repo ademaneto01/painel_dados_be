@@ -41,7 +41,7 @@
 
 .navBarButton:hover::after {
   width: 90%;
-  left: 5%; 
+  left: 5%;
 }
 
 .navBarButtonHidden {
@@ -88,4 +88,11 @@
 
 .hidden {
   transform: translateX(-17em);
+}
+.iconHidable {
+  position: absolute;
+  color: var(--azul-tech);
+  left: 16.5em;
+  top: calc(4.5em + 1em);
+  padding: 5px;
 }

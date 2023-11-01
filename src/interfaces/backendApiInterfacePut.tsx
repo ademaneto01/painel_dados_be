@@ -1,20 +1,7 @@
 import {
-  EntitiesUserLogin,
-  EntitiesUsers,
-  EntitiesUrl,
   EntitiesContratos,
-  EntitiesEntidadesEscolares,
-  EntitiesUsuariosPDG,
-  EntitiesRegistrarEntidadeEscolar,
-  EntitiesCadastroUser,
-  EntitiesEditarEntidadeEscolar,
-  EntitiesEntidadesEscolaresPDG,
-  EntitiesVinculosAgentesExterno,
   EntitiesTeste,
   EntitiesVincularAgente,
-  EntitiesRegistrarDocContrato,
-  EntitiesDocsContrato,
-  EntitiesDocsEntidade,
   EntitiesInfosContrato,
 } from '@/entities';
 

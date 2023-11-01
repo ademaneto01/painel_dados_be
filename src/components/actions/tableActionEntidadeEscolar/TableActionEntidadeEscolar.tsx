@@ -1,5 +1,5 @@
 import styles from '@/styles/Action.module.css';
-import { FiEdit, FiMoreHorizontal, FiMoreVertical } from 'react-icons/fi';
+import { FiMoreHorizontal, FiMoreVertical } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ModalDelete, ModalDadosEntidadeEscolar } from '../../modal';
@@ -50,7 +50,7 @@ export default function TableActionEntidadeEscolar(
       setShowModalDelete('');
       setUsersUpdated(true);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
