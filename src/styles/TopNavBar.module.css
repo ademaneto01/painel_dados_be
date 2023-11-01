@@ -22,6 +22,7 @@
 .logo {
   margin-right: 0.5em;
 }
+
 .toogleTopNav {
   display: flex;
   justify-content: center;
@@ -30,14 +31,17 @@
   width: 2.5em;
   height: 2.5em;
   border-radius: 50%;
-  transition: transform 0.3s;
-  box-shadow: 0 0 10px 3px var(--gray-40);
 }
 
 .toogleTopNav:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 10px 3px var(--gray-100);
+  transform: scale(1.05);
 }
+
+.toogleTopNav:active {
+  transform: scale(0.95);
+  box-shadow: none;
+}
+
 .user {
   font-size: 0.85em;
   display: flex;

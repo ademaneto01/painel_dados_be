@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/TopNavBar.module.css';
-import { HiOutlineDotsCircleHorizontal } from 'react-icons/hi';
-import { PiDotsThreeCircleFill } from 'react-icons/pi';
+import { AiFillCloseCircle } from 'react-icons/ai';
+import { BsArrowDownCircle } from 'react-icons/bs';
 import { TbLayoutSidebarRightExpand } from 'react-icons/tb';
 import { TbLayoutSidebarRightCollapse } from 'react-icons/tb';
 import BackendApiMock from '@/backendApi';
@@ -88,8 +88,8 @@ export default function TopNavBar(props: TopNavBarProps) {
           <a className={styles.toogleTopNav}
             onClick={handleOpen}>
             {modalTopNavBaR
-              ? renderIcon(PiDotsThreeCircleFill)
-              : renderIcon(HiOutlineDotsCircleHorizontal)}
+              ? renderIcon(AiFillCloseCircle)
+              : renderIcon(BsArrowDownCircle)}
           </a>
           {modalTopNavBaR && (
             <ModalTopNavBaR
@@ -97,6 +97,7 @@ export default function TopNavBar(props: TopNavBarProps) {
                 setModalTopNavBaR(false);
               }}
               button1={logOut}
+              title={'Menu'}
             />
           )}
         </div>
