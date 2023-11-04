@@ -15,7 +15,7 @@
 
 .logoContainer {
   display: flex;
-  margin-left: 1rem;
+  margin-left: 0.6rem;
   margin-right: 3.8em;
 }
 
@@ -46,7 +46,7 @@
   font-size: 0.85em;
   display: flex;
   align-items: flex-end;
-  margin-right: 2em;
+  margin-right: 0.9em;
   cursor: default;
 }
 
