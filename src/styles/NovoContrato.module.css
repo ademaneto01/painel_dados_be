@@ -83,8 +83,14 @@
 
 .confirmButton:hover,
 .cancelButton:hover {
-  transform: translateY(-2px); 
+  transform: translateY(-2px);
   box-shadow: 0px 12px 25px 0px var(--black-200);
+}
+
+.confirmButton:active,
+.cancelButton:active {
+transform: translateY(0);
+box-shadow: 0px 6px 12px 0px var(--black-200);
 }
 
 .buttonContainer {

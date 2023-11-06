@@ -10,10 +10,16 @@ import { ModalTopNavBaR } from '../modal';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { PageLoader } from '../shared';
+import { CgLogOut } from 'react-icons/cg';
+import { IconType } from 'react-icons';
 
 interface TopNavBarProps {
   toggleSideNavBar: () => void;
   hidden: boolean;
+}
+
+function reactIcon(icon: IconType): JSX.Element {
+  return icon({ style: { fontSize: '1.15em' } });
 }
 
 export default function TopNavBar(props: TopNavBarProps) {
@@ -98,6 +104,8 @@ export default function TopNavBar(props: TopNavBarProps) {
               }}
               button1={logOut}
               title={'Menu'}
+              text={'Logout'}
+              icon={reactIcon(CgLogOut)}
             />
           )}
         </div>

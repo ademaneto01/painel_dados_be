@@ -5,12 +5,16 @@ interface ModalValidationProps {
   button1: () => void;
   onCancel: () => void;
   title: string;
+  text: string;
+  icon: JSX.Element;
 }
 
 const ModalTopNavBaR: React.FC<ModalValidationProps> = ({
   button1,
   onCancel,
   title,
+  text,
+  icon,
 }) => {
   return (
     <div className={styles.background} onClick={onCancel}>
@@ -22,9 +26,10 @@ const ModalTopNavBaR: React.FC<ModalValidationProps> = ({
       >
         <div className={styles.title}>{title}</div>
         <div className={styles.buttonContainer}>
-          <button onClick={button1} className={styles.btn}>
-            Logout
-          </button>
+          <a onClick={button1} className={styles.btn}>
+              <span className={styles.icon}>{icon}</span>
+              <span className={styles.text}/> {text}
+          </a>
         </div>
       </div>
     </div>

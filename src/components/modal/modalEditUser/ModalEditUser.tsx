@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
-import styles from '@/styles/ModalStandard.module.css';
+import styles from '@/styles/ModalEditUser.module.css';
 import { FailedToFetchError } from '@/errors';
 import BackendApiMock from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
@@ -23,10 +23,11 @@ interface EntidadesEscolaresData {
 
 interface ModalProps {
   onCancel: () => void;
+  userId: string;
   titleModal: string;
 }
 
-const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
+const ModalEditUser: React.FC<ModalProps> = ({ onCancel, userId, titleModal }) => {
   const { usersUpdated, setUsersUpdated } = useGlobalContext();
   const [formData, setFormData] = useState<FormData>({
     nome: '',
@@ -40,19 +41,10 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
   });
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const [entidadesEscolaresData, setEntidadesEscolaresData] = useState<
-    EntidadesEscolaresData[]
-  >([
-    {
-      id: '',
-      nome_operacional: '',
-    },
-  ]);
+  const [entidadesEscolaresData, setEntidadesEscolaresData] = useState<EntidadesEscolaresData[]>([]);
   const [msgError, setMsgError] = useState('');
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -65,16 +57,30 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
   }
 
   useEffect(() => {
-    fetchDataEntidadesEscolares();
-  }, []);
+    fetchDataInitial();
+  }, [userId]);
 
-  async function fetchDataEntidadesEscolares() {
+  async function fetchDataInitial() {
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
-      const response = await backendApi.todasEntidadesEscolares();
+      const response = await backendApi.localizarUsuario({ userId });
+
+      setFormData({
+        nome: response[0]?.nome || '',
+        email: response[0]?.email || '',
+        senha: '',
+        confirmPassword: '',
+        id_ee: response[0]?.id_ee || '',
+        perfil: response[0]?.perfil || '',
+        escola: response[0]?.escola || '',
+        isPasswordMatch: true,
+      });
+
+      const entidadesEscolares = await backendApi.todasEntidadesEscolares();
+
       setEntidadesEscolaresData(
-        response.map((school) => ({
+        entidadesEscolares.map((school) => ({
           id: school.id || '',
           nome_operacional: school.nome_operacional || '',
         }))
@@ -123,19 +129,20 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
     }
 
     if (!loaded) {
-      fetchData();
+      fetchDataUpdate();
     }
 
     setUsersUpdated(true);
     onCancel();
   }
 
-  async function fetchData() {
+  async function fetchDataUpdate() {
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiMock(`${token}`);
 
-      await backendApi.registrarUsuario({
+      await backendApi.editarUsuario({
+        id: userId,
         nome: formData.nome,
         email: formData.email,
         senha: formData.senha,
@@ -277,4 +284,4 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
   );
 };
 
-export default ModalAddUser;
+export default ModalEditUser;
