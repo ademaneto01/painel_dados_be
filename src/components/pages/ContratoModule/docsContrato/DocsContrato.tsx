@@ -6,12 +6,10 @@ import {
 import styles from '@/styles/Turmas.module.css';
 import { Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
-import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
 import { EntitiesDocsContrato } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
-import { AxiosError } from 'axios';
 
 class Column<T> {
   constructor(public header: string, public accessor: keyof T) {}
@@ -46,11 +44,11 @@ function useFetchEntidadesEscolares() {
         setData(docsContratoData);
         setUsersUpdated(false);
       } catch (error: any) {
-        if (error instanceof FailedToFetchError) {
-          setError(true);
-        } else {
+        setError(true);
+        if (error.response.data.mensagem) {
           setMsgError(error.response.data.mensagem);
-          setError(true);
+        } else {
+          setMsgError('Ocorreu um erro desconhecido.');
         }
       } finally {
         setLoaded(true);

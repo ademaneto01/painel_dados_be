@@ -3,7 +3,6 @@ import React from 'react';
 import { CreateButton, PageContentContainer } from '../shared';
 import { Column, Table } from '../Table';
 import { useEffect, useState } from 'react';
-import { FailedToFetchError } from '@/errors';
 import { ModalAddUser } from '../modal';
 import EntitiesUsers from '@/entities/EntitiesUsers';
 import { BackendApiGet } from '@/backendApi';
@@ -21,6 +20,7 @@ function PageUsers() {
   const [data, setData] = useState([] as EntitiesUsers[]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const [showModalUser, setShowModalUser] = useState(false);
   const { usersUpdated, setUsersUpdated } = useGlobalContext();
 
@@ -40,11 +40,12 @@ function PageUsers() {
         const users = await backendApi.localizarUsuarios();
 
         setData(users);
-      } catch (error) {
-        if (error instanceof FailedToFetchError) {
-          setError(true);
+      } catch (error: any) {
+        setError(true);
+        if (error.response.data.mensagem) {
+          setMsgError(error.response.data.mensagem);
         } else {
-          throw error;
+          setMsgError('Ocorreu um erro desconhecido.');
         }
       } finally {
         setLoaded(true);
@@ -78,6 +79,7 @@ function PageUsers() {
           columns={columns}
           loaded={loaded}
           error={error}
+          msgError={msgError}
           labelInput={'Buscar pelo nome ou email'}
         />
       </PageContentContainer>

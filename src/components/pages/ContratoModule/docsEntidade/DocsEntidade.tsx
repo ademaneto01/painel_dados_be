@@ -6,7 +6,6 @@ import {
 import styles from '@/styles/Turmas.module.css';
 import { Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
-import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
 import { EntitiesDocsEntidade } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
@@ -39,17 +38,18 @@ function useFetchEntidadesEscolares() {
       const token = localStorage.getItem('auth_token');
       try {
         const backendApi = new BackendApiGet(`${token}`);
-        const docsEntidadeData = await backendApi.listarDocsEntidade({
-          uuid_ee: idEntidadeEscolar,
-        });
+        const docsEntidadeData = await backendApi.listarDocsEntidade(
+          idEntidadeEscolar,
+        );
         setData(docsEntidadeData);
         setUsersUpdated(false);
       } catch (error: any) {
-        // if (error instanceof FailedToFetchError) {
-        //   setError(true);
-        // } else {
-        setMsgError(error.response.data.mensagem);
         setError(true);
+        if (error.response.data.mensagem) {
+          setMsgError(error.response.data.mensagem);
+        } else {
+          setMsgError('Ocorreu um erro desconhecido.');
+        }
       } finally {
         setLoaded(true);
       }

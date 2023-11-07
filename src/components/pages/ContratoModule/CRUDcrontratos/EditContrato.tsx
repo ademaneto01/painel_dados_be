@@ -5,11 +5,7 @@ import { FailedToFetchError } from '@/errors';
 import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
-import {
-  PageContentContainer,
-  CreateButton,
-  BackButton,
-} from '@/components/shared';
+import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import validaCNPJ from '@/validations/validaCNPJ';
 
@@ -105,15 +101,17 @@ export default function EditContrato(): JSX.Element {
         }
       }
     } catch (error) {
-      console.error('Erro ao buscar o CEP:', error);
+      setError(true);
+      setMsgError('Erro ao buscar o CEP...');
     }
   };
 
   const handleApiErrors = (error: any) => {
-    if (error instanceof FailedToFetchError) {
-      setError(true);
+    setError(true);
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
     } else {
-      throw error;
+      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 

@@ -9,9 +9,5 @@ export default function PageContentContainer(
     styles.pageContentContainer,
     sharedStyles.shadowBorder,
   ].join(' ');
-  return (
-    <div className={className} onClick={(e) => e.stopPropagation()}>
-      {props.children}
-    </div>
-  );
+  return <div className={className}>{props.children}</div>;
 }

@@ -1,15 +1,10 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import styles from '@/styles/NovoContrato.module.css';
-import { FailedToFetchError } from '@/errors';
 import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
-import {
-  PageContentContainer,
-  CreateButton,
-  BackButton,
-} from '@/components/shared';
+import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { EntitiesUsuariosPDG } from '@/entities';
 import validaCNPJ from '@/validations/validaCNPJ';
@@ -105,10 +100,11 @@ export default function EditEntidadeEscolar(): JSX.Element {
   };
 
   const handleApiErrors = (error: any) => {
-    if (error instanceof FailedToFetchError) {
-      setError(true);
+    setError(true);
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
     } else {
-      throw error;
+      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 
@@ -164,7 +160,8 @@ export default function EditEntidadeEscolar(): JSX.Element {
         }
       }
     } catch (error) {
-      console.error('Erro ao buscar o CEP:', error);
+      setError(true);
+      setMsgError('Erro ao buscar o CEP...');
     }
   };
 

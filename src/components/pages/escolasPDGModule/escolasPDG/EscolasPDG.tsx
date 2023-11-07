@@ -2,7 +2,6 @@ import { CreateButton, PageContentContainer } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Column, Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
-import { FailedToFetchError } from '@/errors';
 import { EntitiesEntidadesEscolaresPDG } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
@@ -18,6 +17,7 @@ export default function EscolasPDG(): JSX.Element {
   const [data, setData] = useState<EntitiesEntidadesEscolaresPDG[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const { setPageEscolasPDG, setIdEntidadeEscolar } = useGlobalContext();
 
   const handleRowClick = (rowData: EntitiesEntidadesEscolaresPDG) => {
@@ -43,11 +43,12 @@ export default function EscolasPDG(): JSX.Element {
         });
 
       setData(contentidadesEscolasratos);
-    } catch (err) {
-      if (err instanceof FailedToFetchError) {
-        setError(true);
+    } catch (error: any) {
+      setError(true);
+      if (error.response.data.mensagem) {
+        setMsgError(error.response.data.mensagem);
       } else {
-        throw err;
+        setMsgError('Ocorreu um erro desconhecido.');
       }
     } finally {
       setLoaded(true);
@@ -66,6 +67,7 @@ export default function EscolasPDG(): JSX.Element {
           columns={COLUMNS}
           loaded={loaded}
           error={error}
+          msgError={msgError}
           searchInputNone={'none'}
           searchInputNoneEscola={'none'}
           labelInput={'Buscar pela escola'}

@@ -10,7 +10,6 @@ import {
   EntitiesUrl,
   EntitiesUsers,
   EntitiesUsuariosPDG,
-  EntitiesVincularAgente,
   EntitiesTeste,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
@@ -109,13 +108,13 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
   }
 
   public async listarDocsEntidade(
-    uuid_ee: any,
+    idEntidadeEscolar: any,
   ): Promise<EntitiesDocsEntidade[]> {
     return await this.get<EntitiesDocsEntidade>(
       '/listarDocsEntidade',
 
       new MockDocsEntitade(),
-      { id: uuid_ee },
+      { id: idEntidadeEscolar },
     );
   }
 
@@ -209,15 +208,10 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
   ): Promise<T[]> {
     let response: AxiosResponse;
 
-    try {
-      response = data
-        ? await this.api.get(`${route}?id=${data.id}`)
-        : await this.api.get(route);
-      return this.serializeOrError<T>(response, serializer);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      throw new FailedToFetchError();
-    }
+    response = data
+      ? await this.api.get(`${route}?id=${data.id}`)
+      : await this.api.get(route);
+    return this.serializeOrError<T>(response, serializer);
   }
 
   private serializeOrError<T>(

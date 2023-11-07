@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import InputMask from 'react-input-mask';
 import styles from '@/styles/NovoContrato.module.css';
-import { FailedToFetchError } from '@/errors';
 import { BackendApiPost } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
@@ -43,10 +42,11 @@ export default function NovoContrato(): JSX.Element {
   const { setPage } = useGlobalContext();
 
   const handleApiErrors = (error: any) => {
-    if (error instanceof FailedToFetchError) {
-      setError(true);
+    setError(true);
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
     } else {
-      throw error;
+      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 
@@ -88,7 +88,8 @@ export default function NovoContrato(): JSX.Element {
         }
       }
     } catch (error) {
-      console.error('Erro ao buscar o CEP:', error);
+      setError(true);
+      setMsgError('Erro ao buscar o CEP...');
     }
   };
 

@@ -106,10 +106,10 @@ export default class BackendApiPut implements BackendApiInterfacePut {
 
   private async put<T>(
     route: string,
+    userData: any,
     serializer: SerializerInterface,
-    params: any,
   ): Promise<T[]> {
-    const response = await this.api.get(route, { params });
+    const response = await this.api.put(route, userData);
     return this.serializeOrError<T>(response, serializer);
   }
 

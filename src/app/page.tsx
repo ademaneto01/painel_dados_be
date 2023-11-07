@@ -77,14 +77,10 @@ export default function Home(): JSX.Element {
       />
       <SideNavBar
         hidden={sideNavBarHidden}
-        setHidden={setSideNavBarHidden}
         activePage={page}
         setPage={setPage}
       />
-      <div
-        onClick={() => toggleSideNavBar()}
-        className={expandable(styles.pageContainer)}
-      >
+      <div className={expandable(styles.pageContainer)}>
         <Page />
       </div>
     </main>

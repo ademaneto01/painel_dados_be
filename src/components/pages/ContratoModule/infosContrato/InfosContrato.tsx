@@ -6,7 +6,6 @@ import {
 } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { useEffect, useState } from 'react';
-import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
 import Cookies from 'js-cookie';
 import { EntitiesInfosContrato } from '@/entities';
@@ -18,9 +17,9 @@ import { ModalDelete } from '../../../modal';
 function useFetchInfosContrato() {
   const [data, setData] = useState<EntitiesInfosContrato[]>([]);
   const [idInfos, setIdInfos] = useState('');
-
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const { setUsersUpdated, usersUpdated, idContrato } = useGlobalContext();
 
   useEffect(() => {
@@ -34,14 +33,14 @@ function useFetchInfosContrato() {
         setIdInfos(infosContratoData[0].id);
         setData(infosContratoData);
         setUsersUpdated(false);
-      } catch (error) {
+      } catch (error: any) {
         setError(true);
 
-        // if (error instanceof FailedToFetchError) {
-        //   setError(true);
-        // } else {
-        //   throw error;
-        // }
+        if (error.response.data.mensagem) {
+          setMsgError(error.response.data.mensagem);
+        } else {
+          setMsgError('Ocorreu um erro desconhecido.');
+        }
       } finally {
         setLoaded(true);
       }
@@ -51,7 +50,7 @@ function useFetchInfosContrato() {
     }
   }, [loaded, usersUpdated]);
 
-  return { data, loaded, error, idInfos, setUsersUpdated };
+  return { data, loaded, error, msgError, idInfos, setUsersUpdated };
 }
 
 async function deleteInfoContrato(
@@ -66,8 +65,8 @@ async function deleteInfoContrato(
     await backendApi.deletarInfosContrato({ id: idInfos });
     setModaldelete(false);
     setUsersUpdated(true);
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.error(error.response.data.mensagem);
   }
 }
 function Navbar() {
@@ -78,7 +77,8 @@ function Navbar() {
   );
 }
 
-function InfosContratoScreen({ data, loaded, error }: any) {
+function InfosContratoScreen({ data, error, msgError }: any) {
+  console.log(msgError);
   return (
     <div
       style={{
@@ -97,7 +97,7 @@ function InfosContratoScreen({ data, loaded, error }: any) {
               marginTop: '3rem',
             }}
           >
-            Ainda não existe Informações sobre o contrato...
+            {msgError}
           </h2>
         </div>
       ) : (
@@ -108,7 +108,7 @@ function InfosContratoScreen({ data, loaded, error }: any) {
 }
 
 export default function InfosContrato(): JSX.Element {
-  const { data, idInfos, setUsersUpdated, loaded, error } =
+  const { data, idInfos, setUsersUpdated, loaded, error, msgError } =
     useFetchInfosContrato();
   const [modalDelete, setModaldelete] = useState(false);
   const { setPage } = useGlobalContext();
@@ -169,7 +169,7 @@ export default function InfosContrato(): JSX.Element {
           />
         )}
 
-        <InfosContratoScreen data={data} error={error} />
+        <InfosContratoScreen data={data} error={error} msgError={msgError} />
       </PageContentContainer>
     </div>
   );

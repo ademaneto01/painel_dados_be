@@ -6,7 +6,6 @@ import {
 import styles from '@/styles/Turmas.module.css';
 import { Column, Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
-import { FailedToFetchError } from '@/errors';
 import { EntitiesVinculosAgentesExterno } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
@@ -25,6 +24,7 @@ export default function EscolasPDG(): JSX.Element {
   const [data, setData] = useState<EntitiesVinculosAgentesExterno[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const {
     idEntidadeEscolar,
     setPageEscolasPDG,
@@ -57,11 +57,12 @@ export default function EscolasPDG(): JSX.Element {
         });
       setData(agentesExternosData);
       setUsersUpdated(false);
-    } catch (err) {
-      if (err instanceof FailedToFetchError) {
-        setError(true);
+    } catch (error: any) {
+      setError(true);
+      if (error.response.data.mensagem) {
+        setMsgError(error.response.data.mensagem);
       } else {
-        throw err;
+        setMsgError('Ocorreu um erro desconhecido.');
       }
     } finally {
       setLoaded(true);
@@ -84,6 +85,7 @@ export default function EscolasPDG(): JSX.Element {
           columns={COLUMNS}
           loaded={loaded}
           error={error}
+          msgError={msgError}
           searchInputNone={'none'}
           searchInputNoneEscola={'none'}
           labelInput={'Buscar pelo nome'}

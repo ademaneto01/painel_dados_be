@@ -3,11 +3,7 @@ import styles from '@/styles/ModalAddDoc.module.css';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiPost } from '@/backendApi';
 import { PageEnumContratos } from '@/enums';
-import {
-  PageContentContainer,
-  CreateButton,
-  BackButton,
-} from '@/components/shared';
+import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import ErrorComponent from '@/components/ErrorComponent';
 
@@ -82,10 +78,11 @@ export default function RegistrarDoc(): JSX.Element {
   };
 
   const handleApiErrors = (error: any) => {
-    if (error instanceof FailedToFetchError) {
-      setError(true);
+    setError(true);
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
     } else {
-      throw error;
+      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 

@@ -4,7 +4,6 @@ import styles from '@/styles/SideNavBar.module.css';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IconType } from 'react-icons';
 import { ImUser, ImDisplay, ImList2 } from 'react-icons/im';
-import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io';
 import SideNavBarButton from './SideNavBarButton';
 import { BackendApiGet } from '@/backendApi';
 
@@ -16,7 +15,6 @@ interface SideNavBarProps {
   hidden: boolean;
   setPage: Dispatch<SetStateAction<PageEnum>>;
   activePage: PageEnum;
-  setHidden: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function SideNavBar(props: SideNavBarProps) {
@@ -45,10 +43,6 @@ export default function SideNavBar(props: SideNavBarProps) {
     return style + (props.hidden ? ` ${styles.hidden}` : '');
   }
 
-  function toogleSideNav(): void {
-    props.hidden ? props.setHidden(false) : props.setHidden(true);
-  }
-
   function isActive(page: PageEnum): boolean {
     return page === props.activePage;
   }
@@ -56,9 +50,6 @@ export default function SideNavBar(props: SideNavBarProps) {
   return (
     <div className={hidable(styles.navBar)}>
       <div className={styles.buttonsContainer}>
-        <div className={styles.iconHidable} onClick={() => toogleSideNav()}>
-          {props.hidden ? <IoIosArrowForward /> : <IoIosArrowBack />}
-        </div>
         <SideNavBarButton
           text="Usuários"
           onClick={() => {

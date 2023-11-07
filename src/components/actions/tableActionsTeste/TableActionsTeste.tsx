@@ -3,11 +3,7 @@ import Action from '../Action';
 import { FiEdit } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
-import {
-  ModalDadosAgente,
-  ModalDadosEntidadeEscolar,
-  ModalDelete,
-} from '../../modal';
+import { ModalDadosAgente, ModalDelete } from '../../modal';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import { BackendApiDelete } from '@/backendApi';
