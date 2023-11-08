@@ -1,19 +1,27 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/TopNavBar.module.css';
-import { HiOutlineDotsCircleHorizontal } from 'react-icons/hi';
-import { TbAtom2Filled } from 'react-icons/tb';
-import { GiPowerButton } from 'react-icons/gi';
-import { PiPowerFill } from 'react-icons/pi';
+
+import { AiFillCloseCircle } from 'react-icons/ai';
+import { BsArrowDownCircle } from 'react-icons/bs';
+import { TbLayoutSidebarRightExpand } from 'react-icons/tb';
+import { TbLayoutSidebarRightCollapse } from 'react-icons/tb';
 import { BackendApiGet } from '@/backendApi';
+
 import { ModalTopNavBaR } from '../modal';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { PageLoader } from '../shared';
+import { CgLogOut } from 'react-icons/cg';
+import { IconType } from 'react-icons';
 
 interface TopNavBarProps {
   toggleSideNavBar: () => void;
   hidden: boolean;
+}
+
+function reactIcon(icon: IconType): JSX.Element {
+  return icon({ style: { fontSize: '1.15em' } });
 }
 
 export default function TopNavBar(props: TopNavBarProps) {
@@ -62,9 +70,9 @@ export default function TopNavBar(props: TopNavBarProps) {
       <div className={styles.topNavBar}>
         <a className={styles.toogleTopNav} onClick={props.toggleSideNavBar}>
           {props.hidden ? (
-            <HiOutlineDotsCircleHorizontal size="2em" />
+            <TbLayoutSidebarRightCollapse size="2em" />
           ) : (
-            <TbAtom2Filled size="2em" />
+            <TbLayoutSidebarRightExpand size="2em" />
           )}
         </a>
         <div className={styles.logoContainer}>
@@ -83,25 +91,20 @@ export default function TopNavBar(props: TopNavBarProps) {
         <a className={styles.user}>{`${nome} - ${escola}`}</a>
 
         <div className={styles.container}>
-          <button
-            onClick={handleOpen}
-            style={{
-              background: 'none',
-              border: 'none',
-              outline: 'none',
-              color: 'var(--azul-tech)',
-            }}
-          >
+          <a className={styles.toogleTopNav} onClick={handleOpen}>
             {modalTopNavBaR
-              ? renderIcon(PiPowerFill)
-              : renderIcon(GiPowerButton)}
-          </button>
+              ? renderIcon(AiFillCloseCircle)
+              : renderIcon(BsArrowDownCircle)}
+          </a>
           {modalTopNavBaR && (
             <ModalTopNavBaR
               onCancel={() => {
                 setModalTopNavBaR(false);
               }}
               button1={logOut}
+              title={'Menu'}
+              text={'Logout'}
+              icon={reactIcon(CgLogOut)}
             />
           )}
         </div>

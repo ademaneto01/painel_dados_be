@@ -1,31 +1,37 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
-import styles from '@/styles/ModalStandard.module.css';
-import { BackendApiGet, BackendApiPost, BackendApiPut } from '@/backendApi';
+import styles from '@/styles/ModalEditUser.module.css';
+import { FailedToFetchError } from '@/errors';
+import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import ErrorComponent from '@/components/ErrorComponent';
 
 interface FormData {
-  nome: string;
-  email: string;
-  senha: string;
-  confirmPassword: string;
-  perfil: string;
-  escola: string;
-  id_ee: string;
+  nome: string | null;
+  email: string | null;
+  senha: string | null;
+  confirmPassword: string | null;
+  perfil: string | null;
+  escola: string | null;
+  id_ee: string | null;
   isPasswordMatch: boolean;
 }
 
 interface EntidadesEscolaresData {
-  id: string;
-  nome_operacional: string;
+  id: string | null;
+  nome_operacional: string | null;
 }
 
 interface ModalProps {
   onCancel: () => void;
+  userId: string;
   titleModal: string;
 }
 
-const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
+const ModalEditUser: React.FC<ModalProps> = ({
+  onCancel,
+  userId,
+  titleModal,
+}) => {
   const { usersUpdated, setUsersUpdated } = useGlobalContext();
   const [formData, setFormData] = useState<FormData>({
     nome: '',
@@ -42,7 +48,6 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
   const [entidadesEscolaresData, setEntidadesEscolaresData] = useState<
     EntidadesEscolaresData[]
   >([]);
-
   const [msgError, setMsgError] = useState('');
 
   const handleInputChange = (
@@ -60,26 +65,45 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
   }
 
   useEffect(() => {
-    fetchDataEntidadesEscolares();
-  }, []);
+    fetchDataInitial();
+  }, [userId]);
 
-  async function fetchDataEntidadesEscolares() {
+  async function fetchDataInitial() {
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiGet(`${token}`);
-      const response = await backendApi.todasEntidadesEscolares();
+      const response = await backendApi.localizarUsuario(userId);
+
+      setFormData({
+        nome: response[0]?.nome || '',
+        email: response[0]?.email || '',
+        senha: '',
+        confirmPassword: '',
+        id_ee: response[0]?.id_ee || '',
+        perfil: response[0]?.perfil || '',
+        escola: response[0]?.escola || '',
+        isPasswordMatch: true,
+      });
+
+      const entidadesEscolares = await backendApi.todasEntidadesEscolares();
+
       setEntidadesEscolaresData(
-        response.map((school) => ({
+        entidadesEscolares.map((school) => ({
           id: school.id || '',
           nome_operacional: school.nome_operacional || '',
         })),
       );
-    } catch (error) {
-      console.error('Failed to fetch entidades escolares:', error);
+    } catch (error: any) {
+      setError(true);
+      if (error.response.data.mensagem) {
+        setMsgError(error.response.data.mensagem);
+      } else {
+        setMsgError('Ocorreu um erro desconhecido.');
+      }
     }
   }
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if (
@@ -91,7 +115,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
       formData.perfil === ''
     ) {
       setError(true);
-      setMsgError('Todos os campos são obrigatórios...');
+      setMsgError('Todos campos são obrigatórios...');
       setTimeout(() => {
         setError(false);
       }, 6000);
@@ -113,29 +137,38 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
       return;
     }
 
+    if (!loaded) {
+      fetchDataUpdate();
+    }
+
+    setUsersUpdated(true);
+    onCancel();
+  };
+
+  async function fetchDataUpdate() {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiPost(`${token}`);
+      const backendApi = new BackendApiPut(`${token}`);
 
-      await backendApi.registrarUsuario({
+      await backendApi.editarUsuario({
+        id: userId,
         nome: formData.nome,
         email: formData.email,
         senha: formData.senha,
         perfil: formData.perfil,
         id_ee: formData.id_ee,
       });
-
-      setUsersUpdated(true);
-      onCancel();
-    } catch (error: any) {
-      setError(true);
-      if (error.response.data.mensagem) {
-        setMsgError(error.response.data.mensagem);
+    } catch (error) {
+      if (error instanceof FailedToFetchError) {
+        setError(true);
       } else {
-        setMsgError('Ocorreu um erro desconhecido.');
+        throw error;
       }
+    } finally {
+      setUsersUpdated(true);
+      setLoaded(true);
     }
-  };
+  }
 
   return (
     <>
@@ -238,7 +271,11 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
             </label>
           </div>
           <div className={styles.buttonContainer}>
-            <button className={styles.confirmButton} type="submit">
+            <button
+              className={styles.confirmButton}
+              type="button"
+              onClick={handleSubmit}
+            >
               Salvar
             </button>
             <button
@@ -256,4 +293,4 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
   );
 };
 
-export default ModalAddUser;
+export default ModalEditUser;

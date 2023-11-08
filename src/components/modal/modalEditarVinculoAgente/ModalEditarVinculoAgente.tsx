@@ -225,15 +225,15 @@ const FormComponent: React.FC<any> = ({
           e.stopPropagation();
         }}
       >
-        <h1
-          style={{
-            fontSize: '20px',
-            color: 'gray',
-          }}
-        >
-          {titleModal}
-        </h1>
         <div className={styles.boxStandard}>
+          <h1
+            style={{
+              fontSize: '20px',
+              color: 'gray',
+            }}
+          >
+            {titleModal}
+          </h1>
           <label className={styles.labelStandard}>
             Agente
             <input
@@ -254,8 +254,8 @@ const FormComponent: React.FC<any> = ({
               className={styles.inputSelect}
             >
               <option value="">-</option>
-              <option value="true">Ativo</option>
-              <option value="false">Inativo</option>
+              <option value="true">Sim</option>
+              <option value="false">Não</option>
             </select>
           </label>
           <div>

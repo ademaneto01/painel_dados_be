@@ -45,7 +45,7 @@
     "**/*.tsx",
     "types.d.ts",
     ".next/types/**/*.ts"
-  ],
+, "src/components/modal/modalEditUser"  ],
   "exclude": [
     "node_modules"
   ]

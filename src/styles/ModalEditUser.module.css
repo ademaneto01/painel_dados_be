@@ -1,0 +1,258 @@
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: var(--gray-202);
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+  }
+  
+  .container {
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 2rem;
+    width: 43rem;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 0 10px var(--black-200);
+    z-index: 8;
+  }
+  
+  .boxStandard {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+  
+  .labelStandard {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  
+  .inputStandard {
+    all: unset;
+    text-align: start;
+    width: 100%;
+    padding-left: 0.7rem;
+    height: 2.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--gray-200);
+    margin-top: 0.2rem;
+    color: var(--azul-tenro);
+    cursor: text;
+  }
+  
+  .inputStandardError {
+    all: unset;
+    text-align: start;
+    width: 100%;
+    padding-left: 0.7rem;
+    height: 2.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--red-300);
+    margin-top: 0.2rem;
+    cursor: text;
+  }
+  
+  .inputSelect {
+    text-align: start;
+    width: 102%;
+    padding-left: 0.7rem;
+    height: 2.5rem;
+    color: var(--azul-tenro);
+    border-radius: 5px;
+    border: 1px solid var(--gray-200);
+    margin-top: 0.2rem;
+    background-color: var(--white);
+    cursor: pointer;
+  }
+  
+  .inputStandard:focus-within,
+  .inputSelect:focus-within {
+    box-shadow: 0 0 5px var(--gray-200);
+  }
+  .inputSelect:focus {
+    outline: transparent;
+  }
+  
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1rem;
+  }
+  
+  .confirmButton,
+  .cancelButton {
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0px 10px 20px 0px var(--black-200);
+    margin-top: -10px;
+    transition: all 0.3s ease; 
+  }
+  
+  .confirmButton {
+    background-color: var(--verde-learn);
+    color: var(--white);
+  }
+  
+  .cancelButton {
+    background-color: var(--red-300);
+    color: var(--white);
+  }
+  
+  .confirmButton:hover,
+  .cancelButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 12px 25px 0px var(--black-200);
+  }
+  
+  .confirmButton:active,
+  .cancelButton:active {
+  transform: translateY(0);
+  box-shadow: 0px 6px 12px 0px var(--black-200);
+  }
+  
+  .boxCidadeEstadoCepTel {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 1rem;
+    gap: 1.5rem;
+  }
+  
+  .boxEstadoTel,
+  .boxCidadeCep {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    gap: 1rem;
+  }
+  
+  .uploadedImage {
+    width: 6rem;
+    object-fit: contain;
+    height: 6rem;
+    border-radius: 5px;
+  }
+  
+  .inputFile {
+    display: flex;
+    justify-content: center;
+    width: 102%;
+    padding-left: 0.7rem;
+    height: 2.5rem;
+    border-radius: 5px;
+    border: 1px solid var(--gray-200);
+    padding-top: 0.5rem;
+    margin-top: 0.2rem;
+  }
+  .inputStandardAddEscola {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 102%;
+    padding-left: 0.7rem;
+    min-height: 2.5rem;
+    max-height: auto;
+    border-radius: 5px;
+    border: 1px solid var(--gray-200);
+    margin-top: 0.2rem;
+  }
+  .buttonLabelEscola {
+    all: unset;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.2rem;
+    align-items: center;
+    border-radius: 5px;
+    width: 9rem;
+    height: 1.5rem;
+    border: 1px solid var(--gray-200);
+  }
+  .buttonRemoveEscola {
+    all: unset;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.2rem;
+    align-items: center;
+    border-radius: 2px;
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1px solid var(--gray-200);
+    cursor: pointer;
+  }
+  .boxTags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .btnDropDownEscola {
+    all: unset;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+  }
+  #selectDrop {
+    all: unset;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    width: 102%;
+    cursor: pointer;
+    overflow-y: auto;
+    border-radius: 5px;
+    max-height: 10rem;
+    border: 1px solid var(--gray-200);
+  }
+  #selectDrop option:hover {
+    background-color: var(--gray-200);
+  }
+  #selectDrop option {
+    margin-top: 0.4rem;
+  }
+  .containerSenhasAddUser {
+    display: flex;
+    justify-content: space-between;
+  }
+  .boxSenhasAddUser {
+    width: 48%;
+  }
+  .optionContainer {
+    display: grid;
+    margin-top: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 13px;
+    max-height: calc(5 * 20px);
+    overflow-y: auto;
+  }
+  
+  .labelTitle {
+    grid-column: span 2;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .divCheckBoxVincularAgente {
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkBoxModalVincularAgente {
+    margin-right: 0.3rem;
+    cursor: pointer;
+  }
+  

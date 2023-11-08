@@ -87,6 +87,12 @@
   box-shadow: 0px 12px 25px 0px var(--black-200);
 }
 
+.confirmButton:active,
+.cancelButton:active {
+transform: translateY(0);
+box-shadow: 0px 6px 12px 0px var(--black-200);
+}
+
 .buttonContainer {
   display: flex;
   justify-content: center;

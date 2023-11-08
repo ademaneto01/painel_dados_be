@@ -265,8 +265,8 @@ const FormComponent: React.FC<any> = ({
               className={styles.inputSelect}
             >
               <option value="">-</option>
-              <option value="true">Ativo</option>
-              <option value="false">Inativo</option>
+              <option value="true">Sim</option>
+              <option value="false">Não</option>
             </select>
           </label>
           <div>

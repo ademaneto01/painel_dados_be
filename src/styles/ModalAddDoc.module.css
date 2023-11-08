@@ -29,9 +29,6 @@
   justify-content: center;
   margin-top: 1rem;
   gap: 1rem;
-  position: sticky;
-  bottom: 0;
-  padding: 1rem;
 }
 
 .confirmButton,
@@ -59,6 +56,12 @@
 .cancelButton:hover {
   transform: translateY(-2px);
   box-shadow: 0px 12px 25px 0px var(--black-200);
+}
+
+.confirmButton:active,
+.cancelButton:active {
+transform: translateY(0);
+box-shadow: 0px 6px 12px 0px var(--black-200);
 }
 
 .boxStandard {

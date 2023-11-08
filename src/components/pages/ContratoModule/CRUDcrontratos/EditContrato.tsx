@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import InputMask from 'react-input-mask';
-import { FailedToFetchError } from '@/errors';
 import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
@@ -325,7 +324,7 @@ const FormComponent: React.FC<any> = ({
         Complemento
         <input
           type="text"
-          placeholder="Complemente"
+          placeholder="Complemento"
           name="complemento"
           value={formData.complemento ?? ''}
           onChange={handleInputChange}
