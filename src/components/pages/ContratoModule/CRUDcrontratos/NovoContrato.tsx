@@ -65,6 +65,11 @@ export default function NovoContrato(): JSX.Element {
   const fetchEndereco = async (cep: string) => {
     try {
       cep = cep.replace(/-/g, '');
+      for (const validaCep of cep) {
+        if (validaCep === '_') {
+          return null;
+        }
+      }
       if (cep.length !== 8) {
         return null;
       }
@@ -97,6 +102,7 @@ export default function NovoContrato(): JSX.Element {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
+
     if (name === 'cep') {
       fetchEndereco(value);
     }

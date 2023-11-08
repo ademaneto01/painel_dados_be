@@ -4,6 +4,7 @@ import { FailedToFetchError } from '@/errors';
 import { BackendApiGet } from '@/backendApi';
 import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
+import ErrorComponent from '@/components/ErrorComponent';
 
 interface FormData {
   nome: string;
@@ -39,7 +40,8 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
     interlocutor: false,
     ativo: true,
   });
-
+  const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -62,11 +64,12 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
         interlocutor: response[0].interlocutor,
         ativo: response[0].bo_ativo,
       });
-    } catch (error) {
-      if (error instanceof FailedToFetchError) {
-        console.log(error);
+    } catch (error: any) {
+      setError(true);
+      if (error.response.data.mensagem) {
+        setMsgError(error.response.data.mensagem);
       } else {
-        throw error;
+        setMsgError('Ocorreu um erro desconhecido.');
       }
     } finally {
       setLoaded(true);
@@ -126,6 +129,7 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
           </div>
         </div>
       </div>
+      {error ? <ErrorComponent message={msgError} /> : ''}
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
 import { FailedToFetchError } from '@/errors';
-import { BackendApiGet, BackendApiPut } from '@/backendApi';
+import { BackendApiGet, BackendApiPost, BackendApiPut } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { useGlobalContext } from '@/context/store';
 
@@ -75,10 +75,12 @@ export default function ModalEditarVinculoAgente({
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleApiErrors = (error: any) => {
-    if (error instanceof FailedToFetchError) {
-      setError(true);
+    setError(true);
+
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
     } else {
-      throw error;
+      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 
@@ -108,15 +110,17 @@ export default function ModalEditarVinculoAgente({
 
   const fetchUserVinculoAgenteInitial = async () => {
     const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiGet(`${token}`);
+    const backendApiPost = new BackendApiPost(`${token}`);
 
-    const dataReq = {
+    const userData = {
       userId,
       id_ee: idEntidadeEscolar,
     };
     try {
-      const responseUserPdg = await backendApi.listarVinculoAgente(dataReq);
-
+      const responseUserPdg = await backendApiPost.listarVinculoAgente(
+        userData,
+      );
+      console.log(responseUserPdg, 'aqui');
       const mappedData: FormData = {
         id_escola: responseUserPdg[0].id_escola,
         id_prof: responseUserPdg[0].id_prof,

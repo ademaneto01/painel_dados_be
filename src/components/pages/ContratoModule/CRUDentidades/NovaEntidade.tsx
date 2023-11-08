@@ -96,6 +96,11 @@ export default function NovaEntidade(): JSX.Element {
   const fetchEndereco = async (cep: string) => {
     try {
       cep = cep.replace(/-/g, '');
+      for (const validaCep of cep) {
+        if (validaCep === '_') {
+          return null;
+        }
+      }
       if (cep.length !== 8) {
         return null;
       }

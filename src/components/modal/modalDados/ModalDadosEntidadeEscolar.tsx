@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/ModalDados.module.css';
-import { FailedToFetchError } from '@/errors';
 import { BackendApiGet } from '@/backendApi';
 import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
 import EntitiesUsersPDG from '@/entities/EntitiesUsuariosPDG';
+import ErrorComponent from '@/components/ErrorComponent';
 
 interface FormData {
   nome_operacional: string;
@@ -47,6 +47,8 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
   });
   const [usuarioPDG, setUsuarioPDG] = useState<EntitiesUsersPDG[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -75,11 +77,12 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
         return user.id === response[0].id_usuario_pdg;
       });
       setUsuarioPDG(usuarioEncontrado ? [usuarioEncontrado] : []);
-    } catch (error) {
-      if (error instanceof FailedToFetchError) {
-        console.log(error);
+    } catch (error: any) {
+      setError(true);
+      if (error.response.data.mensagem) {
+        setMsgError(error.response.data.mensagem);
       } else {
-        throw error;
+        setMsgError('Ocorreu um erro desconhecido.');
       }
     } finally {
       setLoaded(true);
@@ -143,6 +146,7 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
           </div>
         </div>
       </div>
+      {error ? <ErrorComponent message={msgError} /> : ''}
     </>
   );
 };

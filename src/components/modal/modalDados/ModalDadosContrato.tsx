@@ -4,6 +4,7 @@ import { FailedToFetchError } from '@/errors';
 import { BackendApiGet } from '@/backendApi';
 import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
+import ErrorComponent from '@/components/ErrorComponent';
 
 interface FormData {
   nome_simplificado: string;
@@ -46,6 +47,8 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
     qtdescolas: '',
   });
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -70,11 +73,12 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
         complemento: response[0].complemento,
         qtdescolas: response[0].qtdescolas,
       });
-    } catch (error) {
-      if (error instanceof FailedToFetchError) {
-        console.log(error);
+    } catch (error: any) {
+      setError(true);
+      if (error.response.data.mensagem) {
+        setMsgError(error.response.data.mensagem);
       } else {
-        throw error;
+        setMsgError('Ocorreu um erro desconhecido.');
       }
     } finally {
       setLoaded(true);
@@ -142,6 +146,7 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
           </div>
         </div>
       </div>
+      {error ? <ErrorComponent message={msgError} /> : ''}
     </>
   );
 };

@@ -94,6 +94,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
 
       return await backendApi.localizarEntidadeEscolar(id);
     } catch (error) {
+      console.log('erro aqui');
       handleApiErrors(error);
       return null;
     }
@@ -137,6 +138,11 @@ export default function EditEntidadeEscolar(): JSX.Element {
   const fetchEndereco = async (cep: string) => {
     try {
       cep = cep.replace(/-/g, '');
+      for (const validaCep of cep) {
+        if (validaCep === '_') {
+          return null;
+        }
+      }
       if (cep.length !== 8) {
         return null;
       }

@@ -52,9 +52,7 @@ export default function EscolasPDG(): JSX.Element {
     try {
       const backendApi = new BackendApiGet(`${token}`);
       const agentesExternosData =
-        await backendApi.listarAgenteRelacionadoEscola({
-          id_ee: idEntidadeEscolar,
-        });
+        await backendApi.listarAgenteRelacionadoEscola(idEntidadeEscolar);
       setData(agentesExternosData);
       setUsersUpdated(false);
     } catch (error: any) {

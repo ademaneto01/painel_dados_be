@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
-import { FailedToFetchError } from '@/errors';
 import { BackendApiGet, BackendApiPost, BackendApiPut } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import ErrorComponent from '@/components/ErrorComponent';
@@ -88,7 +87,14 @@ const ModalAddUser: React.FC<ModalProps> = ({
           nome_operacional: school.nome_operacional || '',
         })),
       );
-    } catch (error) {}
+    } catch (error: any) {
+      setError(true);
+      if (error.response.data.mensagem) {
+        setMsgError(error.response.data.mensagem);
+      } else {
+        setMsgError('Ocorreu um erro desconhecido.');
+      }
+    }
   }
   async function fetchDataInitial() {
     try {
@@ -116,11 +122,12 @@ const ModalAddUser: React.FC<ModalProps> = ({
           nome_operacional: school.nome_operacional || '',
         })),
       );
-    } catch (error) {
-      if (error instanceof FailedToFetchError) {
-        setError(true);
+    } catch (error: any) {
+      setError(true);
+      if (error.response.data.mensagem) {
+        setMsgError(error.response.data.mensagem);
       } else {
-        throw error;
+        setMsgError('Ocorreu um erro desconhecido.');
       }
     }
   }
@@ -213,11 +220,12 @@ const ModalAddUser: React.FC<ModalProps> = ({
           perfil: formData.perfil,
           id_ee: formData.id_ee,
         });
-      } catch (error) {
-        if (error instanceof FailedToFetchError) {
-          setError(true);
+      } catch (error: any) {
+        setError(true);
+        if (error.response.data.mensagem) {
+          setMsgError(error.response.data.mensagem);
         } else {
-          throw error;
+          setMsgError('Ocorreu um erro desconhecido.');
         }
       } finally {
         setUsersUpdated(true);
@@ -236,11 +244,12 @@ const ModalAddUser: React.FC<ModalProps> = ({
           perfil: formData.perfil,
           id_ee: formData.id_ee,
         });
-      } catch (error) {
-        if (error instanceof FailedToFetchError) {
-          setError(true);
+      } catch (error: any) {
+        setError(true);
+        if (error.response.data.mensagem) {
+          setMsgError(error.response.data.mensagem);
         } else {
-          throw error;
+          setMsgError('Ocorreu um erro desconhecido.');
         }
       } finally {
         setUsersUpdated(true);

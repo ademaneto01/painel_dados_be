@@ -29,13 +29,13 @@ export default function TopNavBar(props: TopNavBarProps) {
 
   useEffect(() => {
     const nomeStorage = localStorage.getItem('userNome');
-    const escolaStorageId = localStorage.getItem('escola');
-    const token = localStorage.getItem('authToken');
+    const id = localStorage.getItem('escola');
+    const token = localStorage.getItem('auth_token');
 
     const backendApi = new BackendApiGet(`${token}`);
     const fetchUserData = async () => {
       try {
-        const user = await backendApi.localizarEntidadeEscolar(escolaStorageId);
+        const user = await backendApi.localizarEntidadeEscolar(id);
 
         setEscola(user[0].nome_operacional || '');
       } catch (error) {

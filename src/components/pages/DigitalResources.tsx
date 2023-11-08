@@ -18,10 +18,14 @@ export default function DigitalResources() {
       try {
         const backendApi = new BackendApiGet(`${token}`);
         const user = await backendApi.localizarUsuario(userId);
+        let dadosEntidade: any[] = [];
 
-        const dadosEntidade = await backendApi.localizarUrlPainel({
-          id_ee: user[0].id_ee,
-        });
+        if (user[0].perfil === 'Escola') {
+          dadosEntidade = await backendApi.localizarUrlPainel(user[0].id_ee);
+        } else {
+          setNaoContemDados(true);
+          return;
+        }
 
         if (dadosEntidade.length > 0 && dadosEntidade[0].url_dados !== '') {
           setData(dadosEntidade);

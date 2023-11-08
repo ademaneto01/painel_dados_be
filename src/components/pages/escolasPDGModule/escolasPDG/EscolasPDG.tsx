@@ -38,9 +38,7 @@ export default function EscolasPDG(): JSX.Element {
     try {
       const backendApi = new BackendApiGet(`${token}`);
       const contentidadesEscolasratos =
-        await backendApi.localizarEntidadesEscolaresUsuariosPDG({
-          userId: idUsuario,
-        });
+        await backendApi.localizarEntidadesEscolaresUsuariosPDG(idUsuario);
 
       setData(contentidadesEscolasratos);
     } catch (error: any) {

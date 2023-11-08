@@ -11,6 +11,7 @@ import {
   EntitiesUsers,
   EntitiesUsuariosPDG,
   EntitiesTeste,
+  EntitiesVincularAgente,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterfaceGet, SerializerInterface } from '@/interfaces';
@@ -207,7 +208,6 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
     data?: any,
   ): Promise<T[]> {
     let response: AxiosResponse;
-
     response = data
       ? await this.api.get(`${route}?id=${data.id}`)
       : await this.api.get(route);
@@ -218,7 +218,7 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
     response: AxiosResponse,
     serializer: SerializerInterface,
   ): T[] {
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 201) {
       const entities: T[] = [];
       for (let otd of response.data) {
         const entity = serializer.toEntity(otd);

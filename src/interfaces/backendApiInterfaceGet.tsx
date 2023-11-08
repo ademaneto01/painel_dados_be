@@ -11,6 +11,7 @@ import {
   EntitiesDocsContrato,
   EntitiesDocsEntidade,
   EntitiesInfosContrato,
+  EntitiesVincularAgente,
 } from '@/entities';
 
 export default interface BackendApiInterfaceGet {
@@ -25,6 +26,7 @@ export default interface BackendApiInterfaceGet {
   localizarEntidadesEscolares(
     uuid_ec: any,
   ): Promise<EntitiesEntidadesEscolares[]>;
+
   localizarEntidadeEscolar(id: any): Promise<EntitiesEditarEntidadeEscolar[]>;
   localizarUsuariosPDG(): Promise<EntitiesUsuariosPDG[]>;
   localizarContrato(id: any): Promise<EntitiesContratos[]>;

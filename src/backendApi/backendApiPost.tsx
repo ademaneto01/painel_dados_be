@@ -148,7 +148,7 @@ export default class BackendApiPost implements BackendApiInterfacePost {
     response: AxiosResponse,
     serializer: SerializerInterface,
   ): T[] {
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 201) {
       const entities: T[] = [];
       for (let otd of response.data) {
         const entity = serializer.toEntity(otd);

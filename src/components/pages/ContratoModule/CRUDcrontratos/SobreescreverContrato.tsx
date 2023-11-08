@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import styles from '@/styles/NovoContrato.module.css';
-import { FailedToFetchError } from '@/errors';
 import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
@@ -110,6 +109,11 @@ export default function SobreescreverContrato(): JSX.Element {
   const fetchEndereco = async (cep: string) => {
     try {
       cep = cep.replace(/-/g, '');
+      for (const validaCep of cep) {
+        if (validaCep === '_') {
+          return null;
+        }
+      }
       if (cep.length !== 8) {
         return null;
       }

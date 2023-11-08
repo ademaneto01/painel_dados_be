@@ -73,10 +73,11 @@ export default function ModalVicularAgente({
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleApiErrors = (error: any) => {
-    if (error instanceof FailedToFetchError) {
-      setError(true);
+    setError(true);
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
     } else {
-      throw error;
+      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 
@@ -89,9 +90,9 @@ export default function ModalVicularAgente({
       formData.id_escola = idEntidadeEscolar;
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiGet(`${token}`);
-      const responseAgentes = await backendApi.listarAgenteRelacionadoEscola({
-        id_ee: idEntidadeEscolar,
-      });
+      const responseAgentes = await backendApi.listarAgenteRelacionadoEscola(
+        idEntidadeEscolar,
+      );
       const isAgentPresent = responseAgentes.some((agente) => {
         return agente.uuid_agente === formData.id_prof;
       });
@@ -134,7 +135,7 @@ export default function ModalVicularAgente({
     const backendApi = new BackendApiGet(`${token}`);
 
     try {
-      const responseUserPdg = await backendApi.localizarAgenteId({ id: value });
+      const responseUserPdg = await backendApi.localizarAgenteId(value);
       if (responseUserPdg[0].cargo === 'Professor') {
         setIsProfessor(true);
       } else {
