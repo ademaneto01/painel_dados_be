@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
 import styles from '@/styles/Action.module.css';
 import Action from '../Action';
 import { FiEdit } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
-<<<<<<< HEAD
 import { ModalDelete, ModalAddUser, ModalEditUser } from '../../modal'; // Import ModalEditUser
-=======
-import { ModalDelete, ModalAddUser } from '../../modal';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import { BackendApiDelete } from '@/backendApi';
->>>>>>> ademarNew
 import { useGlobalContext } from '@/context/store';
 
 interface PropsForExclusion {
@@ -38,9 +33,7 @@ export default function TableActionsUsers(props: PropsForExclusion): JSX.Element
   }
 
   async function deleteUser(id: string) {
-<<<<<<< HEAD
     // Your delete user logic here
-=======
     const token = Cookies.get('auth_token');
 
     try {
@@ -52,7 +45,6 @@ export default function TableActionsUsers(props: PropsForExclusion): JSX.Element
     } catch (error) {
       console.log(error);
     }
->>>>>>> ademarNew
   }
 
   function handleClickOpenModalAddEditUser(id: string): void {
