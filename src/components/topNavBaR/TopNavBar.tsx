@@ -1,11 +1,19 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/TopNavBar.module.css';
+<<<<<<< HEAD
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { BsArrowDownCircle } from 'react-icons/bs';
 import { TbLayoutSidebarRightExpand } from 'react-icons/tb';
 import { TbLayoutSidebarRightCollapse } from 'react-icons/tb';
 import BackendApiMock from '@/backendApi';
+=======
+import { HiOutlineDotsCircleHorizontal } from 'react-icons/hi';
+import { TbAtom2Filled } from 'react-icons/tb';
+import { GiPowerButton } from 'react-icons/gi';
+import { PiPowerFill } from 'react-icons/pi';
+import { BackendApiGet } from '@/backendApi';
+>>>>>>> ademarNew
 import { ModalTopNavBaR } from '../modal';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
@@ -38,12 +46,10 @@ export default function TopNavBar(props: TopNavBarProps) {
     const escolaStorageId = localStorage.getItem('escola');
     const token = localStorage.getItem('authToken');
 
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiGet(`${token}`);
     const fetchUserData = async () => {
       try {
-        const user = await backendApi.localizarEntitadeEscolar({
-          id: escolaStorageId,
-        });
+        const user = await backendApi.localizarEntidadeEscolar(escolaStorageId);
 
         setEscola(user[0].nome_operacional || '');
       } catch (error) {

@@ -1,12 +1,12 @@
 import styles from '@/styles/Action.module.css';
-import { FiEdit, FiMoreHorizontal, FiMoreVertical } from 'react-icons/fi';
+import { FiMoreHorizontal, FiMoreVertical } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ModalDelete, ModalDadosEntidadeEscolar } from '../../modal';
 import { ImEyePlus } from 'react-icons/im';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
-import BackendApiMock from '@/backendApi';
+import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumContratos } from '@/enums';
 import Action from '../Action';
@@ -44,13 +44,13 @@ export default function TableActionEntidadeEscolar(
 
   async function deleteEntidadeEscolar(id: string) {
     const token = Cookies.get('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiDelete(`${token}`);
     try {
       await backendApi.deletarEntidadeEscolar({ id });
       setShowModalDelete('');
       setUsersUpdated(true);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

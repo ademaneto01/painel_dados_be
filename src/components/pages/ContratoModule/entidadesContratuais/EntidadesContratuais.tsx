@@ -2,10 +2,9 @@ import { PageContentContainer, CreateButton } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
-import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
 import { EntitiesContratos } from '@/entities';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 
 class Column<T> {
@@ -30,20 +29,22 @@ function useFetchContratos() {
   const [data, setData] = useState<EntitiesContratos[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const { usersUpdated } = useGlobalContext();
 
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
       try {
-        const backendApi = new BackendApiMock(`${token}`);
+        const backendApi = new BackendApiGet(`${token}`);
         const contratos = await backendApi.localizarContratos();
         setData(contratos);
-      } catch (error) {
-        if (error instanceof FailedToFetchError) {
-          setError(true);
+      } catch (error: any) {
+        setError(true);
+        if (error.response.data.mensagem) {
+          setMsgError(error.response.data.mensagem);
         } else {
-          throw error;
+          setMsgError('Ocorreu um erro desconhecido.');
         }
       } finally {
         setLoaded(true);
@@ -54,7 +55,7 @@ function useFetchContratos() {
     }
   }, [loaded, usersUpdated]);
 
-  return { data, loaded, error };
+  return { data, loaded, error, msgError };
 }
 
 function Navbar() {
@@ -65,13 +66,14 @@ function Navbar() {
   );
 }
 
-function ContratosTable({ data, loaded, error, onClickRow }: any) {
+function ContratosTable({ data, loaded, error, msgError, onClickRow }: any) {
   return (
     <Table
       data={data}
       columns={columns}
       loaded={loaded}
       error={error}
+      msgError={msgError}
       searchInputNone={'none'}
       searchInputNoneEscola={'none'}
       labelInput={'Buscar pelo Nome'}
@@ -81,7 +83,7 @@ function ContratosTable({ data, loaded, error, onClickRow }: any) {
 }
 
 export default function EntidadesContratuais(): JSX.Element {
-  const { data, loaded, error } = useFetchContratos();
+  const { data, loaded, error, msgError } = useFetchContratos();
   const { setPage, setIdContrato } = useGlobalContext();
 
   const handleRowClick = (rowData: EntitiesContratos) => {
@@ -106,6 +108,7 @@ export default function EntidadesContratuais(): JSX.Element {
           data={data}
           loaded={loaded}
           error={error}
+          msgError={msgError}
           onClickRow={handleRowClick}
         />
       </PageContentContainer>

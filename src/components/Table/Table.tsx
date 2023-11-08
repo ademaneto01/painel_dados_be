@@ -12,6 +12,7 @@ export interface TableProps<T> {
   data: T[];
   columns: Column<T>[];
   error?: boolean;
+  msgError?: string;
   loaded?: boolean;
   searchInputNone?: string;
   searchInputNoneEscola?: string;
@@ -240,19 +241,26 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
             <table>
               <TableHeaders headers={headers} />
               <tbody>
-
-                {paginatedData.length > 0 ? paginatedData.map((item) => {
-                  const key = getKey('row-');
-                  return (
-                    <TableRow<T>
-                      key={key}
-                      id={id}
-                      item={item}
-                      accessors={accessors}
-                      onClickRow={props.onClickRow}
-                    />
-                  );
-                }) : <div className={styles.errorNotDados}><span className={styles.errorNotDadosSpan}>Ainda não existe dados cadastrados...</span></div>}
+                {paginatedData.length > 0 ? (
+                  paginatedData.map((item) => {
+                    const key = getKey('row-');
+                    return (
+                      <TableRow<T>
+                        key={key}
+                        id={id}
+                        item={item}
+                        accessors={accessors}
+                        onClickRow={props.onClickRow}
+                      />
+                    );
+                  })
+                ) : (
+                  <div className={styles.errorNotDados}>
+                    <span className={styles.errorNotDadosSpan}>
+                      Ainda não existe dados cadastrados...
+                    </span>
+                  </div>
+                )}
               </tbody>
             </table>
             <div className={styles.pagination}>
@@ -271,11 +279,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
         </>
       );
     } else {
-      return (
-        <ErrorComponent
-          message={'Erro inesperado, tente novamente mais tarde...'}
-        />
-      );
+      return <ErrorComponent message={`${props.msgError}`} />;
     }
   } else {
     return <Loader />;

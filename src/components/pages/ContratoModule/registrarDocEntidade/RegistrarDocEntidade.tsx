@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styles from '@/styles/ModalAddDoc.module.css';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiPost } from '@/backendApi';
 import { PageEnumContratos } from '@/enums';
-import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
+import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import ErrorComponent from '@/components/ErrorComponent';
 
@@ -61,16 +61,17 @@ export default function RegistrarDocEntidade(): JSX.Element {
   };
 
   const handleApiErrors = (error: any) => {
-    if (error instanceof FailedToFetchError) {
-      setError(true);
+    setError(true);
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
     } else {
-      throw error;
+      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 
   const fetchDocData = async (nome_doc: string, url_doc: string) => {
     const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiPost(`${token}`);
     const bodyReq = {
       uuid_ee: idEntidadeEscolar,
       nome_doc,

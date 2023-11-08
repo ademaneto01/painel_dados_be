@@ -1,11 +1,14 @@
-import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
+import {
+  PageContentContainer,
+  CreateButton,
+  BackButton,
+} from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
-import { FailedToFetchError } from '@/errors';
 import { PageEnumContratos } from '@/enums';
 import { EntitiesEntidadesEscolares } from '@/entities';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 
 class Column<T> {
@@ -28,23 +31,25 @@ function useFetchEntidadesEscolares() {
   const [data, setData] = useState<EntitiesEntidadesEscolares[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const { setUsersUpdated, usersUpdated, idContrato } = useGlobalContext();
 
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
       try {
-        const backendApi = new BackendApiMock(`${token}`);
-        const entidadesEscola = await backendApi.localizarEntidadesEscolares({
-          uuid_ec: idContrato,
-        });
+        const backendApi = new BackendApiGet(`${token}`);
+        const entidadesEscola = await backendApi.localizarEntidadesEscolares(
+          idContrato,
+        );
         setData(entidadesEscola);
         setUsersUpdated(false);
-      } catch (error) {
-        if (error instanceof FailedToFetchError) {
-          setError(true);
+      } catch (error: any) {
+        setError(true);
+        if (error.response.data.mensagem) {
+          setMsgError(error.response.data.mensagem);
         } else {
-          throw error;
+          setMsgError('Ocorreu um erro desconhecido.');
         }
       } finally {
         setLoaded(true);
@@ -55,7 +60,7 @@ function useFetchEntidadesEscolares() {
     }
   }, [loaded, usersUpdated]);
 
-  return { data, loaded, error };
+  return { data, loaded, error, msgError };
 }
 
 function Navbar() {
@@ -66,13 +71,14 @@ function Navbar() {
   );
 }
 
-function EntidadesEscolaresTable({ data, loaded, error }: any) {
+function EntidadesEscolaresTable({ data, loaded, error, msgError }: any) {
   return (
     <Table
       data={data}
       columns={columns}
       loaded={loaded}
       error={error}
+      msgError={msgError}
       searchInputNone={'none'}
       searchInputNoneEscola={'none'}
       labelInput={'Buscar pelo Nome'}

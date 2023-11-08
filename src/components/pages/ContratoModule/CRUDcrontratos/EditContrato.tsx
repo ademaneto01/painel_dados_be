@@ -2,10 +2,10 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import InputMask from 'react-input-mask';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
-import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
+import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import validaCNPJ from '@/validations/validaCNPJ';
 
@@ -68,8 +68,8 @@ export default function EditContrato(): JSX.Element {
   const fetchContractData = async (id: string) => {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
-      return await backendApi.localizarContrato({ id });
+      const backendApi = new BackendApiGet(`${token}`);
+      return await backendApi.localizarContrato(id);
     } catch (error) {
       handleApiErrors(error);
       return null;
@@ -101,22 +101,24 @@ export default function EditContrato(): JSX.Element {
         }
       }
     } catch (error) {
-      console.error('Erro ao buscar o CEP:', error);
+      setError(true);
+      setMsgError('Erro ao buscar o CEP...');
     }
   };
 
   const handleApiErrors = (error: any) => {
-    if (error instanceof FailedToFetchError) {
-      setError(true);
+    setError(true);
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
     } else {
-      throw error;
+      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiPut(`${token}`);
       await backendApi.editarEntidadeContratual({
         id: idContrato,
         nome_simplificado: formData.nome_simplificado,

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import SideNavBar from '@/components/sideNavBar';
 import TopNavBar from '@/components/topNavBaR';
 import * as pages from '@/components/pages';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 
 export default function Home(): JSX.Element {
   const [sideNavBarHidden, setSideNavBarHidden] = useState(false);
@@ -15,12 +15,11 @@ export default function Home(): JSX.Element {
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
     const userId = localStorage.getItem('userId');
-    const backendApi = new BackendApiMock(`${token}`);
+
+    const backendApi = new BackendApiGet(`${token}`);
     const fetchUserData = async () => {
       try {
-        const user = await backendApi.localizarUsuario({
-          userId,
-        });
+        const user = await backendApi.localizarUsuario(userId);
 
         if (user && user.length > 0) {
           setPerfil(user[0].perfil || '');
@@ -71,8 +70,11 @@ export default function Home(): JSX.Element {
   }
 
   return (
-    <main>
-      <TopNavBar toggleSideNavBar={toggleSideNavBar}  hidden={sideNavBarHidden} />
+    <main className={styles.main}>
+      <TopNavBar
+        toggleSideNavBar={toggleSideNavBar}
+        hidden={sideNavBarHidden}
+      />
       <SideNavBar
         hidden={sideNavBarHidden}
         activePage={page}

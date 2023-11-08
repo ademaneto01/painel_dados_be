@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import InputMask from 'react-input-mask';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiPost } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumAgentesExterno } from '@/enums';
 import { useGlobalContext } from '@/context/store';
@@ -36,17 +36,18 @@ export default function RegistrarAgente(): JSX.Element {
   const { setPageAgentesExterno, setUsersUpdated } = useGlobalContext();
 
   const handleApiErrors = (error: any) => {
-    if (error instanceof FailedToFetchError) {
-      setError(true);
+    setError(true);
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
     } else {
-      throw error;
+      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiPost(`${token}`);
       await backendApi.registrarAgente(formData);
       setUsersUpdated(true);
       setPageAgentesExterno(PageEnumAgentesExterno.agentes);
@@ -62,17 +63,16 @@ export default function RegistrarAgente(): JSX.Element {
     const { name, type } = e.target;
     let value: any;
 
-    if (type === "checkbox") {
-        value = (e.target as HTMLInputElement).checked;
-        
+    if (type === 'checkbox') {
+      value = (e.target as HTMLInputElement).checked;
     } else {
-        value = e.target.value;
-        const booleanValue = value === 'true' ? true : value === 'false' ? false : null;
-        value = ['ativo'].includes(name) ? booleanValue : value;
+      value = e.target.value;
+      const booleanValue =
+        value === 'true' ? true : value === 'false' ? false : null;
+      value = ['ativo'].includes(name) ? booleanValue : value;
     }
 
     setFormData((prev) => ({ ...prev, [name]: value }));
-  
   };
 
   const validateForm = (): boolean => {
@@ -97,7 +97,7 @@ export default function RegistrarAgente(): JSX.Element {
       return false;
     }
     return true;
-};
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -169,7 +169,7 @@ const FormComponent: React.FC<any> = ({
             name="cargo"
             className={styles.inputSelect}
           >
-           <option value="">-</option>
+            <option value="">-</option>
             <option value="Diretor">Diretor(a)</option>
             <option value="Mantenedor">Mantenedor(a)</option>
             <option value="Coordenador">Coordenador(a)</option>
@@ -177,7 +177,7 @@ const FormComponent: React.FC<any> = ({
             <option value="Secretario">Secretário(a)</option>
           </select>
         </label>
-       
+
         <label className={styles.labelStandard}>
           Data de Nascimento
           <InputMask

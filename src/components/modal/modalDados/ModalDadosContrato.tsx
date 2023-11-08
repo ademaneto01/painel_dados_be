@@ -1,7 +1,7 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '@/styles/ModalDados.module.css';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
 
@@ -54,9 +54,9 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
   async function fetchData() {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiGet(`${token}`);
 
-      const response = await backendApi.localizarContrato({ id: idContrato });
+      const response = await backendApi.localizarContrato(idContrato);
       setFormData({
         nome_simplificado: response[0].nome_simplificado,
         razao_social: response[0].razao_social,

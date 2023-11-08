@@ -1,16 +1,19 @@
-import { CreateButton, PageContentContainer, BackButton } from '@/components/shared';
+import {
+  CreateButton,
+  PageContentContainer,
+  BackButton,
+} from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Column, Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
-import { FailedToFetchError } from '@/errors';
 import { EntitiesVinculosAgentesExterno } from '@/entities';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumEscolasPDG } from '@/enums';
 import ModalVicularAgente from '@/components/modal/modalVincularAgente/ModalVincularAgente';
 
 const COLUMNS = [
-  new Column('Nome Operacional', 'nome'),
+  new Column('Nome', 'nome'),
   new Column('E-mail Primario', 'no_email_primario'),
   new Column('Telefone', 'nu_telefone'),
   new Column('Cargo', 'cargo'),
@@ -21,6 +24,7 @@ export default function EscolasPDG(): JSX.Element {
   const [data, setData] = useState<EntitiesVinculosAgentesExterno[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const {
     idEntidadeEscolar,
     setPageEscolasPDG,
@@ -46,18 +50,19 @@ export default function EscolasPDG(): JSX.Element {
     const token = localStorage.getItem('auth_token');
 
     try {
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiGet(`${token}`);
       const agentesExternosData =
         await backendApi.listarAgenteRelacionadoEscola({
           id_ee: idEntidadeEscolar,
         });
       setData(agentesExternosData);
       setUsersUpdated(false);
-    } catch (err) {
-      if (err instanceof FailedToFetchError) {
-        setError(true);
+    } catch (error: any) {
+      setError(true);
+      if (error.response.data.mensagem) {
+        setMsgError(error.response.data.mensagem);
       } else {
-        throw err;
+        setMsgError('Ocorreu um erro desconhecido.');
       }
     } finally {
       setLoaded(true);
@@ -80,8 +85,10 @@ export default function EscolasPDG(): JSX.Element {
           columns={COLUMNS}
           loaded={loaded}
           error={error}
+          msgError={msgError}
           searchInputNone={'none'}
-          searchInputNoneNome={'none'}
+          searchInputNoneEscola={'none'}
+          labelInput={'Buscar pelo nome'}
         />
       </PageContentContainer>
     </div>

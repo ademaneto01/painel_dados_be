@@ -1,8 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import InputMask from 'react-input-mask';
 import styles from '@/styles/NovoContrato.module.css';
-import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiPost } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
@@ -43,17 +42,18 @@ export default function NovoContrato(): JSX.Element {
   const { setPage } = useGlobalContext();
 
   const handleApiErrors = (error: any) => {
-    if (error instanceof FailedToFetchError) {
-      setError(true);
+    setError(true);
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
     } else {
-      throw error;
+      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiPost(`${token}`);
       await backendApi.registrarContrato(formData);
       setPage(PageEnumContratos.entidadesContratuais);
     } catch (error) {
@@ -88,7 +88,8 @@ export default function NovoContrato(): JSX.Element {
         }
       }
     } catch (error) {
-      console.error('Erro ao buscar o CEP:', error);
+      setError(true);
+      setMsgError('Erro ao buscar o CEP...');
     }
   };
 

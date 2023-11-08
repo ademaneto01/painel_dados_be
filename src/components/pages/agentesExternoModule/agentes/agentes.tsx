@@ -2,9 +2,8 @@ import { EntitiesTeste } from '@/entities';
 import styles from '@/styles/Page.module.css';
 import { Column, Table } from '../../../Table';
 import { PageContentContainer, CreateButton } from '../../../shared';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
-import { FailedToFetchError } from '@/errors';
 import { useState, useEffect } from 'react';
 import { PageEnumAgentesExterno } from '@/enums';
 
@@ -19,7 +18,7 @@ export default function AgentesExterno() {
   const [data, setData] = useState<EntitiesTeste[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-
+  const [msgError, setMsgError] = useState('');
   const { usersUpdated, setUsersUpdated, setPageAgentesExterno } =
     useGlobalContext();
 
@@ -27,16 +26,17 @@ export default function AgentesExterno() {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
       try {
-        const backendApi = new BackendApiMock(`${token}`);
+        const backendApi = new BackendApiGet(`${token}`);
 
         const users = await backendApi.listarTodosAgentes();
 
         setData(users);
-      } catch (error) {
-        if (error instanceof FailedToFetchError) {
-          setError(true);
+      } catch (error: any) {
+        setError(true);
+        if (error.response.data.mensagem) {
+          setMsgError(error.response.data.mensagem);
         } else {
-          throw error;
+          setMsgError('Ocorreu um erro desconhecido.');
         }
       } finally {
         setLoaded(true);
@@ -66,6 +66,7 @@ export default function AgentesExterno() {
           columns={columns}
           loaded={loaded}
           error={error}
+          msgError={msgError}
           inputSelectAgente={true}
           searchInputNoneEscola={'none'}
           labelInput={'Buscar pelo nome'}

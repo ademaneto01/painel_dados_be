@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet, BackendApiPost, BackendApiPut } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import ErrorComponent from '@/components/ErrorComponent';
 
@@ -71,13 +71,45 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
   async function fetchDataEntidadesEscolares() {
     try {
       const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiGet(`${token}`);
       const response = await backendApi.todasEntidadesEscolares();
       setEntidadesEscolaresData(
         response.map((school) => ({
           id: school.id || '',
           nome_operacional: school.nome_operacional || '',
+<<<<<<< HEAD
         }))
+=======
+        })),
+      );
+    } catch (error) {}
+  }
+  async function fetchDataInitial() {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const backendApi = new BackendApiGet(`${token}`);
+      const response = await backendApi.localizarUsuario(userId);
+
+      setFormData({
+        nome: response[0]?.nome || '',
+        email: response[0]?.email || '',
+        confirmEmail: response[0]?.email || '',
+        senha: '',
+        confirmPassword: '',
+        id_ee: response[0]?.id_ee || '',
+        perfil: response[0]?.perfil || '',
+        escola: response[0]?.escola || '',
+        isPasswordMatch: true,
+      });
+
+      const entidadesEscolares = await backendApi.todasEntidadesEscolares();
+
+      setEntidadesEscolaresData(
+        entidadesEscolares.map((school) => ({
+          id: school.id || '',
+          nome_operacional: school.nome_operacional || '',
+        })),
+>>>>>>> ademarNew
       );
     } catch (error) {
       if (error instanceof FailedToFetchError) {
@@ -121,10 +153,24 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
       }, 6000);
       return;
     }
+<<<<<<< HEAD
+=======
+    async function fetchDataUpdate() {
+      try {
+        const token = localStorage.getItem('auth_token');
+        const backendApi = new BackendApiPut(`${token}`);
+>>>>>>> ademarNew
 
     if (!loaded) {
       fetchData();
     }
+<<<<<<< HEAD
+=======
+    async function fetchData() {
+      try {
+        const token = localStorage.getItem('auth_token');
+        const backendApi = new BackendApiPost(`${token}`);
+>>>>>>> ademarNew
 
     setUsersUpdated(true);
     onCancel();

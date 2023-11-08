@@ -3,14 +3,10 @@ import Action from '../Action';
 import { FiEdit } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
-import {
-  ModalDadosAgente,
-  ModalDadosEntidadeEscolar,
-  ModalDelete,
-} from '../../modal';
+import { ModalDadosAgente, ModalDelete } from '../../modal';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
-import BackendApiMock from '@/backendApi';
+import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumAgentesExterno } from '@/enums';
 import { ImEyePlus } from 'react-icons/im';
@@ -44,7 +40,7 @@ export default function TableActionsTeste(
     const token = Cookies.get('auth_token');
 
     try {
-      const backendApi = new BackendApiMock(`${token}`);
+      const backendApi = new BackendApiDelete(`${token}`);
       await backendApi.deletarAgente({ userId: props.uuid_agente });
       setShowModalDelete('');
       setUsersUpdated(true);

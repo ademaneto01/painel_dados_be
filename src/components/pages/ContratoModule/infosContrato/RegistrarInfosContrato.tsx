@@ -1,12 +1,11 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import { FailedToFetchError } from '@/errors';
-import BackendApiMock from '@/backendApi';
+import { BackendApiPost } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { PageEnumContratos } from '@/enums';
-import { PageContentContainer, CreateButton, BackButton } from '@/components/shared';
+import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
-import { EntitiesInfosContrato } from '@/entities';
 
 interface FormData {
   ano_assinatura: number | null;
@@ -34,16 +33,17 @@ export default function RegistrarInfosContrato(): JSX.Element {
   const { setPage, idContrato } = useGlobalContext();
 
   const handleApiErrors = (error: any) => {
-    if (error instanceof FailedToFetchError) {
-      setError(true);
+    setError(true);
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
     } else {
-      throw error;
+      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 
   const fetchData = async () => {
     const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiMock(`${token}`);
+    const backendApi = new BackendApiPost(`${token}`);
     try {
       const requestBody = {
         ...formData,

@@ -1,13 +1,14 @@
-import BackendApiMock from '@/backendApi';
+import { BackendApiGet } from '@/backendApi';
 import { EntitiesUrl } from '@/entities';
-import { FailedToFetchError } from '@/errors';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '@/styles/DigitalResources.module.css';
+
 export default function DigitalResources() {
   const [data, setData] = useState([] as EntitiesUrl[]);
   const [loaded, setLoaded] = useState(false);
   const [naoContemDados, setNaoContemDados] = useState(false);
   const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
 
   useEffect(() => {
     async function fetchData() {
@@ -15,8 +16,8 @@ export default function DigitalResources() {
       const userId = localStorage.getItem('userId');
 
       try {
-        const backendApi = new BackendApiMock(`${token}`);
-        const user = await backendApi.localizarUsuario({ userId });
+        const backendApi = new BackendApiGet(`${token}`);
+        const user = await backendApi.localizarUsuario(userId);
 
         const dadosEntidade = await backendApi.localizarUrlPainel({
           id_ee: user[0].id_ee,
@@ -27,11 +28,12 @@ export default function DigitalResources() {
         } else {
           setNaoContemDados(true);
         }
-      } catch (error) {
-        if (error instanceof FailedToFetchError) {
-          setError(true);
+      } catch (error: any) {
+        setError(true);
+        if (error.response.data.mensagem) {
+          setMsgError(error.response.data.mensagem);
         } else {
-          throw error;
+          setMsgError('Ocorreu um erro desconhecido.');
         }
       } finally {
         setLoaded(true);
@@ -40,7 +42,7 @@ export default function DigitalResources() {
     if (!loaded) {
       fetchData();
     }
-  }, []);
+  }, [loaded]);
   if (!naoContemDados) {
     return (
       <div className={styles.containerDigitaResources}>
