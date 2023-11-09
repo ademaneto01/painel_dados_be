@@ -197,7 +197,7 @@ export default function NovaEntidade(): JSX.Element {
   );
 }
 
-const HeaderComponent: React.FC = () => <h4>Nova Entidade Escolar</h4>;
+const HeaderComponent: React.FC = () => <h4>Nova Escola</h4>;
 
 const NavigationButtons: React.FC<{
   setPage: React.Dispatch<React.SetStateAction<PageEnumContratos>>;

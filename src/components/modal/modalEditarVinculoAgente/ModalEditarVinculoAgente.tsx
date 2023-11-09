@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
-import { FailedToFetchError } from '@/errors';
 import { BackendApiGet, BackendApiPost, BackendApiPut } from '@/backendApi';
 import ErrorComponent from '@/components/ErrorComponent';
 import { useGlobalContext } from '@/context/store';
@@ -186,13 +185,13 @@ export default function ModalEditarVinculoAgente({
 
   return (
     <div className={styles.background} onClick={onCancel}>
-      <HeaderComponent />
       <FormComponent
         formData={formData}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
         setPageEscolasPDG={setPageEscolasPDG}
         onCancel={onCancel}
+        HeaderComponent={HeaderComponent}
         handleCheckboxChange={handleCheckboxChange}
         selectedOptions={selectedOptions}
         isProfessor={isProfessor}
@@ -204,13 +203,17 @@ export default function ModalEditarVinculoAgente({
   );
 }
 
-const HeaderComponent: React.FC = () => <h4>Editar Vinculo Agente</h4>;
+const HeaderComponent: React.FC = () => (
+  <h1 className={styles.titleModalEditarVinculoAgetne}>
+    Editar Vinculo Agente
+  </h1>
+);
 
 const FormComponent: React.FC<any> = ({
   formData,
   handleInputChange,
   handleSubmit,
-  titleModal,
+  HeaderComponent,
   onCancel,
   handleCheckboxChange,
   isProfessor,
@@ -226,14 +229,7 @@ const FormComponent: React.FC<any> = ({
         }}
       >
         <div className={styles.boxStandard}>
-          <h1
-            style={{
-              fontSize: '20px',
-              color: 'gray',
-            }}
-          >
-            {titleModal}
-          </h1>
+          <HeaderComponent />
           <label className={styles.labelStandard}>
             Agente
             <input

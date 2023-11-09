@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
-import { BackendApiGet, BackendApiPost, BackendApiPut } from '@/backendApi';
+import { BackendApiGet, BackendApiPost } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import ErrorComponent from '@/components/ErrorComponent';
 
@@ -55,6 +55,16 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
     }));
   };
 
+  const handleApiErrors = (error: any) => {
+    setError(true);
+
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
+    } else {
+      setMsgError('Ocorreu um erro desconhecido.');
+    }
+  };
+
   function getPasswordClass(isPasswordMatch: boolean): string {
     return isPasswordMatch ? styles.inputStandard : styles.inputStandardError;
   }
@@ -75,7 +85,8 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
         })),
       );
     } catch (error) {
-      console.error('Failed to fetch entidades escolares:', error);
+      handleApiErrors(error);
+      return null;
     }
   }
 
@@ -128,12 +139,8 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
       setUsersUpdated(true);
       onCancel();
     } catch (error: any) {
-      setError(true);
-      if (error.response.data.mensagem) {
-        setMsgError(error.response.data.mensagem);
-      } else {
-        setMsgError('Ocorreu um erro desconhecido.');
-      }
+      handleApiErrors(error);
+      return null;
     }
   };
 

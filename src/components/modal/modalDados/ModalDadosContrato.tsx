@@ -124,6 +124,10 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
                 <span className={styles.label}>QTD. Escolas:</span>{' '}
                 {formData.qtdescolas}
               </p>
+              <p>
+                <span className={styles.label}>Endereço:</span>{' '}
+                {formData.endereco}
+              </p>
             </div>
             <div className={styles.dadosColumn}>
               <p>

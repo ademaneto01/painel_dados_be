@@ -99,7 +99,7 @@ export default function EntidadesEscolares(): JSX.Element {
           <CreateButton
             color={'var(--white'}
             colorBackGround={'var(--blue-300)'}
-            text="Nova Entidade"
+            text="Nova Escola"
             onClick={() => setPage(PageEnumContratos.novaEntidade)}
           />
           <BackButton

@@ -64,6 +64,15 @@ const ModalEditUser: React.FC<ModalProps> = ({
     return isPasswordMatch ? styles.inputStandard : styles.inputStandardError;
   }
 
+  const handleApiErrors = (error: any) => {
+    setError(true);
+    if (error.response.data.mensagem) {
+      setMsgError(error.response.data.mensagem);
+    } else {
+      setMsgError('Ocorreu um erro desconhecido.');
+    }
+  };
+
   useEffect(() => {
     fetchDataInitial();
   }, [userId]);
@@ -94,12 +103,8 @@ const ModalEditUser: React.FC<ModalProps> = ({
         })),
       );
     } catch (error: any) {
-      setError(true);
-      if (error.response.data.mensagem) {
-        setMsgError(error.response.data.mensagem);
-      } else {
-        setMsgError('Ocorreu um erro desconhecido.');
-      }
+      handleApiErrors(error);
+      return null;
     }
   }
 
@@ -159,11 +164,8 @@ const ModalEditUser: React.FC<ModalProps> = ({
         id_ee: formData.id_ee,
       });
     } catch (error) {
-      if (error instanceof FailedToFetchError) {
-        setError(true);
-      } else {
-        throw error;
-      }
+      handleApiErrors(error);
+      return null;
     } finally {
       setUsersUpdated(true);
       setLoaded(true);

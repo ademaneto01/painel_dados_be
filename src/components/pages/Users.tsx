@@ -31,6 +31,19 @@ function PageUsers() {
     setShowModalUser(false);
   }
 
+  function UsersTable({ data, loaded, error, columns, msgError }: any) {
+    return (
+      <Table
+        data={data}
+        columns={columns}
+        loaded={loaded}
+        error={error}
+        msgError={msgError}
+        labelInput={'Buscar pelo Nome'}
+      />
+    );
+  }
+
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
@@ -70,11 +83,10 @@ function PageUsers() {
         {showModalUser && (
           <ModalAddUser
             titleModal={'Novo usuário'}
-            userId={''}
             onCancel={() => handleClickCloseModalAdd()}
           />
         )}
-        <Table<EntitiesUsers>
+        <UsersTable
           data={data}
           columns={columns}
           loaded={loaded}
