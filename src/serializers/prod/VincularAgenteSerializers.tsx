@@ -20,7 +20,7 @@ interface VincularAgenteMockPayload {
   bo_9af: boolean;
 }
 
-export default class MockVincularAgente implements SerializerInterface {
+export default class VincularAgenteSerializers implements SerializerInterface {
   toEntity(otd: VincularAgenteMockPayload): EntitiesVincularAgente {
     return new EntitiesVincularAgente({
       id: otd.id,

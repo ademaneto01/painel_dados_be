@@ -13,7 +13,7 @@ import EntitiesEditarEntidadeEscolar from './EntitiesEditarEntidadeEscolar';
 import EntitiesEntidadesEscolaresPDG from './EntitiesEntidadesEscolaresPDG';
 import EntitiesVinculosAgentesExterno from './EntitiesVinculosAgentesExterno';
 import EntitiesVincularAgente from './EntitiesVincularAgente';
-import EntitiesTeste from './EntitiesTeste';
+import EntitiesAgenteExterno from './EntitiesAgenteExterno';
 import EntitiesRegistrarDocContrato from './EntitiesRegistrarDocContrato';
 import EntitiesDocsContrato from './EntitiesDocsContrato';
 import EntitiesDocsEntidade from './EntitiesDocsEntidade';
@@ -34,7 +34,7 @@ export {
   EntitiesEntidadesEscolaresPDG,
   EntitiesVinculosAgentesExterno,
   EntitiesVincularAgente,
-  EntitiesTeste,
+  EntitiesAgenteExterno,
   EntitiesRegistrarDocContrato,
   EntitiesDocsContrato,
   EntitiesDocsEntidade,

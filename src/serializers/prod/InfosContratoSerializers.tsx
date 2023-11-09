@@ -13,7 +13,7 @@ interface InfosContratoMockPayload {
   reajuste_igpm_ipca: boolean;
 }
 
-export default class MockInfosContrato implements SerializerInterface {
+export default class InfosContratoSerializers implements SerializerInterface {
   toEntity(otd: InfosContratoMockPayload): EntitiesInfosContrato {
     return new EntitiesInfosContrato({
       id: otd.id,

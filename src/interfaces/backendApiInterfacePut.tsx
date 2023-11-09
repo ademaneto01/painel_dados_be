@@ -1,6 +1,6 @@
 import {
   EntitiesContratos,
-  EntitiesTeste,
+  EntitiesAgenteExterno,
   EntitiesVincularAgente,
   EntitiesInfosContrato,
   EntitiesOneUser,
@@ -12,7 +12,7 @@ export default interface BackendApiInterfacePut {
 
   editarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
 
-  editarAgente(userData: any): Promise<EntitiesTeste[]>;
+  editarAgente(userData: any): Promise<EntitiesAgenteExterno[]>;
 
   editarEntidadeContratual(userData: any): Promise<EntitiesContratos[]>;
 

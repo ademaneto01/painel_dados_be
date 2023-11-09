@@ -7,11 +7,10 @@ import {
   EntitiesEditarEntidadeEscolar,
   EntitiesEntidadesEscolaresPDG,
   EntitiesVinculosAgentesExterno,
-  EntitiesTeste,
+  EntitiesAgenteExterno,
   EntitiesDocsContrato,
   EntitiesDocsEntidade,
   EntitiesInfosContrato,
-  EntitiesVincularAgente,
 } from '@/entities';
 
 export default interface BackendApiInterfaceGet {
@@ -33,8 +32,8 @@ export default interface BackendApiInterfaceGet {
   listarAgenteRelacionadoEscola(
     id_ee: any,
   ): Promise<EntitiesVinculosAgentesExterno[]>;
-  listarTodosAgentes(): Promise<EntitiesTeste[]>;
-  localizarAgenteId(id: any): Promise<EntitiesTeste[]>;
+  listarTodosAgentes(): Promise<EntitiesAgenteExterno[]>;
+  localizarAgenteId(id: any): Promise<EntitiesAgenteExterno[]>;
   localizarUrlPainel(id_ee: any): Promise<EntitiesUrl[]>;
   listarDocsContrato(uuid_ec: any): Promise<EntitiesDocsContrato[]>;
   listarDocsEntidade(uuid_ee: any): Promise<EntitiesDocsEntidade[]>;

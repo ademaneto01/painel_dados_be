@@ -1,22 +1,22 @@
-import { EntitiesUserLogin } from '@/entities';
+import { EntitiesOneUser } from '@/entities';
 import { SerializerInterface } from '@/interfaces';
 
 interface UsersMockPayload {
   id: string;
   nome: string;
   email: string;
-  token: string;
+  senha: string;
   perfil: string;
   id_ee: string;
 }
 
-export default class MockUserLogin implements SerializerInterface {
-  toEntity(otd: UsersMockPayload): EntitiesUserLogin {
-    return new EntitiesUserLogin({
+export default class OneUserSerializers implements SerializerInterface {
+  toEntity(otd: UsersMockPayload): EntitiesOneUser {
+    return new EntitiesOneUser({
       id: otd.id,
       nome: otd.nome,
       email: otd.email,
-      token: otd.token,
+      senha: otd.senha,
       perfil: otd.perfil,
       id_ee: otd.id_ee,
     });

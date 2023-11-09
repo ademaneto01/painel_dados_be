@@ -16,7 +16,7 @@ interface UsersMockPayload {
   ativo: boolean;
 }
 
-export default class MockRegisterEntitiesEscolaresSerializers
+export default class RegisterEntitiesEscolaresSerializers
   implements SerializerInterface
 {
   toEntity(otd: UsersMockPayload): EntitiesRegistrarEntidadeEscolar {

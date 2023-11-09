@@ -4,7 +4,7 @@ import TableActionsContratos from './tableActionsContratos/TableActionsContratos
 import TableActionEntidadeEscolar from './tableActionEntidadeEscolar/TableActionEntidadeEscolar';
 import TableActionEntidadeEscolarPDG from './tableActionEntidadeEscolarPDG/TableActionEntidadeEscolarPDG';
 import TableActionAgentesRelacionadoEscola from './tableActionAgentesRelacionadoEscola/TableActionAgentesRelacionadoEscola';
-import TableActionsTeste from './tableActionsTeste/TableActionsTeste';
+import TableActionsAgenteExterno from './tableActionsAgenteExterno/TableActionsAgenteExterno';
 import TableActionsDocsContrato from './tableActionsDocsContrato/TableActionsDocsContrato';
 import TableActionsDocsEntidade from './tableActionsDocsEntidade/TableActionsDocsEntidade';
 export {
@@ -14,7 +14,7 @@ export {
   TableActionEntidadeEscolar,
   TableActionEntidadeEscolarPDG,
   TableActionAgentesRelacionadoEscola,
-  TableActionsTeste,
+  TableActionsAgenteExterno,
   TableActionsDocsContrato,
   TableActionsDocsEntidade,
 };

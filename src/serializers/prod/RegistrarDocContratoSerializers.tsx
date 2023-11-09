@@ -9,7 +9,9 @@ interface RegistrarMockPayload {
   criado_em: string;
 }
 
-export default class MockRegistrarDocContrato implements SerializerInterface {
+export default class RegistrarDocContratoSerializers
+  implements SerializerInterface
+{
   toEntity(otd: RegistrarMockPayload): EntitiesRegistrarDocContrato {
     return new EntitiesRegistrarDocContrato({
       id: otd.id,

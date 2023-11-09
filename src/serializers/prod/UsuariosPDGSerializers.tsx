@@ -9,7 +9,7 @@ interface UsersMockPayload {
   id_ee: string;
 }
 
-export default class MockUsersPDG implements SerializerInterface {
+export default class UsuariosPDGSerializers implements SerializerInterface {
   toEntity(otd: UsersMockPayload): EntitiesUsuariosPDG {
     return new EntitiesUsuariosPDG({
       id: otd.id,

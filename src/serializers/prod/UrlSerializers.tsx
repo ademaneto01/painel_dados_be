@@ -8,7 +8,7 @@ interface UsersMockPayload {
   time_stamp: string;
 }
 
-export default class MockUrlSerializers implements SerializerInterface {
+export default class UrlSerializers implements SerializerInterface {
   toEntity(otd: UsersMockPayload): EntitiesUrl {
     return new EntitiesUrl({
       id: otd.id,

@@ -25,7 +25,7 @@ function reactIcon(icon: IconType, color?: string): JSX.Element {
   return icon(options);
 }
 
-export default function TableActionsTeste(
+export default function TableActionsAgenteExterno(
   props: PropsForFxclusion,
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');

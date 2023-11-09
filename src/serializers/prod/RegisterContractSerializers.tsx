@@ -15,7 +15,7 @@ interface UsersMockPayload {
   qtdescolas: string;
 }
 
-export default class MockRegisterContractSerializers
+export default class RegisterContractSerializers
   implements SerializerInterface
 {
   toEntity(otd: UsersMockPayload): EntitiesRegisterContract {

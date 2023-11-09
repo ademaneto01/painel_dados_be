@@ -10,25 +10,24 @@ import {
   EntitiesUrl,
   EntitiesUsers,
   EntitiesUsuariosPDG,
-  EntitiesTeste,
-  EntitiesVincularAgente,
+  EntitiesAgenteExterno,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterfaceGet, SerializerInterface } from '@/interfaces';
 import {
-  MockUsersSerializers,
-  MockUrlSerializers,
-  MockUsuariosPDG,
-  MockEntidadeEscolarPDGSerializers,
-  MockTeste,
-  MockDocsContrato,
-  MockDocsEntitade,
-  MockAgenteExternoVinculo,
-  MockEditarEntidadeEscolar,
-  MockContratosSerializers,
-  MockEntidadesEscolaresSerializers,
-  MockInfosContrato,
-} from '@/serializers/mocks';
+  UsersSerializers,
+  UrlSerializers,
+  UsuariosPDGSerializers,
+  EntidadeEscolarPDGSerializers,
+  AgenteExternoSerializers,
+  DocsContratoSerializers,
+  DocsEntitadeSerializers,
+  AgenteExternoVinculoSerializers,
+  EditarEntidadeEscolarSerializers,
+  ContratosSerializers,
+  EntidadesEscolaresSerializers,
+  InfosContratoSerializers,
+} from '@/serializers/prod';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
@@ -54,14 +53,14 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
   public async localizarUsuarios(): Promise<EntitiesUsers[]> {
     return await this.get<EntitiesUsers>(
       '/localizarUsuarios',
-      new MockUsersSerializers(),
+      new UsersSerializers(),
     );
   }
 
   public async localizarUsuariosPDG(): Promise<EntitiesUsuariosPDG[]> {
     return await this.get<EntitiesUsuariosPDG>(
       '/localizarUsuariosPDG',
-      new MockUsuariosPDG(),
+      new UsuariosPDGSerializers(),
     );
   }
 
@@ -70,20 +69,20 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
   > {
     return await this.get<EntitiesEntidadesEscolares>(
       '/todasEntidadesEscolares',
-      new MockEntidadesEscolaresSerializers(),
+      new EntidadesEscolaresSerializers(),
     );
   }
   public async localizarContratos(): Promise<EntitiesContratos[]> {
     return await this.get<EntitiesContratos>(
       '/localizarContratos',
-      new MockContratosSerializers(),
+      new ContratosSerializers(),
     );
   }
   public async getUrl(userId: any): Promise<EntitiesUrl[]> {
     return await this.get<EntitiesUrl>(
       '/findDadosUser',
 
-      new MockUrlSerializers(),
+      new UrlSerializers(),
       { id: userId },
     );
   }
@@ -92,7 +91,7 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
     return await this.get<EntitiesContratos>(
       '/localizarContrato',
 
-      new MockContratosSerializers(),
+      new ContratosSerializers(),
       { id },
     );
   }
@@ -103,7 +102,7 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
     return await this.get<EntitiesDocsContrato>(
       '/listarDocsContrato',
 
-      new MockDocsContrato(),
+      new DocsContratoSerializers(),
       { id: idContrato },
     );
   }
@@ -114,7 +113,7 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
     return await this.get<EntitiesDocsEntidade>(
       '/listarDocsEntidade',
 
-      new MockDocsEntitade(),
+      new DocsEntitadeSerializers(),
       { id: idEntidadeEscolar },
     );
   }
@@ -123,7 +122,7 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
     return await this.get<EntitiesUsers>(
       '/localizarUsuario',
 
-      new MockUsersSerializers(),
+      new UsersSerializers(),
       { id: userId },
     );
   }
@@ -133,7 +132,7 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
     return await this.get<EntitiesInfosContrato>(
       '/listarInfosContrato',
 
-      new MockInfosContrato(),
+      new InfosContratoSerializers(),
       { id: uuid_ec },
     );
   }
@@ -143,7 +142,7 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
   ): Promise<EntitiesEditarEntidadeEscolar[]> {
     return await this.get<EntitiesEditarEntidadeEscolar>(
       '/localizarEntidadeEscolar',
-      new MockEditarEntidadeEscolar(),
+      new EditarEntidadeEscolarSerializers(),
       { id },
     );
   }
@@ -153,23 +152,23 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
     return await this.get<EntitiesVinculosAgentesExterno>(
       '/ListarAgentesRelacionadoEscola',
 
-      new MockAgenteExternoVinculo(),
+      new AgenteExternoVinculoSerializers(),
       { id: id_ee },
     );
   }
 
-  public async listarTodosAgentes(): Promise<EntitiesTeste[]> {
-    return await this.get<EntitiesTeste>(
+  public async listarTodosAgentes(): Promise<EntitiesAgenteExterno[]> {
+    return await this.get<EntitiesAgenteExterno>(
       '/listarTodosAgentes',
-      new MockTeste(),
+      new AgenteExternoSerializers(),
     );
   }
 
-  public async localizarAgenteId(id: any): Promise<EntitiesTeste[]> {
-    return await this.get<EntitiesTeste>(
+  public async localizarAgenteId(id: any): Promise<EntitiesAgenteExterno[]> {
+    return await this.get<EntitiesAgenteExterno>(
       '/localizarAgenteId',
 
-      new MockTeste(),
+      new AgenteExternoSerializers(),
       { id },
     );
   }
@@ -180,7 +179,7 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
     return await this.get<EntitiesEntidadesEscolaresPDG>(
       '/localizarEntidadesEscolaresUsuariosPDG',
 
-      new MockEntidadeEscolarPDGSerializers(),
+      new EntidadeEscolarPDGSerializers(),
       { id: userId },
     );
   }
@@ -190,14 +189,14 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
   ): Promise<EntitiesEntidadesEscolares[]> {
     return await this.get<EntitiesEntidadesEscolares>(
       '/localizarEntidadesEscolares',
-      new MockEntidadesEscolaresSerializers(),
+      new EntidadesEscolaresSerializers(),
       { id: uuid_ec },
     );
   }
   public async localizarUrlPainel(id_ee: any): Promise<EntitiesUrl[]> {
     return await this.get<EntitiesUrl>(
       '/localizarUrlPainel',
-      new MockUrlSerializers(),
+      new UrlSerializers(),
       { id: id_ee },
     );
   }

@@ -3,7 +3,7 @@ import {
   EntitiesContratos,
   EntitiesRegistrarEntidadeEscolar,
   EntitiesCadastroUser,
-  EntitiesTeste,
+  EntitiesAgenteExterno,
   EntitiesRegistrarDocContrato,
   EntitiesDocsEntidade,
   EntitiesInfosContrato,
@@ -19,7 +19,7 @@ export default interface BackendApiInterfacePost {
   ): Promise<EntitiesRegistrarEntidadeEscolar[]>;
   registrarContrato(userData: any): Promise<EntitiesContratos[]>;
 
-  registrarAgente(userData: any): Promise<EntitiesTeste[]>;
+  registrarAgente(userData: any): Promise<EntitiesAgenteExterno[]>;
 
   listarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
 

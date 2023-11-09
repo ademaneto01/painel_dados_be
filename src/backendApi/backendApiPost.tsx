@@ -7,21 +7,21 @@ import {
   EntitiesRegistrarEntidadeEscolar,
   EntitiesUserLogin,
   EntitiesVincularAgente,
-  EntitiesTeste,
+  EntitiesAgenteExterno,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterfacePost, SerializerInterface } from '@/interfaces';
 import {
-  MockUserLogin,
-  MockCadastroSerializers,
-  MockRegistrarEntidadeEscolar,
-  MockTeste,
-  MockVincularAgente,
-  MockRegistrarDocContrato,
-  MockDocsEntitade,
-  MockContratosSerializers,
-  MockInfosContrato,
-} from '@/serializers/mocks';
+  UserLoginSerializers,
+  CadastroSerializers,
+  RegistrarEntidadeEscolarSerializers,
+  AgenteExternoSerializers,
+  VincularAgenteSerializers,
+  RegistrarDocContratoSerializers,
+  DocsEntitadeSerializers,
+  ContratosSerializers,
+  InfosContratoSerializers,
+} from '@/serializers/prod';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
@@ -48,7 +48,7 @@ export default class BackendApiPost implements BackendApiInterfacePost {
     return await this.post<EntitiesUserLogin>(
       '/login',
       userData,
-      new MockUserLogin(),
+      new UserLoginSerializers(),
     );
   }
 
@@ -56,7 +56,7 @@ export default class BackendApiPost implements BackendApiInterfacePost {
     return await this.post<EntitiesOneUser>(
       '/registrarUsuario',
       userData,
-      new MockCadastroSerializers(),
+      new CadastroSerializers(),
     );
   }
 
@@ -66,7 +66,7 @@ export default class BackendApiPost implements BackendApiInterfacePost {
     return await this.post<EntitiesRegistrarEntidadeEscolar>(
       '/registrarEntidadeEscolar',
       userData,
-      new MockRegistrarEntidadeEscolar(),
+      new RegistrarEntidadeEscolarSerializers(),
     );
   }
 
@@ -76,7 +76,7 @@ export default class BackendApiPost implements BackendApiInterfacePost {
     return await this.post<EntitiesRegistrarDocContrato>(
       '/registrarDocContrato',
       userData,
-      new MockRegistrarDocContrato(),
+      new RegistrarDocContratoSerializers(),
     );
   }
 
@@ -86,7 +86,7 @@ export default class BackendApiPost implements BackendApiInterfacePost {
     return await this.post<EntitiesDocsEntidade>(
       '/registrarDocEntidade',
       userData,
-      new MockDocsEntitade(),
+      new DocsEntitadeSerializers(),
     );
   }
 
@@ -94,7 +94,7 @@ export default class BackendApiPost implements BackendApiInterfacePost {
     return await this.post<EntitiesContratos>(
       '/registrarEntidadeContratual',
       userData,
-      new MockContratosSerializers(),
+      new ContratosSerializers(),
     );
   }
 
@@ -104,15 +104,17 @@ export default class BackendApiPost implements BackendApiInterfacePost {
     return await this.post<EntitiesInfosContrato>(
       '/registrarInfosContrato',
       userData,
-      new MockInfosContrato(),
+      new InfosContratoSerializers(),
     );
   }
 
-  public async registrarAgente(userData: any): Promise<EntitiesTeste[]> {
-    return await this.post<EntitiesTeste>(
+  public async registrarAgente(
+    userData: any,
+  ): Promise<EntitiesAgenteExterno[]> {
+    return await this.post<EntitiesAgenteExterno>(
       '/registrarAgente',
       userData,
-      new MockTeste(),
+      new AgenteExternoSerializers(),
     );
   }
 
@@ -122,7 +124,7 @@ export default class BackendApiPost implements BackendApiInterfacePost {
     return await this.post<EntitiesVincularAgente>(
       '/vincularAgente',
       userData,
-      new MockVincularAgente(),
+      new VincularAgenteSerializers(),
     );
   }
   public async listarVinculoAgente(
@@ -131,7 +133,7 @@ export default class BackendApiPost implements BackendApiInterfacePost {
     return await this.post<EntitiesVincularAgente>(
       '/listarVinculoAgente',
       userData,
-      new MockVincularAgente(),
+      new VincularAgenteSerializers(),
     );
   }
   private async post<T>(

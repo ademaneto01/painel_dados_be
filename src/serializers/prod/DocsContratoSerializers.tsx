@@ -8,7 +8,7 @@ interface DocsContratoMockPayload {
   url_doc: string;
 }
 
-export default class MockDocsContrato implements SerializerInterface {
+export default class DocsContratoSerializers implements SerializerInterface {
   toEntity(otd: DocsContratoMockPayload): EntitiesDocsContrato {
     return new EntitiesDocsContrato({
       id: otd.id,

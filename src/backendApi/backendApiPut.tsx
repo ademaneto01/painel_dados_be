@@ -4,18 +4,18 @@ import {
   EntitiesInfosContrato,
   EntitiesOneUser,
   EntitiesVincularAgente,
-  EntitiesTeste,
+  EntitiesAgenteExterno,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterfacePut, SerializerInterface } from '@/interfaces';
 import {
-  MockOneUserSerializers,
-  MockTeste,
-  MockVincularAgente,
-  MockContratosSerializers,
-  MockEntidadesEscolaresSerializers,
-  MockInfosContrato,
-} from '@/serializers/mocks';
+  OneUserSerializers,
+  AgenteExternoSerializers,
+  VincularAgenteSerializers,
+  ContratosSerializers,
+  EntidadesEscolaresSerializers,
+  InfosContratoSerializers,
+} from '@/serializers/prod';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
@@ -42,7 +42,7 @@ export default class BackendApiPut implements BackendApiInterfacePut {
     return await this.put<EntitiesOneUser>(
       '/editarUsuario',
       userData,
-      new MockOneUserSerializers(),
+      new OneUserSerializers(),
     );
   }
 
@@ -52,7 +52,7 @@ export default class BackendApiPut implements BackendApiInterfacePut {
     return await this.put<EntitiesContratos>(
       '/sobrescreverContrato',
       userData,
-      new MockContratosSerializers(),
+      new ContratosSerializers(),
     );
   }
 
@@ -62,15 +62,15 @@ export default class BackendApiPut implements BackendApiInterfacePut {
     return await this.put<EntitiesContratos>(
       '/editarEntidadeContratual',
       userData,
-      new MockContratosSerializers(),
+      new ContratosSerializers(),
     );
   }
 
-  public async editarAgente(userData: any): Promise<EntitiesTeste[]> {
-    return await this.put<EntitiesTeste>(
+  public async editarAgente(userData: any): Promise<EntitiesAgenteExterno[]> {
+    return await this.put<EntitiesAgenteExterno>(
       '/editarAgente',
       userData,
-      new MockTeste(),
+      new AgenteExternoSerializers(),
     );
   }
 
@@ -80,7 +80,7 @@ export default class BackendApiPut implements BackendApiInterfacePut {
     return await this.put<EntitiesEntidadesEscolares>(
       '/editarEntidadeEscolar',
       userData,
-      new MockEntidadesEscolaresSerializers(),
+      new EntidadesEscolaresSerializers(),
     );
   }
 
@@ -90,7 +90,7 @@ export default class BackendApiPut implements BackendApiInterfacePut {
     return await this.put<EntitiesInfosContrato>(
       '/editarInfosContrato',
       userData,
-      new MockInfosContrato(),
+      new InfosContratoSerializers(),
     );
   }
 
@@ -100,7 +100,7 @@ export default class BackendApiPut implements BackendApiInterfacePut {
     return await this.put<EntitiesVincularAgente>(
       '/editarVinculoAgente',
       userData,
-      new MockVincularAgente(),
+      new VincularAgenteSerializers(),
     );
   }
 

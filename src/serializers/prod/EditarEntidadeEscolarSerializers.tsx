@@ -1,4 +1,4 @@
-import { EntitiesEntidadesEscolaresPDG } from '@/entities';
+import { EntitiesEditarEntidadeEscolar } from '@/entities';
 import { SerializerInterface } from '@/interfaces';
 
 interface UsersMockPayload {
@@ -12,15 +12,17 @@ interface UsersMockPayload {
   cidade: string;
   uf: string;
   bairro: string;
+  url_dados: string;
+  id_usuario_pdg: string;
   complemento: string;
   ativo: boolean;
 }
 
-export default class MockEntidadeEscolarPDGSerializers
+export default class EditarEntidadeEscolarSerializers
   implements SerializerInterface
 {
-  toEntity(otd: UsersMockPayload): EntitiesEntidadesEscolaresPDG {
-    return new EntitiesEntidadesEscolaresPDG({
+  toEntity(otd: UsersMockPayload): EntitiesEditarEntidadeEscolar {
+    return new EntitiesEditarEntidadeEscolar({
       id: otd.id,
       uuid_ec: otd.uuid_ec,
       id_ec: otd.id_ec,
@@ -31,6 +33,8 @@ export default class MockEntidadeEscolarPDGSerializers
       cidade: otd.cidade,
       uf: otd.uf,
       bairro: otd.bairro,
+      url_dados: otd.url_dados,
+      id_usuario_pdg: otd.id_usuario_pdg,
       complemento: otd.complemento,
       ativo: otd.ativo,
     });
