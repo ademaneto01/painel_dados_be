@@ -124,7 +124,7 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
                 <div className={styles.boxUrl}>{formData.url_dados}</div>
               </div>
               <p>
-                <span className={styles.label}>Endereço:</span>{' '}
+                <span className={styles.label}>Rua:</span>{' '}
                 {formData.endereco}
               </p>
             </div>

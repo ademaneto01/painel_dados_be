@@ -3,6 +3,7 @@ import {
   CreateButton,
   Loader,
   BackButton,
+  DeleteButton,
 } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { useEffect, useState } from 'react';
@@ -124,10 +125,10 @@ export default function InfosContrato(): JSX.Element {
         <div className={styles.boxBtns}>
           {!error ? (
             <>
-              <CreateButton
-                color={'var(--white'}
+              <DeleteButton
+                color={'var(--white)'}
                 size={'10rem'}
-                colorBackGround={'red'}
+                colorBackGround={'var(--red-300)'}
                 text="Deletar Infos."
                 onClick={() => setModaldelete(true)}
               />
