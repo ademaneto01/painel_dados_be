@@ -56,7 +56,7 @@ export default function SobreescreverContrato(): JSX.Element {
         uf: response[0]?.uf || '',
         bairro: response[0]?.bairro || '',
         complemento: response[0]?.complemento || '',
-        bo_rede: response[0]?.bo_rede || null,
+        bo_rede: response[0].bo_rede,
       });
     }
   };

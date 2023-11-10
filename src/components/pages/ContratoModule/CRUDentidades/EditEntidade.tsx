@@ -72,7 +72,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
         url_dados: response[0]?.url_dados || '',
         uuid_ec: response[0]?.uuid_ec || '',
         id_usuario_pdg: response[0]?.id_usuario_pdg || '',
-        ativo: response[0]?.ativo || null,
+        ativo: response[0].ativo,
       });
     }
   };

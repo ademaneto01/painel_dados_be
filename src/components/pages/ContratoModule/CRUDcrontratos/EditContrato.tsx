@@ -47,6 +47,7 @@ export default function EditContrato(): JSX.Element {
 
   const fetchDataInitial = async () => {
     const response = await fetchContractData(idContrato);
+
     if (response) {
       setFormData({
         nome_simplificado: response[0]?.nome_simplificado || '',
@@ -58,8 +59,8 @@ export default function EditContrato(): JSX.Element {
         uf: response[0]?.uf || '',
         bairro: response[0]?.bairro || '',
         complemento: response[0]?.complemento || '',
-        ativo: response[0]?.ativo || null,
-        bo_rede: response[0]?.bo_rede || null,
+        ativo: response[0].ativo,
+        bo_rede: response[0].bo_rede,
       });
     }
   };
@@ -178,6 +179,7 @@ export default function EditContrato(): JSX.Element {
     if (name === 'ativo' || name === 'bo_rede') {
       const booleanValue =
         value === 'true' ? true : value === 'false' ? false : null;
+      console.log(value);
       setFormData((prevState) => ({ ...prevState, [name]: booleanValue }));
     } else {
       setFormData((prevState) => ({ ...prevState, [name]: value }));
