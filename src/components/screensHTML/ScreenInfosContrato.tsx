@@ -12,9 +12,9 @@ export default function ScreensInfosContrato(
     <div className={styles.contract_info}>
       {props.data.map((contrato, index) => (
         <div key={index}>
-          <p>Ano de Assinatura: {contrato.ano_assinatura}</p>
-          <p>Ano de Operação: {contrato.ano_operacao}</p>
-          <p>Ano de Término: {contrato.ano_termino}</p>
+          <p>Data de Assinatura: {contrato.ano_assinatura}</p>
+          <p>Data de Operação: {contrato.ano_operacao}</p>
+          <p>Data de Término: {contrato.ano_termino}</p>
           <p>Ativo: {contrato.ativo ? 'Sim' : 'Não'}</p>
           <p>Responsável pelo Frete: {contrato.resp_frete}</p>
           <p>Pedido Mínimo: {contrato.pedido_min}</p>

@@ -4,9 +4,9 @@ import { SerializerInterface } from '@/interfaces';
 interface InfosContratoMockPayload {
   id: string;
   uuid_ec: string;
-  ano_assinatura: number;
-  ano_operacao: number;
-  ano_termino: number;
+  ano_assinatura: string;
+  ano_operacao: string;
+  ano_termino: string;
   ativo: boolean;
   resp_frete: string;
   pedido_min: number;

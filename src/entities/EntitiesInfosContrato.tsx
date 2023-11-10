@@ -1,9 +1,9 @@
 interface UserProps {
   id: string;
   uuid_ec: string;
-  ano_assinatura: number;
-  ano_operacao: number;
-  ano_termino: number;
+  ano_assinatura: string;
+  ano_operacao: string;
+  ano_termino: string;
   ativo: boolean;
   resp_frete: string;
   pedido_min: number;
@@ -13,9 +13,9 @@ interface UserProps {
 export default class EntitiesInfosContrato {
   readonly id: string;
   readonly uuid_ec: string;
-  readonly ano_assinatura: number;
-  readonly ano_operacao: number;
-  readonly ano_termino: number;
+  readonly ano_assinatura: string;
+  readonly ano_operacao: string;
+  readonly ano_termino: string;
   readonly ativo: boolean;
   readonly resp_frete: string;
   readonly pedido_min: number;

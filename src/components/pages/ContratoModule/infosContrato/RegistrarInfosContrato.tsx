@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
+import InputMask from 'react-input-mask';
 import { BackendApiPost } from '@/backendApi';
 import { ErrorComponent } from '@/errors/index';
 import { PageEnumContratos } from '@/enums';
@@ -7,9 +8,9 @@ import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 
 interface FormData {
-  ano_assinatura: number | null;
-  ano_operacao: number | null;
-  ano_termino: number | null;
+  ano_assinatura: string | null;
+  ano_operacao: string | null;
+  ano_termino: string | null;
   ativo: boolean | null;
   resp_frete: string;
   pedido_min: number | null;
@@ -62,11 +63,7 @@ export default function RegistrarInfosContrato(): JSX.Element {
     const { name, value } = e.target;
 
     let updatedValue: any;
-    if (
-      ['ano_assinatura', 'ano_operacao', 'ano_termino', 'pedido_min'].includes(
-        name,
-      )
-    ) {
+    if (['pedido_min'].includes(name)) {
       updatedValue = value ? parseInt(value, 10) : null;
     } else if (
       ['ativo'].includes(name) ||
@@ -148,10 +145,11 @@ const FormComponent: React.FC<any> = ({
   return (
     <form className={styles.boxForm} onSubmit={handleSubmit}>
       <label className={styles.labelStandard}>
-        Ano de Assinatura
-        <input
-          type="number"
-          placeholder="Ano de Assinatura"
+        Data de Assinatura
+        <InputMask
+          type="text"
+          mask="99/99/9999"
+          placeholder="Data de Assinatura"
           name="ano_assinatura"
           value={formData.ano_assinatura}
           onChange={handleInputChange}
@@ -160,10 +158,11 @@ const FormComponent: React.FC<any> = ({
       </label>
 
       <label className={styles.labelStandard}>
-        Ano de Operação
-        <input
-          type="number"
-          placeholder="Ano de Operação"
+        Data de Operação
+        <InputMask
+          type="text"
+          mask="99/99/9999"
+          placeholder="Data de Operação"
           name="ano_operacao"
           value={formData.ano_operacao}
           onChange={handleInputChange}
@@ -171,10 +170,11 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Ano de Termino
-        <input
-          type="number"
-          placeholder="Ano de Termino"
+        Data de Termino
+        <InputMask
+          type="text"
+          mask="99/99/9999"
+          placeholder="Data de Termino"
           name="ano_termino"
           value={formData.ano_termino}
           onChange={handleInputChange}

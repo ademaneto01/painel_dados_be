@@ -29,3 +29,14 @@
   min-height: 20vh;
   margin-bottom: 5em;
 }
+.boxInfosContrato {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 100%;
+  margin-top: 1rem;
+}
+.msgInfosContratoNotFound {
+  color: var(--red-300);
+  margin-top: 3rem;
+}

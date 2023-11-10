@@ -79,25 +79,10 @@ function Navbar() {
 
 function InfosContratoScreen({ data, error, msgError }: any) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        height: '100%',
-        marginTop: '1rem',
-      }}
-    >
+    <div className={styles.boxInfosXContrato}>
       {error ? (
         <div className={styles.pageContainer}>
-          <h2
-            style={{
-              color: 'red',
-              marginTop: '3rem',
-            }}
-          >
-            {msgError}
-          </h2>
+          <h2 className={styles.msgInfosContratoNotFound}>{msgError}</h2>
         </div>
       ) : (
         <ScreensInfosContrato data={data} />
