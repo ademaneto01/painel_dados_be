@@ -66,6 +66,8 @@
   width: 102%;
   padding-left: 0.7rem;
   height: 2.5rem;
+  max-height: 4rem;
+  overflow: auto;
   color: var(--azul-tenro);
   border-radius: 5px;
   border: 1px solid var(--gray-200);

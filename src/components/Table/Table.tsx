@@ -42,7 +42,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
   const [filterSchool, setFilterSchool] = useState('');
   const [filterProfile, setFilterProfile] = useState('');
   const [filterCargo, setFilterCargo] = useState('');
-  const itemsPerPage = 6;
+  const itemsPerPage = 5;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
