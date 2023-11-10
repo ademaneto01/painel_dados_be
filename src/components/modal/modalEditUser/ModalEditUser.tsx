@@ -1,9 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalEditUser.module.css';
-import { FailedToFetchError } from '@/errors';
 import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
-import ErrorComponent from '@/components/ErrorComponent';
+import { ErrorComponent } from '@/errors/index';
 
 interface FormData {
   nome: string | null;

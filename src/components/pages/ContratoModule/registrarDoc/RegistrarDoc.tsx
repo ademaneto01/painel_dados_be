@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import styles from '@/styles/ModalAddDoc.module.css';
-import { FailedToFetchError } from '@/errors';
 import { BackendApiPost } from '@/backendApi';
 import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
-import ErrorComponent from '@/components/ErrorComponent';
+import { ErrorComponent } from '@/errors/index';
 
 export default function RegistrarDoc(): JSX.Element {
   const [nomeDocInputs, setNomeDocInputs] = useState<string[]>(['']);

@@ -4,7 +4,7 @@ import { BackendApiGet } from '@/backendApi';
 import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
 import EntitiesUsersPDG from '@/entities/EntitiesUsuariosPDG';
-import ErrorComponent from '@/components/ErrorComponent';
+import { ErrorComponent } from '@/errors/index';
 
 interface FormData {
   nome_operacional: string;

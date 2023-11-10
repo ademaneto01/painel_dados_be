@@ -3,7 +3,7 @@ import Action from '../Action';
 import { FiEdit } from 'react-icons/fi';
 import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
-import { ModalDelete, ModalAddUser, ModalEditUser } from '../../modal'; // Import ModalEditUser
+import { ModalDelete, ModalEditUser } from '../../modal';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import { BackendApiDelete } from '@/backendApi';
@@ -23,7 +23,9 @@ function reactIcon(icon: IconType, color?: string): JSX.Element {
   return icon(options);
 }
 
-export default function TableActionsUsers(props: PropsForExclusion): JSX.Element {
+export default function TableActionsUsers(
+  props: PropsForExclusion,
+): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
   const [showModalEditUser, setShowModalEditUser] = useState(''); // State for the edit user modal
   const { setUsersUpdated } = useGlobalContext();

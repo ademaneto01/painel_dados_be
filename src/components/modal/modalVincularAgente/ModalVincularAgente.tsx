@@ -1,10 +1,9 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
-import { FailedToFetchError } from '@/errors';
 import { BackendApiGet, BackendApiPost } from '@/backendApi';
-import ErrorComponent from '@/components/ErrorComponent';
+import { ErrorComponent } from '@/errors/index';
 import { useGlobalContext } from '@/context/store';
-import { EntitiesTeste } from '@/entities';
+import { EntitiesAgenteExterno } from '@/entities';
 
 interface FormData {
   id_escola: string;
@@ -69,7 +68,7 @@ export default function ModalVicularAgente({
   const [msgError, setMsgError] = useState('');
   const { setPageEscolasPDG, idEntidadeEscolar, setUsersUpdated } =
     useGlobalContext();
-  const [agenteData, setAgenteData] = useState<EntitiesTeste[]>([]);
+  const [agenteData, setAgenteData] = useState<EntitiesAgenteExterno[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleApiErrors = (error: any) => {

@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
 import { BackendApiGet, BackendApiPost, BackendApiPut } from '@/backendApi';
-import ErrorComponent from '@/components/ErrorComponent';
+import { ErrorComponent } from '@/errors/index';
 import { useGlobalContext } from '@/context/store';
 
 interface FormData {

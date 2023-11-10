@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/ModalDados.module.css';
-import { FailedToFetchError } from '@/errors';
 import { BackendApiGet } from '@/backendApi';
 import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
-import ErrorComponent from '@/components/ErrorComponent';
+import { ErrorComponent } from '@/errors/index';
 
 interface FormData {
   nome: string;

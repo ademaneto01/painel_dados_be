@@ -1,9 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import InputMask from 'react-input-mask';
-import { FailedToFetchError } from '@/errors';
 import { BackendApiPost } from '@/backendApi';
-import ErrorComponent from '@/components/ErrorComponent';
+import { ErrorComponent } from '@/errors/index';
 import { PageEnumAgentesExterno } from '@/enums';
 import { useGlobalContext } from '@/context/store';
 import { BackButton, PageContentContainer } from '@/components/shared';

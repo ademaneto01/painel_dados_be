@@ -1,6 +1,6 @@
 import styles from '../../styles/Table.module.css';
 import { useCallback, useMemo, useState } from 'react';
-import ErrorComponent from '../ErrorComponent';
+import { ErrorComponent } from '@/errors/index';
 import { Loader } from '../shared';
 import Column from './Column';
 import TableHeaders from './TableHeaders';

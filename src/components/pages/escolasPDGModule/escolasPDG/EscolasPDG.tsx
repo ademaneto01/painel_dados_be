@@ -1,11 +1,11 @@
-import { CreateButton, PageContentContainer } from '@/components/shared';
+import { PageContentContainer } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Column, Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
 import { EntitiesEntidadesEscolaresPDG } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
-import { PageEnumContratos, PageEnumEscolasPDG } from '@/enums';
+import { PageEnumEscolasPDG } from '@/enums';
 
 const COLUMNS = [
   new Column('Nome Operacional', 'nome_operacional'),
