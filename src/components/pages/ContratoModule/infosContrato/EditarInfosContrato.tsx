@@ -91,11 +91,7 @@ export default function EditarInfosContrato(): JSX.Element {
     const { name, value } = e.target;
 
     let updatedValue: any;
-    if (
-      ['ano_assinatura', 'ano_operacao', 'ano_termino', 'pedido_min'].includes(
-        name,
-      )
-    ) {
+    if (['pedido_min'].includes(name)) {
       updatedValue = value ? parseInt(value, 10) : null;
     } else if (
       ['ativo'].includes(name) ||

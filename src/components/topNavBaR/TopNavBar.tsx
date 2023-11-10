@@ -78,11 +78,12 @@ export default function TopNavBar(props: TopNavBarProps) {
         <div className={styles.logoContainer}>
           <Image
             className={styles.logo}
-            src="/beyond_by_be.png"
+            src="/logo_be_branco-H.png"
             alt="Beyond by Be"
             priority={true}
+            aspect-ratio={1}
             width={120}
-            height={28}
+            height={50}
           />
         </div>
 

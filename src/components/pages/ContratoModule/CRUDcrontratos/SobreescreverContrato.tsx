@@ -273,10 +273,10 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Endereço
+        Rua
         <input
           type="text"
-          placeholder="Endereço"
+          placeholder="Rua"
           name="endereco"
           value={formData.endereco ?? ''}
           onChange={handleInputChange}
