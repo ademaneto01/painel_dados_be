@@ -78,7 +78,6 @@ function Navbar() {
 }
 
 function InfosContratoScreen({ data, error, msgError }: any) {
-  console.log(msgError);
   return (
     <div
       style={{

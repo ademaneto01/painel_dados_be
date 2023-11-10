@@ -33,7 +33,7 @@ export default class BackendApiPost implements BackendApiInterfacePost {
     this.accessToken = accessToken || undefined;
 
     this.api = axios.create({
-      baseURL: 'http://localhost:3001',
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       timeout: 30000,
       headers: {
         'Content-Type': 'application/json',

@@ -92,38 +92,38 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
           </div>
           <div className={styles.boxDados}>
             <div className={styles.dadosColumn}>
-              <p>
+              <div>
                 <div className={styles.conteinerUrlDados}>
                   <span className={styles.label}>Nome:</span>{' '}
                   <div className={styles.boxUrl}>{formData.nome}</div>
                 </div>
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>E-mail Primário:</span>{' '}
                 {formData.email_primario}
-              </p>
+              </div>
 
-              <p>
+              <div>
                 <span className={styles.label}>E-mail Secundário:</span>{' '}
                 {formData.email_secundario}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>Interlocutor:</span>{' '}
                 {formData.interlocutor === true ? 'Sim' : 'Não'}
-              </p>
+              </div>
             </div>
             <div className={styles.dadosColumn}>
-              <p>
+              <div>
                 <span className={styles.label}>Data de Nascimento:</span>{' '}
                 {formData.data_nascimento}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>Telefone:</span>{' '}
                 {formData.telefone}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>Cargo:</span> {formData.cargo}
-              </p>
+              </div>
             </div>
           </div>
         </div>

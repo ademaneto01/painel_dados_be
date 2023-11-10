@@ -101,50 +101,50 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
           </div>
           <div className={styles.boxDados}>
             <div className={styles.dadosColumn}>
-              <p>
+              <div>
                 <div className={styles.conteinerUrlDados}>
                   <span className={styles.label}>Nome Simplificado:</span>{' '}
                   <div className={styles.boxUrl}>
                     {formData.nome_simplificado}
                   </div>
                 </div>
-              </p>
-              <p>
+              </div>
+              <div>
                 <div className={styles.conteinerUrlDados}>
                   <span className={styles.label}>Razao Social:</span>{' '}
                   <div className={styles.boxUrl}>{formData.razao_social}</div>
                 </div>
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>CNPJ Contratual:</span>{' '}
                 {formData.cnpj_cont}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>QTD. Escolas:</span>{' '}
                 {formData.qtdescolas}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>Endereço:</span>{' '}
                 {formData.endereco}
-              </p>
+              </div>
             </div>
             <div className={styles.dadosColumn}>
-              <p>
+              <div>
                 <span className={styles.label}>CEP:</span> {formData.cep}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>Cidade:</span> {formData.cidade}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>UF:</span> {formData.uf}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>Bairro:</span> {formData.bairro}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>Complemento:</span>{' '}
                 {formData.complemento}
-              </p>
+              </div>
             </div>
           </div>
         </div>

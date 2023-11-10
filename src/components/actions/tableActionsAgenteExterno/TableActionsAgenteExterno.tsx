@@ -53,7 +53,6 @@ export default function TableActionsAgenteExterno(
 
   function handleClickOpenEditAgente(id: string): void {
     setIdAgente(props.uuid_agente);
-    console.log('ok');
     setPageAgentesExterno(PageEnumAgentesExterno.editarAgente);
   }
 

@@ -107,45 +107,45 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
           </div>
           <div className={styles.boxDados}>
             <div className={styles.dadosColumn}>
-              <p>
+              <div>
                 <span className={styles.label}>Nome Operacional:</span>{' '}
                 {formData.nome_operacional}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>CNPJ Escola:</span>{' '}
                 {formData.cnpj_escola}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>RESP. Pedagógico:</span>{' '}
                 {usuarioPDG.length > 0 ? usuarioPDG[0].nome : 'N/A'}
-              </p>
+              </div>
               <div className={styles.conteinerUrlDados}>
                 <span className={styles.label}>URL Dados:</span>{' '}
                 <div className={styles.boxUrl}>{formData.url_dados}</div>
               </div>
-              <p>
+              <div>
                 <span className={styles.label}>Endereço:</span>{' '}
                 {formData.endereco}
-              </p>
+              </div>
             </div>
             <div className={styles.dadosColumn}>
-              <p>
+              <div>
                 <span className={styles.label}>CEP:</span> {formData.cep}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>Cidade:</span> {formData.cidade}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>UF:</span> {formData.uf}
-              </p>
-              <p>
+              </div>
+              <div>
                 <span className={styles.label}>Bairro:</span> {formData.bairro}
-              </p>
+              </div>
 
-              <p>
+              <div>
                 <span className={styles.label}>Complemento:</span>{' '}
                 {formData.complemento}
-              </p>
+              </div>
             </div>
           </div>
         </div>
