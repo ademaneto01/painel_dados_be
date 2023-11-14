@@ -13,6 +13,7 @@ interface EntidadesEscolaresProps {
   uf: string;
   bairro: string;
   url_dados: string;
+  instagram: string;
   id_usuario_pdg: string;
   complemento: string;
   ativo: boolean;
@@ -30,6 +31,7 @@ export default class EntitiesEditarEntidadeEscolar {
   readonly uf: string;
   readonly bairro: string;
   readonly url_dados: string;
+  readonly instagram: string;
   readonly id_usuario_pdg: string;
   readonly complemento: string;
   readonly ativo: boolean;
@@ -46,6 +48,7 @@ export default class EntitiesEditarEntidadeEscolar {
     uf,
     bairro,
     url_dados,
+    instagram,
     id_usuario_pdg,
     complemento,
     ativo,
@@ -61,6 +64,7 @@ export default class EntitiesEditarEntidadeEscolar {
     this.uf = uf;
     this.bairro = bairro;
     this.url_dados = url_dados;
+    this.instagram = instagram;
     this.id_usuario_pdg = id_usuario_pdg;
     this.complemento = complemento;
     this.ativo = ativo;

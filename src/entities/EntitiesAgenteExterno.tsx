@@ -7,6 +7,8 @@ interface UserProps {
   bo_ativo: boolean;
   nu_telefone: string;
   data_nascimento: string;
+  linkedin: string;
+  instagram: string;
   interlocutor: boolean;
   no_email_primario: string;
   no_email_secundario: string;
@@ -19,6 +21,8 @@ export default class EntitiesAgenteExterno {
   readonly bo_ativo: boolean;
   readonly nu_telefone: string;
   readonly data_nascimento: string;
+  readonly linkedin: string;
+  readonly instagram: string;
   readonly interlocutor: boolean;
   readonly no_email_primario: string;
   readonly no_email_secundario: string;
@@ -30,6 +34,8 @@ export default class EntitiesAgenteExterno {
     bo_ativo,
     nu_telefone,
     data_nascimento,
+    linkedin,
+    instagram,
     interlocutor,
     no_email_primario,
     no_email_secundario,
@@ -40,6 +46,8 @@ export default class EntitiesAgenteExterno {
     this.bo_ativo = bo_ativo;
     this.nu_telefone = nu_telefone;
     this.data_nascimento = data_nascimento;
+    this.linkedin = linkedin;
+    this.instagram = instagram;
     this.interlocutor = interlocutor;
     this.no_email_primario = no_email_primario;
     this.no_email_secundario = no_email_secundario;

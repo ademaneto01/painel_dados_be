@@ -45,10 +45,9 @@ export default function RegistrarDoc(): JSX.Element {
     const errors: string[] = [];
 
     if (nomeDocInputs.length === 1 || urlDocInputs.length === 1) {
-      console.log('entrou');
       errors.push('Todos os campos são obrigatórios...');
     }
-    console.log(errors.length, 'aqui');
+
     if (errors.length > 0) {
       setError(true);
       setMsgError(errors.join(' '));

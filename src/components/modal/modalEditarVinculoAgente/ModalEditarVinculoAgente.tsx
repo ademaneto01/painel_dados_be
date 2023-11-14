@@ -119,7 +119,7 @@ export default function ModalEditarVinculoAgente({
       const responseUserPdg = await backendApiPost.listarVinculoAgente(
         userData,
       );
-      console.log(responseUserPdg, 'aqui');
+
       const mappedData: FormData = {
         id_escola: responseUserPdg[0].id_escola,
         id_prof: responseUserPdg[0].id_prof,

@@ -14,6 +14,8 @@ interface FormData {
   email_secundario: string;
   telefone: string;
   data_nascimento: string;
+  linkedin: string;
+  instagram: string;
   ativo: boolean;
   interlocutor: boolean;
 }
@@ -26,6 +28,8 @@ export default function RegistrarAgente(): JSX.Element {
     email_secundario: '',
     telefone: '',
     data_nascimento: '',
+    linkedin: '',
+    instagram: '',
     ativo: true,
     interlocutor: false,
   });
@@ -176,7 +180,6 @@ const FormComponent: React.FC<any> = ({
             <option value="Secretario">Secretário(a)</option>
           </select>
         </label>
-
         <label className={styles.labelStandard}>
           Data de Nascimento
           <InputMask
@@ -190,16 +193,37 @@ const FormComponent: React.FC<any> = ({
           />
         </label>
         <label className={styles.labelStandard}>
-          E-mail Primário
+          Linkedin
           <input
             type="text"
-            placeholder="E-mail Primário"
-            name="email_primario"
-            value={formData.email_primario}
+            placeholder="Linkedin"
+            name="linkedin"
+            value={formData.linkedin}
             onChange={handleInputChange}
             className={styles.inputStandard}
           />
         </label>
+        <label className={styles.labelStandard}>
+          Instagram
+          <input
+            type="text"
+            placeholder="Instagram"
+            name="instagram"
+            value={formData.instagram}
+            onChange={handleInputChange}
+            className={styles.inputStandard}
+          />
+        </label>
+        <label className={styles.labelStandard}>E-mail Primário</label>
+        <input
+          type="text"
+          placeholder="E-mail Primário"
+          name="email_primario"
+          value={formData.email_primario}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+
         <label className={styles.labelStandard}>
           E-mail Secundário
           <input

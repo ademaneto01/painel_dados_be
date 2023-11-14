@@ -102,3 +102,6 @@
   margin-bottom: 1rem;
   gap: 1rem;
 }
+.required {
+  color: var(--red-300);
+}

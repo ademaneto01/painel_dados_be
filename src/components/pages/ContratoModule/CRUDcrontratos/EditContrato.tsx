@@ -179,7 +179,6 @@ export default function EditContrato(): JSX.Element {
     if (name === 'ativo' || name === 'bo_rede') {
       const booleanValue =
         value === 'true' ? true : value === 'false' ? false : null;
-      console.log(value);
       setFormData((prevState) => ({ ...prevState, [name]: booleanValue }));
     } else {
       setFormData((prevState) => ({ ...prevState, [name]: value }));

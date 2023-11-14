@@ -8,6 +8,8 @@ interface AgenteExternoMockPayload {
   bo_ativo: boolean;
   nu_telefone: string;
   data_nascimento: string;
+  linkedin: string;
+  instagram: string;
   interlocutor: boolean;
   no_email_primario: string;
   no_email_secundario: string;
@@ -22,6 +24,8 @@ export default class AgenteExternoSerializers implements SerializerInterface {
       bo_ativo: otd.bo_ativo,
       nu_telefone: otd.nu_telefone,
       data_nascimento: otd.data_nascimento,
+      linkedin: otd.linkedin,
+      instagram: otd.instagram,
       interlocutor: otd.interlocutor,
       no_email_primario: otd.no_email_primario,
       no_email_secundario: otd.no_email_secundario,

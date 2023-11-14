@@ -8,12 +8,14 @@ import { useGlobalContext } from '@/context/store';
 import { BackButton, PageContentContainer } from '@/components/shared';
 
 interface FormData {
-  nome: string | null;
-  cargo: string | null;
-  email_primario: string | null;
+  nome: string;
+  cargo: string;
+  email_primario: string;
   email_secundario: string | null;
   telefone: string | null;
   data_nascimento: string | null;
+  linkedin: string | null;
+  instagram: string | null;
   interlocutor: boolean;
   ativo: boolean;
 }
@@ -26,6 +28,8 @@ export default function EditarAgente(): JSX.Element {
     email_secundario: '',
     telefone: '',
     data_nascimento: '',
+    linkedin: '',
+    instagram: '',
     interlocutor: false,
     ativo: true,
   });
@@ -79,6 +83,8 @@ export default function EditarAgente(): JSX.Element {
         email_secundario: infosContratoData[0].no_email_secundario,
         telefone: infosContratoData[0].nu_telefone,
         data_nascimento: infosContratoData[0].data_nascimento,
+        linkedin: infosContratoData[0].linkedin,
+        instagram: infosContratoData[0].instagram,
         interlocutor: infosContratoData[0].interlocutor,
         ativo: infosContratoData[0].bo_ativo,
       });
@@ -107,10 +113,17 @@ export default function EditarAgente(): JSX.Element {
 
   const validateForm = (): boolean => {
     const errors: string[] = [];
-    if (Object.values(formData).some((v) => v === '' || v === null)) {
-      errors.push('Todos campos são obrigatórios...');
+    if (!formData.nome.trim()) {
+      errors.push('O campo nome é obrigatório.');
     }
 
+    if (!formData.cargo) {
+      errors.push('O campo cargo é obrigatório.');
+    }
+
+    if (!formData.email_primario.trim()) {
+      errors.push('O campo e-mail primário é obrigatório.');
+    }
     if (errors.length) {
       setError(true);
       setMsgError(errors.join(' '));
@@ -172,7 +185,7 @@ const FormComponent: React.FC<any> = ({
     <>
       <form className={styles.boxForm} onSubmit={handleSubmit}>
         <label className={styles.labelStandard}>
-          Nome
+          Nome <span className={styles.required}>*</span>
           <input
             type="text"
             placeholder="Nome"
@@ -183,7 +196,7 @@ const FormComponent: React.FC<any> = ({
           />
         </label>
         <label className={styles.labelStandard}>
-          Cargo
+          Cargo <span className={styles.required}>*</span>
           <select
             value={formData.cargo ?? ''}
             onChange={handleInputChange}
@@ -211,7 +224,29 @@ const FormComponent: React.FC<any> = ({
           />
         </label>
         <label className={styles.labelStandard}>
-          E-mail Primário
+          Linkedin
+          <input
+            type="text"
+            placeholder="Linkedin"
+            name="linkedin"
+            value={formData.linkedin ?? ''}
+            onChange={handleInputChange}
+            className={styles.inputStandard}
+          />
+        </label>
+        <label className={styles.labelStandard}>
+          Instagram
+          <input
+            type="text"
+            placeholder="Instagram"
+            name="instagram"
+            value={formData.instagram ?? ''}
+            onChange={handleInputChange}
+            className={styles.inputStandard}
+          />
+        </label>
+        <label className={styles.labelStandard}>
+          E-mail Primário <span className={styles.required}>*</span>
           <input
             type="text"
             placeholder="E-mail Primário"

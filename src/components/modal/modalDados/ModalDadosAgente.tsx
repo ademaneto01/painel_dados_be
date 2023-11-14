@@ -12,6 +12,8 @@ interface FormData {
   email_secundario: string;
   telefone: string;
   data_nascimento: string;
+  instagram: string;
+  linkedin: string;
   interlocutor: boolean;
   ativo: boolean;
 }
@@ -36,6 +38,8 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
     email_secundario: '',
     telefone: '',
     data_nascimento: '',
+    instagram: '',
+    linkedin: '',
     interlocutor: false,
     ativo: true,
   });
@@ -60,6 +64,8 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
         email_secundario: response[0].no_email_secundario,
         telefone: response[0].nu_telefone,
         data_nascimento: response[0].data_nascimento,
+        instagram: response[0].instagram,
+        linkedin: response[0].linkedin,
         interlocutor: response[0].interlocutor,
         ativo: response[0].bo_ativo,
       });
@@ -102,20 +108,27 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
                 <span className={styles.label}>E-mail Primário:</span>{' '}
                 {formData.email_primario}
               </div>
-
               <div>
                 <span className={styles.label}>E-mail Secundário:</span>{' '}
                 {formData.email_secundario}
               </div>
               <div>
-                <span className={styles.label}>Interlocutor:</span>{' '}
-                {formData.interlocutor === true ? 'Sim' : 'Não'}
+                <span className={styles.label}>Linkedin:</span>{' '}
+                {formData.linkedin}
+              </div>
+              <div>
+                <span className={styles.label}>Instagram:</span>{' '}
+                {formData.instagram}
               </div>
             </div>
             <div className={styles.dadosColumn}>
               <div>
                 <span className={styles.label}>Data de Nascimento:</span>{' '}
                 {formData.data_nascimento}
+              </div>
+              <div>
+                <span className={styles.label}>Interlocutor:</span>{' '}
+                {formData.interlocutor === true ? 'Sim' : 'Não'}
               </div>
               <div>
                 <span className={styles.label}>Telefone:</span>{' '}

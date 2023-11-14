@@ -19,6 +19,7 @@ interface FormData {
   bairro: string;
   complemento: string;
   url_dados: string | null;
+  instagram: string;
   id_usuario_pdg: string;
   ativo: boolean | null;
 }
@@ -34,6 +35,7 @@ export default function NovaEntidade(): JSX.Element {
     bairro: '',
     complemento: '',
     url_dados: '',
+    instagram: '',
     id_usuario_pdg: '',
     ativo: true,
   });
@@ -147,7 +149,12 @@ export default function NovaEntidade(): JSX.Element {
     const errors: string[] = [];
 
     for (const [key, value] of Object.entries(formData)) {
-      if (key !== 'url_dados' && (value === '' || value === null)) {
+      if (
+        key !== 'url_dados' &&
+        key !== 'instagram' &&
+        key !== 'id_usuario_pdg' &&
+        (value === '' || value === null)
+      ) {
         errors.push('Todos campos são obrigatórios...');
         break;
       }
@@ -330,6 +337,17 @@ const FormComponent: React.FC<any> = ({
           placeholder="url_dados"
           name="url_dados"
           value={formData.url_dados}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Instagram
+        <input
+          type="text"
+          placeholder="Instagram"
+          name="instagram"
+          value={formData.instagram}
           onChange={handleInputChange}
           className={styles.inputStandard}
         />

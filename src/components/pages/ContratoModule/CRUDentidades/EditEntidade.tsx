@@ -20,6 +20,7 @@ interface FormData {
   bairro: string | null;
   complemento: string | null;
   url_dados: string | null;
+  instagram: string | null;
   uuid_ec: string | null;
   id_usuario_pdg: string | null;
   ativo: boolean | null;
@@ -42,6 +43,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
     bairro: '',
     complemento: '',
     url_dados: '',
+    instagram: '',
     uuid_ec: '',
     id_usuario_pdg: '',
     ativo: true,
@@ -70,6 +72,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
         bairro: response[0]?.bairro || '',
         complemento: response[0]?.complemento || '',
         url_dados: response[0]?.url_dados || '',
+        instagram: response[0]?.instagram || '',
         uuid_ec: response[0]?.uuid_ec || '',
         id_usuario_pdg: response[0]?.id_usuario_pdg || '',
         ativo: response[0].ativo,
@@ -94,7 +97,6 @@ export default function EditEntidadeEscolar(): JSX.Element {
 
       return await backendApi.localizarEntidadeEscolar(id);
     } catch (error) {
-      console.log('erro aqui');
       handleApiErrors(error);
       return null;
     }
@@ -113,20 +115,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiPut(`${token}`);
-      await backendApi.editarEntidadeEscolar({
-        id: idEntidadeEscolar,
-        nome_operacional: formData.nome_operacional,
-        cnpj_escola: formData.cnpj_escola,
-        cep: formData.cep,
-        endereco: formData.endereco,
-        cidade: formData.cidade,
-        uf: formData.uf,
-        bairro: formData.bairro,
-        complemento: formData.complemento,
-        url_dados: formData.url_dados,
-        id_usuario_pdg: formData.id_usuario_pdg,
-        ativo: formData.ativo,
-      });
+      await backendApi.editarEntidadeEscolar(formData);
     } catch (error) {
       handleApiErrors(error);
     } finally {
@@ -175,11 +164,17 @@ export default function EditEntidadeEscolar(): JSX.Element {
     const errors: string[] = [];
 
     for (const [key, value] of Object.entries(formData)) {
-      if (key !== 'url_dados' && (value === '' || value === null)) {
+      if (
+        key !== 'url_dados' &&
+        key !== 'instagram' &&
+        key !== 'id_usuario_pdg' &&
+        (value === '' || value === null)
+      ) {
         errors.push('Todos campos são obrigatórios...');
         break;
       }
     }
+
     if (formData.uf && formData.uf.length > 2) {
       errors.push('Campo UF é permitido somente dois caracteres...');
     }
@@ -201,6 +196,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
+
     if (name === 'cep') {
       fetchEndereco(value);
     }
@@ -374,6 +370,17 @@ const FormComponent: React.FC<any> = ({
           placeholder="url_dados"
           name="url_dados"
           value={formData.url_dados ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Instagram
+        <input
+          type="text"
+          placeholder="Instagram"
+          name="instagram"
+          value={formData.instagram ?? ''}
           onChange={handleInputChange}
           className={styles.inputStandard}
         />

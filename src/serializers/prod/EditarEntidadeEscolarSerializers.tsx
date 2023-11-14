@@ -13,6 +13,7 @@ interface UsersMockPayload {
   uf: string;
   bairro: string;
   url_dados: string;
+  instagram: string;
   id_usuario_pdg: string;
   complemento: string;
   ativo: boolean;
@@ -34,6 +35,7 @@ export default class EditarEntidadeEscolarSerializers
       uf: otd.uf,
       bairro: otd.bairro,
       url_dados: otd.url_dados,
+      instagram: otd.instagram,
       id_usuario_pdg: otd.id_usuario_pdg,
       complemento: otd.complemento,
       ativo: otd.ativo,
