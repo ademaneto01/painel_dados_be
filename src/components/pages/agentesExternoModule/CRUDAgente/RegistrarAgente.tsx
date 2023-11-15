@@ -150,7 +150,7 @@ const FormComponent: React.FC<any> = ({
     <>
       <form className={styles.boxForm} onSubmit={handleSubmit}>
         <label className={styles.labelStandard}>
-          Nome
+          Nome*
           <input
             type="text"
             placeholder="Nome"
@@ -161,7 +161,7 @@ const FormComponent: React.FC<any> = ({
           />
         </label>
         <label className={styles.labelStandard}>
-          Cargo
+          Cargo*
           <select
             value={formData.cargo}
             onChange={handleInputChange}
@@ -190,7 +190,7 @@ const FormComponent: React.FC<any> = ({
           />
         </label>
         <label className={styles.labelStandard}>
-          E-mail Primário
+          E-mail Primário*
           <input
             type="text"
             placeholder="E-mail Primário"

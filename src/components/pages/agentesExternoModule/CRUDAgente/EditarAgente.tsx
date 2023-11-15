@@ -108,7 +108,7 @@ export default function EditarAgente(): JSX.Element {
   const validateForm = (): boolean => {
     const errors: string[] = [];
     if (Object.values(formData).some((v) => v === '' || v === null)) {
-      errors.push('Todos campos são obrigatórios...');
+      errors.push('Informe os campos obrigatórios.');
     }
 
     if (errors.length) {
@@ -172,7 +172,7 @@ const FormComponent: React.FC<any> = ({
     <>
       <form className={styles.boxForm} onSubmit={handleSubmit}>
         <label className={styles.labelStandard}>
-          Nome
+          Nome*
           <input
             type="text"
             placeholder="Nome"
@@ -183,7 +183,7 @@ const FormComponent: React.FC<any> = ({
           />
         </label>
         <label className={styles.labelStandard}>
-          Cargo
+          Cargo*
           <select
             value={formData.cargo ?? ''}
             onChange={handleInputChange}
@@ -211,7 +211,7 @@ const FormComponent: React.FC<any> = ({
           />
         </label>
         <label className={styles.labelStandard}>
-          E-mail Primário
+          E-mail Primário*
           <input
             type="text"
             placeholder="E-mail Primário"

@@ -65,7 +65,7 @@ export default function RegistrarDoc(): JSX.Element {
 
       if (!nome_doc || !url_doc) {
         setError(true);
-        setMsgError('Todos os campos são obrigatórios...');
+        setMsgError('Informe os campos obrigatórios.');
         setTimeout(() => setError(false), 6000);
         return;
       } else {
@@ -156,7 +156,7 @@ const FormComponent: React.FC<any> = ({
           <div key={index} className={styles.borderBoxInputs}>
             <div className={styles.boxStandard}>
               <label className={styles.labelStandard}>
-                Nome Documento
+                Nome Documento*
                 <input
                   type="text"
                   placeholder="Nome Documento"
@@ -169,7 +169,7 @@ const FormComponent: React.FC<any> = ({
                 />
               </label>
               <label className={styles.labelStandard}>
-                URL Documento
+                URL Documento*
                 <input
                   type="text"
                   placeholder="URL Documento"

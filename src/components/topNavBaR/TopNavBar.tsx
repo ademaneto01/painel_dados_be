@@ -3,9 +3,8 @@ import React, { useState, useEffect } from 'react';
 import styles from '@/styles/TopNavBar.module.css';
 
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { BsArrowDownCircle } from 'react-icons/bs';
-import { TbLayoutSidebarRightExpand } from 'react-icons/tb';
-import { TbLayoutSidebarRightCollapse } from 'react-icons/tb';
+import { IoPowerOutline } from 'react-icons/io5';
+import { GoSidebarCollapse, GoSidebarExpand } from 'react-icons/go';
 import { BackendApiGet } from '@/backendApi';
 
 import { ModalTopNavBaR } from '../modal';
@@ -70,9 +69,9 @@ export default function TopNavBar(props: TopNavBarProps) {
       <div className={styles.topNavBar}>
         <a className={styles.toogleTopNav} onClick={props.toggleSideNavBar}>
           {props.hidden ? (
-            <TbLayoutSidebarRightCollapse size="2em" />
+            <GoSidebarCollapse size="2em" />
           ) : (
-            <TbLayoutSidebarRightExpand size="2em" />
+            <GoSidebarExpand size="2em" />
           )}
         </a>
         <div className={styles.logoContainer}>
@@ -95,7 +94,7 @@ export default function TopNavBar(props: TopNavBarProps) {
           <a className={styles.toogleTopNav} onClick={handleOpen}>
             {modalTopNavBaR
               ? renderIcon(AiFillCloseCircle)
-              : renderIcon(BsArrowDownCircle)}
+              : renderIcon(IoPowerOutline)}
           </a>
           {modalTopNavBaR && (
             <ModalTopNavBaR

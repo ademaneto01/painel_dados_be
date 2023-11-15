@@ -6,7 +6,9 @@
   left: 0;
   bottom: 0;
   width: 17em;
-  background-color: var(--white);
+  background-image: url('/fundo_alternativo.png');
+  background-size: cover;
+  background-position: center;
   flex-direction: column;
   align-items: left;
   justify-content: space-between;
@@ -19,29 +21,14 @@
   display: flex;
   font-family: 'Poppins', sans-serif;
   font-size: 0.87em;
-  color: var(--azul-tech);
+  color: var(--gray-100);
   text-decoration: none;
   padding: 1.23em 2em;
   margin-bottom: 20px;
   user-select: none;
   position: relative;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.navBarButton::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  height: 2px;
-  width: 0;
-  background-color: var(--verde-tech);
-  transition: width 0.5s ease, left 0.5s ease;
-}
-
-.navBarButton:hover::after {
-  width: 90%;
-  left: 5%;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  border-radius: 1em;
 }
 
 .navBarButtonHidden {
@@ -49,33 +36,32 @@
 }
 
 .navBarButton:hover {
-  color: var(--verde-tech);
+  color: var(--white);
+  background: var(--azul-tech-opaque);
+  border-radius: 1em;
+  border-color: solid var(--gray-300);
 }
 
 .activeNavBarButton {
-  background: linear-gradient(to bottom, var(--azul-tech), var(--verde-tech));
-  border-radius: 0.9em;
+  background: linear-gradient(to bottom, var(--azul-techt), var(--verde-techt));
   color: var(--white);
+  transform: scale(1.1);
+  border-radius: 1em;
+  transition: transform 0.3s ease, border-color 0.3s;
 }
 
 .activeNavBarButton:hover {
+  background: linear-gradient(to bottom, var(--azul-techt), var(--verde-techt));
   color: var(--white);
-}
-
-.activeNavBarButton::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  height: 2px;
-  width: 0;
-  background-color: var(--verde-tech);
-  transition: width 0.5s ease, left 0.5s ease;
+  transform: scale(1.1);
+  border-radius: 1em;
+  transition: transform 0.3s ease, border-color 0.3s;
 }
 
 .buttonsContainer {
   margin-top: 4.5em;
   padding: 1.4em;
+  border-radius: 1em;
 }
 
 .buttonsContainer:hover {
@@ -83,12 +69,14 @@
 }
 
 .text {
+  margin-top: 0.1em;
   margin-left: 0.7em;
 }
 
 .hidden {
-  transform: translateX(-17em);
+  transform: translateX(-12em);
 }
+
 .iconHidable {
   position: absolute;
   color: var(--azul-tech);
@@ -96,3 +84,29 @@
   top: calc(4.5em + 1em);
   padding: 5px;
 }
+
+.buttonHidden {
+  margin-left: 12em;
+  width: 2em; 
+  height: 2em; 
+  margin-bottom: 20px;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5em; 
+  transition: width 0.3s, height 0.3s; 
+}
+
+.buttonHidden:hover {
+  color: var(--white);
+  background: var(--azul-tech-opaque);
+  border-radius: 1em;
+  border: solid 2px var(--gray-300);
+}
+
+
+
+
+
+

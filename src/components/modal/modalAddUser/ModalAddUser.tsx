@@ -102,7 +102,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
       formData.perfil === ''
     ) {
       setError(true);
-      setMsgError('Todos os campos são obrigatórios...');
+      setMsgError('Informe os campos obrigatórios.');
       setTimeout(() => {
         setError(false);
       }, 6000);
@@ -164,7 +164,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
           </h1>
           <div className={styles.boxStandard}>
             <label className={styles.labelStandard}>
-              Nome
+              Nome*
               <input
                 type="text"
                 placeholder="Nome"
@@ -175,7 +175,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
               />
             </label>
             <label className={styles.labelStandard}>
-              E-mail
+              E-mail*
               <input
                 type="email"
                 placeholder="E-mail"
@@ -188,7 +188,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
             <div className={styles.containerSenhasAddUser}>
               <div className={styles.boxSenhasAddUser}>
                 <label className={styles.labelStandard}>
-                  Senha
+                  Senha*
                   <input
                     type="password"
                     placeholder="Senha"
@@ -201,7 +201,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
               </div>
               <div className={styles.boxSenhasAddUser}>
                 <label className={styles.labelStandard}>
-                  Confirme a senha
+                  Confirme a senha*
                   <input
                     type="password"
                     placeholder="Confirme a senha"
@@ -214,7 +214,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
               </div>
             </div>
             <label className={styles.labelStandard}>
-              Escola
+              Escola*
               <select
                 value={formData.id_ee ?? ''}
                 onChange={handleInputChange}
@@ -230,11 +230,11 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
               </select>
             </label>
             <label className={styles.labelStandard}>
-              Perfil
+              Perfil*
               <select
                 value={formData.perfil ?? ''}
                 onChange={handleInputChange}
-                name="perfil"
+                name="perfil*"
                 className={styles.inputSelect}
               >
                 <option value="">-</option>

@@ -16,7 +16,10 @@
   --azul-tech:#31599C;
   --verde-tech: rgb(12,182,177);
   --verde-learn: rgb(0,135,157);
+  --azul-tech-opaque: rgb(49,89,156, 0.7);
+  --azul-techt: rgb(49,89,156, 0.7);
   --verde-light: rgb(166,206,57);
+  --verde-techt: rgb(12,182,177, 0.7);
   --azul-escuro: rgb(27,41,73);
   --azul-tenro: rgb(25, 44, 83);
   --black-14: rgba(0, 0, 0, 0.14);
