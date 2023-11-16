@@ -28,7 +28,7 @@ export default function SideNavBarButton(props: SideNavBarButtonProps) {
       onClick={props.onClick}
     >
       {props.icon}
-      <span className={styles.text}>{props.text}</span>
+      <span className={styles.text}> {props.text}</span>
     </a>
   );
 }

@@ -82,7 +82,7 @@ export default function RegistrarInfosContrato(): JSX.Element {
 
     for (const [key, value] of Object.entries(formData)) {
       if (value === '' || value === null) {
-        errors.push('Todos campos são obrigatórios...');
+        errors.push('Informe os campos obrigatórios.');
         break;
       }
     }
@@ -145,7 +145,7 @@ const FormComponent: React.FC<any> = ({
   return (
     <form className={styles.boxForm} onSubmit={handleSubmit}>
       <label className={styles.labelStandard}>
-        Data de Assinatura
+        Data de Assinatura*
         <InputMask
           type="text"
           mask="99/99/9999"
@@ -158,7 +158,7 @@ const FormComponent: React.FC<any> = ({
       </label>
 
       <label className={styles.labelStandard}>
-        Data de Operação
+        Data de Operação*
         <InputMask
           type="text"
           mask="99/99/9999"
@@ -170,7 +170,7 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Data de Termino
+        Data de Termino*
         <InputMask
           type="text"
           mask="99/99/9999"
@@ -182,7 +182,7 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Responsavel pelo Frete
+        Responsavel pelo Frete*
         <input
           type="text"
           placeholder="Responsavel pelo Frete"
@@ -193,7 +193,7 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Pedido Mínimo
+        Pedido Mínimo*
         <input
           type="text"
           placeholder="Pedido Mínimo"
@@ -205,7 +205,7 @@ const FormComponent: React.FC<any> = ({
       </label>
 
       <label className={styles.labelStandard}>
-        Reajuste IGPM IPCA
+        Reajuste IGPM IPCA*
         <select
           value={
             formData.reajuste_igpm_ipca === null
@@ -222,7 +222,7 @@ const FormComponent: React.FC<any> = ({
         </select>
       </label>
       <label className={styles.labelStandard}>
-        Status
+        Status*
         <select
           value={formData.ativo === null ? '' : formData.ativo.toString()}
           onChange={handleInputChange}

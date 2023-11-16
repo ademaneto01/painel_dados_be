@@ -158,7 +158,7 @@ export default function NovaEntidade(): JSX.Element {
         key !== 'id_usuario_pdg' &&
         (value === '' || value === null)
       ) {
-        errors.push('Todos campos são obrigatórios...');
+        errors.push('Informe os campos obrigatórios.');
         break;
       }
     }
@@ -228,7 +228,7 @@ const FormComponent: React.FC<any> = ({
   return (
     <form className={styles.boxForm} onSubmit={handleSubmit}>
       <label className={styles.labelStandard}>
-        Nome Operacional
+        Nome Operacional*
         <input
           type="text"
           placeholder="Nome Operacional"
@@ -239,7 +239,7 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Responsavel Pedagógico
+        Responsavel Pedagógico*
         <select
           value={formData.id_usuario_pdg}
           onChange={handleInputChange}
@@ -255,7 +255,7 @@ const FormComponent: React.FC<any> = ({
         </select>
       </label>
       <label className={styles.labelStandard}>
-        CNPJ Escola
+        CNPJ Escola*
         <InputMask
           type="text"
           placeholder="CNPJ Escola"
@@ -267,7 +267,7 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        CEP
+        CEP*
         <InputMask
           type="text"
           placeholder="CEP"
@@ -279,7 +279,7 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Rua
+        Rua*
         <input
           type="text"
           placeholder="Rua"
@@ -290,7 +290,7 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Cidade
+        Cidade*
         <input
           type="text"
           placeholder="Cidade"
@@ -301,7 +301,7 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        UF
+        UF*
         <input
           type="text"
           placeholder="UF"
@@ -312,7 +312,7 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Bairro
+        Bairro*
         <input
           type="text"
           placeholder="Bairro"
@@ -323,7 +323,7 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Complemento
+        Complemento*
         <input
           type="text"
           placeholder="Complemento"
@@ -366,8 +366,9 @@ const FormComponent: React.FC<any> = ({
           className={styles.inputStandard}
         />
       </label>
+
       <label className={styles.labelStandard}>
-        Status
+        Status*
         <select
           value={formData.ativo === null ? '' : formData.ativo.toString()}
           onChange={handleInputChange}

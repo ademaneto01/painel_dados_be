@@ -113,12 +113,8 @@ export default function EditarAgente(): JSX.Element {
 
   const validateForm = (): boolean => {
     const errors: string[] = [];
-    if (!formData.nome.trim()) {
-      errors.push('O campo nome é obrigatório.');
-    }
-
-    if (!formData.cargo) {
-      errors.push('O campo cargo é obrigatório.');
+    if (Object.values(formData).some((v) => v === '' || v === null)) {
+      errors.push('Informe os campos obrigatórios.');
     }
 
     if (!formData.email_primario.trim()) {
@@ -185,7 +181,7 @@ const FormComponent: React.FC<any> = ({
     <>
       <form className={styles.boxForm} onSubmit={handleSubmit}>
         <label className={styles.labelStandard}>
-          Nome <span className={styles.required}>*</span>
+          Nome*
           <input
             type="text"
             placeholder="Nome"
@@ -196,7 +192,7 @@ const FormComponent: React.FC<any> = ({
           />
         </label>
         <label className={styles.labelStandard}>
-          Cargo <span className={styles.required}>*</span>
+          Cargo*
           <select
             value={formData.cargo ?? ''}
             onChange={handleInputChange}
@@ -224,6 +220,28 @@ const FormComponent: React.FC<any> = ({
           />
         </label>
         <label className={styles.labelStandard}>
+          E-mail Primário*
+          <input
+            type="text"
+            placeholder="E-mail Primário"
+            name="email_primario"
+            value={formData.email_primario ?? ''}
+            onChange={handleInputChange}
+            className={styles.inputStandard}
+          />
+        </label>
+        <label className={styles.labelStandard}>
+          E-mail Secundário
+          <input
+            type="text"
+            placeholder="E-mail Secundário"
+            name="email_secundario"
+            value={formData.email_secundario ?? ''}
+            onChange={handleInputChange}
+            className={styles.inputStandard}
+          />
+        </label>
+        <label className={styles.labelStandard}>
           Linkedin
           <input
             type="text"
@@ -245,28 +263,7 @@ const FormComponent: React.FC<any> = ({
             className={styles.inputStandard}
           />
         </label>
-        <label className={styles.labelStandard}>
-          E-mail Primário <span className={styles.required}>*</span>
-          <input
-            type="text"
-            placeholder="E-mail Primário"
-            name="email_primario"
-            value={formData.email_primario ?? ''}
-            onChange={handleInputChange}
-            className={styles.inputStandard}
-          />
-        </label>
-        <label className={styles.labelStandard}>
-          E-mail Secundário
-          <input
-            type="text"
-            placeholder="E-mail Secundário"
-            name="email_secundario"
-            value={formData.email_secundario ?? ''}
-            onChange={handleInputChange}
-            className={styles.inputStandard}
-          />
-        </label>
+
         <label className={styles.labelStandard}>
           Telefone
           <InputMask

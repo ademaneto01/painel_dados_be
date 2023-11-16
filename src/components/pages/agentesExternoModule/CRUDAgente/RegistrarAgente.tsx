@@ -154,7 +154,7 @@ const FormComponent: React.FC<any> = ({
     <>
       <form className={styles.boxForm} onSubmit={handleSubmit}>
         <label className={styles.labelStandard}>
-          Nome
+          Nome*
           <input
             type="text"
             placeholder="Nome"
@@ -165,7 +165,7 @@ const FormComponent: React.FC<any> = ({
           />
         </label>
         <label className={styles.labelStandard}>
-          Cargo
+          Cargo*
           <select
             value={formData.cargo}
             onChange={handleInputChange}
@@ -193,6 +193,28 @@ const FormComponent: React.FC<any> = ({
           />
         </label>
         <label className={styles.labelStandard}>
+          E-mail Primário*
+          <input
+            type="text"
+            placeholder="E-mail Primário"
+            name="email_primario"
+            value={formData.email_primario}
+            onChange={handleInputChange}
+            className={styles.inputStandard}
+          />
+        </label>
+        <label className={styles.labelStandard}>
+          E-mail Secundário
+          <input
+            type="text"
+            placeholder="E-mail Secundário"
+            name="email_secundario"
+            value={formData.email_secundario}
+            onChange={handleInputChange}
+            className={styles.inputStandard}
+          />
+        </label>
+        <label className={styles.labelStandard}>
           Linkedin
           <input
             type="text"
@@ -210,27 +232,6 @@ const FormComponent: React.FC<any> = ({
             placeholder="Instagram"
             name="instagram"
             value={formData.instagram}
-            onChange={handleInputChange}
-            className={styles.inputStandard}
-          />
-        </label>
-        <label className={styles.labelStandard}>E-mail Primário</label>
-        <input
-          type="text"
-          placeholder="E-mail Primário"
-          name="email_primario"
-          value={formData.email_primario}
-          onChange={handleInputChange}
-          className={styles.inputStandard}
-        />
-
-        <label className={styles.labelStandard}>
-          E-mail Secundário
-          <input
-            type="text"
-            placeholder="E-mail Secundário"
-            name="email_secundario"
-            value={formData.email_secundario}
             onChange={handleInputChange}
             className={styles.inputStandard}
           />

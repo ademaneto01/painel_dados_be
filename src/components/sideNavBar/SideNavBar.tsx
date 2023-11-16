@@ -3,12 +3,14 @@ import React from 'react';
 import styles from '@/styles/SideNavBar.module.css';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IconType } from 'react-icons';
-import { ImUser, ImDisplay, ImList2 } from 'react-icons/im';
+import { RiComputerFill, RiComputerLine } from 'react-icons/ri';
 import SideNavBarButton from './SideNavBarButton';
 import { BackendApiGet } from '@/backendApi';
+import { PiUsers, PiUserSquare, PiUserSquareFill, PiUsersFill } from 'react-icons/pi';
+import { IoDocumentsOutline, IoDocuments, IoSchool, IoSchoolOutline  } from 'react-icons/io5';
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
-  return icon({ style: { fontSize: '1.15em', color: color } });
+  return icon({ style: { fontSize: '1.3em', color: color } });
 }
 
 interface SideNavBarProps {
@@ -51,20 +53,24 @@ export default function SideNavBar(props: SideNavBarProps) {
     <div className={hidable(styles.navBar)}>
       <div className={styles.buttonsContainer}>
         <SideNavBarButton
-          text="Usuários"
+          text={"Usuários"}
           onClick={() => {
             props.setPage(PageEnum.users);
           }}
-          icon={reactIcon(ImUser)}
+          icon={isActive(PageEnum.users) 
+            ? reactIcon(PiUserSquareFill) 
+            : reactIcon(PiUserSquare)}
           active={isActive(PageEnum.users)}
           hidden={perfil === 'Administrador' ? true : false}
         />
         <SideNavBarButton
-          text="Agentes Externo"
+          text={"Agentes Externos"}
           onClick={() => {
             props.setPage(PageEnum.agentesExterno);
           }}
-          icon={reactIcon(ImUser)}
+          icon={isActive(PageEnum.agentesExterno)
+            ? reactIcon(PiUsersFill) 
+            : reactIcon(PiUsers)}
           active={isActive(PageEnum.agentesExterno)}
           hidden={
             perfil === 'Administrador' || perfil === 'Pedagógico' ? true : false
@@ -75,7 +81,9 @@ export default function SideNavBar(props: SideNavBarProps) {
           onClick={() => {
             props.setPage(PageEnum.contratos);
           }}
-          icon={reactIcon(ImList2)}
+          icon={isActive(PageEnum.contratos)
+            ? reactIcon(IoDocuments) 
+            : reactIcon(IoDocumentsOutline)}
           active={isActive(PageEnum.contratos)}
           hidden={perfil === 'Administrador' ? true : false}
         />
@@ -84,7 +92,9 @@ export default function SideNavBar(props: SideNavBarProps) {
           onClick={() => {
             props.setPage(PageEnum.escolasPDG);
           }}
-          icon={reactIcon(ImList2)}
+          icon={isActive(PageEnum.escolasPDG)
+            ? reactIcon(IoSchool) 
+            : reactIcon(IoSchoolOutline)}
           active={isActive(PageEnum.escolasPDG)}
           hidden={perfil === 'Pedagógico' ? true : false}
         />
@@ -93,7 +103,9 @@ export default function SideNavBar(props: SideNavBarProps) {
           onClick={() => {
             props.setPage(PageEnum.digitalResources);
           }}
-          icon={reactIcon(ImDisplay)}
+          icon={isActive(PageEnum.digitalResources)
+            ? reactIcon(RiComputerFill) 
+            : reactIcon(RiComputerLine)}
           active={isActive(PageEnum.digitalResources)}
           hidden={perfil === 'Escola' ? true : false}
         />

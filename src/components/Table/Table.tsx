@@ -257,7 +257,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
                 ) : (
                   <div className={styles.errorNotDados}>
                     <span className={styles.errorNotDadosSpan}>
-                      Ainda não existe dados cadastrados...
+                      Ainda não existem dados cadastrados...
                     </span>
                   </div>
                 )}

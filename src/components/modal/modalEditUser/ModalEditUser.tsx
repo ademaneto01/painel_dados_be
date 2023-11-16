@@ -119,7 +119,7 @@ const ModalEditUser: React.FC<ModalProps> = ({
       formData.perfil === ''
     ) {
       setError(true);
-      setMsgError('Todos campos são obrigatórios...');
+      setMsgError('Informe os campos obrigatórios.');
       setTimeout(() => {
         setError(false);
       }, 6000);
@@ -191,7 +191,7 @@ const ModalEditUser: React.FC<ModalProps> = ({
           </h1>
           <div className={styles.boxStandard}>
             <label className={styles.labelStandard}>
-              Nome
+              Nome*
               <input
                 type="text"
                 placeholder="Nome"
@@ -202,7 +202,7 @@ const ModalEditUser: React.FC<ModalProps> = ({
               />
             </label>
             <label className={styles.labelStandard}>
-              E-mail
+              E-mail*
               <input
                 type="email"
                 placeholder="E-mail"
@@ -215,7 +215,7 @@ const ModalEditUser: React.FC<ModalProps> = ({
             <div className={styles.containerSenhasAddUser}>
               <div className={styles.boxSenhasAddUser}>
                 <label className={styles.labelStandard}>
-                  Senha
+                  Senha*
                   <input
                     type="password"
                     placeholder="Senha"
@@ -228,7 +228,7 @@ const ModalEditUser: React.FC<ModalProps> = ({
               </div>
               <div className={styles.boxSenhasAddUser}>
                 <label className={styles.labelStandard}>
-                  Confirme a senha
+                  Confirme a senha*
                   <input
                     type="password"
                     placeholder="Confirme a senha"
@@ -241,7 +241,7 @@ const ModalEditUser: React.FC<ModalProps> = ({
               </div>
             </div>
             <label className={styles.labelStandard}>
-              Escola
+              Escola*
               <select
                 value={formData.id_ee ?? ''}
                 onChange={handleInputChange}
@@ -257,7 +257,7 @@ const ModalEditUser: React.FC<ModalProps> = ({
               </select>
             </label>
             <label className={styles.labelStandard}>
-              Perfil
+              Perfil*
               <select
                 value={formData.perfil ?? ''}
                 onChange={handleInputChange}
