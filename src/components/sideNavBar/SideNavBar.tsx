@@ -60,7 +60,6 @@ export default function SideNavBar(props: SideNavBarProps) {
           icon={isActive(PageEnum.users) 
             ? reactIcon(PiUserSquareFill) 
             : reactIcon(PiUserSquare)}
-          buttonHidden={props.hidden}
           active={isActive(PageEnum.users)}
           hidden={perfil === 'Administrador' ? true : false}
         />
@@ -72,7 +71,6 @@ export default function SideNavBar(props: SideNavBarProps) {
           icon={isActive(PageEnum.agentesExterno)
             ? reactIcon(PiUsersFill) 
             : reactIcon(PiUsers)}
-          buttonHidden={props.hidden}
           active={isActive(PageEnum.agentesExterno)}
           hidden={
             perfil === 'Administrador' || perfil === 'Pedagógico' ? true : false
@@ -86,7 +84,6 @@ export default function SideNavBar(props: SideNavBarProps) {
           icon={isActive(PageEnum.contratos)
             ? reactIcon(IoDocuments) 
             : reactIcon(IoDocumentsOutline)}
-          buttonHidden={props.hidden}
           active={isActive(PageEnum.contratos)}
           hidden={perfil === 'Administrador' ? true : false}
         />
@@ -98,7 +95,6 @@ export default function SideNavBar(props: SideNavBarProps) {
           icon={isActive(PageEnum.escolasPDG)
             ? reactIcon(IoSchool) 
             : reactIcon(IoSchoolOutline)}
-          buttonHidden={props.hidden}
           active={isActive(PageEnum.escolasPDG)}
           hidden={perfil === 'Pedagógico' ? true : false}
         />
@@ -110,7 +106,6 @@ export default function SideNavBar(props: SideNavBarProps) {
           icon={isActive(PageEnum.digitalResources)
             ? reactIcon(RiComputerFill) 
             : reactIcon(RiComputerLine)}
-          buttonHidden={props.hidden}
           active={isActive(PageEnum.digitalResources)}
           hidden={perfil === 'Escola' ? true : false}
         />
