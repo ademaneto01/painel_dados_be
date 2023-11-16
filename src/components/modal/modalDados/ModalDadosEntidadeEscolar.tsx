@@ -12,6 +12,7 @@ interface FormData {
   cep: string;
   url_dados: string;
   instagram: string;
+  facebook: string;
   endereco: string;
   cidade: string;
   uf: string;
@@ -41,6 +42,7 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
     cep: '',
     url_dados: '',
     instagram: '',
+    facebook: '',
     endereco: '',
     cidade: '',
     uf: '',
@@ -67,6 +69,7 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
         cnpj_escola: response[0].cnpj_escola,
         url_dados: response[0].url_dados,
         instagram: response[0].instagram,
+        facebook: response[0].facebook,
         cep: response[0].cep,
         endereco: response[0].endereco,
         cidade: response[0].cidade,
@@ -131,10 +134,14 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
                 {formData.instagram}
               </div>
               <div>
-                <span className={styles.label}>Rua:</span> {formData.endereco}
+                <span className={styles.label}>Facebook:</span>{' '}
+                {formData.facebook}
               </div>
             </div>
             <div className={styles.dadosColumn}>
+              <div>
+                <span className={styles.label}>Rua:</span> {formData.endereco}
+              </div>
               <div>
                 <span className={styles.label}>CEP:</span> {formData.cep}
               </div>

@@ -20,6 +20,7 @@ interface FormData {
   complemento: string;
   url_dados: string | null;
   instagram: string;
+  facebook: string;
   id_usuario_pdg: string;
   ativo: boolean | null;
 }
@@ -36,6 +37,7 @@ export default function NovaEntidade(): JSX.Element {
     complemento: '',
     url_dados: '',
     instagram: '',
+    facebook: '',
     id_usuario_pdg: '',
     ativo: true,
   });
@@ -152,6 +154,7 @@ export default function NovaEntidade(): JSX.Element {
       if (
         key !== 'url_dados' &&
         key !== 'instagram' &&
+        key !== 'facebook' &&
         key !== 'id_usuario_pdg' &&
         (value === '' || value === null)
       ) {
@@ -348,6 +351,17 @@ const FormComponent: React.FC<any> = ({
           placeholder="Instagram"
           name="instagram"
           value={formData.instagram}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Facebook
+        <input
+          type="text"
+          placeholder="Facebook"
+          name="facebook"
+          value={formData.facebook}
           onChange={handleInputChange}
           className={styles.inputStandard}
         />

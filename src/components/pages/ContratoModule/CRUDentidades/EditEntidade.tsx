@@ -21,6 +21,7 @@ interface FormData {
   complemento: string | null;
   url_dados: string | null;
   instagram: string | null;
+  facebook: string | null;
   uuid_ec: string | null;
   id_usuario_pdg: string | null;
   ativo: boolean | null;
@@ -44,6 +45,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
     complemento: '',
     url_dados: '',
     instagram: '',
+    facebook: '',
     uuid_ec: '',
     id_usuario_pdg: '',
     ativo: true,
@@ -73,6 +75,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
         complemento: response[0]?.complemento || '',
         url_dados: response[0]?.url_dados || '',
         instagram: response[0]?.instagram || '',
+        facebook: response[0]?.facebook || '',
         uuid_ec: response[0]?.uuid_ec || '',
         id_usuario_pdg: response[0]?.id_usuario_pdg || '',
         ativo: response[0].ativo,
@@ -167,6 +170,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
       if (
         key !== 'url_dados' &&
         key !== 'instagram' &&
+        key !== 'facebook' &&
         key !== 'id_usuario_pdg' &&
         (value === '' || value === null)
       ) {
@@ -381,6 +385,17 @@ const FormComponent: React.FC<any> = ({
           placeholder="Instagram"
           name="instagram"
           value={formData.instagram ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Facebook
+        <input
+          type="text"
+          placeholder="Facebook"
+          name="facebook"
+          value={formData.facebook ?? ''}
           onChange={handleInputChange}
           className={styles.inputStandard}
         />
