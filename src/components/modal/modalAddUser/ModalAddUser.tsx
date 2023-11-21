@@ -234,7 +234,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
               <select
                 value={formData.perfil ?? ''}
                 onChange={handleInputChange}
-                name="perfil*"
+                name="perfil"
                 className={styles.inputSelect}
               >
                 <option value="">-</option>
