@@ -52,6 +52,7 @@ export default function SideNavBar(props: SideNavBarProps) {
   return (
     <div className={hidable(styles.navBar)}>
       <div className={styles.buttonsContainer}>
+        <div className={styles.buttonsBackground}></div>
         <SideNavBarButton
           text={"Usuários"}
           onClick={() => {

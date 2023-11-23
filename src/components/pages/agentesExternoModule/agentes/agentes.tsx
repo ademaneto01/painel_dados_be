@@ -50,7 +50,7 @@ export default function AgentesExterno() {
 
   return (
     <div className={styles.pageContainer}>
-      <h4>Agentes Externo</h4>
+      <h4>Agentes Externos</h4>
       <PageContentContainer>
         <CreateButton
           color={'var(--white'}
