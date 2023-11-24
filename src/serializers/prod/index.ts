@@ -17,7 +17,9 @@ import AgenteExternoVinculoSerializers from './AgenteExternoVinculoSerializers';
 import EditarEntidadeEscolarSerializers from './EditarEntidadeEscolarSerializers';
 import ContratosSerializers from './ContratosSerializers';
 import EntidadesEscolaresSerializers from './EntidadesEscolaresSerializers';
+import AlunadosSerializers from './AlunadosSerializers';
 export {
+  AlunadosSerializers,
   UsersSerializers,
   UserLoginSerializers,
   OneUserSerializers,

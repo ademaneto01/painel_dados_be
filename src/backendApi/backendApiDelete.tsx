@@ -53,6 +53,9 @@ export default class BackendApiDelete implements BackendApiInterfaceDelete {
     return await this.delete<string>('/deletarInfosContrato', id);
   }
 
+  public async deletarAlunado(userData: any): Promise<string> {
+    return await this.delete<string>('/deletarAlunado', userData);
+  }
   private async delete<T>(route: string, data: any): Promise<T> {
     const response = await this.api.delete(route, { data });
 

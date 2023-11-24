@@ -11,6 +11,7 @@ import {
   EntitiesUsers,
   EntitiesUsuariosPDG,
   EntitiesAgenteExterno,
+  EntitiesAlunados,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterfaceGet, SerializerInterface } from '@/interfaces';
@@ -27,6 +28,7 @@ import {
   ContratosSerializers,
   EntidadesEscolaresSerializers,
   InfosContratoSerializers,
+  AlunadosSerializers,
 } from '@/serializers/prod';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
@@ -201,14 +203,39 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
     );
   }
 
+  public async listarIndividualTurmas(data: any): Promise<EntitiesAlunados[]> {
+    return await this.get<EntitiesAlunados>(
+      '/listarIndividualTurmas',
+      new AlunadosSerializers(),
+      { id: data },
+    );
+  }
+  public async listarIndividualAlunados(
+    data: any,
+  ): Promise<EntitiesAlunados[]> {
+    return await this.get<EntitiesAlunados>(
+      '/listarIndividualAlunados',
+      new AlunadosSerializers(),
+      { id: data },
+    );
+  }
+
   private async get<T>(
     route: string,
     serializer: SerializerInterface,
     data?: any,
   ): Promise<T[]> {
     let response: AxiosResponse;
+
     response = data
-      ? await this.api.get(`${route}?id=${data.id}`)
+      ? await this.api.get(
+          `${route}?id=${
+            route === '/listarIndividualAlunados' ||
+            route === '/listarIndividualTurmas'
+              ? JSON.stringify(data.id)
+              : data.id
+          }`,
+        )
       : await this.api.get(route);
     return this.serializeOrError<T>(response, serializer);
   }
