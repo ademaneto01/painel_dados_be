@@ -52,7 +52,6 @@ export default function SideNavBar(props: SideNavBarProps) {
   return (
     <div className={hidable(styles.navBar)}>
       <div className={styles.buttonsContainer}>
-        <div className={styles.buttonsBackground}></div>
         <SideNavBarButton
           text={"Usuários"}
           onClick={() => {
@@ -61,55 +60,60 @@ export default function SideNavBar(props: SideNavBarProps) {
           icon={isActive(PageEnum.users) 
             ? reactIcon(PiUserSquareFill) 
             : reactIcon(PiUserSquare)}
+          buttonHidden={(props.hidden && perfil === 'Administrador')}
           active={isActive(PageEnum.users)}
           hidden={perfil === 'Administrador' ? true : false}
         />
-        <SideNavBarButton
-          text={"Agentes Externos"}
-          onClick={() => {
-            props.setPage(PageEnum.agentesExterno);
-          }}
-          icon={isActive(PageEnum.agentesExterno)
-            ? reactIcon(PiUsersFill) 
-            : reactIcon(PiUsers)}
-          active={isActive(PageEnum.agentesExterno)}
-          hidden={
-            perfil === 'Administrador' || perfil === 'Pedagógico' ? true : false
-          }
-        />
-        <SideNavBarButton
-          text="Contratos"
-          onClick={() => {
-            props.setPage(PageEnum.contratos);
-          }}
-          icon={isActive(PageEnum.contratos)
-            ? reactIcon(IoDocuments) 
-            : reactIcon(IoDocumentsOutline)}
-          active={isActive(PageEnum.contratos)}
-          hidden={perfil === 'Administrador' ? true : false}
-        />
-        <SideNavBarButton
-          text="Escolas"
-          onClick={() => {
-            props.setPage(PageEnum.escolasPDG);
-          }}
-          icon={isActive(PageEnum.escolasPDG)
-            ? reactIcon(IoSchool) 
-            : reactIcon(IoSchoolOutline)}
-          active={isActive(PageEnum.escolasPDG)}
-          hidden={perfil === 'Pedagógico' ? true : false}
-        />
-        <SideNavBarButton
-          text="Recursos Digitais"
-          onClick={() => {
-            props.setPage(PageEnum.digitalResources);
-          }}
-          icon={isActive(PageEnum.digitalResources)
-            ? reactIcon(RiComputerFill) 
-            : reactIcon(RiComputerLine)}
-          active={isActive(PageEnum.digitalResources)}
-          hidden={perfil === 'Escola' ? true : false}
-        />
+      <SideNavBarButton
+        text={"Agentes Externos"}
+        onClick={() => {
+          props.setPage(PageEnum.agentesExterno);
+        }}
+        icon={isActive(PageEnum.agentesExterno)
+          ? reactIcon(PiUsersFill) 
+          : reactIcon(PiUsers)}
+        buttonHidden={(props.hidden && (perfil === 'Administrador' || perfil === 'Pedagógico'))}
+        active={isActive(PageEnum.agentesExterno)}
+        hidden={
+          perfil === 'Administrador' || perfil === 'Pedagógico' ? true : false
+        }
+      />
+      <SideNavBarButton
+        text="Contratos"
+        onClick={() => {
+          props.setPage(PageEnum.contratos);
+        }}
+        icon={isActive(PageEnum.contratos)
+          ? reactIcon(IoDocuments) 
+          : reactIcon(IoDocumentsOutline)}
+        buttonHidden={(props.hidden && perfil === 'Administrador')}
+        active={isActive(PageEnum.contratos)}
+        hidden={perfil === 'Administrador' ? true : false}
+      />
+      <SideNavBarButton
+        text="Escolas"
+        onClick={() => {
+          props.setPage(PageEnum.escolasPDG);
+        }}
+        icon={isActive(PageEnum.escolasPDG)
+          ? reactIcon(IoSchool) 
+          : reactIcon(IoSchoolOutline)}
+        buttonHidden={(props.hidden && perfil === 'Pedagógico')}
+        active={isActive(PageEnum.escolasPDG)}
+        hidden={perfil === 'Pedagógico' ? true : false}
+      />
+      <SideNavBarButton
+        text="Recursos Digitais"
+        onClick={() => {
+          props.setPage(PageEnum.digitalResources);
+        }}
+        icon={isActive(PageEnum.digitalResources)
+          ? reactIcon(RiComputerFill) 
+          : reactIcon(RiComputerLine)}
+        buttonHidden={(props.hidden && perfil === 'Escola')}
+        active={isActive(PageEnum.digitalResources)}
+        hidden={perfil === 'Escola' ? true : false}
+      />
       </div>
     </div>
   );

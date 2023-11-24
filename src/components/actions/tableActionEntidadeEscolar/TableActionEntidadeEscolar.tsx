@@ -10,6 +10,7 @@ import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumContratos } from '@/enums';
 import Action from '../Action';
+import Tooltip from '@/components/Tooltip/Tooltip';
 
 interface PropsForFxclusion {
   id: string;
@@ -89,7 +90,9 @@ export default function TableActionEntidadeEscolar(
           handleModalInfos(props.id, event);
         }}
       />
-      <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
+      <Tooltip text="Visualizar Informações"> 
+        <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
+      </Tooltip>
       <Action
         icon={renderIcon(FaTrashAlt, '#f1646c')}
         onClick={handleDeleteClick}

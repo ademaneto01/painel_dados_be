@@ -7,28 +7,32 @@ interface SideNavBarButtonProps {
   onClick?: VoidFunction;
   active: boolean;
   hidden: boolean;
+  buttonHidden?: boolean;
 }
 
 export default function SideNavBarButton(props: SideNavBarButtonProps) {
   function activable(style: string): string {
     return style + (props.active ? ` ${styles.activeNavBarButton}` : '');
   }
+
   function hidable(style: string): string {
     return style + (props.hidden ? ` ${styles.navBarButtonHidden}` : '');
-  }
+  } 
 
   return (
     <a
       data-testid="side-nav-button"
       className={
-        props.hidden
-          ? activable(styles.navBarButton)
-          : hidable(styles.navBarButtonHidden)
+          props.buttonHidden
+            ? styles.buttonHidden
+            : props.hidden
+            ? activable(styles.navBarButton)
+            : hidable(styles.navBarButtonHidden)
       }
       onClick={props.onClick}
     >
       {props.icon}
-      <span className={styles.text}> {props.text}</span>
+      <span className={styles.text}> {props.buttonHidden ? "" : props.text}</span>
     </a>
   );
 }

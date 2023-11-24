@@ -4,6 +4,7 @@ import { ModalDadosEntidadeEscolar } from '../../modal';
 import { ImEyePlus } from 'react-icons/im';
 import { useState } from 'react';
 import Action from '../Action';
+import Tooltip from '@/components/Tooltip/Tooltip';
 
 interface PropsForFxclusion {
   id: string;
@@ -29,13 +30,14 @@ export default function TableActionEntidadeEscolarPDG(
   }
   return (
     <div className={styles.container}>
-      <Action
-        icon={reactIcon(ImEyePlus)}
-        onClick={() => {
-          verMais(props.id);
-        }}
-      />
-
+      <Tooltip text="Editar Usuário"> 
+        <Action
+          icon={reactIcon(ImEyePlus)}
+          onClick={() => {
+            verMais(props.id);
+          }}
+        />
+      </Tooltip>
       {showModalVerMais === props.id && (
         <ModalDadosEntidadeEscolar
           idEntidade={props.id}

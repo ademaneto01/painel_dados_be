@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import ModalEditarVinculoAgente from '@/components/modal/modalEditarVinculoAgente/ModalEditarVinculoAgente';
+import Tooltip from '@/components/Tooltip/Tooltip';
 
 interface PropsForFxclusion {
   uuid_agente: string;
@@ -62,10 +63,12 @@ export default function TableActionAgentesRelacionadoEscola(
 
   return (
     <div className={styles.container}>
-      <Action
-        icon={reactIcon(FiEdit)}
-        onClick={() => handleClickOpenModalEditAgente(props.uuid_agente)}
-      />
+      <Tooltip text="Editar Agente"> 
+        <Action
+          icon={reactIcon(FiEdit)}
+          onClick={() => handleClickOpenModalEditAgente(props.uuid_agente)}
+        />
+      </Tooltip>
       <Action
         icon={reactIcon(FaTrashAlt, '#f1646c')}
         onClick={() => handleClickOpenModalExcluir(props.uuid_agente)}

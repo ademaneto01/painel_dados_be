@@ -81,7 +81,7 @@ export default function TopNavBar(props: TopNavBarProps) {
             alt="Logo be Branco"
             priority={true}
             aspect-ratio={1}
-            width={100}
+            width={95}
             height={38}
           />
         </div>

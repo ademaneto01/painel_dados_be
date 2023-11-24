@@ -5,7 +5,7 @@
   top: 6.5%;
   left: -2em;
   bottom: 1%;
-  width: 16.8em;
+  width: 17em;
   background-image: url('/fundo_alternativo.png');
   background-size: cover;
   background-position: center;
@@ -21,8 +21,8 @@
   border-radius: 40px;
 }
 
-.navBar.hidden{
-  transform: translateX(-10em); 
+.hidden{
+  transform: translateX(-12em); 
 }
 
 .navBarButton {
@@ -69,7 +69,7 @@
 
 .buttonsContainer {
   margin-top: 4.5em;
-  padding: 2.4rem;
+  padding: 2.3rem;
   border-radius: 1em;
 }
 
@@ -78,20 +78,31 @@
 }
 
 .text {
-  margin-top: 0.1em;
-  margin-left: 0.7em;
+  margin: 0.1em 0em 0em 0.7em;
+  font-size: 1.1em;
+  flex-grow: 1; 
 }
 
-.iconHidable {
-  position: absolute;
-  color: var(--azul-tech);
-  left: 8em;
-  top: calc(4.5em + 1em);
-  padding: 5px;
+.icon {
+  font-size: 1.5em;
 }
 
+.buttonHidden {
+  margin-left: 12em;
+  width: 2em;
+  height: 2em;
+  margin-bottom: 20px;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5em;
+  transition: width 0.3s, height 0.3s;
+  position: relative;
+}
 
-
-
-
-
+.buttonHidden:hover {
+  color: var(--white);
+  background: var(--azul-tech-opaque);
+  border: solid 2px var(--gray-300);
+}
