@@ -150,12 +150,12 @@ export default function Alunados(): JSX.Element {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (formAnoRef.length === 4) {
-      if (parseInt(formAnoRef) >= 2020 && parseInt(formAnoRef) <= 2026) {
+      if (parseInt(formAnoRef) >= 2017 && parseInt(formAnoRef) <= 2026) {
         loadData();
       } else {
         setError(true);
         setMsgError(
-          'Ano de busca inválido. Por favor, insira um ano entre 2020 e 2025.',
+          'Ano de busca inválido. Por favor, insira um ano entre 2017 e 2026.',
         );
         setTimeout(() => {
           setError(false);

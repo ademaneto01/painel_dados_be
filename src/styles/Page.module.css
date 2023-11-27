@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   min-height: 80%;
-  max-height: 110%;
+  height: 105%;
 
   margin-top: 1.7em;
   padding: 1.2em;
@@ -228,7 +228,8 @@
   align-items: center;
   padding: 1em 0.8em 1em 0.8em;
   font-family: 'Poppins', sans-serif;
-  transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out, transform 0.3s ease-out;
+  transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out,
+    transform 0.3s ease-out;
   box-shadow: 0px 0.3em 1em var(--black-200);
   user-select: none;
 }
