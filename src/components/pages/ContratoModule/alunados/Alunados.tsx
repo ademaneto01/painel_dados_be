@@ -150,7 +150,17 @@ export default function Alunados(): JSX.Element {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (formAnoRef.length === 4) {
-      loadData();
+      if (parseInt(formAnoRef) >= 2020 && parseInt(formAnoRef) <= 2026) {
+        loadData();
+      } else {
+        setError(true);
+        setMsgError(
+          'Ano de busca inválido. Por favor, insira um ano entre 2020 e 2025.',
+        );
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
+      }
     } else {
       setIsDataFilled(false);
       setSpanCadastro(false);
@@ -430,8 +440,9 @@ const FormComponent: React.FC<any> = ({
           {formAnoRef.length === 4 && spanCadastro ? (
             <PageContentContainer>
               <span>
-                Deseja cadastrar 'Alunado' referente ao ano de: {formAnoRef}?
-                Clique em cadastrar, logo acima....
+                Caso deseje registrar alunos e turmas referente ao ano letivo de{' '}
+                {formAnoRef}, por favor, clique no botão "Cadastrar" localizado
+                acima.
               </span>
             </PageContentContainer>
           ) : (
