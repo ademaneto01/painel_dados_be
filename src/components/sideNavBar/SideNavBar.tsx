@@ -1,4 +1,4 @@
-import { PageEnum } from '@/enums';
+import { PageEnum, pageEnumAcompanhamentoPDG } from '@/enums';
 import React from 'react';
 import styles from '@/styles/SideNavBar.module.css';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -116,7 +116,19 @@ export default function SideNavBar(props: SideNavBarProps) {
           active={isActive(PageEnum.escolasPDG)}
           hidden={perfil === 'Pedagógico' ? true : false}
         />
-
+        <SideNavBarButton
+          text="Acompanhamento"
+          onClick={() => {
+            props.setPage(PageEnum.acompanhamentoPDG);
+          }}
+          icon={
+            isActive(PageEnum.escolasPDG)
+              ? reactIcon(IoSchool)
+              : reactIcon(IoSchoolOutline)
+          }
+          active={isActive(PageEnum.escolasPDG)}
+          hidden={perfil === 'Administrador' ? true : false}
+        />
         <SideNavBarButton
           text="Recursos Digitais"
           onClick={() => {

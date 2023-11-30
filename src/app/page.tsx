@@ -60,6 +60,8 @@ export default function Home(): JSX.Element {
         return <pages.EscolasPDG />;
       case PageEnum.agentesExterno:
         return <pages.AgentesExterno />;
+      case PageEnum.acompanhamentoPDG:
+        return <pages.pagesAcompanhamento />;
       default:
         return <></>;
     }
