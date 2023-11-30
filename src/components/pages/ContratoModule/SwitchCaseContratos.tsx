@@ -42,6 +42,7 @@ export default function SwitchCaseContratos() {
         return <pages.CadastrarAlunado />;
       case PageEnumContratos.editarAlunado:
         return <pages.EditarAlunado />;
+
       default:
         return <></>;
     }

@@ -75,6 +75,7 @@ export default function TableActionEntidadeEscolar(
     setIdEntidadeEscolar(id);
     setPage(PageEnumContratos.alunados);
   }
+
   function visualizarDocumentos(id: string): void {
     setIdEntidadeEscolar(id);
     setPage(PageEnumContratos.docsEntidade);

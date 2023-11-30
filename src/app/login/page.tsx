@@ -68,7 +68,7 @@ export default function SignIn(): JSX.Element {
         email: form.email,
         senha: form.password,
       });
-      console.log(users[0].token);
+
       setLoaded(true);
       saveUserToLocalStorage(users[0]);
       router.push('/');
