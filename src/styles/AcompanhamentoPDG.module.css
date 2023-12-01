@@ -12,6 +12,34 @@
   border-radius: 5px;
   background-color: var(--gray-202);
 }
+.conteinerWidthAll {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 93.5%;
+  padding: 1em 2em 1em 1em;
+  border-radius: 5px;
+  background-color: var(--gray-202);
+}
+
+.boxToAlignTitleLearning {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+}
+.conteinerLearning {
+  display: flex;
+  width: 100%;
+  gap: 2em;
+}
+.boxLearning {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 100%;
+}
+
 .conteinerObsCycle {
   display: flex;
   width: 100%;
@@ -75,4 +103,26 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
   gap: 1rem;
+}
+.inputSelect {
+  text-align: start;
+  width: 101%;
+  padding-left: 0.7rem;
+  height: 2.5rem;
+  max-height: 3rem;
+  overflow-y: visible;
+  color: var(--azul-tenro);
+  background-color: var(--white);
+  border-radius: 5px;
+  border: 1px solid var(--gray-200);
+  margin-top: 0.2rem;
+  background-color: var(--white);
+  cursor: pointer;
+}
+
+.inputSelect:focus-within {
+  box-shadow: 0 0 5px var(--gray-200);
+}
+.inputSelect:focus {
+  outline: transparent;
 }

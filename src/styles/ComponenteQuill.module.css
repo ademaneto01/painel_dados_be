@@ -1,0 +1,16 @@
+.meuEditorQuill {
+  border-radius: 5px;
+  line-height: 1.5;
+  border: 1px solid var(--gray-200);
+  border-radius: 4px;
+  background-color: var(--white);
+  width: 100%;
+}
+
+.meuEditorQuill:focus-within {
+  box-shadow: 0 0 5px var(--gray-200);
+}
+
+.meuEditorQuill:focus {
+  outline: transparent;
+}
