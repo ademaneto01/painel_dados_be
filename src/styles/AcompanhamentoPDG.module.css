@@ -126,3 +126,70 @@
 .inputSelect:focus {
   outline: transparent;
 }
+
+.searchSelectContainer {
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  width: 250px;
+  cursor: pointer;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.optionsContainer {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid #beb1b1;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: white;
+  padding: 0.5em;
+  font-size: 0.8em;
+}
+
+.scrollableOptionsContainer {
+  margin-top: 0.5em;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.optionItem {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.optionItem:hover {
+  background-color: #f0f0f0;
+}
+.boxsearchInput {
+  display: flex;
+  align-items: center;
+  padding-right: 3px;
+  cursor: pointer;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  padding-left: 3px;
+}
+.searchInputSelect {
+  all: unset;
+  width: 100%;
+  padding: 8px;
+  border-bottom: 0.03em solid black;
+  box-sizing: border-box;
+  outline: none;
+  cursor: auto;
+}

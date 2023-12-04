@@ -1,4 +1,10 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+} from 'react';
 import styles from '@/styles/AcompanhamentoPDG.module.css';
 import { BackendApiGet, BackendApiPost } from '@/backendApi';
 import InputMask from 'react-input-mask';
@@ -7,7 +13,9 @@ import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import dynamic from 'next/dynamic';
-
+import { FaSearch } from 'react-icons/fa';
+import { IoIosArrowDown } from 'react-icons/io';
+import { IconBaseProps, IconType } from 'react-icons';
 interface FormData {
   id: string;
   nome_operacional: string;
@@ -28,6 +36,11 @@ const MultilineInputSSR = dynamic(
 export default function RegistrarAcompanhamento(): JSX.Element {
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [nameSearch, setNameSearch] = useState('');
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [showOptions, setShowOptions] = useState(false);
+
   const [yearObservation, setYearObservation] = useState(
     'Enter a year in observation date',
   );
@@ -36,6 +49,15 @@ export default function RegistrarAcompanhamento(): JSX.Element {
     FormDataAgenteExternoRelacionado[]
   >([]);
   const { setPage, idContrato } = useGlobalContext();
+
+  function renderIcon(icon: IconType, color?: string): JSX.Element {
+    const options: IconBaseProps = {
+      fontSize: '1.3em',
+      color: color,
+    };
+
+    return icon(options);
+  }
 
   const fetchData = async () => {
     try {
@@ -78,9 +100,6 @@ export default function RegistrarAcompanhamento(): JSX.Element {
   ) => {
     const { name, value } = e.target;
 
-    if (name === 'partnerschool' && value !== '') {
-      fetchAgentesExterno(value);
-    }
     if (name === 'dataofobservation') {
       const year = value.substring(0, 4);
       setYearObservation(year);
@@ -99,17 +118,62 @@ export default function RegistrarAcompanhamento(): JSX.Element {
     }
   };
 
+  const handleSearchChange = (e: any) => {
+    setSearchTerm(e.target.value);
+    if (e.target.value === '') {
+      setNameSearch('');
+      setAgentesExternoData([]);
+    }
+    setShowOptions(true);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setShowOptions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [containerRef]);
+
+  const handleOptionSelect = (option: FormData) => {
+    setNameSearch(option.nome_operacional);
+    fetchAgentesExterno(option.id);
+    setShowOptions(true);
+  };
+
+  const filteredOptions = entidadesEscolares.filter((entidade) =>
+    entidade.nome_operacional.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
   return (
     <div className={styles.pageContainer}>
       <HeaderComponent />
       <PageContentContainer>
         <NavigationButtons setPage={setPage} />
         <FormComponent
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
           setPage={setPage}
+          handleOptionSelect={handleOptionSelect}
+          setShowOptions={setShowOptions}
+          showOptions={showOptions}
+          filteredOptions={filteredOptions}
+          handleSearchChange={handleSearchChange}
+          nameSearch={nameSearch}
           handleInputChange={handleInputChange}
           entidadesEscolares={entidadesEscolares}
           agentesExternoData={agentesExternoData}
           yearObservation={yearObservation}
+          containerRef={containerRef}
+          renderIcon={renderIcon}
         />
         {error && <ErrorComponent message={msgError} />}
       </PageContentContainer>
@@ -136,28 +200,64 @@ const NavigationButtons: React.FC<{
 const FormComponent: React.FC<any> = ({
   handleSubmit,
   setPage,
-  entidadesEscolares,
   agentesExternoData,
   yearObservation,
   handleInputChange,
+  filteredOptions,
+  searchTerm,
+  nameSearch,
+  setShowOptions,
+  showOptions,
+  handleSearchChange,
+  handleOptionSelect,
+  containerRef,
+  renderIcon,
 }) => {
   return (
     <form className={styles.conteinerForm} onSubmit={handleSubmit}>
       <div className={styles.boxStatus}>
         <label className={styles.labelStandard}>
           Partner school
-          <select
-            name="partnerschool"
-            onChange={handleInputChange}
-            className={styles.inputSelect}
-          >
-            <option value="">-</option>
-            {entidadesEscolares.map((entidade: FormData) => (
-              <option key={entidade.id} value={entidade.id}>
-                {entidade.nome_operacional}
-              </option>
-            ))}
-          </select>
+          <div className={styles.searchSelectContainer} ref={containerRef}>
+            <div className={styles.boxsearchInput}>
+              <input
+                type="text"
+                readOnly
+                value={nameSearch}
+                onClick={() =>
+                  setShowOptions(showOptions === true ? false : true)
+                }
+                className={styles.searchInput}
+              />
+              {renderIcon(IoIosArrowDown)}
+            </div>
+
+            {showOptions && (
+              <div className={styles.optionsContainer}>
+                <div className={styles.inputContainer}>
+                  {renderIcon(FaSearch)}
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    className={styles.searchInputSelect}
+                  />
+                </div>
+                <div className={styles.scrollableOptionsContainer}>
+                  {filteredOptions.map((option: FormData) => (
+                    <div
+                      key={option.id}
+                      className={styles.optionItem}
+                      onClick={() => handleOptionSelect(option)}
+                    >
+                      {option.nome_operacional}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </label>
       </div>
       <div className={styles.conteinerWidthAll}>
