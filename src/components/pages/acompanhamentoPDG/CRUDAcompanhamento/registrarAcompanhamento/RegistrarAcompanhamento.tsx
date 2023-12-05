@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useRef,
-} from 'react';
+import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
 import styles from '@/styles/AcompanhamentoPDG.module.css';
 import { BackendApiGet, BackendApiPost } from '@/backendApi';
 import InputMask from 'react-input-mask';
@@ -13,9 +7,10 @@ import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import dynamic from 'next/dynamic';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaCalendarAlt } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IconBaseProps, IconType } from 'react-icons';
+import { ComponenteCalendar } from '@/components/pages/calendar';
 interface FormData {
   id: string;
   nome_operacional: string;
@@ -39,8 +34,10 @@ export default function RegistrarAcompanhamento(): JSX.Element {
   const [searchTerm, setSearchTerm] = useState('');
   const [nameSearch, setNameSearch] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
   const [showOptions, setShowOptions] = useState(false);
-
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(null);
   const [yearObservation, setYearObservation] = useState(
     'Enter a year in observation date',
   );
@@ -52,7 +49,7 @@ export default function RegistrarAcompanhamento(): JSX.Element {
 
   function renderIcon(icon: IconType, color?: string): JSX.Element {
     const options: IconBaseProps = {
-      fontSize: '1.3em',
+      fontSize: '1em',
       color: color,
     };
 
@@ -108,6 +105,9 @@ export default function RegistrarAcompanhamento(): JSX.Element {
       setYearObservation('Enter a year in observation date');
     }
   };
+  const handleDateChange = (newDate: Date | Date[] | null) => {
+    setSelectedDate(newDate);
+  };
 
   const handleApiErrors = (error: any) => {
     setError(true);
@@ -143,6 +143,23 @@ export default function RegistrarAcompanhamento(): JSX.Element {
     };
   }, [containerRef]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        calendarRef.current &&
+        !calendarRef.current.contains(event.target as Node)
+      ) {
+        setShowCalendar(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [calendarRef]);
+
   const handleOptionSelect = (option: FormData) => {
     setNameSearch(option.nome_operacional);
     fetchAgentesExterno(option.id);
@@ -174,6 +191,11 @@ export default function RegistrarAcompanhamento(): JSX.Element {
           yearObservation={yearObservation}
           containerRef={containerRef}
           renderIcon={renderIcon}
+          showCalendar={showCalendar}
+          setShowCalendar={setShowCalendar}
+          calendarRef={calendarRef}
+          handleDateChange={handleDateChange}
+          selectedDate={selectedDate}
         />
         {error && <ErrorComponent message={msgError} />}
       </PageContentContainer>
@@ -212,6 +234,11 @@ const FormComponent: React.FC<any> = ({
   handleOptionSelect,
   containerRef,
   renderIcon,
+  showCalendar,
+  setShowCalendar,
+  calendarRef,
+  handleDateChange,
+  selectedDate,
 }) => {
   return (
     <form className={styles.conteinerForm} onSubmit={handleSubmit}>
@@ -284,14 +311,28 @@ const FormComponent: React.FC<any> = ({
         </label>
         <label className={styles.labelStandard}>
           Data of observation
-          <InputMask
-            type="text"
-            placeholder="YYYY/MM/DD"
-            mask="9999/99/99"
-            name="dataofobservation"
-            onChange={handleInputChange}
-            className={styles.inputStandard}
-          />
+          <div
+            onClick={() => {
+              setShowCalendar(true);
+            }}
+            className={styles.divDataObsertavion}
+          >
+            <InputMask
+              type="text"
+              placeholder="YYYY/MM/DD"
+              mask="9999/99/99"
+              readOnly
+              name="dataofobservation"
+              value={
+                selectedDate ? selectedDate.toLocaleDateString('en-CA') : ''
+              }
+              className={styles.inputDataObservation}
+            />
+            {renderIcon(FaCalendarAlt)}
+          </div>
+          <div className={styles.flexContainer} ref={calendarRef}>
+            {showCalendar && <ComponenteCalendar onChange={handleDateChange} />}
+          </div>
         </label>
       </div>
       <div className={styles.conteinerWidthAll}>
