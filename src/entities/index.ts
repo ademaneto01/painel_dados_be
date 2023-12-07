@@ -19,6 +19,7 @@ import EntitiesDocsContrato from './EntitiesDocsContrato';
 import EntitiesDocsEntidade from './EntitiesDocsEntidade';
 import EntitiesInfosContrato from './EntitiesInfosContrato';
 import EntitiesAlunados from './EntitiesAlunados';
+import EntitiesAcompanhamentoPDG from './EntitiesAcompanhamentoPDG';
 export {
   EntitiesUsers,
   EntitiesUserLogin,
@@ -41,4 +42,5 @@ export {
   EntitiesDocsEntidade,
   EntitiesInfosContrato,
   EntitiesAlunados,
+  EntitiesAcompanhamentoPDG,
 };

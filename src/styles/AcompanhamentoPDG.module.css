@@ -64,6 +64,8 @@
   background-color: var(--white);
   cursor: text;
 }
+
+.confirmButtonFinal,
 .confirmButton,
 .cancelButton {
   border: none;
@@ -79,18 +81,23 @@
   background-color: var(--verde-learn);
   color: var(--white);
 }
-
+.confirmButtonFinal {
+  background-color: var(--azul-tech);
+  color: var(--white);
+}
 .cancelButton {
   background-color: var(--red-300);
   color: var(--white);
 }
 
+.confirmButtonFinal:hover,
 .confirmButton:hover,
 .cancelButton:hover {
   transform: translateY(-2px);
   box-shadow: 0px 12px 25px 0px var(--black-200);
 }
 
+.confirmButtonFinal:active,
 .confirmButton:active,
 .cancelButton:active {
   transform: translateY(0);

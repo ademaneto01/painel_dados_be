@@ -9,6 +9,7 @@ import {
   EntitiesInfosContrato,
   EntitiesVincularAgente,
   EntitiesAlunados,
+  EntitiesAcompanhamentoPDG,
 } from '@/entities';
 
 export default interface BackendApiInterfacePost {
@@ -31,4 +32,6 @@ export default interface BackendApiInterfacePost {
   registrarInfosContrato(userData: any): Promise<EntitiesInfosContrato[]>;
 
   registrarAlunados(userData: any): Promise<EntitiesAlunados[]>;
+
+  registrarAcompanhamento(userData: any): Promise<EntitiesAcompanhamentoPDG[]>;
 }

@@ -1,6 +1,6 @@
-enum pageEnumAcompanhamentoPDG {
+enum PageEnumAcompanhamentoPDG {
   acompanhamentos = 'acompanhamentos',
   registrarAcompanhamento = 'registrarAcompanhamento',
 }
 
-export default pageEnumAcompanhamentoPDG;
+export default PageEnumAcompanhamentoPDG;

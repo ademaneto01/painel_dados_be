@@ -3,7 +3,7 @@ import styles from '@/styles/AcompanhamentoPDG.module.css';
 import { BackendApiGet, BackendApiPost } from '@/backendApi';
 import InputMask from 'react-input-mask';
 import { ErrorComponent } from '@/errors/index';
-import { PageEnumContratos } from '@/enums';
+import { PageEnumContratos, PageEnumAcompanhamentoPDG } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import dynamic from 'next/dynamic';
@@ -14,6 +14,27 @@ import { ComponenteCalendar } from '@/components/pages/calendar';
 interface FormData {
   id: string;
   nome_operacional: string;
+}
+interface FormDataToSubmit {
+  nameSearch: string;
+  educatorsname: string;
+  dataofobservation: string;
+  grade: string;
+  ofstudents: string;
+  tema: string;
+  lessonplanbe: string;
+  cycle: string;
+  digitalprojector: string;
+  board: string;
+  englishcorner: string;
+  noiselevel: string;
+  resourceaudioqlty: string;
+  nglbematerials: string;
+  lp1lessonplan: string;
+  lp2proposedgoals: string;
+  lp3resourcesused: string;
+  lp4changes: string;
+  finalcoments: string;
 }
 
 interface FormDataAgenteExternoRelacionado {
@@ -37,15 +58,18 @@ export default function RegistrarAcompanhamento(): JSX.Element {
   const calendarRef = useRef<HTMLDivElement>(null);
   const [showOptions, setShowOptions] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | Date[] | null>(null);
+  const [isFinalize, setIsFinalize] = useState('');
   const [yearObservation, setYearObservation] = useState(
     'Enter a year in observation date',
   );
   const [entidadesEscolares, setEntidadesEscolares] = useState<FormData[]>([]);
+  const [formDataToSubmit, setFormDataToSubmit] = useState<FormDataToSubmit[]>(
+    [],
+  );
   const [agentesExternoData, setAgentesExternoData] = useState<
     FormDataAgenteExternoRelacionado[]
   >([]);
-  const { setPage, idContrato } = useGlobalContext();
+  const { setPageAcompanhamento } = useGlobalContext();
 
   function renderIcon(icon: IconType, color?: string): JSX.Element {
     const options: IconBaseProps = {
@@ -55,6 +79,41 @@ export default function RegistrarAcompanhamento(): JSX.Element {
 
     return icon(options);
   }
+
+  const fetchDataRegister = async (estado: string) => {
+    const userId = localStorage.getItem('userId');
+    if (estado === 'finalized') {
+      const novoForm = {
+        ...formDataToSubmit,
+        finalized: true,
+        finalizedtimestamp: new Date(),
+        userId,
+      };
+      try {
+        const token = localStorage.getItem('auth_token');
+        const backendApi = new BackendApiPost(`${token}`);
+        await backendApi.registrarAcompanhamento(novoForm);
+      } catch (error) {
+        handleApiErrors(error);
+      }
+    }
+    if (estado === 'save') {
+      const novoForm = {
+        ...formDataToSubmit,
+        finalized: false,
+        finalizedtimestamp: null,
+        userId,
+      };
+      try {
+        const token = localStorage.getItem('auth_token');
+        const backendApi = new BackendApiPost(`${token}`);
+        await backendApi.registrarAcompanhamento(novoForm);
+      } catch (error) {
+        handleApiErrors(error);
+      }
+    }
+    setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos);
+  };
 
   const fetchData = async () => {
     try {
@@ -99,14 +158,35 @@ export default function RegistrarAcompanhamento(): JSX.Element {
 
     if (name === 'dataofobservation') {
       const year = value.substring(0, 4);
+
       setYearObservation(year);
     }
     if (name === 'dataofobservation' && value === '') {
       setYearObservation('Enter a year in observation date');
     }
+    setFormDataToSubmit((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleQuillChange = (content: string) => {
+    setFormDataToSubmit((prevFormData) => ({
+      ...prevFormData,
+      finalcoments: content,
+    }));
+  };
+
   const handleDateChange = (newDate: Date | Date[] | null) => {
-    setSelectedDate(newDate);
+    let formattedDate = '';
+
+    if (newDate instanceof Date) {
+      formattedDate = newDate.toLocaleDateString('en-CA');
+    } else if (Array.isArray(newDate) && newDate[0] instanceof Date) {
+      formattedDate = newDate[0].toLocaleDateString('en-CA');
+    }
+
+    setFormDataToSubmit((prevFormData) => ({
+      ...prevFormData,
+      dataofobservation: formattedDate,
+    }));
   };
 
   const handleApiErrors = (error: any) => {
@@ -125,6 +205,28 @@ export default function RegistrarAcompanhamento(): JSX.Element {
       setAgentesExternoData([]);
     }
     setShowOptions(true);
+  };
+
+  useEffect(() => {
+    if (isFinalize !== '') {
+      if (isFinalize === 'finalize') {
+        fetchDataRegister('finalized');
+      }
+
+      if (isFinalize === 'save') {
+        fetchDataRegister('save');
+      }
+    }
+  }, [isFinalize]);
+
+  const handleFinalizarClick = (e: any) => {
+    e.preventDefault();
+    setIsFinalize('finalize');
+  };
+
+  const handleSalvarClick = (e: any) => {
+    e.preventDefault();
+    setIsFinalize('save');
   };
 
   useEffect(() => {
@@ -162,6 +264,10 @@ export default function RegistrarAcompanhamento(): JSX.Element {
 
   const handleOptionSelect = (option: FormData) => {
     setNameSearch(option.nome_operacional);
+    setFormDataToSubmit((prevFormData) => ({
+      ...prevFormData,
+      nameSearch: option.id,
+    }));
     fetchAgentesExterno(option.id);
     setShowOptions(true);
   };
@@ -174,11 +280,11 @@ export default function RegistrarAcompanhamento(): JSX.Element {
     <div className={styles.pageContainer}>
       <HeaderComponent />
       <PageContentContainer>
-        <NavigationButtons setPage={setPage} />
+        <NavigationButtons setPageAcompanhamento={setPageAcompanhamento} />
         <FormComponent
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
-          setPage={setPage}
+          setPageAcompanhamento={setPageAcompanhamento}
           handleOptionSelect={handleOptionSelect}
           setShowOptions={setShowOptions}
           showOptions={showOptions}
@@ -195,7 +301,11 @@ export default function RegistrarAcompanhamento(): JSX.Element {
           setShowCalendar={setShowCalendar}
           calendarRef={calendarRef}
           handleDateChange={handleDateChange}
-          selectedDate={selectedDate}
+          setYearObservation={setYearObservation}
+          formDataToSubmit={formDataToSubmit}
+          handleQuillChange={handleQuillChange}
+          handleFinalizarClick={handleFinalizarClick}
+          handleSalvarClick={handleSalvarClick}
         />
         {error && <ErrorComponent message={msgError} />}
       </PageContentContainer>
@@ -206,22 +316,25 @@ export default function RegistrarAcompanhamento(): JSX.Element {
 const HeaderComponent: React.FC = () => <h4>Novo Acompanhamento</h4>;
 
 const NavigationButtons: React.FC<{
-  setPage: React.Dispatch<React.SetStateAction<PageEnumContratos>>;
-}> = ({ setPage }) => (
+  setPageAcompanhamento: React.Dispatch<
+    React.SetStateAction<PageEnumAcompanhamentoPDG>
+  >;
+}> = ({ setPageAcompanhamento }) => (
   <div className={styles.boxBtns}>
     <BackButton
       color={'var(--gray-300'}
       colorBackGround={'var(--white)'}
       text="Voltar"
       size="8rem"
-      onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
+      onClick={() =>
+        setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos)
+      }
     />
   </div>
 );
 
 const FormComponent: React.FC<any> = ({
-  handleSubmit,
-  setPage,
+  setPageAcompanhamento,
   agentesExternoData,
   yearObservation,
   handleInputChange,
@@ -238,10 +351,14 @@ const FormComponent: React.FC<any> = ({
   setShowCalendar,
   calendarRef,
   handleDateChange,
-  selectedDate,
+  setYearObservation,
+  formDataToSubmit,
+  handleQuillChange,
+  handleFinalizarClick,
+  handleSalvarClick,
 }) => {
   return (
-    <form className={styles.conteinerForm} onSubmit={handleSubmit}>
+    <form className={styles.conteinerForm}>
       <div className={styles.boxStatus}>
         <label className={styles.labelStandard}>
           Partner school
@@ -251,6 +368,7 @@ const FormComponent: React.FC<any> = ({
                 type="text"
                 readOnly
                 value={nameSearch}
+                name="nameSearch"
                 onClick={() =>
                   setShowOptions(showOptions === true ? false : true)
                 }
@@ -293,6 +411,7 @@ const FormComponent: React.FC<any> = ({
           Educator's name
           <select
             name="educatorsname"
+            value={formDataToSubmit.educatorsname}
             onChange={handleInputChange}
             className={styles.inputSelect}
           >
@@ -323,15 +442,18 @@ const FormComponent: React.FC<any> = ({
               mask="9999/99/99"
               readOnly
               name="dataofobservation"
-              value={
-                selectedDate ? selectedDate.toLocaleDateString('en-CA') : ''
-              }
+              value={formDataToSubmit.dataofobservation}
               className={styles.inputDataObservation}
             />
             {renderIcon(FaCalendarAlt)}
           </div>
           <div className={styles.flexContainer} ref={calendarRef}>
-            {showCalendar && <ComponenteCalendar onChange={handleDateChange} />}
+            {showCalendar && (
+              <ComponenteCalendar
+                onChange={handleDateChange}
+                setYearObservation={setYearObservation}
+              />
+            )}
           </div>
         </label>
       </div>
@@ -342,6 +464,7 @@ const FormComponent: React.FC<any> = ({
           <select
             onChange={handleInputChange}
             name="grade"
+            value={formDataToSubmit.grade}
             className={styles.inputSelect}
           >
             <option value="">-</option>
@@ -367,7 +490,9 @@ const FormComponent: React.FC<any> = ({
           <input
             type="text"
             placeholder="# of students"
-            name="status"
+            onChange={handleInputChange}
+            name="ofstudents"
+            value={formDataToSubmit.ofstudents}
             className={styles.inputStandard}
           />
         </label>
@@ -375,7 +500,8 @@ const FormComponent: React.FC<any> = ({
           Subject
           <select
             onChange={handleInputChange}
-            name="status"
+            name="tema"
+            value={formDataToSubmit.tema}
             className={styles.inputSelect}
           >
             <option value="">-</option>
@@ -389,7 +515,9 @@ const FormComponent: React.FC<any> = ({
           <input
             type="text"
             placeholder="Lesson plan Be #:"
-            name="status"
+            name="lessonplanbe"
+            onChange={handleInputChange}
+            value={formDataToSubmit.lessonplanbe}
             className={styles.inputStandard}
           />
         </label>
@@ -398,22 +526,47 @@ const FormComponent: React.FC<any> = ({
           <select
             onChange={handleInputChange}
             name="cycle"
+            value={formDataToSubmit.cycle}
             className={styles.inputSelect}
           >
             <option value="">-</option>
             {yearObservation !== 'Enter a year in observation date' ? (
               <>
-                <option value={`${yearObservation}.1`}>
-                  {`${yearObservation}.1`}
+                <option
+                  value={`${yearObservation
+                    .toLocaleDateString('en-CA')
+                    .substring(0, 4)}.1`}
+                >
+                  {`${yearObservation
+                    .toLocaleDateString('en-CA')
+                    .substring(0, 4)}.1`}
                 </option>
-                <option value={`${yearObservation}.2`}>
-                  {`${yearObservation}.2`}
+                <option
+                  value={`${yearObservation
+                    .toLocaleDateString('en-CA')
+                    .substring(0, 4)}.2`}
+                >
+                  {`${yearObservation
+                    .toLocaleDateString('en-CA')
+                    .substring(0, 4)}.2`}
                 </option>
-                <option value={`${yearObservation}.3`}>
-                  {`${yearObservation}.3`}
+                <option
+                  value={`${yearObservation
+                    .toLocaleDateString('en-CA')
+                    .substring(0, 4)}.3`}
+                >
+                  {`${yearObservation
+                    .toLocaleDateString('en-CA')
+                    .substring(0, 4)}.3`}
                 </option>
-                <option value={`${yearObservation}.4`}>
-                  {`${yearObservation}.4`}
+                <option
+                  value={`${yearObservation
+                    .toLocaleDateString('en-CA')
+                    .substring(0, 4)}.4`}
+                >
+                  {`${yearObservation
+                    .toLocaleDateString('en-CA')
+                    .substring(0, 4)}.4`}
                 </option>
                 <option value="extra">Extra</option>
               </>
@@ -433,6 +586,7 @@ const FormComponent: React.FC<any> = ({
                 <select
                   onChange={handleInputChange}
                   name="digitalprojector"
+                  value={formDataToSubmit.digitalprojector}
                   className={styles.inputSelect}
                 >
                   <option value="">-</option>
@@ -447,6 +601,7 @@ const FormComponent: React.FC<any> = ({
                 <select
                   onChange={handleInputChange}
                   name="board"
+                  value={formDataToSubmit.board}
                   className={styles.inputSelect}
                 >
                   <option value="">-</option>
@@ -461,6 +616,7 @@ const FormComponent: React.FC<any> = ({
                 <select
                   onChange={handleInputChange}
                   name="englishcorner"
+                  value={formDataToSubmit.englishcorner}
                   className={styles.inputSelect}
                 >
                   <option value="">-</option>
@@ -476,6 +632,7 @@ const FormComponent: React.FC<any> = ({
                 <select
                   onChange={handleInputChange}
                   name="noiselevel"
+                  value={formDataToSubmit.noiselevel}
                   className={styles.inputSelect}
                 >
                   <option value="">-</option>
@@ -490,6 +647,7 @@ const FormComponent: React.FC<any> = ({
                 <select
                   onChange={handleInputChange}
                   name="resourceaudioqlty"
+                  value={formDataToSubmit.resourceaudioqlty}
                   className={styles.inputSelect}
                 >
                   <option value="">-</option>
@@ -504,6 +662,7 @@ const FormComponent: React.FC<any> = ({
                 <select
                   onChange={handleInputChange}
                   name="nglbematerials"
+                  value={formDataToSubmit.nglbematerials}
                   className={styles.inputSelect}
                 >
                   <option value="">-</option>
@@ -525,7 +684,8 @@ const FormComponent: React.FC<any> = ({
               LP1 - A lesson plan was provided.
               <select
                 onChange={handleInputChange}
-                name="grade"
+                name="lp1lessonplan"
+                value={formDataToSubmit.lp1lessonplan}
                 className={styles.inputSelect}
               >
                 <option value="">-</option>
@@ -538,7 +698,8 @@ const FormComponent: React.FC<any> = ({
               LP2- All proposed goals were addressed.
               <select
                 onChange={handleInputChange}
-                name="grade"
+                name="lp2proposedgoals"
+                value={formDataToSubmit.lp2proposedgoals}
                 className={styles.inputSelect}
               >
                 <option value="">-</option>
@@ -553,7 +714,8 @@ const FormComponent: React.FC<any> = ({
               LP3 - Resources used contributed to achieved student outcomes.
               <select
                 onChange={handleInputChange}
-                name="grade"
+                name="lp3resourcesused"
+                value={formDataToSubmit.lp3resourcesused}
                 className={styles.inputSelect}
               >
                 <option value="">-</option>
@@ -569,7 +731,8 @@ const FormComponent: React.FC<any> = ({
               outcomes.
               <select
                 onChange={handleInputChange}
-                name="grade"
+                name="lp4changes"
+                value={formDataToSubmit.lp4changes}
                 className={styles.inputSelect}
               >
                 <option value="">-</option>
@@ -586,22 +749,35 @@ const FormComponent: React.FC<any> = ({
       <div className={styles.conteinerWidthAll}>
         <div className={styles.boxToAlignTitleLearning}>
           <h3>Final comments</h3>
-          <MultilineInputSSR label="Conteúdo" />
+          <MultilineInputSSR
+            label="Conteúdo"
+            onChange={handleQuillChange}
+            value={formDataToSubmit.finalcoments}
+          />
         </div>
       </div>
 
       <div className={styles.buttonContainer}>
         <button
+          className={styles.confirmButtonFinal}
+          type="button"
+          onClick={handleFinalizarClick}
+        >
+          Finalizar
+        </button>
+        <button
           className={styles.confirmButton}
           type="button"
-          onClick={handleSubmit}
+          onClick={handleSalvarClick}
         >
           Salvar
         </button>
         <button
           className={styles.cancelButton}
           type="button"
-          onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
+          onClick={() =>
+            setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos)
+          }
         >
           Cancelar
         </button>

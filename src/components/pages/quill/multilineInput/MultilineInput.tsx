@@ -25,6 +25,11 @@ const MultilineInput: React.FC<MultilineInputProps> = ({
   onChange,
   value,
 }) => {
+  const handleChange = (content: string) => {
+    if (onChange) {
+      onChange(content);
+    }
+  };
   return (
     <>
       <ReactQuill
@@ -32,7 +37,7 @@ const MultilineInput: React.FC<MultilineInputProps> = ({
         {...register}
         theme={theme}
         modules={modules}
-        onChange={onChange}
+        onChange={handleChange}
         value={value}
       />
     </>

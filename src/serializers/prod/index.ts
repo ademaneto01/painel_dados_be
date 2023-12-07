@@ -18,6 +18,7 @@ import EditarEntidadeEscolarSerializers from './EditarEntidadeEscolarSerializers
 import ContratosSerializers from './ContratosSerializers';
 import EntidadesEscolaresSerializers from './EntidadesEscolaresSerializers';
 import AlunadosSerializers from './AlunadosSerializers';
+import AcompanhamentoPDGSerializers from './AcompanhamentoPDGSerializers';
 export {
   AlunadosSerializers,
   UsersSerializers,
@@ -39,4 +40,5 @@ export {
   EditarEntidadeEscolarSerializers,
   ContratosSerializers,
   EntidadesEscolaresSerializers,
+  AcompanhamentoPDGSerializers,
 };

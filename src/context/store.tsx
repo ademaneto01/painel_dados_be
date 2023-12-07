@@ -3,7 +3,7 @@ import {
   PageEnumContratos,
   PageEnumEscolasPDG,
   PageEnumAgentesExterno,
-  pageEnumAcompanhamentoPDG,
+  PageEnumAcompanhamentoPDG,
 } from '@/enums';
 
 import React, {
@@ -33,7 +33,7 @@ interface ContextProps {
   idAgente: string;
   setIdAgente: Dispatch<SetStateAction<string>>;
   pageAcompanhamento: string;
-  setPageAcompanhamento: Dispatch<SetStateAction<pageEnumAcompanhamentoPDG>>;
+  setPageAcompanhamento: Dispatch<SetStateAction<PageEnumAcompanhamentoPDG>>;
 }
 
 export const GlobalContext = createContext<ContextProps>({
@@ -41,7 +41,7 @@ export const GlobalContext = createContext<ContextProps>({
   setUsersUpdated: () => {},
   page: PageEnumContratos.entidadesContratuais,
   setPage: () => {},
-  pageAcompanhamento: pageEnumAcompanhamentoPDG.registrarAcompanhamento,
+  pageAcompanhamento: PageEnumAcompanhamentoPDG.registrarAcompanhamento,
   setPageAcompanhamento: () => {},
   pageEscolasPDG: PageEnumEscolasPDG.escolasPDG,
   idAgente: '',
@@ -63,7 +63,7 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   const [usersUpdated, setUsersUpdated] = useState(false);
   const [page, setPage] = useState(PageEnumContratos.entidadesContratuais);
   const [pageAcompanhamento, setPageAcompanhamento] = useState(
-    pageEnumAcompanhamentoPDG.registrarAcompanhamento,
+    PageEnumAcompanhamentoPDG.registrarAcompanhamento,
   );
   const [pageAgentesExterno, setPageAgentesExterno] = useState(
     PageEnumAgentesExterno.agentes,

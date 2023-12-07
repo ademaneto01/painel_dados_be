@@ -9,6 +9,7 @@ import {
   EntitiesVincularAgente,
   EntitiesAgenteExterno,
   EntitiesAlunados,
+  EntitiesAcompanhamentoPDG,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterfacePost, SerializerInterface } from '@/interfaces';
@@ -23,6 +24,7 @@ import {
   ContratosSerializers,
   InfosContratoSerializers,
   AlunadosSerializers,
+  AcompanhamentoPDGSerializers,
 } from '@/serializers/prod';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
@@ -124,6 +126,16 @@ export default class BackendApiPost implements BackendApiInterfacePost {
       '/registrarAgente',
       userData,
       new AgenteExternoSerializers(),
+    );
+  }
+
+  public async registrarAcompanhamento(
+    userData: any,
+  ): Promise<EntitiesAcompanhamentoPDG[]> {
+    return await this.post<EntitiesAcompanhamentoPDG>(
+      '/registrarAcompanhamento',
+      userData,
+      new AcompanhamentoPDGSerializers(),
     );
   }
 

@@ -1,6 +1,6 @@
 import { useGlobalContext } from '@/context/store';
 import pages from '../../pages/acompanhamentoPDG/index';
-import { pageEnumAcompanhamentoPDG } from '@/enums';
+import { PageEnumAcompanhamentoPDG } from '@/enums';
 import styles from '@/styles/CardLessons.module.css';
 
 export default function SwitchCaseContratos() {
@@ -8,9 +8,10 @@ export default function SwitchCaseContratos() {
 
   function PagesAcompanhamento(): JSX.Element {
     switch (pageAcompanhamento) {
-      case pageEnumAcompanhamentoPDG.registrarAcompanhamento:
+      case PageEnumAcompanhamentoPDG.registrarAcompanhamento:
         return <pages.RegistrarAcompanhamento />;
-
+      case PageEnumAcompanhamentoPDG.acompanhamentos:
+        return <pages.Acompanhamentos />;
       default:
         return <></>;
     }
