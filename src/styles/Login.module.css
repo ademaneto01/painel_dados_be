@@ -58,6 +58,11 @@
   gap: 1.5em;
 }
 
+.title {
+  font-weight: 550;
+  font-size: 2em;
+}
+
 .labelLogin {
   display: flex;
   flex-direction: column;

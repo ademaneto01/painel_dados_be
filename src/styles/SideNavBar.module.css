@@ -15,14 +15,14 @@
   box-shadow: 2px 0px 18px var(--black-80);
   transition: width 0.3s ease-out, transform 0.3s ease-out;
   transform: translateX(0);
-  border-top: solid var(--gray-200);
-  border-bottom: solid var(--gray-200);
-  border-right: solid var(--gray-200);
+  border-top: solid 0.1em var(--gray-200);
+  border-bottom: solid 0.1em var(--gray-200);
+  border-right: solid 0.1em var(--gray-200);
   border-radius: 40px;
 }
 
 .hidden{
-  transform: translateX(-12em); 
+  transform: translateX(-10em); 
 }
 
 .navBarButton {
@@ -68,7 +68,7 @@
 }
 
 .buttonsContainer {
-  margin-top: 4.5em;
+  margin-top: 1em;
   padding: 2.3rem;
   border-radius: 1em;
 }
@@ -89,14 +89,28 @@
 
 .buttonHidden {
   margin-left: 12em;
-  width: 2em;
-  height: 2em;
-  margin-bottom: 20px;
+  margin-bottom: 3em;
+  transform: scale(1.5);
+  width: 4em;
   color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0.5em;
   transition: width 0.3s, height 0.3s;
+  position: relative;
+}
+
+.activeButtonHidden {
+  background: linear-gradient(to bottom, var(--azul-techt), var(--verde-techt));
+  color: var(--white);
+  padding: 0.3em 0.75em;
+  transform: scale(1.2);
+  border-radius: 0.5em;
+  margin-right: 2.3em;
+  transition: transform 0.3s ease, border-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
 }

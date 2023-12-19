@@ -22,7 +22,7 @@
   text-align: center;
   box-shadow: 0 0 10px var(--azul-escuro);
   margin: 2.4em 1.4em 0em 0em;
-  border: solid var(--azul-escuro);
+  border: solid 0.1em var(--azul-escuro);
 }
 
 .title {
