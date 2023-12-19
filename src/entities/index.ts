@@ -18,6 +18,7 @@ import EntitiesRegistrarDocContrato from './EntitiesRegistrarDocContrato';
 import EntitiesDocsContrato from './EntitiesDocsContrato';
 import EntitiesDocsEntidade from './EntitiesDocsEntidade';
 import EntitiesInfosContrato from './EntitiesInfosContrato';
+import EntitiesAlunados from './EntitiesAlunados';
 export {
   EntitiesUsers,
   EntitiesUserLogin,
@@ -39,4 +40,5 @@ export {
   EntitiesDocsContrato,
   EntitiesDocsEntidade,
   EntitiesInfosContrato,
+  EntitiesAlunados,
 };

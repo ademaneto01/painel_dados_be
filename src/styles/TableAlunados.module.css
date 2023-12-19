@@ -1,0 +1,115 @@
+.table {
+  display: flex;
+  margin-top: 1em;
+
+  flex-direction: column;
+}
+
+.table table {
+  border-collapse: collapse;
+  flex-grow: 1;
+}
+
+.table th {
+  border-collapse: collapse;
+  border-top: 1px solid var(--white-200);
+  border-bottom: 2px solid var(--white-200);
+  padding: 1.1em;
+  text-align: left;
+  font-size: 0.8em;
+}
+.table td {
+  border-collapse: collapse;
+  padding: 1.1em;
+  font-size: 0.8em;
+  border-bottom: 2px solid var(--white-200);
+  color: var(--azul-tenro);
+}
+.conteinerBtns {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  justify-content: space-between;
+}
+.boxInputBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 12em;
+  gap: 0.1em;
+}
+.boxBtns {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  gap: 0.5em;
+}
+.inputStandard {
+  all: unset;
+  text-align: start;
+  width: 45%;
+  padding-left: 0.7rem;
+  height: 2rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9em;
+  border-radius: 5px;
+  color: var(--gray-300);
+  border: 0.063em solid var(--gray-200);
+  cursor: text;
+}
+
+.inputSearch {
+  all: unset;
+  text-align: start;
+  width: 60%;
+  padding-left: 0.7rem;
+  height: 2rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9em;
+  border-radius: 5px;
+  color: var(--gray-300);
+  border: 0.063em solid var(--gray-200);
+  cursor: text;
+}
+
+.confirmButton,
+.cancelButton {
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 0px 10px 20px 0px var(--black-200);
+  margin-top: -10px;
+  transition: all 0.3s ease;
+}
+
+.confirmButton {
+  background-color: var(--verde-learn);
+  color: var(--white);
+}
+
+.cancelButton {
+  background-color: var(--red-300);
+  color: var(--white);
+}
+
+.confirmButton:hover,
+.cancelButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 12px 25px 0px var(--black-200);
+}
+
+.confirmButton:active,
+.cancelButton:active {
+  transform: translateY(0);
+  box-shadow: 0px 6px 12px 0px var(--black-200);
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}

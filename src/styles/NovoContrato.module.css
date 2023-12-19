@@ -55,12 +55,6 @@
 .inputSelect:focus {
   outline: transparent;
 }
-.buttonContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-  gap: 1rem;
-}
 
 .confirmButton,
 .cancelButton {

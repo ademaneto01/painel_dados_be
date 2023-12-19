@@ -11,6 +11,7 @@ import {
   EntitiesDocsContrato,
   EntitiesDocsEntidade,
   EntitiesInfosContrato,
+  EntitiesAlunados,
 } from '@/entities';
 
 export default interface BackendApiInterfaceGet {
@@ -38,4 +39,6 @@ export default interface BackendApiInterfaceGet {
   listarDocsContrato(uuid_ec: any): Promise<EntitiesDocsContrato[]>;
   listarDocsEntidade(uuid_ee: any): Promise<EntitiesDocsEntidade[]>;
   listarInfosContrato(uuid_ec: any): Promise<EntitiesInfosContrato[]>;
+  listarIndividualTurmas(id: any): Promise<EntitiesAlunados[]>;
+  listarIndividualAlunados(id: any): Promise<EntitiesAlunados[]>;
 }

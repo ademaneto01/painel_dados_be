@@ -12,6 +12,10 @@ import RegistrarDocEntidade from './registrarDocEntidade/RegistrarDocEntidade';
 import InfosContrato from './infosContrato/InfosContrato';
 import RegistrarInfosContrato from './infosContrato/RegistrarInfosContrato';
 import EditarInfosContrato from './infosContrato/EditarInfosContrato';
+import Alunados from './alunados/Alunados';
+import CadastrarAlunado from './alunados/CRUDAlunado/cadastroAlunado/CadastroAlunado';
+import EditarAlunado from './alunados/CRUDAlunado/editarAlunado/EditarAlunado';
+
 const pageComponentsContratos = {
   EntidadesContratuais,
   EntidadesEscolares,
@@ -27,5 +31,8 @@ const pageComponentsContratos = {
   InfosContrato,
   RegistrarInfosContrato,
   EditarInfosContrato,
+  Alunados,
+  CadastrarAlunado,
+  EditarAlunado,
 };
 export default pageComponentsContratos;

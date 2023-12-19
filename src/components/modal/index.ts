@@ -6,6 +6,7 @@ import ModalDadosEntidadeEscolar from './modalDados/ModalDadosEntidadeEscolar';
 import ModalDadosAgente from './modalDados/ModalDadosAgente';
 import ModalVisualizarDoc from './modalVisualizarDoc/ModalVisualizarDoc';
 import ModalTopNavBaR from './modalTopNavBaR/ModalTopNavBaR';
+import ModalSucesso from './modalSucesso/ModalSucesso';
 export {
   ModalDelete,
   ModalAddUser,
@@ -15,4 +16,5 @@ export {
   ModalDadosAgente,
   ModalVisualizarDoc,
   ModalTopNavBaR,
+  ModalSucesso,
 };

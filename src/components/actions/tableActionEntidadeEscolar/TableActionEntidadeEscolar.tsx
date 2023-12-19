@@ -31,6 +31,7 @@ export default function TableActionEntidadeEscolar(
     useGlobalContext();
 
   const handleEditClick = () => handleClickOpenModalAddEditSchool(props.id);
+  const handleAlunadosClick = () => handleClickOpenPageAlunados(props.id);
   const handleViewMoreClick = () => verMais(props.id);
   const handleDeleteClick = () => handleClickOpenModalExcluir(props.id);
   const handleVisualizarDocClick = () => visualizarDocumentos(props.id);
@@ -71,6 +72,11 @@ export default function TableActionEntidadeEscolar(
     setIdEntidadeEscolar(id);
     setPage(PageEnumContratos.editEntidade);
   }
+  function handleClickOpenPageAlunados(id: string): void {
+    setIdEntidadeEscolar(id);
+    setPage(PageEnumContratos.alunados);
+  }
+
   function visualizarDocumentos(id: string): void {
     setIdEntidadeEscolar(id);
     setPage(PageEnumContratos.docsEntidade);
@@ -110,6 +116,7 @@ export default function TableActionEntidadeEscolar(
           >
             <div className={styles.modal}>
               <button onClick={handleEditClick}>Editar Entidade</button>
+              <button onClick={handleAlunadosClick}>Alunado</button>
               <button onClick={handleVisualizarDocClick}>
                 Visualizar Documentos
               </button>

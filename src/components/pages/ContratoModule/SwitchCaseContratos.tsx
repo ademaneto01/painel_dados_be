@@ -36,6 +36,13 @@ export default function SwitchCaseContratos() {
         return <pages.RegistrarInfosContrato />;
       case PageEnumContratos.editarInfosContrato:
         return <pages.EditarInfosContrato />;
+      case PageEnumContratos.alunados:
+        return <pages.Alunados />;
+      case PageEnumContratos.cadastroAlunado:
+        return <pages.CadastrarAlunado />;
+      case PageEnumContratos.editarAlunado:
+        return <pages.EditarAlunado />;
+
       default:
         return <></>;
     }

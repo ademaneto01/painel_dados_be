@@ -6,8 +6,18 @@ import { IconType } from 'react-icons';
 import { RiComputerFill, RiComputerLine } from 'react-icons/ri';
 import SideNavBarButton from './SideNavBarButton';
 import { BackendApiGet } from '@/backendApi';
-import { PiUsers, PiUserSquare, PiUserSquareFill, PiUsersFill } from 'react-icons/pi';
-import { IoDocumentsOutline, IoDocuments, IoSchool, IoSchoolOutline  } from 'react-icons/io5';
+import {
+  PiUsers,
+  PiUserSquare,
+  PiUserSquareFill,
+  PiUsersFill,
+} from 'react-icons/pi';
+import {
+  IoDocumentsOutline,
+  IoDocuments,
+  IoSchool,
+  IoSchoolOutline,
+} from 'react-icons/io5';
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
   return icon({ style: { fontSize: '1.3em', color: color } });
@@ -53,7 +63,7 @@ export default function SideNavBar(props: SideNavBarProps) {
     <div className={hidable(styles.navBar)}>
       <div className={styles.buttonsContainer}>
         <SideNavBarButton
-          text={"Usuários"}
+          text={'Usuários'}
           onClick={() => {
             props.setPage(PageEnum.users);
           }}

@@ -5,6 +5,7 @@ import {
   EntitiesInfosContrato,
   EntitiesOneUser,
   EntitiesEntidadesEscolares,
+  EntitiesAlunados,
 } from '@/entities';
 
 export default interface BackendApiInterfacePut {
@@ -21,4 +22,6 @@ export default interface BackendApiInterfacePut {
   editarUsuario(userData: any): Promise<EntitiesOneUser[]>;
 
   editarInfosContrato(userData: any): Promise<EntitiesInfosContrato[]>;
+
+  editarAlunados(userData: any): Promise<EntitiesAlunados[]>;
 }

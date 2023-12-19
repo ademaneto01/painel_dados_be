@@ -42,7 +42,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
   const [filterSchool, setFilterSchool] = useState('');
   const [filterProfile, setFilterProfile] = useState('');
   const [filterCargo, setFilterCargo] = useState('');
-  const itemsPerPage = 5;
+  const [itemsPerPage, setItemsPerPage] = useState(5);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
@@ -157,6 +157,13 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
     }
   };
 
+  const handleItemsPerPageChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setItemsPerPage(Number(event.target.value));
+    setCurrentPage(1);
+  };
+
   const handleFilterNameOrEmailChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -240,6 +247,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
           <div className={styles.table}>
             <table>
               <TableHeaders headers={headers} />
+
               <tbody>
                 {paginatedData.length > 0 ? (
                   paginatedData.map((item) => {
@@ -263,17 +271,31 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
                 )}
               </tbody>
             </table>
-            <div className={styles.pagination}>
-              <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-                {reactIcon(ImArrowLeft2)}
-              </button>
-              <span>{`${currentPage}/${totalPages}`}</span>
-              <button
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
+          </div>
+          <div className={styles.pagination}>
+            <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+              {reactIcon(ImArrowLeft2)}
+            </button>
+            <span>{`${currentPage}/${totalPages}`}</span>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              {reactIcon(ImArrowRight2)}
+            </button>
+            <div className={styles.conteinerItemsPerPg}>
+              Itens por página:{' '}
+              <select
+                className={styles.selectItemPerPage}
+                onChange={handleItemsPerPageChange}
+                value={itemsPerPage}
               >
-                {reactIcon(ImArrowRight2)}
-              </button>
+                <option value="5">5</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="60">60</option>
+                <option value="100">100</option>
+              </select>
             </div>
           </div>
         </>

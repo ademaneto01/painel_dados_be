@@ -13,6 +13,9 @@ enum PageEnumContratos {
   infosContrato = 'infosContrato',
   registrarInfosContrato = 'registrarInfosContrato',
   editarInfosContrato = 'editarInfosContrato',
+  alunados = 'alunados',
+  cadastroAlunado = 'cadastroAlunado',
+  editarAlunado = 'editarAlunado',
 }
 
 export default PageEnumContratos;

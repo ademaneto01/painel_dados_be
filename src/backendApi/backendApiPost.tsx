@@ -8,6 +8,7 @@ import {
   EntitiesUserLogin,
   EntitiesVincularAgente,
   EntitiesAgenteExterno,
+  EntitiesAlunados,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterfacePost, SerializerInterface } from '@/interfaces';
@@ -21,6 +22,7 @@ import {
   DocsEntitadeSerializers,
   ContratosSerializers,
   InfosContratoSerializers,
+  AlunadosSerializers,
 } from '@/serializers/prod';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
@@ -77,6 +79,13 @@ export default class BackendApiPost implements BackendApiInterfacePost {
       '/registrarDocContrato',
       userData,
       new RegistrarDocContratoSerializers(),
+    );
+  }
+  public async registrarAlunados(userData: any): Promise<EntitiesAlunados[]> {
+    return await this.post<EntitiesAlunados>(
+      '/registrarAlunados',
+      userData,
+      new AlunadosSerializers(),
     );
   }
 

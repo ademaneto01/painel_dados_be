@@ -5,6 +5,7 @@ import {
   EntitiesOneUser,
   EntitiesVincularAgente,
   EntitiesAgenteExterno,
+  EntitiesAlunados,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterfacePut, SerializerInterface } from '@/interfaces';
@@ -15,6 +16,7 @@ import {
   ContratosSerializers,
   EntidadesEscolaresSerializers,
   InfosContratoSerializers,
+  AlunadosSerializers,
 } from '@/serializers/prod';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
@@ -101,6 +103,14 @@ export default class BackendApiPut implements BackendApiInterfacePut {
       '/editarVinculoAgente',
       userData,
       new VincularAgenteSerializers(),
+    );
+  }
+
+  public async editarAlunados(userData: any): Promise<EntitiesAlunados[]> {
+    return await this.put<EntitiesAlunados>(
+      '/editarAlunados',
+      userData,
+      new AlunadosSerializers(),
     );
   }
 
