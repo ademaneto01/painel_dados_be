@@ -113,6 +113,11 @@ export default function EditarInfosContrato(): JSX.Element {
         errors.push('Informe os campos obrigatórios.');
         break;
       }
+
+      if (key === 'pedido_min' && isNaN(value as number)) {
+        errors.push('Pedido Mínimo deve ser um número válido.');
+        break;
+      }
     }
 
     if (errors.length) {
