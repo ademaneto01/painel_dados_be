@@ -19,6 +19,10 @@ export default function SideNavBarButton(props: SideNavBarButtonProps) {
     return style + (props.hidden ? ` ${styles.navBarButtonHidden}` : '');
   } 
 
+  function activeHidable(style: string): string {
+    return style + (props.active ? ` ${styles.activeButtonHidden}` : '');
+  } 
+
   return (
     <a
       data-testid="side-nav-button"
@@ -31,7 +35,9 @@ export default function SideNavBarButton(props: SideNavBarButtonProps) {
       }
       onClick={props.onClick}
     >
-      {props.icon}
+      <div className={activeHidable(styles.iconContainer)} onClick={props.onClick}>
+        {props.icon}
+      </div>
       <span className={styles.text}> {props.buttonHidden ? "" : props.text}</span>
     </a>
   );

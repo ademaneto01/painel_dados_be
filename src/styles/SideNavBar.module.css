@@ -100,9 +100,3 @@
   transition: width 0.3s, height 0.3s;
   position: relative;
 }
-
-.buttonHidden:hover {
-  color: var(--white);
-  background: var(--azul-tech-opaque);
-  border: solid 2px var(--gray-300);
-}
