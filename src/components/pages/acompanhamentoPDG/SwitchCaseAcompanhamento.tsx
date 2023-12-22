@@ -12,6 +12,8 @@ export default function SwitchCaseContratos() {
         return <pages.RegistrarAcompanhamento />;
       case PageEnumAcompanhamentoPDG.acompanhamentos:
         return <pages.Acompanhamentos />;
+      case PageEnumAcompanhamentoPDG.visualizeAcompanhamento:
+        return <pages.VisualizeAcompanhamento />;
       default:
         return <></>;
     }

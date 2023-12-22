@@ -1,0 +1,105 @@
+.pageContainer {
+  width: 100%;
+  margin-bottom: 5em;
+}
+.conteinerFullInfos {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.pageContentContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 80%;
+  height: 105%;
+
+  margin-top: 1.7em;
+  padding: 1.2em;
+  padding-bottom: 0.9em;
+  margin-bottom: 2rem;
+}
+
+.conteinerForm {
+  display: flex;
+
+  flex-direction: column;
+  gap: 2em;
+}
+.conteinerObservation {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 45%;
+  padding: 1em 2em 1em 1em;
+  border-radius: 5px;
+  background-color: var(--gray-202);
+}
+.conteinerWidthAll {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 93.5%;
+  padding: 1em 2em 1em 1em;
+  border-radius: 5px;
+  background-color: var(--gray-202);
+}
+
+.boxToAlignTitleLearning {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+}
+.conteinerLearning {
+  display: flex;
+  width: 100%;
+  gap: 2em;
+}
+.boxLearning {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 100%;
+}
+
+.conteinerObsCycle {
+  display: flex;
+  width: 100%;
+  gap: 2em;
+}
+.boxStatus {
+  width: 15em;
+}
+.labelStandard {
+  font-weight: 550;
+  gap: 0.2rem;
+}
+.boxTextInfos {
+  font-size: medium;
+  font-weight: 400;
+  color: rgb(48, 46, 46);
+}
+
+.flexContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: flex-start;
+}
+.divDataObsertavion {
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  padding: 3px 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 101%;
+}
+
+.containerFinalComments {
+  width: 100%;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}

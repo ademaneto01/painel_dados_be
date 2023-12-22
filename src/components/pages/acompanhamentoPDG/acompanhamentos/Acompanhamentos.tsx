@@ -1,21 +1,20 @@
-import { EntitiesAgenteExterno } from '@/entities';
+import { EntitiesAcompanhamentoPDG } from '@/entities';
 import styles from '@/styles/Page.module.css';
-import { Column, Table } from '../../../../Table';
-import { PageContentContainer, CreateButton } from '../../../../shared';
+import { Column, Table } from '../../../Table';
+import { PageContentContainer, CreateButton } from '../../../shared';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { useState, useEffect } from 'react';
 import { PageEnumAcompanhamentoPDG } from '@/enums';
 
 const columns = [
-  new Column('Nome', 'nome'),
-  new Column('Cargo', 'cargo'),
-  new Column('E-mail Primário', 'no_email_primario'),
+  new Column('Nome', 'nome_escola'),
+  new Column('Cycle', 'cycle'),
   new Column('Ações', 'acoes'),
 ];
 
 export default function Acompanhamentos() {
-  const [data, setData] = useState<EntitiesAgenteExterno[]>([]);
+  const [data, setData] = useState<EntitiesAcompanhamentoPDG[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
@@ -25,10 +24,11 @@ export default function Acompanhamentos() {
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
+      const userId = localStorage.getItem('userId');
       try {
         const backendApi = new BackendApiGet(`${token}`);
 
-        const users = await backendApi.listarTodosAgentes();
+        const users = await backendApi.localizarAcompanhamento(userId);
 
         setData(users);
       } catch (error: any) {
@@ -64,7 +64,7 @@ export default function Acompanhamentos() {
           }
         />
 
-        <Table<EntitiesAgenteExterno>
+        <Table<EntitiesAcompanhamentoPDG>
           data={data}
           columns={columns}
           loaded={loaded}
@@ -72,6 +72,7 @@ export default function Acompanhamentos() {
           msgError={msgError}
           inputSelectAgente={true}
           searchInputNoneEscola={'none'}
+          searchInputNone={'none'}
           labelInput={'Buscar pelo nome'}
         />
       </PageContentContainer>

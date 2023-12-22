@@ -2,8 +2,10 @@ import { EntitiesAcompanhamentoPDG } from '@/entities';
 import { SerializerInterface } from '@/interfaces';
 
 interface AcompanhamentoPDGPayload {
+  id: string;
   id_ee: string;
   id_prof: string;
+  nome_escola: string;
   dataofobservation: string;
   grade: boolean;
   ofstudents: string;
@@ -22,6 +24,7 @@ interface AcompanhamentoPDGPayload {
   lp4changes: string;
   finalcoments: string;
   finalized: boolean;
+  deleted: boolean;
 }
 
 export default class AcompanhamentoPDGSerializers
@@ -29,8 +32,10 @@ export default class AcompanhamentoPDGSerializers
 {
   toEntity(otd: AcompanhamentoPDGPayload): EntitiesAcompanhamentoPDG {
     return new EntitiesAcompanhamentoPDG({
+      id: otd.id,
       id_ee: otd.id_ee,
       id_prof: otd.id_prof,
+      nome_escola: otd.nome_escola,
       dataofobservation: otd.dataofobservation,
       grade: otd.grade,
       ofstudents: otd.ofstudents,
@@ -49,6 +54,7 @@ export default class AcompanhamentoPDGSerializers
       lp4changes: otd.lp4changes,
       finalcoments: otd.finalcoments,
       finalized: otd.finalized,
+      deleted: otd.deleted,
     });
   }
 }

@@ -8,4 +8,5 @@ export default interface BackendApiInterfaceDelete {
   deletarDocEntidade(id: any): Promise<string>;
   deletarInfosContrato(id: any): Promise<string>;
   deletarAlunado(userData: any): Promise<string>;
+  deletarAcompanhamento(id: any): Promise<string>;
 }

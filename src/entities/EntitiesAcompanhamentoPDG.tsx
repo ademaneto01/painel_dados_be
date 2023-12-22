@@ -1,6 +1,10 @@
+import { TableActionAcompanhamentoPDG } from '@/components/actions';
+import VisualizeAcompanhamento from '@/components/pages/acompanhamentoPDG/visualizeAcompanhamento/VisualizeAcompanhamento';
 interface UserProps {
+  id: string;
   id_ee: string;
   id_prof: string;
+  nome_escola: string;
   dataofobservation: string;
   grade: boolean;
   ofstudents: string;
@@ -19,11 +23,14 @@ interface UserProps {
   lp4changes: string;
   finalcoments: string;
   finalized: boolean;
+  deleted: boolean;
 }
 
 export default class EntitiesAcompanhamentoPDG {
+  readonly id: string;
   readonly id_ee: string;
   readonly id_prof: string;
+  readonly nome_escola: string;
   readonly dataofobservation: string;
   readonly grade: boolean;
   readonly ofstudents: string;
@@ -42,10 +49,13 @@ export default class EntitiesAcompanhamentoPDG {
   readonly lp4changes: string;
   readonly finalcoments: string;
   readonly finalized: boolean;
+  readonly deleted: boolean;
 
   constructor({
+    id,
     id_ee,
     id_prof,
+    nome_escola,
     dataofobservation,
     grade,
     ofstudents,
@@ -64,9 +74,12 @@ export default class EntitiesAcompanhamentoPDG {
     lp4changes,
     finalcoments,
     finalized,
+    deleted,
   }: UserProps) {
+    this.id = id;
     this.id_ee = id_ee;
     this.id_prof = id_prof;
+    this.nome_escola = nome_escola;
     this.dataofobservation = dataofobservation;
     this.grade = grade;
     this.ofstudents = ofstudents;
@@ -85,5 +98,15 @@ export default class EntitiesAcompanhamentoPDG {
     this.lp4changes = lp4changes;
     this.finalcoments = finalcoments;
     this.finalized = finalized;
+    this.deleted = deleted;
+  }
+  public get acoes(): JSX.Element {
+    return (
+      <TableActionAcompanhamentoPDG
+        id={this.id}
+        nome={this.nome_escola}
+        finalized={this.finalized}
+      />
+    );
   }
 }

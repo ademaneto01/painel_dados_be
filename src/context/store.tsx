@@ -18,6 +18,8 @@ import React, {
 interface ContextProps {
   usersUpdated: boolean;
   setUsersUpdated: Dispatch<SetStateAction<boolean>>;
+  showPageVisualizeAcompanhamento: string;
+  setShowPageVisualizeAcompanhamento: Dispatch<SetStateAction<string>>;
   page: string;
   setPage: Dispatch<SetStateAction<PageEnumContratos>>;
   pageAgentesExterno: string;
@@ -39,9 +41,11 @@ interface ContextProps {
 export const GlobalContext = createContext<ContextProps>({
   usersUpdated: false,
   setUsersUpdated: () => {},
+  showPageVisualizeAcompanhamento: '',
+  setShowPageVisualizeAcompanhamento: () => {},
   page: PageEnumContratos.entidadesContratuais,
   setPage: () => {},
-  pageAcompanhamento: PageEnumAcompanhamentoPDG.registrarAcompanhamento,
+  pageAcompanhamento: PageEnumAcompanhamentoPDG.acompanhamentos,
   setPageAcompanhamento: () => {},
   pageEscolasPDG: PageEnumEscolasPDG.escolasPDG,
   idAgente: '',
@@ -63,7 +67,7 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   const [usersUpdated, setUsersUpdated] = useState(false);
   const [page, setPage] = useState(PageEnumContratos.entidadesContratuais);
   const [pageAcompanhamento, setPageAcompanhamento] = useState(
-    PageEnumAcompanhamentoPDG.registrarAcompanhamento,
+    PageEnumAcompanhamentoPDG.acompanhamentos,
   );
   const [pageAgentesExterno, setPageAgentesExterno] = useState(
     PageEnumAgentesExterno.agentes,
@@ -71,6 +75,8 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   const [pageEscolasPDG, setPageEscolasPDG] = useState(
     PageEnumEscolasPDG.escolasPDG,
   );
+  const [showPageVisualizeAcompanhamento, setShowPageVisualizeAcompanhamento] =
+    useState('');
   const [idContrato, setIdContrato] = useState('');
   const [idAgente, setIdAgente] = useState('');
   const [idEntidadeEscolar, setIdEntidadeEscolar] = useState('');
@@ -78,6 +84,8 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <GlobalContext.Provider
       value={{
+        showPageVisualizeAcompanhamento,
+        setShowPageVisualizeAcompanhamento,
         usersUpdated,
         setUsersUpdated,
         page,

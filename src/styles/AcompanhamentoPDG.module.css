@@ -1,7 +1,46 @@
 .conteinerForm {
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 2em;
+
+  transition: width 0.3s ease;
+}
+
+.expanded {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  gap: 2em;
+  transition: width 0.3s ease;
+}
+
+.inputRange {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1em;
+}
+.expandedRange {
+  display: none;
+}
+.rangesClass {
+  display: flex;
+  flex-direction: column;
+  padding: 3em;
+  margin-top: 5em;
+  gap: 2em;
+  border-radius: 5px;
+  background-color: var(--gray-202);
+}
+.expandeBoxRanges {
+  display: none;
+}
+.btnToogleClose {
+  all: unset;
+  height: 2em;
+  margin-top: 2em;
+  cursor: pointer;
 }
 .conteinerObservation {
   display: flex;
@@ -17,6 +56,7 @@
   flex-direction: column;
   gap: 0.5em;
   width: 93.5%;
+
   padding: 1em 2em 1em 1em;
   border-radius: 5px;
   background-color: var(--gray-202);
@@ -223,4 +263,45 @@
   border: none;
   outline: none;
   cursor: pointer;
+}
+.boxToHiddenForms {
+  display: flex;
+}
+
+.slider {
+  width: 100%;
+  margin: auto;
+  color: var(--azul-tenro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.thumb {
+  cursor: pointer;
+  position: absolute;
+  height: 0.5em;
+  background: var(--azul-tenro);
+  border: 0.4em solid var(--azul-tenro);
+  border-radius: 100%;
+  display: block;
+  box-shadow: 0 0 2px 0 rgb(0 0 0 / 44%);
+}
+
+.track {
+  position: relative;
+  background: var(--azul-tenro);
+  border: 2px solid transparent;
+}
+
+.slider .track {
+  top: 0.8em;
+  height: 0.3em;
+  border-radius: 2em;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.slider .thumb {
+  outline: none;
+  width: 1em;
+  height: 1em;
 }

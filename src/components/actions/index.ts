@@ -7,6 +7,7 @@ import TableActionAgentesRelacionadoEscola from './tableActionAgentesRelacionado
 import TableActionsAgenteExterno from './tableActionsAgenteExterno/TableActionsAgenteExterno';
 import TableActionsDocsContrato from './tableActionsDocsContrato/TableActionsDocsContrato';
 import TableActionsDocsEntidade from './tableActionsDocsEntidade/TableActionsDocsEntidade';
+import TableActionAcompanhamentoPDG from './tableActionAcompanhamentoPDG/TableActionAcompanhamentoPDG';
 export {
   Action,
   TableActionsUsers,
@@ -17,4 +18,5 @@ export {
   TableActionsAgenteExterno,
   TableActionsDocsContrato,
   TableActionsDocsEntidade,
+  TableActionAcompanhamentoPDG,
 };
