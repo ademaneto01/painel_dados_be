@@ -1,48 +1,27 @@
-@media screen and (max-width: 48rem) {
-  .containerMain {
-    width: 90%;
-    min-width: 12.5rem;
-    height: 35%;
-  }
-}
-
-@media screen and (max-width: 30rem) {
-  .containerMain {
-    width: 90%;
-    min-width: 12.5rem;
-    height: 35%;
-  }
-}
 
 .containerFundo {
-  display: flex;
   flex-direction: column;
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 1em;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('/fundo_alternativo2.png');
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('/fundo_alternativo2.webp');
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.logoContainer {
+.logo {
   position: absolute;
   left: 50%;
-  top: 13%;
+  top: 15%;
   transform: translate(-50%, -50%);
-  width: 10em;
-  height: 10em;
+  width: 25%;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.logo {
-  height: 100%;
-  width: auto;
-  aspect-ratio: 2;
 }
 
 .formLogin {
@@ -50,39 +29,37 @@
   flex-direction: column;
   align-items: center;
   border-radius: 2.5rem;
-  width: 23em;
+  width: 25%;
+  height: auto;
   background-color: var(--white);
-  padding: 1rem 3rem 0rem 3rem;
-  margin-top: 8rem;
+  padding: 2rem 2rem 0rem 0rem;
+  margin-top: 4rem;
   box-shadow: 0rem 0rem 1.25rem 0rem var(--black-200);
   gap: 1.5em;
 }
 
-.title {
-  font-weight: 550;
-  font-size: 2em;
-}
-
-.labelLogin {
+.groupForm {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  width: 80%;
+}
+
+.title {
+  margin-left: 2rem;
+  font-weight: 550;
+  font-size: 210%;
 }
 
 .inputLogin {
+  text-align: left; 
   all: unset;
-  text-align: start;
   width: 100%;
-  padding-left: 0.7rem;
-  height: 2.5rem;
+  height: auto;
+  padding: 1rem;
   border-radius: 0.3125rem;
   border: 1px solid var(--gray-200);
-  margin-top: 0.2rem;
+  margin: 0.2rem;  
   cursor: text;
-}
-
-.groupForm {
-  width: 100%;
 }
 
 .btnLoginContainer {
@@ -104,6 +81,7 @@
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
   position: relative;
+  margin-left: 2rem;
   box-shadow: 0 0.3125rem 0.63rem var(--black-200);
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -139,29 +117,10 @@
   transform: scale(1.1);
 }
 
-.btnLoginTeste {
-  display: flex;
-  border-radius: 3rem;
-  height: 3rem;
-  width: 8rem;
-  color: var(--blue-300);
-  background-color: var(--white);
-  justify-content: center;
-  align-items: center;
-  padding: 1em 0.8em 1em 0.8em;
-  font-family: 'Poppins', sans-serif;
-  transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out;
-  box-shadow: 0rem 0.19rem 0.63rem var(--black-200);
-  user-select: none;
-}
-
 .btnLogin:hover {
   cursor: pointer;
 }
 
-.btnLoginTeste:hover {
-  cursor: pointer;
-}
 
 .boxWarning {
   text-align: center;
@@ -172,7 +131,4 @@
 .error {
   margin-bottom: 1em;
   color: var(--red-300);
-}
-.boxLoaderLogin {
-  height: 3.3em;
 }

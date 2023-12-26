@@ -85,38 +85,36 @@ export default function SignIn(): JSX.Element {
 
   return (
     <div className={styles.containerFundo}>
-      <div className={styles.logoContainer}>
-        <img src="logo_be_2.png" className={styles.logo} />
-      </div>
-      <form className={styles.formLogin} onSubmit={(evt) => handleSignIn(evt)}>
-        <h1 className={styles.title}>Login</h1>
-        <div className={styles.groupForm}>
-          <label className={styles.labelLogin}>E-mail</label>
-          <input
-            className={styles.inputLogin}
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={onChange}
-          />
-        </div>
-        <div className={styles.groupForm}>
-          <label className={styles.labelLogin}>Senha</label>
-          <input
-            className={styles.inputLogin}
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={onChange}
-          />
-        </div>
-        <button className={styles.btnLogin} type="submit">
-          Entrar
-        </button>
-        <div className={styles.boxWarning}>
-          <span className={styles.error}>{warning.show && warning.msg}</span>
-        </div>
-      </form>
+          <img src="logo_be_2.png" className={styles.logo} />
+        <form className={styles.formLogin} onSubmit={(evt) => handleSignIn(evt)}>
+          <h1 className={styles.title}>Login</h1>
+          <div className={styles.groupForm}>
+            <label className={styles.labelLogin}>E-mail</label>
+            <input
+              className={styles.inputLogin}
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={onChange}
+            />
+          </div>
+          <div className={styles.groupForm}>
+            <label className={styles.labelLogin}>Senha</label>
+            <input
+              className={styles.inputLogin}
+              type="password"
+              name="password"
+              value={form.password}
+              onChange={onChange}
+            />
+          </div>
+          <button className={styles.btnLogin} type="submit">
+            Entrar
+          </button>
+          <div className={styles.boxWarning}>
+            <span className={styles.error}>{warning.show && warning.msg}</span>
+          </div>
+        </form>
       <div className={styles.boxLoaderLogin}>{loaded ? <Loader /> : ''}</div>
     </div>
   );
