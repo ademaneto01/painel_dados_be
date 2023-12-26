@@ -53,7 +53,6 @@
   border-radius: 50%;
   justify-content: center;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
   cursor: pointer;
   position: relative;
   transition: transform 0.2s, box-shadow 0.2s;
@@ -101,7 +100,6 @@
   width: 20%;
   padding-left: 0.7rem;
   height: 2rem;
-  font-family: 'Poppins', sans-serif;
   font-size: 0.9em;
   border-radius: 5px;
   color: var(--gray-300);
@@ -112,7 +110,6 @@
   text-align: start;
   width: 20%;
   padding-left: 0.7rem;
-  font-family: 'Poppins', sans-serif;
   font-size: 0.9em;
   height: 2rem;
   font-size: medium;

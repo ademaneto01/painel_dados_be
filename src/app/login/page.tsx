@@ -85,7 +85,7 @@ export default function SignIn(): JSX.Element {
 
   return (
     <div className={styles.containerFundo}>
-          <img src="logo_be_2.png" className={styles.logo} />
+        <img src="logo_be_2.png" className={styles.logo} />
         <form className={styles.formLogin} onSubmit={(evt) => handleSignIn(evt)}>
           <h1 className={styles.title}>Login</h1>
           <div className={styles.groupForm}>
