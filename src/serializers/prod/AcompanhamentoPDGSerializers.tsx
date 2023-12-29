@@ -7,12 +7,12 @@ interface AcompanhamentoPDGPayload {
   id_prof: string;
   nome_escola: string;
   dataofobservation: string;
-  grade: boolean;
+  grade: string;
   ofstudents: string;
   tema: string;
   lessonplanbe: string;
   cycle: string;
-  digitalprojector: boolean;
+  digitalprojector: string;
   board: string;
   englishcorner: string;
   noiselevel: string;

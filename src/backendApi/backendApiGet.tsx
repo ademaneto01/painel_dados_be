@@ -13,6 +13,7 @@ import {
   EntitiesAgenteExterno,
   EntitiesAlunados,
   EntitiesAcompanhamentoPDG,
+  EntitiesAcompanhamentoPDGCriteria,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterfaceGet, SerializerInterface } from '@/interfaces';
@@ -31,6 +32,7 @@ import {
   InfosContratoSerializers,
   AlunadosSerializers,
   AcompanhamentoPDGSerializers,
+  AcompanhamentoPDGCriteriaSerializers,
 } from '@/serializers/prod';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
@@ -227,6 +229,15 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
     return await this.get<EntitiesAcompanhamentoPDG>(
       '/localizarAcompanhamento',
       new AcompanhamentoPDGSerializers(),
+      { id: data },
+    );
+  }
+  public async LocalizarCriteriaById(
+    data: any,
+  ): Promise<EntitiesAcompanhamentoPDGCriteria[]> {
+    return await this.get<EntitiesAcompanhamentoPDGCriteria>(
+      '/LocalizarCriteriaById',
+      new AcompanhamentoPDGCriteriaSerializers(),
       { id: data },
     );
   }

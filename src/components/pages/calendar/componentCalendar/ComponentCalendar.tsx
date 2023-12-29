@@ -20,6 +20,7 @@ const ComponenteCalendar: React.FC<propsModalCalendar> = ({
 
   const handleChange = (newDate: Date | Date[] | null) => {
     onChange(newDate);
+
     setYearObservation(newDate);
   };
 

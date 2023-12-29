@@ -6,6 +6,8 @@ import {
   EntitiesVincularAgente,
   EntitiesAgenteExterno,
   EntitiesAlunados,
+  EntitiesAcompanhamentoPDG,
+  EntitiesAcompanhamentoPDGCriteria,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterfacePut, SerializerInterface } from '@/interfaces';
@@ -17,6 +19,8 @@ import {
   EntidadesEscolaresSerializers,
   InfosContratoSerializers,
   AlunadosSerializers,
+  AcompanhamentoPDGSerializers,
+  AcompanhamentoPDGCriteriaSerializers,
 } from '@/serializers/prod';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
@@ -93,6 +97,26 @@ export default class BackendApiPut implements BackendApiInterfacePut {
       '/editarInfosContrato',
       userData,
       new InfosContratoSerializers(),
+    );
+  }
+
+  public async editarAcompanhamento(
+    userData: any,
+  ): Promise<EntitiesAcompanhamentoPDG[]> {
+    return await this.put<EntitiesAcompanhamentoPDG>(
+      '/editarAcompanhamento',
+      userData,
+      new AcompanhamentoPDGSerializers(),
+    );
+  }
+
+  public async editarCriteria(
+    userData: any,
+  ): Promise<EntitiesAcompanhamentoPDGCriteria[]> {
+    return await this.put<EntitiesAcompanhamentoPDGCriteria>(
+      '/editarCriteria',
+      userData,
+      new AcompanhamentoPDGCriteriaSerializers(),
     );
   }
 

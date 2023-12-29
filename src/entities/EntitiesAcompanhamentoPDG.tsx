@@ -1,17 +1,17 @@
 import { TableActionAcompanhamentoPDG } from '@/components/actions';
-import VisualizeAcompanhamento from '@/components/pages/acompanhamentoPDG/visualizeAcompanhamento/VisualizeAcompanhamento';
+
 interface UserProps {
   id: string;
   id_ee: string;
   id_prof: string;
   nome_escola: string;
   dataofobservation: string;
-  grade: boolean;
+  grade: string;
   ofstudents: string;
   tema: string;
   lessonplanbe: string;
   cycle: string;
-  digitalprojector: boolean;
+  digitalprojector: string;
   board: string;
   englishcorner: string;
   noiselevel: string;
@@ -32,12 +32,12 @@ export default class EntitiesAcompanhamentoPDG {
   readonly id_prof: string;
   readonly nome_escola: string;
   readonly dataofobservation: string;
-  readonly grade: boolean;
+  readonly grade: string;
   readonly ofstudents: string;
   readonly tema: string;
   readonly lessonplanbe: string;
   readonly cycle: string;
-  readonly digitalprojector: boolean;
+  readonly digitalprojector: string;
   readonly board: string;
   readonly englishcorner: string;
   readonly noiselevel: string;

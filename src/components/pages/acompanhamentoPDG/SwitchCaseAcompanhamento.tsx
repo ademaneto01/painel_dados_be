@@ -14,6 +14,8 @@ export default function SwitchCaseContratos() {
         return <pages.Acompanhamentos />;
       case PageEnumAcompanhamentoPDG.visualizeAcompanhamento:
         return <pages.VisualizeAcompanhamento />;
+      case PageEnumAcompanhamentoPDG.editarAcompanhamento:
+        return <pages.EditarAcompanhamento />;
       default:
         return <></>;
     }

@@ -27,9 +27,11 @@ export default function TableActionAcompanhamentoPDG(
     setUsersUpdated,
     setShowPageVisualizeAcompanhamento,
     setPageAcompanhamento,
+    setIdAcompanhamento,
   } = useGlobalContext();
   const [modalInfos, setModalInfos] = useState('');
   const handleViewMoreClick = () => verMais();
+  const handleEditAcompanhamento = () => EditarAcompanhamento();
   const handleDeleteClick = () => handleClickOpenModalExcluir(props.id);
   function renderIcon(icon: IconType, color?: string): JSX.Element {
     const options: IconBaseProps = {};
@@ -62,10 +64,15 @@ export default function TableActionAcompanhamentoPDG(
     setPageAcompanhamento(PageEnumAcompanhamentoPDG.visualizeAcompanhamento);
   }
 
+  function EditarAcompanhamento(): void {
+    setIdAcompanhamento(props.id);
+    setPageAcompanhamento(PageEnumAcompanhamentoPDG.editarAcompanhamento);
+  }
+
   return (
     <div className={styles.container}>
       {!props.finalized ? (
-        <Action icon={renderIcon(FiEdit)} onClick={() => {}} />
+        <Action icon={renderIcon(FiEdit)} onClick={handleEditAcompanhamento} />
       ) : (
         ''
       )}

@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
 import ReactSlider from 'react-slider';
 import Image from 'next/image';
 import styles from '@/styles/AcompanhamentoPDG.module.css';
-import { BackendApiGet, BackendApiPost } from '@/backendApi';
+import { BackendApiGet, BackendApiPost, BackendApiPut } from '@/backendApi';
 import InputMask from 'react-input-mask';
 import { ErrorComponent } from '@/errors/index';
 import { PageEnumAcompanhamentoPDG } from '@/enums';
@@ -18,50 +18,51 @@ interface FormData {
   id: string;
   nome_operacional: string;
 }
+
 interface FormDataToSubmit {
-  nome_escola: string;
-  nameSearch: string;
-  educatorsname: string;
-  dataofobservation: string;
-  grade: string;
-  ofstudents: string;
-  tema: string;
-  lessonplanbe: string;
-  cycle: string;
-  digitalprojector: string;
-  board: string;
-  englishcorner: string;
-  noiselevel: string;
-  resourceaudioqlty: string;
-  nglbematerials: string;
-  lp1lessonplan: string;
-  lp2proposedgoals: string;
-  lp3resourcesused: string;
-  lp4changes: string;
-  finalcoments: string;
+  nome_escola: string | null;
+  nameSearch: string | null;
+  educatorsname: string | null;
+  dataofobservation: string | null;
+  grade: string | null;
+  ofstudents: string | null;
+  tema: string | null;
+  lessonplanbe: string | null;
+  cycle: string | null;
+  digitalprojector: string | null;
+  board: string | null;
+  englishcorner: string | null;
+  noiselevel: string | null;
+  resourceaudioqlty: string | null;
+  nglbematerials: string | null;
+  lp1lessonplan: string | null;
+  lp2proposedgoals: string | null;
+  lp3resourcesused: string | null;
+  lp4changes: string | null;
+  finalcoments: string | null;
 }
 
 interface FormDataCriteriaToSubmit {
-  id: string;
-  id_acmp: string;
-  e1: string;
-  e2: string;
-  e3: string;
-  e4: string;
-  e5: string;
-  e6: string;
-  m1: string;
-  m2: string;
-  m3: string;
-  m4: string;
-  m5: string;
-  m6: string;
-  l1: string;
-  l2: string;
-  l3: string;
-  l4: string;
-  l5: string;
-  l6: string;
+  id: string | null;
+  id_acmp: string | null;
+  e1: string | null;
+  e2: string | null;
+  e3: string | null;
+  e4: string | null;
+  e5: string | null;
+  e6: string | null;
+  m1: string | null;
+  m2: string | null;
+  m3: string | null;
+  m4: string | null;
+  m5: string | null;
+  m6: string | null;
+  l1: string | null;
+  l2: string | null;
+  l3: string | null;
+  l4: string | null;
+  l5: string | null;
+  l6: string | null;
 }
 
 interface FormDataAgenteExternoRelacionado {
@@ -76,7 +77,7 @@ const MultilineInputSSR = dynamic(
   },
 );
 
-export default function RegistrarAcompanhamento(): JSX.Element {
+export default function EditarAcompanhamento(): JSX.Element {
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -91,16 +92,35 @@ export default function RegistrarAcompanhamento(): JSX.Element {
     'Enter a year in observation date',
   );
   const [entidadesEscolares, setEntidadesEscolares] = useState<FormData[]>([]);
-  const [formDataToSubmit, setFormDataToSubmit] = useState<FormDataToSubmit[]>(
-    [],
-  );
+  const [formDataToSubmit, setFormDataToSubmit] = useState<FormDataToSubmit>({
+    nome_escola: '',
+    nameSearch: '',
+    educatorsname: '',
+    dataofobservation: '',
+    grade: '',
+    ofstudents: '',
+    tema: '',
+    lessonplanbe: '',
+    cycle: '',
+    digitalprojector: '',
+    board: '',
+    englishcorner: '',
+    noiselevel: '',
+    resourceaudioqlty: '',
+    nglbematerials: '',
+    lp1lessonplan: '',
+    lp2proposedgoals: '',
+    lp3resourcesused: '',
+    lp4changes: '',
+    finalcoments: '',
+  });
   const [formDataCriteriaToSubmit, setFormDataCriteriaToSubmit] = useState<
     FormDataCriteriaToSubmit[]
   >([]);
   const [agentesExternoData, setAgentesExternoData] = useState<
     FormDataAgenteExternoRelacionado[]
   >([]);
-  const { setPageAcompanhamento } = useGlobalContext();
+  const { setPageAcompanhamento, idAcompanhamento } = useGlobalContext();
 
   function renderIcon(icon: IconType, color?: string): JSX.Element {
     const options: IconBaseProps = {
@@ -116,14 +136,15 @@ export default function RegistrarAcompanhamento(): JSX.Element {
     if (estado === 'finalized') {
       const novoForm = {
         ...formDataToSubmit,
+        id: idAcompanhamento,
         finalized: true,
         finalizedtimestamp: new Date(),
         userId,
       };
       try {
         const token = localStorage.getItem('auth_token');
-        const backendApi = new BackendApiPost(`${token}`);
-        const response = await backendApi.registrarAcompanhamento(novoForm);
+        const backendApi = new BackendApiPut(`${token}`);
+        const response = await backendApi.editarAcompanhamento(novoForm);
         const formCriteria = {
           id_acmp: response[0].id,
           ...formDataCriteriaToSubmit,
@@ -131,7 +152,7 @@ export default function RegistrarAcompanhamento(): JSX.Element {
           finalizedtimestamp: new Date(),
         };
 
-        await backendApi.registrarAcompanhamentoCriteria(formCriteria);
+        await backendApi.editarCriteria(formCriteria);
       } catch (error) {
         handleApiErrors(error);
       }
@@ -140,13 +161,14 @@ export default function RegistrarAcompanhamento(): JSX.Element {
       const novoForm = {
         ...formDataToSubmit,
         finalized: false,
+        id: idAcompanhamento,
         finalizedtimestamp: null,
         userId,
       };
       try {
         const token = localStorage.getItem('auth_token');
-        const backendApi = new BackendApiPost(`${token}`);
-        const response = await backendApi.registrarAcompanhamento(novoForm);
+        const backendApi = new BackendApiPut(`${token}`);
+        const response = await backendApi.editarAcompanhamento(novoForm);
 
         const formCriteria = {
           id_acmp: response[0].id,
@@ -155,7 +177,7 @@ export default function RegistrarAcompanhamento(): JSX.Element {
           finalizedtimestamp: null,
         };
 
-        await backendApi.registrarAcompanhamentoCriteria(formCriteria);
+        await backendApi.editarCriteria(formCriteria);
       } catch (error) {
         handleApiErrors(error);
       }
@@ -179,6 +201,71 @@ export default function RegistrarAcompanhamento(): JSX.Element {
     }
   };
 
+  useEffect(() => {
+    fetchDataInitial();
+    fetchData();
+  }, []);
+
+  const fetchDataInitial = async () => {
+    const token = localStorage.getItem('auth_token');
+    const backendApi = new BackendApiGet(`${token}`);
+    const responseAcompanhamento = await backendApi.localizarAcompanhamentoById(
+      idAcompanhamento,
+    );
+    const responseCriteria = await backendApi.LocalizarCriteriaById(
+      idAcompanhamento,
+    );
+    if (responseCriteria) {
+      setFormDataCriteriaToSubmit((prevFormData) => ({
+        ...prevFormData,
+        e1: responseCriteria[0]?.e1 || '',
+        e2: responseCriteria[0]?.e2 || '',
+        e3: responseCriteria[0]?.e3 || '',
+        e4: responseCriteria[0]?.e4 || '',
+        e5: responseCriteria[0]?.e5 || '',
+        e6: responseCriteria[0]?.e6 || '',
+        m1: responseCriteria[0]?.m1 || '',
+        m2: responseCriteria[0]?.m2 || '',
+        m3: responseCriteria[0]?.m3 || '',
+        m4: responseCriteria[0]?.m4 || '',
+        m5: responseCriteria[0]?.m5 || '',
+        m6: responseCriteria[0]?.m6 || '',
+        l1: responseCriteria[0]?.l1 || '',
+        l2: responseCriteria[0]?.l2 || '',
+        l3: responseCriteria[0]?.l3 || '',
+        l4: responseCriteria[0]?.l4 || '',
+        l5: responseCriteria[0]?.l5 || '',
+        l6: responseCriteria[0]?.l6 || '',
+      }));
+    }
+    if (responseAcompanhamento) {
+      setNameSearch(responseAcompanhamento[0]?.nome_escola);
+      setFormDataToSubmit((prevFormData) => ({
+        ...prevFormData,
+        nameSearch: responseAcompanhamento[0]?.id_ee || '',
+        nome_escola: responseAcompanhamento[0]?.nome_escola || '',
+        educatorsname: responseAcompanhamento[0]?.id_prof || '',
+        dataofobservation: responseAcompanhamento[0]?.dataofobservation || '',
+        grade: responseAcompanhamento[0]?.grade || '',
+        ofstudents: responseAcompanhamento[0]?.ofstudents || '',
+        tema: responseAcompanhamento[0]?.tema || '',
+        lessonplanbe: responseAcompanhamento[0]?.lessonplanbe || '',
+        cycle: responseAcompanhamento[0]?.cycle || '',
+        digitalprojector: responseAcompanhamento[0]?.digitalprojector || '',
+        board: responseAcompanhamento[0]?.board || '',
+        englishcorner: responseAcompanhamento[0]?.englishcorner || '',
+        noiselevel: responseAcompanhamento[0]?.noiselevel || '',
+        resourceaudioqlty: responseAcompanhamento[0]?.resourceaudioqlty || '',
+        nglbematerials: responseAcompanhamento[0]?.nglbematerials || '',
+        lp1lessonplan: responseAcompanhamento[0]?.lp1lessonplan || '',
+        lp2proposedgoals: responseAcompanhamento[0]?.lp2proposedgoals || '',
+        lp3resourcesused: responseAcompanhamento[0]?.lp3resourcesused || '',
+        lp4changes: responseAcompanhamento[0]?.lp4changes || '',
+      }));
+      fetchAgentesExterno(responseAcompanhamento[0]?.id_ee);
+    }
+  };
+
   const fetchAgentesExterno = async (id: string) => {
     try {
       const token = localStorage.getItem('auth_token');
@@ -194,10 +281,6 @@ export default function RegistrarAcompanhamento(): JSX.Element {
       handleApiErrors(error);
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  });
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -376,6 +459,7 @@ export default function RegistrarAcompanhamento(): JSX.Element {
           showCalendar={showCalendar}
           setShowCalendar={setShowCalendar}
           calendarRef={calendarRef}
+          formDataCriteriaToSubmit={formDataCriteriaToSubmit}
           handleDateChange={handleDateChange}
           setYearObservation={setYearObservation}
           formDataToSubmit={formDataToSubmit}
@@ -394,7 +478,7 @@ export default function RegistrarAcompanhamento(): JSX.Element {
   );
 }
 
-const HeaderComponent: React.FC = () => <h4>Novo Acompanhamento</h4>;
+const HeaderComponent: React.FC = () => <h4>Editar Acompanhamento</h4>;
 
 const NavigationButtons: React.FC<{
   setPageAcompanhamento: React.Dispatch<
@@ -442,6 +526,7 @@ const FormComponent: React.FC<any> = ({
   toggleSideNavBar,
   inputRangeClass,
   boxRanges,
+  formDataCriteriaToSubmit,
   ReactSlider,
 }) => {
   return (
@@ -455,7 +540,7 @@ const FormComponent: React.FC<any> = ({
                 <input
                   type="text"
                   readOnly
-                  value={nameSearch}
+                  value={formDataToSubmit.nome_escola ?? ''}
                   name="nameSearch"
                   onClick={() =>
                     setShowOptions(showOptions === true ? false : true)
@@ -472,7 +557,7 @@ const FormComponent: React.FC<any> = ({
                     <input
                       type="text"
                       placeholder="Search..."
-                      value={searchTerm}
+                      value={formDataToSubmit.searchTerm ?? ''}
                       onChange={handleSearchChange}
                       className={styles.searchInputSelect}
                     />
@@ -499,7 +584,7 @@ const FormComponent: React.FC<any> = ({
             Educator's name
             <select
               name="educatorsname"
-              value={formDataToSubmit.educatorsname}
+              value={formDataToSubmit.educatorsname ?? ''}
               onChange={handleInputChange}
               className={styles.inputSelect}
             >
@@ -530,7 +615,7 @@ const FormComponent: React.FC<any> = ({
                 mask="9999/99/99"
                 readOnly
                 name="dataofobservation"
-                value={formDataToSubmit.dataofobservation}
+                value={formDataToSubmit.dataofobservation ?? ''}
                 className={styles.inputDataObservation}
               />
               {renderIcon(FaCalendarAlt)}
@@ -552,7 +637,7 @@ const FormComponent: React.FC<any> = ({
             <select
               onChange={handleInputChange}
               name="grade"
-              value={formDataToSubmit.grade}
+              value={formDataToSubmit.grade ?? ''}
               className={styles.inputSelect}
             >
               <option value="">-</option>
@@ -580,7 +665,7 @@ const FormComponent: React.FC<any> = ({
               placeholder="# of students"
               onChange={handleInputChange}
               name="ofstudents"
-              value={formDataToSubmit.ofstudents}
+              value={formDataToSubmit.ofstudents ?? ''}
               className={styles.inputStandard}
             />
           </label>
@@ -589,7 +674,7 @@ const FormComponent: React.FC<any> = ({
             <select
               onChange={handleInputChange}
               name="tema"
-              value={formDataToSubmit.tema}
+              value={formDataToSubmit.tema ?? ''}
               className={styles.inputSelect}
             >
               <option value="">-</option>
@@ -605,7 +690,7 @@ const FormComponent: React.FC<any> = ({
               placeholder="Lesson plan Be #:"
               name="lessonplanbe"
               onChange={handleInputChange}
-              value={formDataToSubmit.lessonplanbe}
+              value={formDataToSubmit.lessonplanbe ?? ''}
               className={styles.inputStandard}
             />
           </label>
@@ -614,47 +699,23 @@ const FormComponent: React.FC<any> = ({
             <select
               onChange={handleInputChange}
               name="cycle"
-              value={formDataToSubmit.cycle}
+              value={formDataToSubmit.cycle ?? ''}
               className={styles.inputSelect}
             >
               <option value="">-</option>
               {yearObservation !== 'Enter a year in observation date' ? (
                 <>
-                  <option
-                    value={`${yearObservation
-                      .toLocaleDateString('en-CA')
-                      .substring(0, 4)}.1`}
-                  >
-                    {`${yearObservation
-                      .toLocaleDateString('en-CA')
-                      .substring(0, 4)}.1`}
+                  <option value={`${yearObservation.getFullYear()}.1`}>
+                    {`${yearObservation.getFullYear()}.1`}
                   </option>
-                  <option
-                    value={`${yearObservation
-                      .toLocaleDateString('en-CA')
-                      .substring(0, 4)}.2`}
-                  >
-                    {`${yearObservation
-                      .toLocaleDateString('en-CA')
-                      .substring(0, 4)}.2`}
+                  <option value={`${yearObservation.getFullYear()}.2`}>
+                    {`${yearObservation.getFullYear()}.2`}
                   </option>
-                  <option
-                    value={`${yearObservation
-                      .toLocaleDateString('en-CA')
-                      .substring(0, 4)}.3`}
-                  >
-                    {`${yearObservation
-                      .toLocaleDateString('en-CA')
-                      .substring(0, 4)}.3`}
+                  <option value={`${yearObservation.getFullYear()}.3`}>
+                    {`${yearObservation.getFullYear()}.3`}
                   </option>
-                  <option
-                    value={`${yearObservation
-                      .toLocaleDateString('en-CA')
-                      .substring(0, 4)}.4`}
-                  >
-                    {`${yearObservation
-                      .toLocaleDateString('en-CA')
-                      .substring(0, 4)}.4`}
+                  <option value={`${yearObservation.getFullYear()}.4`}>
+                    {`${yearObservation.getFullYear()}.4`}
                   </option>
                   <option value="extra">Extra</option>
                 </>
@@ -674,7 +735,7 @@ const FormComponent: React.FC<any> = ({
                   <select
                     onChange={handleInputChange}
                     name="digitalprojector"
-                    value={formDataToSubmit.digitalprojector}
+                    value={formDataToSubmit.digitalprojector ?? ''}
                     className={styles.inputSelect}
                   >
                     <option value="">-</option>
@@ -689,7 +750,7 @@ const FormComponent: React.FC<any> = ({
                   <select
                     onChange={handleInputChange}
                     name="board"
-                    value={formDataToSubmit.board}
+                    value={formDataToSubmit.board ?? ''}
                     className={styles.inputSelect}
                   >
                     <option value="">-</option>
@@ -704,7 +765,7 @@ const FormComponent: React.FC<any> = ({
                   <select
                     onChange={handleInputChange}
                     name="englishcorner"
-                    value={formDataToSubmit.englishcorner}
+                    value={formDataToSubmit.englishcorner ?? ''}
                     className={styles.inputSelect}
                   >
                     <option value="">-</option>
@@ -720,7 +781,7 @@ const FormComponent: React.FC<any> = ({
                   <select
                     onChange={handleInputChange}
                     name="noiselevel"
-                    value={formDataToSubmit.noiselevel}
+                    value={formDataToSubmit.noiselevel ?? ''}
                     className={styles.inputSelect}
                   >
                     <option value="">-</option>
@@ -735,7 +796,7 @@ const FormComponent: React.FC<any> = ({
                   <select
                     onChange={handleInputChange}
                     name="resourceaudioqlty"
-                    value={formDataToSubmit.resourceaudioqlty}
+                    value={formDataToSubmit.resourceaudioqlty ?? ''}
                     className={styles.inputSelect}
                   >
                     <option value="">-</option>
@@ -750,7 +811,7 @@ const FormComponent: React.FC<any> = ({
                   <select
                     onChange={handleInputChange}
                     name="nglbematerials"
-                    value={formDataToSubmit.nglbematerials}
+                    value={formDataToSubmit.nglbematerials ?? ''}
                     className={styles.inputSelect}
                   >
                     <option value="">-</option>
@@ -773,7 +834,7 @@ const FormComponent: React.FC<any> = ({
                 <select
                   onChange={handleInputChange}
                   name="lp1lessonplan"
-                  value={formDataToSubmit.lp1lessonplan}
+                  value={formDataToSubmit.lp1lessonplan ?? ''}
                   className={styles.inputSelect}
                 >
                   <option value="">-</option>
@@ -787,7 +848,7 @@ const FormComponent: React.FC<any> = ({
                 <select
                   onChange={handleInputChange}
                   name="lp2proposedgoals"
-                  value={formDataToSubmit.lp2proposedgoals}
+                  value={formDataToSubmit.lp2proposedgoals ?? ''}
                   className={styles.inputSelect}
                 >
                   <option value="">-</option>
@@ -803,7 +864,7 @@ const FormComponent: React.FC<any> = ({
                 <select
                   onChange={handleInputChange}
                   name="lp3resourcesused"
-                  value={formDataToSubmit.lp3resourcesused}
+                  value={formDataToSubmit.lp3resourcesused ?? ''}
                   className={styles.inputSelect}
                 >
                   <option value="">-</option>
@@ -820,7 +881,7 @@ const FormComponent: React.FC<any> = ({
                 <select
                   onChange={handleInputChange}
                   name="lp4changes"
-                  value={formDataToSubmit.lp4changes}
+                  value={formDataToSubmit.lp4changes ?? ''}
                   className={styles.inputSelect}
                 >
                   <option value="">-</option>
@@ -840,7 +901,7 @@ const FormComponent: React.FC<any> = ({
             <MultilineInputSSR
               label="Conteúdo"
               onChange={handleQuillChange}
-              value={formDataToSubmit.finalcoments}
+              value={formDataToSubmit.finalcoments ?? ''}
             />
           </div>
         </div>
@@ -887,6 +948,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.e1}
               min={-1}
               max={1}
               step={0.02}
@@ -908,6 +970,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.e2}
               min={-1}
               max={1}
               step={0.02}
@@ -929,6 +992,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.e3}
               min={-1}
               max={1}
               step={0.02}
@@ -950,6 +1014,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.e4}
               min={-1}
               max={1}
               step={0.02}
@@ -971,6 +1036,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.e5}
               min={-1}
               max={1}
               step={0.02}
@@ -992,6 +1058,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.e6}
               min={-1}
               max={1}
               step={0.02}
@@ -1013,6 +1080,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.m1}
               min={-1}
               max={1}
               step={0.02}
@@ -1034,6 +1102,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.m2}
               min={-1}
               max={1}
               step={0.02}
@@ -1055,6 +1124,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.m3}
               min={-1}
               max={1}
               step={0.02}
@@ -1077,6 +1147,7 @@ const FormComponent: React.FC<any> = ({
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
               min={-1}
+              value={formDataCriteriaToSubmit.m4}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('m4', value)}
@@ -1098,6 +1169,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.m5}
               min={-1}
               max={1}
               step={0.02}
@@ -1119,6 +1191,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.m6}
               min={-1}
               max={1}
               step={0.02}
@@ -1141,6 +1214,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.l1}
               min={-1}
               max={1}
               step={0.02}
@@ -1162,6 +1236,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.l2}
               min={-1}
               max={1}
               step={0.02}
@@ -1184,6 +1259,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.l3}
               min={-1}
               max={1}
               step={0.02}
@@ -1205,6 +1281,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.l4}
               min={-1}
               max={1}
               step={0.02}
@@ -1226,6 +1303,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.l5}
               min={-1}
               max={1}
               step={0.02}
@@ -1247,6 +1325,7 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
+              value={formDataCriteriaToSubmit.l6}
               min={-1}
               max={1}
               step={0.02}

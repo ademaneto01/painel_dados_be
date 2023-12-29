@@ -20,6 +20,8 @@ interface ContextProps {
   setUsersUpdated: Dispatch<SetStateAction<boolean>>;
   showPageVisualizeAcompanhamento: string;
   setShowPageVisualizeAcompanhamento: Dispatch<SetStateAction<string>>;
+  idAcompanhamento: string;
+  setIdAcompanhamento: Dispatch<SetStateAction<string>>;
   page: string;
   setPage: Dispatch<SetStateAction<PageEnumContratos>>;
   pageAgentesExterno: string;
@@ -43,6 +45,8 @@ export const GlobalContext = createContext<ContextProps>({
   setUsersUpdated: () => {},
   showPageVisualizeAcompanhamento: '',
   setShowPageVisualizeAcompanhamento: () => {},
+  idAcompanhamento: '',
+  setIdAcompanhamento: () => {},
   page: PageEnumContratos.entidadesContratuais,
   setPage: () => {},
   pageAcompanhamento: PageEnumAcompanhamentoPDG.acompanhamentos,
@@ -75,6 +79,7 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   const [pageEscolasPDG, setPageEscolasPDG] = useState(
     PageEnumEscolasPDG.escolasPDG,
   );
+  const [idAcompanhamento, setIdAcompanhamento] = useState('');
   const [showPageVisualizeAcompanhamento, setShowPageVisualizeAcompanhamento] =
     useState('');
   const [idContrato, setIdContrato] = useState('');
@@ -104,6 +109,8 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
         setGlobalAnoRef,
         idEntidadeEscolar,
         setIdEntidadeEscolar,
+        idAcompanhamento,
+        setIdAcompanhamento,
       }}
     >
       {children}

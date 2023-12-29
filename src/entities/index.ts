@@ -20,6 +20,7 @@ import EntitiesDocsEntidade from './EntitiesDocsEntidade';
 import EntitiesInfosContrato from './EntitiesInfosContrato';
 import EntitiesAlunados from './EntitiesAlunados';
 import EntitiesAcompanhamentoPDG from './EntitiesAcompanhamentoPDG';
+import EntitiesAcompanhamentoPDGCriteria from './EntitiesAcompanhamentoPDGCriteria';
 export {
   EntitiesUsers,
   EntitiesUserLogin,
@@ -43,4 +44,5 @@ export {
   EntitiesInfosContrato,
   EntitiesAlunados,
   EntitiesAcompanhamentoPDG,
+  EntitiesAcompanhamentoPDGCriteria,
 };

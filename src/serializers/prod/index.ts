@@ -19,6 +19,7 @@ import ContratosSerializers from './ContratosSerializers';
 import EntidadesEscolaresSerializers from './EntidadesEscolaresSerializers';
 import AlunadosSerializers from './AlunadosSerializers';
 import AcompanhamentoPDGSerializers from './AcompanhamentoPDGSerializers';
+import AcompanhamentoPDGCriteriaSerializers from './AcompanhamentoPDGCriteriaSerializers';
 export {
   AlunadosSerializers,
   UsersSerializers,
@@ -41,4 +42,5 @@ export {
   ContratosSerializers,
   EntidadesEscolaresSerializers,
   AcompanhamentoPDGSerializers,
+  AcompanhamentoPDGCriteriaSerializers,
 };
