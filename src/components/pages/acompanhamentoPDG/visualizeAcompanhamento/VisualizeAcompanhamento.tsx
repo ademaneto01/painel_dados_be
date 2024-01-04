@@ -1,6 +1,6 @@
 import { EntitiesAcompanhamentoPDG, EntitiesAgenteExterno } from '@/entities';
 import styles from '@/styles/VisualizeAcompanhamento.module.css';
-import { PageContentContainer, CreateButton } from '../../../shared';
+import { PageContentContainer, BackButton } from '../../../shared';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { useState, useEffect } from 'react';
@@ -8,9 +8,6 @@ import { PageEnumAcompanhamentoPDG } from '@/enums';
 
 export default function VisualizeAcompanhamento() {
   const [data, setData] = useState<EntitiesAcompanhamentoPDG[]>([]);
-  const [dataAgenteExterno, setDataAgenteExterno] = useState<
-    EntitiesAgenteExterno[]
-  >([]);
   const [nomeAgente, setNomeAgente] = useState('');
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -75,9 +72,9 @@ export default function VisualizeAcompanhamento() {
     <div className={styles.pageContainer}>
       <h4>Acompanhamento Pedagógico</h4>
       <PageContentContainer>
-        <CreateButton
-          color={'var(--white'}
-          colorBackGround={'var(--verde-tech)'}
+        <BackButton
+          color={'var(--gray-300'}
+          colorBackGround={'var(--white'}
           text="Voltar"
           onClick={() =>
             setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos)

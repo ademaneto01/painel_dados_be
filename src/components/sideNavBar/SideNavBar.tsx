@@ -4,6 +4,7 @@ import styles from '@/styles/SideNavBar.module.css';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IconType } from 'react-icons';
 import { RiComputerFill, RiComputerLine } from 'react-icons/ri';
+import { BsBuildings, BsBuildingsFill } from 'react-icons/bs';
 import SideNavBarButton from './SideNavBarButton';
 import { BackendApiGet } from '@/backendApi';
 import {
@@ -110,8 +111,8 @@ export default function SideNavBar(props: SideNavBarProps) {
           }}
           icon={
             isActive(PageEnum.escolasPDG)
-              ? reactIcon(IoSchool)
-              : reactIcon(IoSchoolOutline)
+              ? reactIcon(BsBuildingsFill)
+              : reactIcon(BsBuildings)
           }
           active={isActive(PageEnum.escolasPDG)}
           hidden={perfil === 'Pedagógico' ? true : false}

@@ -11,6 +11,7 @@ import { useGlobalContext } from '@/context/store';
 import dynamic from 'next/dynamic';
 import { FaSearch, FaCalendarAlt } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
+import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ComponenteCalendar } from '@/components/pages/calendar';
 
@@ -387,6 +388,7 @@ export default function RegistrarAcompanhamento(): JSX.Element {
           inputRangeClass={inputRangeClass}
           ReactSlider={ReactSlider}
           boxRanges={boxRanges}
+          avaliationPage={avaliationPage}
         />
         {error && <ErrorComponent message={msgError} />}
       </PageContentContainer>
@@ -443,6 +445,7 @@ const FormComponent: React.FC<any> = ({
   inputRangeClass,
   boxRanges,
   ReactSlider,
+  avaliationPage,
 }) => {
   return (
     <div className={styles.boxToHiddenForms}>
@@ -877,7 +880,9 @@ const FormComponent: React.FC<any> = ({
           toggleSideNavBar();
         }}
       >
-        {'>'}
+        {avaliationPage
+          ? renderIcon(AiOutlineRight)
+          : renderIcon(AiOutlineLeft)}
       </button>
       <div className={containerClass}>
         <div className={boxRanges}>

@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
 import ReactSlider from 'react-slider';
 import Image from 'next/image';
 import styles from '@/styles/AcompanhamentoPDG.module.css';
-import { BackendApiGet, BackendApiPost, BackendApiPut } from '@/backendApi';
+import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import InputMask from 'react-input-mask';
 import { ErrorComponent } from '@/errors/index';
 import { PageEnumAcompanhamentoPDG } from '@/enums';
@@ -11,6 +11,7 @@ import { useGlobalContext } from '@/context/store';
 import dynamic from 'next/dynamic';
 import { FaSearch, FaCalendarAlt } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
+import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ComponenteCalendar } from '@/components/pages/calendar';
 
@@ -88,7 +89,7 @@ export default function EditarAcompanhamento(): JSX.Element {
   const [showCalendar, setShowCalendar] = useState(false);
   const [avaliationPage, setAvaliationPage] = useState(false);
   const [isFinalize, setIsFinalize] = useState('');
-  const [yearObservation, setYearObservation] = useState(
+  const [yearObservation, setYearObservation] = useState<string | Date>(
     'Enter a year in observation date',
   );
   const [entidadesEscolares, setEntidadesEscolares] = useState<FormData[]>([]);
@@ -185,6 +186,11 @@ export default function EditarAcompanhamento(): JSX.Element {
     setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos);
   };
 
+  useEffect(() => {
+    fetchDataInitial();
+    fetchData();
+  }, []);
+
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('auth_token');
@@ -201,68 +207,71 @@ export default function EditarAcompanhamento(): JSX.Element {
     }
   };
 
-  useEffect(() => {
-    fetchDataInitial();
-    fetchData();
-  }, []);
-
   const fetchDataInitial = async () => {
-    const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiGet(`${token}`);
-    const responseAcompanhamento = await backendApi.localizarAcompanhamentoById(
-      idAcompanhamento,
-    );
-    const responseCriteria = await backendApi.LocalizarCriteriaById(
-      idAcompanhamento,
-    );
-    if (responseCriteria) {
-      setFormDataCriteriaToSubmit((prevFormData) => ({
-        ...prevFormData,
-        e1: responseCriteria[0]?.e1 || '',
-        e2: responseCriteria[0]?.e2 || '',
-        e3: responseCriteria[0]?.e3 || '',
-        e4: responseCriteria[0]?.e4 || '',
-        e5: responseCriteria[0]?.e5 || '',
-        e6: responseCriteria[0]?.e6 || '',
-        m1: responseCriteria[0]?.m1 || '',
-        m2: responseCriteria[0]?.m2 || '',
-        m3: responseCriteria[0]?.m3 || '',
-        m4: responseCriteria[0]?.m4 || '',
-        m5: responseCriteria[0]?.m5 || '',
-        m6: responseCriteria[0]?.m6 || '',
-        l1: responseCriteria[0]?.l1 || '',
-        l2: responseCriteria[0]?.l2 || '',
-        l3: responseCriteria[0]?.l3 || '',
-        l4: responseCriteria[0]?.l4 || '',
-        l5: responseCriteria[0]?.l5 || '',
-        l6: responseCriteria[0]?.l6 || '',
-      }));
-    }
-    if (responseAcompanhamento) {
-      setNameSearch(responseAcompanhamento[0]?.nome_escola);
-      setFormDataToSubmit((prevFormData) => ({
-        ...prevFormData,
-        nameSearch: responseAcompanhamento[0]?.id_ee || '',
-        nome_escola: responseAcompanhamento[0]?.nome_escola || '',
-        educatorsname: responseAcompanhamento[0]?.id_prof || '',
-        dataofobservation: responseAcompanhamento[0]?.dataofobservation || '',
-        grade: responseAcompanhamento[0]?.grade || '',
-        ofstudents: responseAcompanhamento[0]?.ofstudents || '',
-        tema: responseAcompanhamento[0]?.tema || '',
-        lessonplanbe: responseAcompanhamento[0]?.lessonplanbe || '',
-        cycle: responseAcompanhamento[0]?.cycle || '',
-        digitalprojector: responseAcompanhamento[0]?.digitalprojector || '',
-        board: responseAcompanhamento[0]?.board || '',
-        englishcorner: responseAcompanhamento[0]?.englishcorner || '',
-        noiselevel: responseAcompanhamento[0]?.noiselevel || '',
-        resourceaudioqlty: responseAcompanhamento[0]?.resourceaudioqlty || '',
-        nglbematerials: responseAcompanhamento[0]?.nglbematerials || '',
-        lp1lessonplan: responseAcompanhamento[0]?.lp1lessonplan || '',
-        lp2proposedgoals: responseAcompanhamento[0]?.lp2proposedgoals || '',
-        lp3resourcesused: responseAcompanhamento[0]?.lp3resourcesused || '',
-        lp4changes: responseAcompanhamento[0]?.lp4changes || '',
-      }));
-      fetchAgentesExterno(responseAcompanhamento[0]?.id_ee);
+    try {
+      const token = localStorage.getItem('auth_token');
+      const backendApi = new BackendApiGet(`${token}`);
+      const responseAcompanhamento =
+        await backendApi.localizarAcompanhamentoById(idAcompanhamento);
+      const responseCriteria = await backendApi.LocalizarCriteriaById(
+        idAcompanhamento,
+      );
+      if (responseCriteria) {
+        setFormDataCriteriaToSubmit((prevFormData) => ({
+          ...prevFormData,
+          e1: responseCriteria[0]?.e1 || '',
+          e2: responseCriteria[0]?.e2 || '',
+          e3: responseCriteria[0]?.e3 || '',
+          e4: responseCriteria[0]?.e4 || '',
+          e5: responseCriteria[0]?.e5 || '',
+          e6: responseCriteria[0]?.e6 || '',
+          m1: responseCriteria[0]?.m1 || '',
+          m2: responseCriteria[0]?.m2 || '',
+          m3: responseCriteria[0]?.m3 || '',
+          m4: responseCriteria[0]?.m4 || '',
+          m5: responseCriteria[0]?.m5 || '',
+          m6: responseCriteria[0]?.m6 || '',
+          l1: responseCriteria[0]?.l1 || '',
+          l2: responseCriteria[0]?.l2 || '',
+          l3: responseCriteria[0]?.l3 || '',
+          l4: responseCriteria[0]?.l4 || '',
+          l5: responseCriteria[0]?.l5 || '',
+          l6: responseCriteria[0]?.l6 || '',
+        }));
+      }
+      if (responseAcompanhamento) {
+        setNameSearch(responseAcompanhamento[0]?.nome_escola);
+        setFormDataToSubmit((prevFormData) => ({
+          ...prevFormData,
+          nameSearch: responseAcompanhamento[0]?.id_ee || '',
+          nome_escola: responseAcompanhamento[0]?.nome_escola || '',
+          educatorsname: responseAcompanhamento[0]?.id_prof || '',
+          dataofobservation: responseAcompanhamento[0]?.dataofobservation || '',
+          grade: responseAcompanhamento[0]?.grade || '',
+          ofstudents: responseAcompanhamento[0]?.ofstudents || '',
+          tema: responseAcompanhamento[0]?.tema || '',
+          lessonplanbe: responseAcompanhamento[0]?.lessonplanbe || '',
+          cycle: responseAcompanhamento[0]?.cycle || '',
+          digitalprojector: responseAcompanhamento[0]?.digitalprojector || '',
+          board: responseAcompanhamento[0]?.board || '',
+          englishcorner: responseAcompanhamento[0]?.englishcorner || '',
+          noiselevel: responseAcompanhamento[0]?.noiselevel || '',
+          resourceaudioqlty: responseAcompanhamento[0]?.resourceaudioqlty || '',
+          nglbematerials: responseAcompanhamento[0]?.nglbematerials || '',
+          lp1lessonplan: responseAcompanhamento[0]?.lp1lessonplan || '',
+          lp2proposedgoals: responseAcompanhamento[0]?.lp2proposedgoals || '',
+          lp3resourcesused: responseAcompanhamento[0]?.lp3resourcesused || '',
+          lp4changes: responseAcompanhamento[0]?.lp4changes || '',
+          finalcoments: responseAcompanhamento[0]?.finalcoments || '',
+        }));
+        const dataTeste = new Date(
+          responseAcompanhamento[0]?.dataofobservation,
+        );
+        setYearObservation(dataTeste);
+        fetchAgentesExterno(responseAcompanhamento[0]?.id_ee);
+      }
+    } catch (error) {
+      handleApiErrors(error);
     }
   };
 
@@ -468,6 +477,7 @@ export default function EditarAcompanhamento(): JSX.Element {
           handleSalvarClick={handleSalvarClick}
           containerClass={containerClass}
           toggleSideNavBar={toggleSideNavBar}
+          avaliationPage={avaliationPage}
           inputRangeClass={inputRangeClass}
           ReactSlider={ReactSlider}
           boxRanges={boxRanges}
@@ -505,8 +515,6 @@ const FormComponent: React.FC<any> = ({
   handleInputChange,
   handleSliderChange,
   filteredOptions,
-  searchTerm,
-  nameSearch,
   setShowOptions,
   showOptions,
   handleSearchChange,
@@ -528,6 +536,7 @@ const FormComponent: React.FC<any> = ({
   boxRanges,
   formDataCriteriaToSubmit,
   ReactSlider,
+  avaliationPage,
 }) => {
   return (
     <div className={styles.boxToHiddenForms}>
@@ -588,7 +597,6 @@ const FormComponent: React.FC<any> = ({
               onChange={handleInputChange}
               className={styles.inputSelect}
             >
-              <option value="">-</option>
               {agentesExternoData.map(
                 (agentesExterno: FormDataAgenteExternoRelacionado) => (
                   <option
@@ -938,7 +946,9 @@ const FormComponent: React.FC<any> = ({
           toggleSideNavBar();
         }}
       >
-        {'>'}
+        {avaliationPage
+          ? renderIcon(AiOutlineRight)
+          : renderIcon(AiOutlineLeft)}
       </button>
       <div className={containerClass}>
         <div className={boxRanges}>
