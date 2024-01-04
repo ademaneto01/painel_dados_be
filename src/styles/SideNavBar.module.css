@@ -73,7 +73,7 @@
 
 .text {
   margin-left: 1em;
-  font-size: 1.07em;
+  font-size: 1em;
   flex-grow: 1;
 }
 
@@ -83,23 +83,25 @@
 
 .iconContainer {
   overflow: visible;
+  font-size: 0.8em;
 }
 
 .buttonHidden {
   margin-left: 11.8em;
   padding: 0.3em 0.8em;
   margin-bottom: 3em;
-  transform: scale(1.5);
+  transform: scale(1.1);
   color: var(--white);
   display: flex;
   align-items: center;
+
   justify-content: center;
   border-radius: 0.5em;
   transition: width 0.3s, height 0.3s;
 }
 
 .buttonHidden:hover {
-  transform: scale(1.7);
+  transform: scale(1.1);
 }
 
 .activeButtonHidden {
