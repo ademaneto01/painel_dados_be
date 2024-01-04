@@ -368,12 +368,16 @@ export default function EditarAcompanhamento(): JSX.Element {
 
   const handleFinalizarClick = (e: any) => {
     e.preventDefault();
-    setIsFinalize('finalize');
+    if (validateForm()) {
+      setIsFinalize('finalize');
+    }
   };
 
   const handleSalvarClick = (e: any) => {
     e.preventDefault();
-    setIsFinalize('save');
+    if (validateForm()) {
+      setIsFinalize('save');
+    }
   };
 
   useEffect(() => {
@@ -418,6 +422,21 @@ export default function EditarAcompanhamento(): JSX.Element {
     }));
     fetchAgentesExterno(option.id);
     setShowOptions(true);
+  };
+
+  const validateForm = (): boolean => {
+    const errors: string[] = [];
+    if (Object.values(formDataToSubmit).some((v) => v === '' || v === null)) {
+      errors.push('Todos os campos são obrigatórios.');
+    }
+
+    if (errors.length) {
+      setError(true);
+      setMsgError(errors.join(' '));
+      setTimeout(() => setError(false), 6000);
+      return false;
+    }
+    return true;
   };
 
   const containerClass = expandable(styles.conteinerForm);

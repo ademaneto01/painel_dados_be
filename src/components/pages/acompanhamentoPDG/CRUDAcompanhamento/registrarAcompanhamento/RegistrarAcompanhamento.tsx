@@ -92,9 +92,28 @@ export default function RegistrarAcompanhamento(): JSX.Element {
     'Enter a year in observation date',
   );
   const [entidadesEscolares, setEntidadesEscolares] = useState<FormData[]>([]);
-  const [formDataToSubmit, setFormDataToSubmit] = useState<FormDataToSubmit[]>(
-    [],
-  );
+  const [formDataToSubmit, setFormDataToSubmit] = useState<FormDataToSubmit>({
+    nome_escola: '',
+    nameSearch: '',
+    educatorsname: '',
+    dataofobservation: '',
+    grade: '',
+    ofstudents: '',
+    tema: '',
+    lessonplanbe: '',
+    cycle: '',
+    digitalprojector: '',
+    board: '',
+    englishcorner: '',
+    noiselevel: '',
+    resourceaudioqlty: '',
+    nglbematerials: '',
+    lp1lessonplan: '',
+    lp2proposedgoals: '',
+    lp3resourcesused: '',
+    lp4changes: '',
+    finalcoments: '',
+  });
   const [formDataCriteriaToSubmit, setFormDataCriteriaToSubmit] = useState<
     FormDataCriteriaToSubmit[]
   >([]);
@@ -254,6 +273,21 @@ export default function RegistrarAcompanhamento(): JSX.Element {
     }
   };
 
+  const validateForm = (): boolean => {
+    const errors: string[] = [];
+    if (Object.values(formDataToSubmit).some((v) => v === '' || v === null)) {
+      errors.push('Todos os campos são obrigatórios.');
+    }
+
+    if (errors.length) {
+      setError(true);
+      setMsgError(errors.join(' '));
+      setTimeout(() => setError(false), 6000);
+      return false;
+    }
+    return true;
+  };
+
   const handleSearchChange = (e: any) => {
     setSearchTerm(e.target.value);
     if (e.target.value === '') {
@@ -277,12 +311,16 @@ export default function RegistrarAcompanhamento(): JSX.Element {
 
   const handleFinalizarClick = (e: any) => {
     e.preventDefault();
-    setIsFinalize('finalize');
+    if (validateForm()) {
+      setIsFinalize('finalize');
+    }
   };
 
   const handleSalvarClick = (e: any) => {
     e.preventDefault();
-    setIsFinalize('save');
+    if (validateForm()) {
+      setIsFinalize('save');
+    }
   };
 
   useEffect(() => {
