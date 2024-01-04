@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { ImEyePlus } from 'react-icons/im';
+import Tooltip from '@/components/Tooltip/Tooltip';
 
 interface PropsForFxclusion {
   id: string;
@@ -56,7 +57,9 @@ export default function TableActionsDocsEntidade(
 
   return (
     <div className={styles.container}>
+    <Tooltip text="Visualizar Documento"> 
       <Action icon={reactIcon(ImEyePlus)} onClick={handleViewMoreClick} />
+    </Tooltip>
       <Action
         icon={reactIcon(FaTrashAlt, '#f1646c')}
         onClick={() => handleClickOpenModalExcluir(props.id)}

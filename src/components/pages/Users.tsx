@@ -72,7 +72,7 @@ function PageUsers() {
 
   return (
     <div className={styles.pageContainer}>
-      <h4>Usuarios</h4>
+      <h4>Usuários</h4>
       <PageContentContainer>
         <CreateButton
           color={'var(--white'}

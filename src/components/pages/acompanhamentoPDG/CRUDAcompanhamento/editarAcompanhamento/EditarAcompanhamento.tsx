@@ -426,6 +426,7 @@ export default function EditarAcompanhamento(): JSX.Element {
 
   const validateForm = (): boolean => {
     const errors: string[] = [];
+    console.log(formDataToSubmit);
     if (Object.values(formDataToSubmit).some((v) => v === '' || v === null)) {
       errors.push('Todos os campos são obrigatórios.');
     }

@@ -10,6 +10,7 @@ import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumAgentesExterno } from '@/enums';
 import { ImEyePlus } from 'react-icons/im';
+import Tooltip from '@/components/Tooltip/Tooltip';
 
 interface PropsForFxclusion {
   uuid_agente: string;
@@ -62,11 +63,15 @@ export default function TableActionsAgenteExterno(
 
   return (
     <div className={styles.container}>
-      <Action
-        icon={reactIcon(FiEdit)}
-        onClick={() => handleClickOpenEditAgente(props.uuid_agente)}
-      />
-      <Action icon={reactIcon(ImEyePlus)} onClick={handleViewMoreClick} />
+      <Tooltip text="Editar Agente"> 
+        <Action
+          icon={reactIcon(FiEdit)}
+          onClick={() => handleClickOpenEditAgente(props.uuid_agente)}
+        />
+      </Tooltip>
+      <Tooltip text="Visualizar Informações"> 
+        <Action icon={reactIcon(ImEyePlus)} onClick={handleViewMoreClick} />
+      </Tooltip>
       <Action
         icon={reactIcon(FaTrashAlt, '#f1646c')}
         onClick={() => handleClickOpenModalExcluir(props.uuid_agente)}

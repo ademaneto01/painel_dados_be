@@ -61,10 +61,10 @@ export default function RegistrarInfosContrato(): JSX.Element {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-
+  
     let updatedValue: any;
     if (['pedido_min'].includes(name)) {
-      updatedValue = value ? parseInt(value, 10) : null;
+      updatedValue = value !== '' ? parseInt(value, 10) : null;
     } else if (
       ['ativo'].includes(name) ||
       ['reajuste_igpm_ipca'].includes(name)
@@ -79,14 +79,19 @@ export default function RegistrarInfosContrato(): JSX.Element {
 
   const validateForm = (): boolean => {
     const errors: string[] = [];
-
+  
     for (const [key, value] of Object.entries(formData)) {
-      if (value === '' || value === null) {
+      if ((value === '' || value === null) && key !== 'pedido_min') {
         errors.push('Informe os campos obrigatórios.');
         break;
       }
+  
+      if (key === 'pedido_min' && (value === '' || value === null || isNaN(value as number))) {
+        errors.push('Pedido Mínimo deve ser um número válido.');
+        break;
+      }
     }
-
+  
     if (errors.length) {
       setError(true);
       setMsgError(errors.join(' '));

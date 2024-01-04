@@ -69,20 +69,20 @@ export default function TopNavBar(props: TopNavBarProps) {
       <div className={styles.topNavBar}>
         <a className={styles.toogleTopNav} onClick={props.toggleSideNavBar}>
           {props.hidden ? (
-            <GoSidebarCollapse size="2em" />
+            <GoSidebarCollapse size="1.5em" />
           ) : (
-            <GoSidebarExpand size="2em" />
+            <GoSidebarExpand size="1.5em" />
           )}
         </a>
         <div className={styles.logoContainer}>
           <Image
             className={styles.logo}
             src="/logo_be_branco-H.png"
-            alt="Beyond by Be"
+            alt="Logo be Branco"
             priority={true}
             aspect-ratio={1}
-            width={120}
-            height={50}
+            width={95}
+            height={38}
           />
         </div>
 
@@ -102,7 +102,15 @@ export default function TopNavBar(props: TopNavBarProps) {
                 setModalTopNavBaR(false);
               }}
               button1={logOut}
-              title={'Menu'}
+              title={<Image
+                className={styles.logo}
+                src="/logo_be_cor-H.png"
+                alt="Logo Be cor"
+                priority={true}
+                aspect-ratio={1}
+                width={120}
+                height={50}
+              />}
               text={'Logout'}
               icon={reactIcon(CgLogOut)}
             />

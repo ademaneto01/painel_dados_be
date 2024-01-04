@@ -73,6 +73,7 @@ export default function SideNavBar(props: SideNavBarProps) {
               ? reactIcon(PiUserSquareFill)
               : reactIcon(PiUserSquare)
           }
+          buttonHidden={props.hidden && perfil === 'Administrador'}
           active={isActive(PageEnum.users)}
           hidden={perfil === 'Administrador' ? true : false}
         />
@@ -85,6 +86,10 @@ export default function SideNavBar(props: SideNavBarProps) {
             isActive(PageEnum.agentesExterno)
               ? reactIcon(PiUsersFill)
               : reactIcon(PiUsers)
+          }
+          buttonHidden={
+            props.hidden &&
+            (perfil === 'Administrador' || perfil === 'Pedagógico')
           }
           active={isActive(PageEnum.agentesExterno)}
           hidden={
@@ -101,6 +106,7 @@ export default function SideNavBar(props: SideNavBarProps) {
               ? reactIcon(IoDocuments)
               : reactIcon(IoDocumentsOutline)
           }
+          buttonHidden={props.hidden && perfil === 'Administrador'}
           active={isActive(PageEnum.contratos)}
           hidden={perfil === 'Administrador' ? true : false}
         />
@@ -114,11 +120,12 @@ export default function SideNavBar(props: SideNavBarProps) {
               ? reactIcon(BsBuildingsFill)
               : reactIcon(BsBuildings)
           }
+          buttonHidden={props.hidden && perfil === 'Pedagógico'}
           active={isActive(PageEnum.escolasPDG)}
           hidden={perfil === 'Pedagógico' ? true : false}
         />
         <SideNavBarButton
-          text="Acompanhamento"
+          text="Acompanhamentos"
           onClick={() => {
             props.setPage(PageEnum.acompanhamentoPDG);
           }}
@@ -127,6 +134,7 @@ export default function SideNavBar(props: SideNavBarProps) {
               ? reactIcon(IoSchool)
               : reactIcon(IoSchoolOutline)
           }
+          buttonHidden={props.hidden && perfil === 'Pedagógico'}
           active={isActive(PageEnum.acompanhamentoPDG)}
           hidden={perfil === 'Pedagógico' ? true : false}
         />
@@ -140,6 +148,7 @@ export default function SideNavBar(props: SideNavBarProps) {
               ? reactIcon(RiComputerFill)
               : reactIcon(RiComputerLine)
           }
+          buttonHidden={props.hidden && perfil === 'Escola'}
           active={isActive(PageEnum.digitalResources)}
           hidden={perfil === 'Escola' ? true : false}
         />

@@ -4,7 +4,7 @@ import styles from '@/styles/ModalTopNavBaR.module.css';
 interface ModalValidationProps {
   button1: () => void;
   onCancel: () => void;
-  title: string;
+  title: React.ReactNode;
   text: string;
   icon: JSX.Element;
 }

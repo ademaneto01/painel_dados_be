@@ -58,6 +58,10 @@
   gap: 1.5em;
 }
 
+.formLogin h1 {
+  font-size: larger;
+}
+
 .labelLogin {
   display: flex;
   flex-direction: column;
@@ -114,7 +118,7 @@
 }
 
 .btnLogin::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;

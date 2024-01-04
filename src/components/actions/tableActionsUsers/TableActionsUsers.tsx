@@ -8,6 +8,7 @@ import { useState } from 'react';
 import Cookies from 'js-cookie';
 import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
+import Tooltip from '@/components/Tooltip/Tooltip';
 
 interface PropsForExclusion {
   id: string;
@@ -55,10 +56,12 @@ export default function TableActionsUsers(
 
   return (
     <div className={styles.container}>
+    <Tooltip text="Editar Usuário"> 
       <Action
         icon={reactIcon(FiEdit)}
         onClick={() => handleClickOpenModalAddEditUser(props.id)}
       />
+    </Tooltip>
       <Action
         icon={reactIcon(FaTrashAlt, '#f1646c')}
         onClick={() => handleClickOpenModalExcluir(props.id)}

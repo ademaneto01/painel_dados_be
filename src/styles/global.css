@@ -1,5 +1,4 @@
 :root {
-  font-size: 16px;
   --white: #ffffff;
   --white-200: #eaf0f7;
   --white-300: #f1f5fa;
@@ -24,13 +23,27 @@
   --azul-tenro: rgb(25, 44, 83);
   --black-14: rgba(0, 0, 0, 0.14);
   --black-200: rgba(0, 0, 0, 0.2);
+  --black-40: rgba(0, 0, 0, 0.4);
+  --black-80: rgba(0, 0, 0, 0.8);
   --red-300: #ca1c1cce;
   --brown: brown;
   --blue-light: #7286a2;
 }
 
 * {
+  font-size: 16px;
+  font-family: 'MuseoSansRounded300', 'Lucida Sans', 'Lucida Sans Regular',
+    'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'MuseoSansRounded300';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('MuseoSansRounded300'), local('MuseoSansRounded300'),
+    url('/fonts/-Museo/MuseoSansRounded300.otf') format('opentype');
 }

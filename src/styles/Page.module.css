@@ -37,7 +37,6 @@
   background-color: var(--verde-tech);
   justify-content: center;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
   cursor: pointer;
   position: relative;
   box-shadow: 0 5px 10px var(--black-200);
@@ -83,7 +82,6 @@
   justify-content: center;
   align-items: center;
   padding: 1em 0.8em 1em 0.8em;
-  font-family: 'Poppins', sans-serif;
   transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out;
   box-shadow: 0px 0.3em 1em var(--black-200);
   user-select: none;
@@ -112,7 +110,6 @@
   background-color: var(--white);
   justify-content: center;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
   cursor: pointer;
   position: relative;
   box-shadow: 0 5px 10px var(--black-200);
@@ -158,7 +155,6 @@
   justify-content: center;
   align-items: center;
   padding: 1em 0.8em 1em 0.8em;
-  font-family: 'Poppins', sans-serif;
   transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out;
   box-shadow: 0px 0.3em 1em var(--black-200);
   user-select: none;
@@ -182,7 +178,6 @@
   background-color: var(--red-300);
   justify-content: center;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
   cursor: pointer;
   position: relative;
   box-shadow: 0 5px 10px var(--black-200);
@@ -228,7 +223,6 @@
   justify-content: center;
   align-items: center;
   padding: 1em 0.8em 1em 0.8em;
-  font-family: 'Poppins', sans-serif;
   transition: box-shadow 0.3s ease-out, background-color 0.3s ease-out,
     transform 0.3s ease-out;
   box-shadow: 0px 0.3em 1em var(--black-200);
