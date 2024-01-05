@@ -262,15 +262,36 @@ export default function EditarAlunado(): JSX.Element {
   ) => {
     return { ...turmas, ...alunados };
   };
+
+  const validateFormulario = () => {
+    const todosCampos: Record<string, any> = {
+      ...formDataAlunados,
+      ...formDataTurmas,
+    };
+    for (const campo in todosCampos) {
+      if (parseInt(todosCampos[campo]) < 0) {
+        return false;
+      }
+    }
+    return true;
+  };
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    formDataAlunadosEdit.ano_ref = globalAnoRef;
-    formDataAlunadosEdit.id_ee = idEntidadeEscolar;
-    const combinedFormData = mergeFormData(
-      formDataTurmasEdit,
-      formDataAlunadosEdit,
-    );
-    editAlunado(combinedFormData);
+    if (validateFormulario()) {
+      formDataAlunadosEdit.ano_ref = globalAnoRef;
+      formDataAlunadosEdit.id_ee = idEntidadeEscolar;
+      const combinedFormData = mergeFormData(
+        formDataTurmasEdit,
+        formDataAlunadosEdit,
+      );
+      editAlunado(combinedFormData);
+    } else {
+      setError(true);
+      setMsgError('Por favor, insira apenas números positivos');
+      setTimeout(() => {
+        setError(false);
+      }, 6000);
+    }
   };
 
   const handleInputChange = (

@@ -990,7 +990,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1012,7 +1012,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1034,7 +1034,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1056,7 +1056,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1078,7 +1078,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1100,7 +1100,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1122,7 +1122,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1144,7 +1144,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1166,7 +1166,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1188,7 +1188,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1211,7 +1211,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1233,7 +1233,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1256,7 +1256,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1278,7 +1278,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1301,7 +1301,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1323,7 +1323,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1345,7 +1345,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>
@@ -1367,7 +1367,7 @@ const FormComponent: React.FC<any> = ({
               src="/termometro.png"
               alt="Beyond by Be"
               priority={true}
-              width={192}
+              width={205}
               height={15}
             />
           </label>

@@ -148,12 +148,34 @@ export default function CadastrarAlunado(): JSX.Element {
   ) => {
     return { ...turmas, ...alunados };
   };
+
+  const validateFormulario = () => {
+    const todosCampos: Record<string, any> = {
+      ...formDataAlunados,
+      ...formDataTurmas,
+    };
+    for (const campo in todosCampos) {
+      if (parseInt(todosCampos[campo]) < 0) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    formDataAlunados.ano_ref = globalAnoRef;
-    formDataAlunados.id_ee = idEntidadeEscolar;
-    const combinedFormData = mergeFormData(formDataTurmas, formDataAlunados);
-    fetchData(combinedFormData);
+    if (validateFormulario()) {
+      formDataAlunados.ano_ref = globalAnoRef;
+      formDataAlunados.id_ee = idEntidadeEscolar;
+      const combinedFormData = mergeFormData(formDataTurmas, formDataAlunados);
+      fetchData(combinedFormData);
+    } else {
+      setError(true);
+      setMsgError('Por favor, insira apenas números positivos');
+      setTimeout(() => {
+        setError(false);
+      }, 6000);
+    }
   };
 
   return (
