@@ -58,10 +58,6 @@
   gap: 1.5em;
 }
 
-.formLogin h1 {
-  font-size: larger;
-}
-
 .labelLogin {
   display: flex;
   flex-direction: column;

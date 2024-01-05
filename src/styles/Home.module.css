@@ -4,7 +4,7 @@
 .pageContainer {
   margin-top: 4.2em;
   display: flex;
-  margin-left: 17em;
+  margin-left: 16em;
   transition: margin-left 0.3s ease-out;
   padding: 2em;
   color: var(--azul-escuro);
