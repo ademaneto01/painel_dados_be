@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import InputMask from 'react-input-mask';
+import Select from 'react-select';
 import { BackendApiPost } from '@/backendApi';
 import { ErrorComponent } from '@/errors/index';
 import { PageEnumContratos } from '@/enums';
@@ -15,6 +16,11 @@ interface FormData {
   resp_frete: string;
   pedido_min: number | null;
   reajuste_igpm_ipca: boolean | null;
+  exclusividade: string | null;
+  tipoexclusividade: string | null;
+  incentivos: [] | null;
+  qtdbolsas: string | null;
+  repasse: string | null;
 }
 
 export default function RegistrarInfosContrato(): JSX.Element {
@@ -26,6 +32,11 @@ export default function RegistrarInfosContrato(): JSX.Element {
     resp_frete: '',
     pedido_min: null,
     reajuste_igpm_ipca: null,
+    exclusividade: null,
+    tipoexclusividade: null,
+    incentivos: null,
+    qtdbolsas: null,
+    repasse: null,
   });
 
   const [error, setError] = useState(false);
@@ -56,13 +67,19 @@ export default function RegistrarInfosContrato(): JSX.Element {
     }
     setPage(PageEnumContratos.infosContrato);
   };
-
+  const handleSelectChange = (selectedOptions: any) => {
+    const values = selectedOptions
+      ? selectedOptions.map((option: any) => option.value)
+      : [];
+    setFormData((prev) => ({ ...prev, incentivos: values }));
+  };
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement> | any,
   ) => {
     const { name, value } = e.target;
-  
+
     let updatedValue: any;
+
     if (['pedido_min'].includes(name)) {
       updatedValue = value !== '' ? parseInt(value, 10) : null;
     } else if (
@@ -79,19 +96,19 @@ export default function RegistrarInfosContrato(): JSX.Element {
 
   const validateForm = (): boolean => {
     const errors: string[] = [];
-  
+
     for (const [key, value] of Object.entries(formData)) {
       if ((value === '' || value === null) && key !== 'pedido_min') {
         errors.push('Informe os campos obrigatórios.');
         break;
       }
-  
-      if (key === 'pedido_min' && (value === '' || value === null || isNaN(value as number))) {
+
+      if (key === 'pedido_min' && isNaN(value as number)) {
         errors.push('Pedido Mínimo deve ser um número válido.');
         break;
       }
     }
-  
+
     if (errors.length) {
       setError(true);
       setMsgError(errors.join(' '));
@@ -108,6 +125,14 @@ export default function RegistrarInfosContrato(): JSX.Element {
     }
   };
 
+  const options = [
+    { value: 'Bolsas', label: 'Bolsas' },
+    { value: 'Marketing', label: 'Marketing' },
+    { value: 'BETT', label: 'BETT' },
+    { value: 'BETT LONDRES', label: 'BETT LONDRES' },
+    { value: 'MULTA', label: 'MULTA' },
+  ];
+
   return (
     <div className={styles.pageContainer}>
       <HeaderComponent />
@@ -118,6 +143,8 @@ export default function RegistrarInfosContrato(): JSX.Element {
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
           setPage={setPage}
+          options={options}
+          handleSelectChange={handleSelectChange}
         />
         {error && <ErrorComponent message={msgError} />}
       </PageContentContainer>
@@ -146,6 +173,8 @@ const FormComponent: React.FC<any> = ({
   handleInputChange,
   handleSubmit,
   setPage,
+  options,
+  handleSelectChange,
 }) => {
   return (
     <form className={styles.boxForm} onSubmit={handleSubmit}>
@@ -198,7 +227,7 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Pedido Mínimo*
+        Pedido Mínimo
         <input
           type="text"
           placeholder="Pedido Mínimo"
@@ -210,7 +239,7 @@ const FormComponent: React.FC<any> = ({
       </label>
 
       <label className={styles.labelStandard}>
-        Reajuste IGPM IPCA*
+        Reajuste*
         <select
           value={
             formData.reajuste_igpm_ipca === null
@@ -222,9 +251,80 @@ const FormComponent: React.FC<any> = ({
           className={styles.inputSelect}
         >
           <option value="">-</option>
-          <option value="true">Sim</option>
-          <option value="false">Não</option>
+          <option value="escola">Escola</option>
+          <option value="IGP-M">IGP-M</option>
+          <option value="IPCA">IPCA</option>
+          <option value="verificar-contrato">Verificar contrato</option>
         </select>
+      </label>
+      <label className={styles.labelStandard}>
+        Exclusividade*
+        <select
+          value={
+            formData.exclusividade === null
+              ? ''
+              : formData.exclusividade.toString()
+          }
+          onChange={handleInputChange}
+          name="exclusividade"
+          className={styles.inputSelect}
+        >
+          <option value="">-</option>
+          <option value="sim">Sim</option>
+          <option value="não">Não</option>
+        </select>
+      </label>
+      <label className={styles.labelStandard}>
+        Tipo exclusividade*
+        <select
+          value={
+            formData.tipoexclusividade === null
+              ? ''
+              : formData.tipoexclusividade.toString()
+          }
+          onChange={handleInputChange}
+          name="tipoexclusividade"
+          className={styles.inputSelect}
+        >
+          <option value="">-</option>
+          <option value="Raio">Raio</option>
+          <option value="Bairro">Bairro</option>
+          <option value="Município">Município</option>
+          <option value="Concorrentes - Vide Contrato">
+            Concorrentes - Vide Contrato
+          </option>
+        </select>
+      </label>
+      <label className={styles.labelStandard}>
+        Incentivos*
+        <Select
+          isMulti
+          name="incentivos"
+          onChange={handleSelectChange}
+          options={options}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        QTD. Bolsas
+        <input
+          type="text"
+          placeholder="QTD. Bolsas"
+          name="qtdbolsas"
+          value={formData.qtdbolsas}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        % de repasse
+        <input
+          type="text"
+          placeholder="% de repasse"
+          name="repasse"
+          value={formData.repasse}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
       </label>
       <label className={styles.labelStandard}>
         Status*
