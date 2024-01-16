@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import InputMask from 'react-input-mask';
+import dynamic from 'next/dynamic';
 import Select from 'react-select';
 import { BackendApiPost } from '@/backendApi';
 import { ErrorComponent } from '@/errors/index';
@@ -15,13 +16,21 @@ interface FormData {
   ativo: boolean | null;
   resp_frete: string;
   pedido_min: number | null;
-  reajuste_igpm_ipca: boolean | null;
+  reajuste_igpm_ipca: string | null;
   exclusividade: string | null;
   tipoexclusividade: string | null;
-  incentivos: [] | null;
+  incentivos: string[] | null;
   qtdbolsas: string | null;
   repasse: string | null;
+  comentario: string | null;
 }
+
+const MultilineInputSSR = dynamic(
+  () => import('../../quill/multilineInput/MultilineInput'),
+  {
+    ssr: false,
+  },
+);
 
 export default function RegistrarInfosContrato(): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
@@ -37,6 +46,7 @@ export default function RegistrarInfosContrato(): JSX.Element {
     incentivos: null,
     qtdbolsas: null,
     repasse: null,
+    comentario: null,
   });
 
   const [error, setError] = useState(false);
@@ -82,10 +92,7 @@ export default function RegistrarInfosContrato(): JSX.Element {
 
     if (['pedido_min'].includes(name)) {
       updatedValue = value !== '' ? parseInt(value, 10) : null;
-    } else if (
-      ['ativo'].includes(name) ||
-      ['reajuste_igpm_ipca'].includes(name)
-    ) {
+    } else if (['ativo'].includes(name) || ['exclusividade'].includes(name)) {
       updatedValue = value === 'true' ? true : value === 'false' ? false : null;
     } else {
       updatedValue = value;
@@ -94,11 +101,35 @@ export default function RegistrarInfosContrato(): JSX.Element {
     setFormData((prev) => ({ ...prev, [name]: updatedValue }));
   };
 
+  const handleQuillChange = (content: string) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      comentario: content,
+    }));
+  };
   const validateForm = (): boolean => {
     const errors: string[] = [];
 
     for (const [key, value] of Object.entries(formData)) {
-      if ((value === '' || value === null) && key !== 'pedido_min') {
+      if (
+        (value === '' || value === null) &&
+        key === 'qtdbolsas' &&
+        isBolsasSelected()
+      ) {
+        errors.push('Campo quantidade de bolsas é obrigatório.');
+        break;
+      }
+      if (
+        (value === '' || value === null) &&
+        key !== 'pedido_min' &&
+        key !== 'qtdbolsas' &&
+        key !== 'reajuste_igpm_ipca' &&
+        key !== 'exclusividade' &&
+        key !== 'tipoexclusividade' &&
+        key !== 'incentivos' &&
+        key !== 'repasse' &&
+        key !== 'comentario'
+      ) {
         errors.push('Informe os campos obrigatórios.');
         break;
       }
@@ -124,6 +155,9 @@ export default function RegistrarInfosContrato(): JSX.Element {
       fetchData();
     }
   };
+  const isBolsasSelected = () => {
+    return formData.incentivos && formData.incentivos.includes('Bolsas');
+  };
 
   const options = [
     { value: 'Bolsas', label: 'Bolsas' },
@@ -145,6 +179,8 @@ export default function RegistrarInfosContrato(): JSX.Element {
           setPage={setPage}
           options={options}
           handleSelectChange={handleSelectChange}
+          handleQuillChange={handleQuillChange}
+          isBolsasSelected={isBolsasSelected}
         />
         {error && <ErrorComponent message={msgError} />}
       </PageContentContainer>
@@ -175,6 +211,8 @@ const FormComponent: React.FC<any> = ({
   setPage,
   options,
   handleSelectChange,
+  handleQuillChange,
+  isBolsasSelected,
 }) => {
   return (
     <form className={styles.boxForm} onSubmit={handleSubmit}>
@@ -190,7 +228,6 @@ const FormComponent: React.FC<any> = ({
           className={styles.inputStandard}
         />
       </label>
-
       <label className={styles.labelStandard}>
         Data de Operação*
         <InputMask
@@ -237,15 +274,10 @@ const FormComponent: React.FC<any> = ({
           className={styles.inputStandard}
         />
       </label>
-
       <label className={styles.labelStandard}>
-        Reajuste*
+        Reajuste
         <select
-          value={
-            formData.reajuste_igpm_ipca === null
-              ? ''
-              : formData.reajuste_igpm_ipca.toString()
-          }
+          value={formData.reajuste_igpm_ipca}
           onChange={handleInputChange}
           name="reajuste_igpm_ipca"
           className={styles.inputSelect}
@@ -258,7 +290,7 @@ const FormComponent: React.FC<any> = ({
         </select>
       </label>
       <label className={styles.labelStandard}>
-        Exclusividade*
+        Exclusividade
         <select
           value={
             formData.exclusividade === null
@@ -270,18 +302,14 @@ const FormComponent: React.FC<any> = ({
           className={styles.inputSelect}
         >
           <option value="">-</option>
-          <option value="sim">Sim</option>
-          <option value="não">Não</option>
+          <option value="true">Sim</option>
+          <option value="false">Não</option>
         </select>
       </label>
       <label className={styles.labelStandard}>
-        Tipo exclusividade*
+        Tipo exclusividade
         <select
-          value={
-            formData.tipoexclusividade === null
-              ? ''
-              : formData.tipoexclusividade.toString()
-          }
+          value={formData.tipoexclusividade}
           onChange={handleInputChange}
           name="tipoexclusividade"
           className={styles.inputSelect}
@@ -296,25 +324,40 @@ const FormComponent: React.FC<any> = ({
         </select>
       </label>
       <label className={styles.labelStandard}>
-        Incentivos*
+        Incentivos
         <Select
           isMulti
+          styles={{
+            control: (baseStyles, state) => ({
+              ...baseStyles,
+              boxShadow: state.isFocused ? '0 0 5px var(--gray-200);' : '',
+              border: 'white',
+
+              height: '2.5rem',
+              cursor: 'pointer',
+            }),
+          }}
+          placeholder="Incentivos"
           name="incentivos"
           onChange={handleSelectChange}
           options={options}
+          className={styles.inputSelectReact}
         />
       </label>
-      <label className={styles.labelStandard}>
-        QTD. Bolsas
-        <input
-          type="text"
-          placeholder="QTD. Bolsas"
-          name="qtdbolsas"
-          value={formData.qtdbolsas}
-          onChange={handleInputChange}
-          className={styles.inputStandard}
-        />
-      </label>
+      {isBolsasSelected() && (
+        <label className={styles.labelStandard}>
+          QTD. Bolsas*
+          <input
+            type="text"
+            placeholder="QTD. Bolsas"
+            name="qtdbolsas"
+            value={formData.qtdbolsas}
+            onChange={handleInputChange}
+            className={styles.inputStandard}
+          />
+        </label>
+      )}
+
       <label className={styles.labelStandard}>
         % de repasse
         <input
@@ -339,7 +382,14 @@ const FormComponent: React.FC<any> = ({
           <option value="false">Inativo</option>
         </select>
       </label>
-
+      <label className={styles.labelStandard}>
+        Comentário
+        <MultilineInputSSR
+          label="Comentário"
+          onChange={handleQuillChange}
+          value={formData.comentario}
+        />
+      </label>
       <div className={styles.buttonContainer}>
         <button
           className={styles.confirmButton}

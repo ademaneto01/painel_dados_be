@@ -46,24 +46,24 @@ interface FormDataToSubmit {
 interface FormDataCriteriaToSubmit {
   id: string | null;
   id_acmp: string | null;
-  e1: string | null;
-  e2: string | null;
-  e3: string | null;
-  e4: string | null;
-  e5: string | null;
-  e6: string | null;
-  m1: string | null;
-  m2: string | null;
-  m3: string | null;
-  m4: string | null;
-  m5: string | null;
-  m6: string | null;
-  l1: string | null;
-  l2: string | null;
-  l3: string | null;
-  l4: string | null;
-  l5: string | null;
-  l6: string | null;
+  e1: number | null;
+  e2: number | null;
+  e3: number | null;
+  e4: number | null;
+  e5: number | null;
+  e6: number | null;
+  m1: number | null;
+  m2: number | null;
+  m3: number | null;
+  m4: number | null;
+  m5: number | null;
+  m6: number | null;
+  l1: number | null;
+  l2: number | null;
+  l3: number | null;
+  l4: number | null;
+  l5: number | null;
+  l6: number | null;
 }
 
 interface FormDataAgenteExternoRelacionado {
@@ -426,7 +426,7 @@ export default function EditarAcompanhamento(): JSX.Element {
 
   const validateForm = (): boolean => {
     const errors: string[] = [];
-    console.log(formDataToSubmit);
+
     if (Object.values(formDataToSubmit).some((v) => v === '' || v === null)) {
       errors.push('Todos os campos são obrigatórios.');
     }
@@ -936,6 +936,15 @@ const FormComponent: React.FC<any> = ({
 
         <div className={styles.buttonContainer}>
           <button
+            className={styles.cancelButton}
+            type="button"
+            onClick={() =>
+              setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos)
+            }
+          >
+            Cancelar
+          </button>
+          <button
             className={styles.confirmButtonFinal}
             type="button"
             onClick={handleFinalizarClick}
@@ -948,15 +957,6 @@ const FormComponent: React.FC<any> = ({
             onClick={handleSalvarClick}
           >
             Salvar
-          </button>
-          <button
-            className={styles.cancelButton}
-            type="button"
-            onClick={() =>
-              setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos)
-            }
-          >
-            Cancelar
           </button>
         </div>
       </form>
@@ -978,21 +978,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.e1}
+              value={Number(formDataCriteriaToSubmit.e1) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('e1', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             E2 - Promotes an appropriate degree of autonomy and self-efficacy.
@@ -1000,21 +996,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.e2}
+              value={Number(formDataCriteriaToSubmit.e2) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('e2', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             E3 - Provides feedback and promotes peer feedback practices
@@ -1022,21 +1014,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.e3}
+              value={Number(formDataCriteriaToSubmit.e3) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('e3', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             E4 - Has good rapport with the group.
@@ -1044,21 +1032,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.e4}
+              value={Number(formDataCriteriaToSubmit.e4) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('e4', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             E5 - Ensures learners are aware of learning goals.
@@ -1066,21 +1050,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.e5}
+              value={Number(formDataCriteriaToSubmit.e5) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('e5', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             E6 - Engages with and handles emergent content effectively.
@@ -1088,21 +1068,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.e6}
+              value={Number(formDataCriteriaToSubmit.e6) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('e6', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             M1 - Modelled throughout the lesson.
@@ -1110,21 +1086,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.m1}
+              value={Number(formDataCriteriaToSubmit.m1) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('m1', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             M2 - Outlined, summarized or transformed strategically.
@@ -1132,21 +1104,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.m2}
+              value={Number(formDataCriteriaToSubmit.m2) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('m2', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             M3 - Organized, structured or related visually.
@@ -1154,21 +1122,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.m3}
+              value={Number(formDataCriteriaToSubmit.m3) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('m3', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             M4 - Integrated with learners' prior knowledge.
@@ -1177,20 +1141,16 @@ const FormComponent: React.FC<any> = ({
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
               min={-1}
-              value={formDataCriteriaToSubmit.m4}
+              value={Number(formDataCriteriaToSubmit.m4) || 0}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('m4', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             M5 - Presented or explained through relevant/meaningful examples for
@@ -1199,21 +1159,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.m5}
+              value={Number(formDataCriteriaToSubmit.m5) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('m5', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             M6 - Presented progressively, generating a positive lesson flow.
@@ -1221,21 +1177,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.m6}
+              value={Number(formDataCriteriaToSubmit.m6) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('m6', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             L1 - Cooperate during the lesson, occasionaly engaging in peer
@@ -1244,21 +1196,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.l1}
+              value={Number(formDataCriteriaToSubmit.l1) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('l1', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             L2 - Approach practice opportunities deliberately.
@@ -1266,21 +1214,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.l2}
+              value={Number(formDataCriteriaToSubmit.l2) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('l2', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             L3 - Verbalize their questions and thoughts, seeking help when
@@ -1289,21 +1233,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.l3}
+              value={Number(formDataCriteriaToSubmit.l3) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('l3', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             L4 - Act as a cohesive group, fostering a positive learning climate.
@@ -1311,21 +1251,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.l4}
+              value={Number(formDataCriteriaToSubmit.l4) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('l4', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             L5 - Reflect on and evaluate their learning.
@@ -1333,21 +1269,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.l5}
+              value={Number(formDataCriteriaToSubmit.l5) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('l5', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
           <label className={inputRangeClass}>
             L6 - Appear engaged throughout the lesson.
@@ -1355,21 +1287,17 @@ const FormComponent: React.FC<any> = ({
               className={styles.slider}
               thumbClassName={styles.thumb}
               trackClassName={styles.track}
-              value={formDataCriteriaToSubmit.l6}
+              value={Number(formDataCriteriaToSubmit.l6) || 0}
               min={-1}
               max={1}
               step={0.02}
               onAfterChange={(value: any) => handleSliderChange('l6', value)}
-              renderThumb={(props: any, state: any) => <div {...props}></div>}
+              renderThumb={(props: any, state: any) => {
+                const { key, ...restProps } = props;
+                return <div key={key} {...restProps}></div>;
+              }}
             />
-            <Image
-              className={styles.logo}
-              src="/termometro.png"
-              alt="Beyond by Be"
-              priority={true}
-              width={205}
-              height={15}
-            />
+            <div className={styles.logoCSS} />
           </label>
         </div>
       </div>

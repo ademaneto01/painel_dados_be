@@ -186,6 +186,13 @@ const FormComponent: React.FC<any> = ({
       </div>
 
       <div className={styles.buttonContainer}>
+        <button
+          type="button"
+          className={styles.cancelButton}
+          onClick={() => setPage(PageEnumContratos.docsContrato)}
+        >
+          Cancelar
+        </button>
         {nomeDocInputs.length > 1 && (
           <button
             type="button"
@@ -208,13 +215,6 @@ const FormComponent: React.FC<any> = ({
           onClick={handleSubmit}
         >
           Salvar
-        </button>
-        <button
-          type="button"
-          className={styles.cancelButton}
-          onClick={() => setPage(PageEnumContratos.docsContrato)}
-        >
-          Cancelar
         </button>
       </div>
     </form>

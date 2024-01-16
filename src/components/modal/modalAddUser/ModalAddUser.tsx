@@ -245,15 +245,15 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
             </label>
           </div>
           <div className={styles.buttonContainer}>
-            <button className={styles.confirmButton} type="submit">
-              Salvar
-            </button>
             <button
               className={styles.cancelButton}
               type="button"
               onClick={onCancel}
             >
               Cancelar
+            </button>
+            <button className={styles.confirmButton} type="submit">
+              Salvar
             </button>
           </div>
         </form>

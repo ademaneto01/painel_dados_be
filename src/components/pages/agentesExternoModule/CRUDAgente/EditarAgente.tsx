@@ -301,13 +301,6 @@ const FormComponent: React.FC<any> = ({
         </label>
         <div className={styles.buttonContainer}>
           <button
-            className={styles.confirmButton}
-            type="button"
-            onClick={handleSubmit}
-          >
-            Salvar
-          </button>
-          <button
             className={styles.cancelButton}
             type="button"
             onClick={() =>
@@ -315,6 +308,13 @@ const FormComponent: React.FC<any> = ({
             }
           >
             Cancelar
+          </button>
+          <button
+            className={styles.confirmButton}
+            type="button"
+            onClick={handleSubmit}
+          >
+            Salvar
           </button>
         </div>
       </form>

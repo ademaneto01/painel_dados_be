@@ -10,7 +10,13 @@ interface InfosContratoMockPayload {
   ativo: boolean;
   resp_frete: string;
   pedido_min: number;
-  reajuste_igpm_ipca: boolean;
+  reajuste_igpm_ipca: string;
+  exclusividade: boolean;
+  tipoexclusividade: string;
+  incentivos: string[];
+  qtdbolsas: string;
+  repasse: string;
+  comentario: string;
 }
 
 export default class InfosContratoSerializers implements SerializerInterface {
@@ -25,6 +31,12 @@ export default class InfosContratoSerializers implements SerializerInterface {
       resp_frete: otd.resp_frete,
       pedido_min: otd.pedido_min,
       reajuste_igpm_ipca: otd.reajuste_igpm_ipca,
+      exclusividade: otd.exclusividade,
+      tipoexclusividade: otd.tipoexclusividade,
+      incentivos: otd.incentivos,
+      qtdbolsas: otd.qtdbolsas,
+      repasse: otd.repasse,
+      comentario: otd.comentario,
     });
   }
 }

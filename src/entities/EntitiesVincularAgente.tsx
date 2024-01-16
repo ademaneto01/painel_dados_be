@@ -15,6 +15,9 @@ interface VinculoAgenteProps {
   bo_7af: boolean;
   bo_8af: boolean;
   bo_9af: boolean;
+  bo_1em: boolean;
+  bo_2em: boolean;
+  bo_3em: boolean;
 }
 
 export default class EntitiesVincularAgente {
@@ -34,6 +37,9 @@ export default class EntitiesVincularAgente {
   readonly bo_7af: boolean;
   readonly bo_8af: boolean;
   readonly bo_9af: boolean;
+  readonly bo_1em: boolean;
+  readonly bo_2em: boolean;
+  readonly bo_3em: boolean;
 
   constructor({
     id,
@@ -52,6 +58,9 @@ export default class EntitiesVincularAgente {
     bo_7af,
     bo_8af,
     bo_9af,
+    bo_1em,
+    bo_2em,
+    bo_3em,
   }: VinculoAgenteProps) {
     this.id = id;
     this.id_prof = id_prof;
@@ -69,5 +78,8 @@ export default class EntitiesVincularAgente {
     this.bo_7af = bo_7af;
     this.bo_8af = bo_8af;
     this.bo_9af = bo_9af;
+    this.bo_1em = bo_1em;
+    this.bo_2em = bo_2em;
+    this.bo_3em = bo_3em;
   }
 }

@@ -144,7 +144,6 @@ const ModalEditUser: React.FC<ModalProps> = ({
     if (!loaded) {
       fetchDataUpdate();
     }
-
     setUsersUpdated(true);
     onCancel();
   };
@@ -166,7 +165,6 @@ const ModalEditUser: React.FC<ModalProps> = ({
       handleApiErrors(error);
       return null;
     } finally {
-      setUsersUpdated(true);
       setLoaded(true);
     }
   }
@@ -273,18 +271,18 @@ const ModalEditUser: React.FC<ModalProps> = ({
           </div>
           <div className={styles.buttonContainer}>
             <button
-              className={styles.confirmButton}
-              type="button"
-              onClick={handleSubmit}
-            >
-              Salvar
-            </button>
-            <button
               className={styles.cancelButton}
               type="button"
               onClick={onCancel}
             >
               Cancelar
+            </button>
+            <button
+              className={styles.confirmButton}
+              type="button"
+              onClick={handleSubmit}
+            >
+              Salvar
             </button>
           </div>
         </form>

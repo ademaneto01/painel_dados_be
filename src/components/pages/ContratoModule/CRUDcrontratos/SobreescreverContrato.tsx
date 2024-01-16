@@ -18,6 +18,8 @@ interface FormData {
   uf: string;
   bairro: string | null;
   complemento: string | null;
+  tipocontrato: string | null;
+  valorcontrato: string | null;
   bo_rede: boolean | null;
 }
 
@@ -36,6 +38,8 @@ export default function SobreescreverContrato(): JSX.Element {
     uf: '',
     bairro: '',
     complemento: '',
+    tipocontrato: '',
+    valorcontrato: '',
     bo_rede: null,
   });
 
@@ -56,6 +60,8 @@ export default function SobreescreverContrato(): JSX.Element {
         uf: response[0]?.uf || '',
         bairro: response[0]?.bairro || '',
         complemento: response[0]?.complemento || '',
+        tipocontrato: response[0]?.tipocontrato || '',
+        valorcontrato: response[0]?.valorcontrato || '',
         bo_rede: response[0].bo_rede,
       });
     }
@@ -96,6 +102,8 @@ export default function SobreescreverContrato(): JSX.Element {
         uf: formData.uf,
         bairro: formData.bairro,
         complemento: formData.complemento,
+        tipocontrato: formData.tipocontrato,
+        valorcontrato: formData.valorcontrato,
         bo_rede: formData.bo_rede,
       });
     } catch (error) {
@@ -328,6 +336,30 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
+        Valor do contrato*
+        <input
+          type="text"
+          placeholder="Valor do contrato"
+          name="valorcontrato"
+          value={formData.valorcontrato ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Tipo*
+        <select
+          value={formData.tipocontrato ?? ''}
+          onChange={handleInputChange}
+          name="tipocontrato"
+          className={styles.inputSelect}
+        >
+          <option value="">-</option>
+          <option value="B2B">B2B</option>
+          <option value="B2C">B2C</option>
+        </select>
+      </label>
+      <label className={styles.labelStandard}>
         Rede*
         <select
           value={formData.bo_rede === null ? '' : formData.bo_rede.toString()}
@@ -342,18 +374,18 @@ const FormComponent: React.FC<any> = ({
       </label>
       <div className={styles.buttonContainer}>
         <button
-          className={styles.confirmButton}
-          type="button"
-          onClick={handleSubmit}
-        >
-          Salvar
-        </button>
-        <button
           className={styles.cancelButton}
           type="button"
           onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
         >
           Cancelar
+        </button>
+        <button
+          className={styles.confirmButton}
+          type="button"
+          onClick={handleSubmit}
+        >
+          Salvar
         </button>
       </div>
     </form>

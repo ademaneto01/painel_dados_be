@@ -82,10 +82,10 @@ export default function VisualizeAcompanhamento() {
         />
         <div>
           {data.map((entity, index) => (
-            <div className={styles.conteinerFullInfos}>
+            <div key={index} className={styles.conteinerFullInfos}>
               <div>
                 <h3>School</h3>
-                <div key={index}>{entity.nome_escola}</div>
+                <div>{entity.nome_escola}</div>
               </div>
               <div className={styles.conteinerWidthAll}>
                 <h3>Observation Info.</h3>

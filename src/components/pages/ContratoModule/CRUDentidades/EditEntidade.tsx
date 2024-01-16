@@ -22,6 +22,7 @@ interface FormData {
   url_dados: string | null;
   instagram: string | null;
   facebook: string | null;
+  linkwhats: string | null;
   uuid_ec: string | null;
   id_usuario_pdg: string | null;
   ativo: boolean | null;
@@ -46,6 +47,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
     url_dados: '',
     instagram: '',
     facebook: '',
+    linkwhats: '',
     uuid_ec: '',
     id_usuario_pdg: '',
     ativo: true,
@@ -76,6 +78,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
         url_dados: response[0]?.url_dados || '',
         instagram: response[0]?.instagram || '',
         facebook: response[0]?.facebook || '',
+        linkwhats: response[0]?.linkwhats || '',
         uuid_ec: response[0]?.uuid_ec || '',
         id_usuario_pdg: response[0]?.id_usuario_pdg || '',
         ativo: response[0].ativo,
@@ -172,6 +175,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
         key !== 'instagram' &&
         key !== 'facebook' &&
         key !== 'id_usuario_pdg' &&
+        key !== 'linkwhats' &&
         (value === '' || value === null)
       ) {
         errors.push('Informe os campos obrigatórios.');
@@ -402,6 +406,17 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
+        Link WhatsApp
+        <input
+          type="text"
+          placeholder="Link WhatsApp"
+          name="linkwhats"
+          value={formData.linkwhats ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
         Status*
         <select
           value={formData.ativo === null ? '' : formData.ativo.toString()}
@@ -417,18 +432,18 @@ const FormComponent: React.FC<any> = ({
 
       <div className={styles.buttonContainer}>
         <button
-          className={styles.confirmButton}
-          type="button"
-          onClick={handleSubmit}
-        >
-          Salvar
-        </button>
-        <button
           className={styles.cancelButton}
           type="button"
           onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
         >
           Cancelar
+        </button>
+        <button
+          className={styles.confirmButton}
+          type="button"
+          onClick={handleSubmit}
+        >
+          Salvar
         </button>
       </div>
     </form>

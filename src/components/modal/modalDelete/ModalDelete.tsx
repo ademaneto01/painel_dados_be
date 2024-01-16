@@ -25,11 +25,11 @@ const ModalDelete: React.FC<ModalValidationProps> = ({
         <h2 className={styles.title}>{title}</h2>
         <p id={styles.text}>{message}</p>
         <div className={styles.buttonContainer}>
-          <button className={styles.confirmButton} onClick={onConfirm}>
-            Sim
-          </button>
           <button className={styles.cancelButton} onClick={onCancel}>
             Não
+          </button>
+          <button className={styles.confirmButton} onClick={onConfirm}>
+            Sim
           </button>
         </div>
       </div>

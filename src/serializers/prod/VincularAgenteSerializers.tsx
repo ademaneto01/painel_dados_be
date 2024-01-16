@@ -18,6 +18,9 @@ interface VincularAgenteMockPayload {
   bo_7af: boolean;
   bo_8af: boolean;
   bo_9af: boolean;
+  bo_1em: boolean;
+  bo_2em: boolean;
+  bo_3em: boolean;
 }
 
 export default class VincularAgenteSerializers implements SerializerInterface {
@@ -39,6 +42,9 @@ export default class VincularAgenteSerializers implements SerializerInterface {
       bo_7af: otd.bo_7af,
       bo_8af: otd.bo_8af,
       bo_9af: otd.bo_9af,
+      bo_1em: otd.bo_1em,
+      bo_2em: otd.bo_2em,
+      bo_3em: otd.bo_3em,
     });
   }
 }

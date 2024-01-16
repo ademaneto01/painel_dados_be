@@ -13,6 +13,7 @@ interface FormData {
   url_dados: string;
   instagram: string;
   facebook: string;
+  linkwhats: string;
   endereco: string;
   cidade: string;
   uf: string;
@@ -43,6 +44,7 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
     url_dados: '',
     instagram: '',
     facebook: '',
+    linkwhats: '',
     endereco: '',
     cidade: '',
     uf: '',
@@ -70,6 +72,7 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
         url_dados: response[0].url_dados,
         instagram: response[0].instagram,
         facebook: response[0].facebook,
+        linkwhats: response[0].linkwhats,
         cep: response[0].cep,
         endereco: response[0].endereco,
         cidade: response[0].cidade,
@@ -77,7 +80,7 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
         bairro: response[0].bairro,
         complemento: response[0].complemento,
       });
-
+      console.log(response[0]);
       const usuariosPDG = await backendApi.localizarUsuariosPDG();
       const usuarioEncontrado = usuariosPDG.find((user) => {
         return user.id === response[0].id_usuario_pdg;
@@ -114,50 +117,81 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
           <div className={styles.boxDados}>
             <div className={styles.dadosColumn}>
               <div>
-                <span className={styles.label}>Nome Operacional:</span>{' '}
-                {formData.nome_operacional}
+                <span className={styles.label}>
+                  Nome Operacional:{' '}
+                  {formData.nome_operacional?.trim()
+                    ? formData.nome_operacional
+                    : 'N/A'}
+                </span>
               </div>
               <div>
-                <span className={styles.label}>CNPJ Escola:</span>{' '}
-                {formData.cnpj_escola}
+                <span className={styles.label}>
+                  CNPJ Escola:{' '}
+                  {formData.cnpj_escola?.trim() ? formData.cnpj_escola : 'N/A'}
+                </span>
               </div>
               <div>
-                <span className={styles.label}>RESP. Pedagógico:</span>{' '}
-                {usuarioPDG.length > 0 ? usuarioPDG[0].nome : 'N/A'}
+                <span className={styles.label}>
+                  RESP. Pedagógico:{' '}
+                  {usuarioPDG.length > 0 ? usuarioPDG[0].nome : 'N/A'}
+                </span>
               </div>
               <div className={styles.conteinerUrlDados}>
-                <span className={styles.label}>URL Dados:</span>{' '}
-                <div className={styles.boxUrl}>{formData.url_dados}</div>
+                <span className={styles.label}>URL Dados:</span>
+                <div className={styles.boxUrl}>
+                  {formData.url_dados?.trim() ? formData.url_dados : 'N/A'}
+                </div>
               </div>
               <div>
-                <span className={styles.label}>Instagram:</span>{' '}
-                {formData.instagram}
+                <span className={styles.label}>
+                  Instagram:{' '}
+                  {formData.instagram?.trim() ? formData.instagram : 'N/A'}
+                </span>
               </div>
               <div>
-                <span className={styles.label}>Facebook:</span>{' '}
-                {formData.facebook}
+                <span className={styles.label}>
+                  Facebook:{' '}
+                  {formData.facebook?.trim() ? formData.facebook : 'N/A'}
+                </span>
+              </div>
+              <div>
+                <span className={styles.label}>
+                  Link WhatsApp:{' '}
+                  {formData.linkwhats?.trim() ? formData.linkwhats : 'N/A'}
+                </span>
               </div>
             </div>
             <div className={styles.dadosColumn}>
               <div>
-                <span className={styles.label}>Rua:</span> {formData.endereco}
+                <span className={styles.label}>
+                  Rua: {formData.endereco?.trim() ? formData.endereco : 'N/A'}
+                </span>
               </div>
               <div>
-                <span className={styles.label}>CEP:</span> {formData.cep}
+                <span className={styles.label}>
+                  CEP: {formData.cep?.trim() ? formData.cep : 'N/A'}
+                </span>
               </div>
               <div>
-                <span className={styles.label}>Cidade:</span> {formData.cidade}
+                <span className={styles.label}>
+                  Cidade: {formData.cidade?.trim() ? formData.cidade : 'N/A'}
+                </span>
               </div>
               <div>
-                <span className={styles.label}>UF:</span> {formData.uf}
+                <span className={styles.label}>
+                  UF: {formData.uf?.trim() ? formData.uf : 'N/A'}
+                </span>
               </div>
               <div>
-                <span className={styles.label}>Bairro:</span> {formData.bairro}
+                <span className={styles.label}>
+                  Bairro: {formData.bairro?.trim() ? formData.bairro : 'N/A'}
+                </span>
               </div>
-
               <div>
-                <span className={styles.label}>Complemento:</span>{' '}
-                {formData.complemento}
+                <span className={styles.label}>
+                  Complemento:{' '}
+                  {formData.complemento?.trim() ? formData.complemento : 'N/A'}
+                </span>
               </div>
             </div>
           </div>

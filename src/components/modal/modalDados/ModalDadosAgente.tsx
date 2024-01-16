@@ -101,30 +101,30 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
               <div>
                 <div className={styles.conteinerUrlDados}>
                   <span className={styles.label}>Nome:</span>{' '}
-                  <div className={styles.boxUrl}>{formData.nome}</div>
+                  <div className={styles.boxUrl}>{formData.nome ?? 'N/A'}</div>
                 </div>
               </div>
               <div>
                 <span className={styles.label}>E-mail Primário:</span>{' '}
-                {formData.email_primario}
+                {formData.email_primario ?? 'N/A'}
               </div>
               <div>
                 <span className={styles.label}>E-mail Secundário:</span>{' '}
-                {formData.email_secundario}
+                {formData.email_secundario ?? 'N/A'}
               </div>
               <div>
                 <span className={styles.label}>Linkedin:</span>{' '}
-                {formData.linkedin}
+                {formData.linkedin ?? 'N/A'}
               </div>
               <div>
                 <span className={styles.label}>Instagram:</span>{' '}
-                {formData.instagram}
+                {formData.instagram ?? 'N/A'}
               </div>
             </div>
             <div className={styles.dadosColumn}>
               <div>
                 <span className={styles.label}>Data de Nascimento:</span>{' '}
-                {formData.data_nascimento}
+                {formData.data_nascimento ?? 'N/A'}
               </div>
               <div>
                 <span className={styles.label}>Interlocutor:</span>{' '}
@@ -132,10 +132,11 @@ const ModalDadosAgente: React.FC<ModalProps> = ({ onCancel, uuid_agente }) => {
               </div>
               <div>
                 <span className={styles.label}>Telefone:</span>{' '}
-                {formData.telefone}
+                {formData.telefone ?? 'N/A'}
               </div>
               <div>
-                <span className={styles.label}>Cargo:</span> {formData.cargo}
+                <span className={styles.label}>Cargo:</span>{' '}
+                {formData.cargo ?? 'N/A'}
               </div>
             </div>
           </div>

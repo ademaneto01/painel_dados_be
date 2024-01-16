@@ -18,6 +18,8 @@ interface FormData {
   uf: string | null;
   bairro: string | null;
   complemento: string | null;
+  tipocontrato: string | null;
+  valorcontrato: string | null;
   ativo: boolean | null;
   bo_rede: boolean | null;
 }
@@ -37,6 +39,8 @@ export default function EditContrato(): JSX.Element {
     uf: '',
     bairro: '',
     complemento: '',
+    tipocontrato: '',
+    valorcontrato: '',
     ativo: null,
     bo_rede: null,
   });
@@ -59,6 +63,8 @@ export default function EditContrato(): JSX.Element {
         uf: response[0]?.uf || '',
         bairro: response[0]?.bairro || '',
         complemento: response[0]?.complemento || '',
+        tipocontrato: response[0]?.tipocontrato || '',
+        valorcontrato: response[0]?.valorcontrato || '',
         ativo: response[0].ativo,
         bo_rede: response[0].bo_rede,
       });
@@ -135,6 +141,8 @@ export default function EditContrato(): JSX.Element {
         uf: formData.uf,
         bairro: formData.bairro,
         complemento: formData.complemento,
+        tipocontrato: formData.tipocontrato,
+        valorcontrato: formData.valorcontrato,
         ativo: formData.ativo,
         bo_rede: formData.bo_rede,
       });
@@ -333,6 +341,30 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
+        Valor do contrato*
+        <input
+          type="text"
+          placeholder="Valor do contrato"
+          name="valorcontrato"
+          value={formData.valorcontrato ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Tipo*
+        <select
+          value={formData.tipocontrato ?? ''}
+          onChange={handleInputChange}
+          name="tipocontrato"
+          className={styles.inputSelect}
+        >
+          <option value="">-</option>
+          <option value="B2B">B2B</option>
+          <option value="B2C">B2C</option>
+        </select>
+      </label>
+      <label className={styles.labelStandard}>
         Status*
         <select
           value={formData.ativo === null ? '' : formData.ativo.toString()}
@@ -360,18 +392,18 @@ const FormComponent: React.FC<any> = ({
       </label>
       <div className={styles.buttonContainer}>
         <button
-          className={styles.confirmButton}
-          type="button"
-          onClick={handleSubmit}
-        >
-          Salvar
-        </button>
-        <button
           className={styles.cancelButton}
           type="button"
           onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
         >
           Cancelar
+        </button>
+        <button
+          className={styles.confirmButton}
+          type="button"
+          onClick={handleSubmit}
+        >
+          Salvar
         </button>
       </div>
     </form>

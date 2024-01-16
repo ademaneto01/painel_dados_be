@@ -21,6 +21,9 @@ interface FormData {
   bo_7AF: boolean;
   bo_8AF: boolean;
   bo_9AF: boolean;
+  bo_1EM: boolean;
+  bo_2EM: boolean;
+  bo_3EM: boolean;
 }
 
 interface ModalProps {
@@ -40,6 +43,9 @@ const OPTIONS = [
   'bo_7AF',
   'bo_8AF',
   'bo_9AF',
+  'bo_1EM',
+  'bo_2EM',
+  'bo_3EM',
 ];
 
 export default function ModalVicularAgente({
@@ -61,6 +67,9 @@ export default function ModalVicularAgente({
     bo_7AF: false,
     bo_8AF: false,
     bo_9AF: false,
+    bo_1EM: false,
+    bo_2EM: false,
+    bo_3EM: false,
   };
   const [isProfessor, setIsProfessor] = useState(false);
   const [formData, setFormData] = useState<FormData>(initialFormData);
@@ -296,18 +305,18 @@ const FormComponent: React.FC<any> = ({
         </div>
         <div className={styles.buttonContainer}>
           <button
-            className={styles.confirmButton}
-            type="button"
-            onClick={handleSubmit}
-          >
-            Salvar
-          </button>
-          <button
             className={styles.cancelButton}
             type="button"
             onClick={onCancel}
           >
             Cancelar
+          </button>
+          <button
+            className={styles.confirmButton}
+            type="button"
+            onClick={handleSubmit}
+          >
+            Salvar
           </button>
         </div>
       </form>

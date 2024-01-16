@@ -52,6 +52,14 @@ export default class BackendApiPut implements BackendApiInterfacePut {
     );
   }
 
+  public async editarUsuarioAtivo(userData: any): Promise<EntitiesOneUser[]> {
+    return await this.put<EntitiesOneUser>(
+      '/editarUsuarioAtivo',
+      userData,
+      new OneUserSerializers(),
+    );
+  }
+
   public async sobrescreverContrato(
     userData: any,
   ): Promise<EntitiesContratos[]> {

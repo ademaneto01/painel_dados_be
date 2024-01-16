@@ -14,9 +14,9 @@
 .container {
   background-color: var(--white);
   border-radius: 10px;
-  padding: 1.5rem;
-  width: 40rem;
-  max-width: 90%;
+  padding: 1rem;
+  width: auto;
+  max-width: 70%;
   text-align: center;
   box-shadow: 0 0 10px var(--black-200);
   z-index: 8;
@@ -46,6 +46,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.7em;
+  text-align: left;
+  padding: 0.5rem;
   align-items: flex-start;
   max-width: 100%;
 }
@@ -58,6 +60,7 @@
 .conteinerUrlDados {
   display: flex;
   flex-direction: row;
+
   gap: 0.5em;
 }
 

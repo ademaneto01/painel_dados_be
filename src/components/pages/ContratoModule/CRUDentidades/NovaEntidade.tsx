@@ -21,6 +21,7 @@ interface FormData {
   url_dados: string | null;
   instagram: string;
   facebook: string;
+  linkwhats: string;
   id_usuario_pdg: string;
   ativo: boolean | null;
 }
@@ -38,6 +39,7 @@ export default function NovaEntidade(): JSX.Element {
     url_dados: '',
     instagram: '',
     facebook: '',
+    linkwhats: '',
     id_usuario_pdg: '',
     ativo: true,
   });
@@ -156,6 +158,7 @@ export default function NovaEntidade(): JSX.Element {
         key !== 'instagram' &&
         key !== 'facebook' &&
         key !== 'id_usuario_pdg' &&
+        key !== 'linkwhats' &&
         (value === '' || value === null)
       ) {
         errors.push('Informe os campos obrigatórios.');
@@ -366,7 +369,17 @@ const FormComponent: React.FC<any> = ({
           className={styles.inputStandard}
         />
       </label>
-
+      <label className={styles.labelStandard}>
+        Link WhatsApp
+        <input
+          type="text"
+          placeholder="Link WhatsApp"
+          name="linkwhats"
+          value={formData.linkwhats}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
       <label className={styles.labelStandard}>
         Status*
         <select
@@ -383,18 +396,18 @@ const FormComponent: React.FC<any> = ({
 
       <div className={styles.buttonContainer}>
         <button
-          className={styles.confirmButton}
-          type="button"
-          onClick={handleSubmit}
-        >
-          Salvar
-        </button>
-        <button
           className={styles.cancelButton}
           type="button"
           onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
         >
           Cancelar
+        </button>
+        <button
+          className={styles.confirmButton}
+          type="button"
+          onClick={handleSubmit}
+        >
+          Salvar
         </button>
       </div>
     </form>

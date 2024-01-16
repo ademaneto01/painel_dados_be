@@ -15,6 +15,7 @@ interface EntidadesEscolaresProps {
   url_dados: string;
   instagram: string;
   facebook: string;
+  linkwhats: string;
   id_usuario_pdg: string;
   complemento: string;
   ativo: boolean;
@@ -34,6 +35,7 @@ export default class EntitiesEditarEntidadeEscolar {
   readonly url_dados: string;
   readonly instagram: string;
   readonly facebook: string;
+  readonly linkwhats: string;
   readonly id_usuario_pdg: string;
   readonly complemento: string;
   readonly ativo: boolean;
@@ -52,6 +54,7 @@ export default class EntitiesEditarEntidadeEscolar {
     url_dados,
     instagram,
     facebook,
+    linkwhats,
     id_usuario_pdg,
     complemento,
     ativo,
@@ -69,6 +72,7 @@ export default class EntitiesEditarEntidadeEscolar {
     this.url_dados = url_dados;
     this.instagram = instagram;
     this.facebook = facebook;
+    this.linkwhats = linkwhats;
     this.id_usuario_pdg = id_usuario_pdg;
     this.complemento = complemento;
     this.ativo = ativo;

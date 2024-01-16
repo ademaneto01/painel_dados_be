@@ -2,6 +2,8 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/NovoContrato.module.css';
 import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import InputMask from 'react-input-mask';
+import dynamic from 'next/dynamic';
+import Select from 'react-select';
 import { ErrorComponent } from '@/errors/index';
 import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
@@ -14,8 +16,21 @@ interface FormData {
   ativo: boolean | null;
   resp_frete: string;
   pedido_min: number | null;
-  reajuste_igpm_ipca: boolean | null;
+  reajuste_igpm_ipca: string | null;
+  exclusividade: boolean | null;
+  tipoexclusividade: string | null;
+  incentivos: string[] | null;
+  qtdbolsas: string | null;
+  repasse: string | null;
+  comentario: string | null;
 }
+
+const MultilineInputSSR = dynamic(
+  () => import('../../quill/multilineInput/MultilineInput'),
+  {
+    ssr: false,
+  },
+);
 
 export default function EditarInfosContrato(): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
@@ -26,6 +41,12 @@ export default function EditarInfosContrato(): JSX.Element {
     resp_frete: '',
     pedido_min: null,
     reajuste_igpm_ipca: null,
+    exclusividade: true,
+    tipoexclusividade: null,
+    incentivos: null,
+    qtdbolsas: null,
+    repasse: null,
+    comentario: null,
   });
   const [idInfos, setIdInfos] = useState('');
   const [error, setError] = useState(false);
@@ -48,6 +69,7 @@ export default function EditarInfosContrato(): JSX.Element {
     const requestBody = {
       id: idInfos,
       ...formData,
+      qtdbolsas: isBolsasSelected() ? formData.qtdbolsas : 0,
     };
 
     try {
@@ -70,6 +92,7 @@ export default function EditarInfosContrato(): JSX.Element {
       const infosContratoData = await backendApi.listarInfosContrato(
         idContrato,
       );
+
       setIdInfos(infosContratoData[0].id);
       setFormData({
         ano_assinatura: infosContratoData[0].ano_assinatura,
@@ -79,24 +102,33 @@ export default function EditarInfosContrato(): JSX.Element {
         resp_frete: infosContratoData[0].resp_frete,
         pedido_min: infosContratoData[0].pedido_min,
         reajuste_igpm_ipca: infosContratoData[0].reajuste_igpm_ipca,
+        exclusividade: infosContratoData[0].exclusividade,
+        tipoexclusividade: infosContratoData[0].tipoexclusividade,
+        incentivos: infosContratoData[0].incentivos,
+        qtdbolsas: infosContratoData[0].qtdbolsas,
+        repasse: infosContratoData[0].repasse,
+        comentario: infosContratoData[0].comentario,
       });
     } catch (error) {
       handleApiErrors(error);
     }
   };
 
+  const handleSelectChange = (selectedOptions: any) => {
+    const values = selectedOptions
+      ? selectedOptions.map((option: any) => option.value)
+      : [];
+    setFormData((prev) => ({ ...prev, incentivos: values }));
+  };
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-  
+
     let updatedValue: any;
     if (['pedido_min'].includes(name)) {
       updatedValue = value !== '' ? parseInt(value, 10) : null;
-    } else if (
-      ['ativo'].includes(name) ||
-      ['reajuste_igpm_ipca'].includes(name)
-    ) {
+    } else if (['ativo'].includes(name) || ['exclusividade'].includes(name)) {
       updatedValue = value === 'true' ? true : value === 'false' ? false : null;
     } else {
       updatedValue = value;
@@ -104,22 +136,45 @@ export default function EditarInfosContrato(): JSX.Element {
 
     setFormData((prev) => ({ ...prev, [name]: updatedValue }));
   };
-
+  const handleQuillChange = (content: string) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      comentario: content,
+    }));
+  };
   const validateForm = (): boolean => {
     const errors: string[] = [];
-  
+
     for (const [key, value] of Object.entries(formData)) {
-      if ((value === '' || value === null) && key !== 'pedido_min') {
+      if (
+        (value === '' || value === null) &&
+        key === 'qtdbolsas' &&
+        isBolsasSelected()
+      ) {
+        errors.push('Campo quantidade de bolsas é obrigatório.');
+        break;
+      }
+      if (
+        (value === '' || value === null) &&
+        key !== 'pedido_min' &&
+        key !== 'qtdbolsas' &&
+        key !== 'reajuste_igpm_ipca' &&
+        key !== 'exclusividade' &&
+        key !== 'tipoexclusividade' &&
+        key !== 'incentivos' &&
+        key !== 'repasse' &&
+        key !== 'comentario'
+      ) {
         errors.push('Informe os campos obrigatórios.');
         break;
       }
-  
-      if (key === 'pedido_min' && (value === '' || value === null || isNaN(value as number))) {
+
+      if (key === 'pedido_min' && isNaN(value as number)) {
         errors.push('Pedido Mínimo deve ser um número válido.');
         break;
       }
     }
-  
+
     if (errors.length) {
       setError(true);
       setMsgError(errors.join(' '));
@@ -136,6 +191,18 @@ export default function EditarInfosContrato(): JSX.Element {
     }
   };
 
+  const isBolsasSelected = () => {
+    return formData.incentivos && formData.incentivos.includes('Bolsas');
+  };
+
+  const options = [
+    { value: 'Bolsas', label: 'Bolsas' },
+    { value: 'Marketing', label: 'Marketing' },
+    { value: 'BETT', label: 'BETT' },
+    { value: 'BETT LONDRES', label: 'BETT LONDRES' },
+    { value: 'MULTA', label: 'MULTA' },
+  ];
+
   return (
     <div className={styles.pageContainer}>
       <HeaderComponent />
@@ -146,6 +213,10 @@ export default function EditarInfosContrato(): JSX.Element {
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
           setPage={setPage}
+          handleSelectChange={handleSelectChange}
+          isBolsasSelected={isBolsasSelected}
+          options={options}
+          handleQuillChange={handleQuillChange}
         />
         {error && <ErrorComponent message={msgError} />}
       </PageContentContainer>
@@ -174,6 +245,10 @@ const FormComponent: React.FC<any> = ({
   handleInputChange,
   handleSubmit,
   setPage,
+  handleSelectChange,
+  isBolsasSelected,
+  options,
+  handleQuillChange,
 }) => {
   return (
     <form className={styles.boxForm} onSubmit={handleSubmit}>
@@ -226,7 +301,7 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Pedido Mínimo*
+        Pedido Mínimo
         <input
           type="text"
           placeholder="Pedido Mínimo"
@@ -238,21 +313,106 @@ const FormComponent: React.FC<any> = ({
       </label>
 
       <label className={styles.labelStandard}>
-        Reajuste IGPM IPCA*
+        Reajuste
         <select
-          value={
-            formData.reajuste_igpm_ipca === null
-              ? ''
-              : formData.reajuste_igpm_ipca.toString()
-          }
+          value={formData.reajuste_igpm_ipca}
           onChange={handleInputChange}
           name="reajuste_igpm_ipca"
+          className={styles.inputSelect}
+        >
+          <option value="">-</option>
+          <option value="escola">Escola</option>
+          <option value="IGP-M">IGP-M</option>
+          <option value="IPCA">IPCA</option>
+          <option value="verificar-contrato">Verificar contrato</option>
+        </select>
+      </label>
+      <label className={styles.labelStandard}>
+        Exclusividade
+        <select
+          value={
+            formData.exclusividade === null
+              ? ''
+              : formData.exclusividade.toString()
+          }
+          onChange={handleInputChange}
+          name="exclusividade"
           className={styles.inputSelect}
         >
           <option value="">-</option>
           <option value="true">Sim</option>
           <option value="false">Não</option>
         </select>
+      </label>
+      <label className={styles.labelStandard}>
+        Tipo exclusividade
+        <select
+          value={formData.tipoexclusividade ?? ''}
+          onChange={handleInputChange}
+          name="tipoexclusividade"
+          className={styles.inputSelect}
+        >
+          <option value="">-</option>
+          <option value="Raio">Raio</option>
+          <option value="Bairro">Bairro</option>
+          <option value="Município">Município</option>
+          <option value="Concorrentes - Vide Contrato">
+            Concorrentes - Vide Contrato
+          </option>
+        </select>
+      </label>
+      <label className={styles.labelStandard}>
+        Incentivos
+        <Select
+          isMulti
+          styles={{
+            control: (baseStyles, state) => ({
+              ...baseStyles,
+              boxShadow: state.isFocused ? '0 0 5px var(--gray-200);' : '',
+              border: 'white',
+
+              height: '2.5rem',
+              cursor: 'pointer',
+            }),
+          }}
+          placeholder="Incentivos"
+          name="incentivos"
+          onChange={handleSelectChange}
+          value={
+            formData.incentivos
+              ? formData.incentivos.map((response: string) => ({
+                  value: response,
+                  label: response,
+                }))
+              : ''
+          }
+          options={options}
+          className={styles.inputSelectReact}
+        />
+      </label>
+      {isBolsasSelected() && (
+        <label className={styles.labelStandard}>
+          QTD. Bolsas*
+          <input
+            type="text"
+            placeholder="QTD. Bolsas"
+            name="qtdbolsas"
+            value={formData.qtdbolsas ?? ''}
+            onChange={handleInputChange}
+            className={styles.inputStandard}
+          />
+        </label>
+      )}
+      <label className={styles.labelStandard}>
+        % de repasse
+        <input
+          type="text"
+          placeholder="% de repasse"
+          name="repasse"
+          value={formData.repasse ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
       </label>
       <label className={styles.labelStandard}>
         Status*
@@ -267,7 +427,14 @@ const FormComponent: React.FC<any> = ({
           <option value="false">Inativo</option>
         </select>
       </label>
-
+      <label className={styles.labelStandard}>
+        Comentário
+        <MultilineInputSSR
+          label="Comentário"
+          onChange={handleQuillChange}
+          value={formData.comentario}
+        />
+      </label>
       <div className={styles.buttonContainer}>
         <button
           className={styles.confirmButton}

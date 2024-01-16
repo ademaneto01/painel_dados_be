@@ -15,6 +15,7 @@ interface UsersMockPayload {
   url_dados: string;
   instagram: string;
   facebook: string;
+  linkwhats: string;
   id_usuario_pdg: string;
   complemento: string;
   ativo: boolean;
@@ -38,6 +39,7 @@ export default class EditarEntidadeEscolarSerializers
       url_dados: otd.url_dados,
       instagram: otd.instagram,
       facebook: otd.facebook,
+      linkwhats: otd.linkwhats,
       id_usuario_pdg: otd.id_usuario_pdg,
       complemento: otd.complemento,
       ativo: otd.ativo,

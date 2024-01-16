@@ -48,6 +48,14 @@
   background-color: var(--white);
   cursor: pointer;
 }
+.inputSelectReact {
+  text-align: start;
+  width: 101%;
+  color: var(--azul-tenro);
+  background-color: var(--white);
+  border-radius: 5px;
+  border: 1px solid var(--gray-200);
+}
 
 .inputSelect:focus-within {
   box-shadow: 0 0 5px var(--gray-200);

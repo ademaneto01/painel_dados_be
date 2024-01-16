@@ -20,6 +20,9 @@ interface FormData {
   bo_7af: boolean;
   bo_8af: boolean;
   bo_9af: boolean;
+  bo_1em: boolean;
+  bo_2em: boolean;
+  bo_3em: boolean;
 }
 
 interface ModalProps {
@@ -40,6 +43,9 @@ const OPTIONS = [
   'bo_7af',
   'bo_8af',
   'bo_9af',
+  'bo_1em',
+  'bo_2em',
+  'bo_3em',
 ];
 
 export default function ModalEditarVinculoAgente({
@@ -62,6 +68,9 @@ export default function ModalEditarVinculoAgente({
     bo_7af: false,
     bo_8af: false,
     bo_9af: false,
+    bo_1em: false,
+    bo_2em: false,
+    bo_3em: false,
   };
   const [isProfessor, setIsProfessor] = useState(false);
   const [formData, setFormData] = useState<FormData>(initialFormData);
@@ -136,6 +145,9 @@ export default function ModalEditarVinculoAgente({
         bo_7af: responseUserPdg[0].bo_7af,
         bo_8af: responseUserPdg[0].bo_8af,
         bo_9af: responseUserPdg[0].bo_9af,
+        bo_1em: responseUserPdg[0].bo_1em,
+        bo_2em: responseUserPdg[0].bo_2em,
+        bo_3em: responseUserPdg[0].bo_3em,
       };
 
       setFormData(mappedData);
@@ -282,18 +294,18 @@ const FormComponent: React.FC<any> = ({
         </div>
         <div className={styles.buttonContainer}>
           <button
-            className={styles.confirmButton}
-            type="button"
-            onClick={handleSubmit}
-          >
-            Salvar
-          </button>
-          <button
             className={styles.cancelButton}
             type="button"
             onClick={onCancel}
           >
             Cancelar
+          </button>
+          <button
+            className={styles.confirmButton}
+            type="button"
+            onClick={handleSubmit}
+          >
+            Salvar
           </button>
         </div>
       </form>

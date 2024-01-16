@@ -13,8 +13,47 @@
   font-size: 24px;
   margin-bottom: 0.5rem;
 }
-
+.conteinerInfos strong {
+  font-size: 16px;
+}
 .contract_info p {
   font-size: 16px;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.conteinerToAlingInfos {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 3rem;
+  width: 93.5%;
+  background-color: var(--gray-202);
+  border-radius: 5px;
+  padding: 1rem;
+}
+.conteinerFullInfos {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.conteinerWidthAll {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 93.5%;
+
+  padding: 1em 2em 1em 1em;
+  border-radius: 5px;
+  background-color: var(--gray-202);
+}
+
+.boxToAlignTitleLearning {
+  display: flex;
+  flex-direction: column;
+  border: 'white';
+  gap: 1em;
+  align-items: center;
+}
+.containerFinalComments {
+  overflow-wrap: break-word;
 }

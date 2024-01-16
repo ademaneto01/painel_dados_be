@@ -735,18 +735,18 @@ const FormComponent: React.FC<any> = ({
         </table>
         <div className={styles.buttonContainer}>
           <button
-            className={styles.confirmButton}
-            type="button"
-            onClick={handleSubmit}
-          >
-            Salvar
-          </button>
-          <button
             className={styles.cancelButton}
             type="button"
             onClick={() => setPage(PageEnumContratos.alunados)}
           >
             Cancelar
+          </button>
+          <button
+            className={styles.confirmButton}
+            type="button"
+            onClick={handleSubmit}
+          >
+            Salvar
           </button>
         </div>
       </form>

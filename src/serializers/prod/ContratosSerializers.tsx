@@ -13,6 +13,8 @@ interface UsersMockPayload {
   bairro: string;
   situacao: string;
   complemento: string;
+  tipocontrato: string;
+  valorcontrato: string;
   ativo: boolean;
   bo_rede: boolean;
   qtdescolas: string;
@@ -32,6 +34,8 @@ export default class ContratosSerializers implements SerializerInterface {
       bairro: otd.bairro,
       situacao: otd.situacao,
       complemento: otd.complemento,
+      tipocontrato: otd.tipocontrato,
+      valorcontrato: otd.valorcontrato,
       ativo: otd.ativo,
       bo_rede: otd.bo_rede,
       qtdescolas: otd.qtdescolas,

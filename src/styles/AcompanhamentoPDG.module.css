@@ -22,13 +22,14 @@
   width: 100%;
   gap: 1em;
 }
+
 .expandedRange {
   display: none;
 }
 .rangesClass {
   display: flex;
   flex-direction: column;
-  padding: 3em;
+  padding: 2em;
   margin-top: 5em;
   gap: 2em;
   border-radius: 5px;
@@ -66,6 +67,7 @@
 .boxToAlignTitleLearning {
   display: flex;
   flex-direction: column;
+  border: 'white';
   gap: 1em;
   align-items: center;
 }
@@ -305,4 +307,19 @@
   outline: none;
   width: 1em;
   height: 1em;
+}
+.containerFinalComments {
+  overflow-wrap: break-word;
+}
+.logoCSS {
+  background-image: linear-gradient(
+    to right,
+    red 0%,
+    yellow 35%,
+    yellow 65%,
+    green 100%
+  );
+  width: 100%;
+  border-radius: 10px;
+  height: 0.7em;
 }

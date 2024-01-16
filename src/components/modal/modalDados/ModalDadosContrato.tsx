@@ -16,6 +16,8 @@ interface FormData {
   bairro: string;
   situacao: string;
   complemento: string;
+  tipocontrato: string;
+  valorcontrato: string;
   qtdescolas: string;
 }
 interface ModalProps {
@@ -43,6 +45,8 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
     bairro: '',
     situacao: '',
     complemento: '',
+    tipocontrato: '',
+    valorcontrato: '',
     qtdescolas: '',
   });
   const [loaded, setLoaded] = useState(false);
@@ -70,6 +74,8 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
         bairro: response[0].bairro,
         situacao: response[0].situacao,
         complemento: response[0].complemento,
+        tipocontrato: response[0].tipocontrato,
+        valorcontrato: response[0].valorcontrato,
         qtdescolas: response[0].qtdescolas,
       });
     } catch (error: any) {
@@ -105,44 +111,58 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
                 <div className={styles.conteinerUrlDados}>
                   <span className={styles.label}>Nome Simplificado:</span>{' '}
                   <div className={styles.boxUrl}>
-                    {formData.nome_simplificado}
+                    {formData.nome_simplificado ?? 'N/A'}
                   </div>
                 </div>
               </div>
               <div>
                 <div className={styles.conteinerUrlDados}>
                   <span className={styles.label}>Razao Social:</span>{' '}
-                  <div className={styles.boxUrl}>{formData.razao_social}</div>
+                  <div className={styles.boxUrl}>
+                    {formData.razao_social ?? 'N/A'}
+                  </div>
                 </div>
               </div>
               <div>
                 <span className={styles.label}>CNPJ Contratual:</span>{' '}
-                {formData.cnpj_cont}
+                {formData.cnpj_cont ?? 'N/A'}
               </div>
               <div>
                 <span className={styles.label}>QTD. Escolas:</span>{' '}
-                {formData.qtdescolas}
+                {formData.qtdescolas ?? 'N/A'}
               </div>
               <div>
-                <span className={styles.label}>Rua:</span> {formData.endereco}
+                <span className={styles.label}>Tipo:</span>{' '}
+                {formData.tipocontrato ?? 'N/A'}
+              </div>
+              <div>
+                <span className={styles.label}>Valor do contrato:</span>{' '}
+                {formData.valorcontrato ?? 'N/A'}
               </div>
             </div>
             <div className={styles.dadosColumn}>
               <div>
-                <span className={styles.label}>CEP:</span> {formData.cep}
+                <span className={styles.label}>Rua:</span>{' '}
+                {formData.endereco ?? 'N/A'}
               </div>
               <div>
-                <span className={styles.label}>Cidade:</span> {formData.cidade}
+                <span className={styles.label}>CEP:</span>{' '}
+                {formData.cep ?? 'N/A'}
               </div>
               <div>
-                <span className={styles.label}>UF:</span> {formData.uf}
+                <span className={styles.label}>Cidade:</span>{' '}
+                {formData.cidade ?? 'N/A'}
               </div>
               <div>
-                <span className={styles.label}>Bairro:</span> {formData.bairro}
+                <span className={styles.label}>UF:</span> {formData.uf ?? 'N/A'}
+              </div>
+              <div>
+                <span className={styles.label}>Bairro:</span>{' '}
+                {formData.bairro ?? 'N/A'}
               </div>
               <div>
                 <span className={styles.label}>Complemento:</span>{' '}
-                {formData.complemento}
+                {formData.complemento ?? 'N/A'}
               </div>
             </div>
           </div>

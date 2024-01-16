@@ -1,4 +1,5 @@
 import styles from '@/styles/ComponenteQuill.module.css';
+import { useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -30,6 +31,15 @@ const MultilineInput: React.FC<MultilineInputProps> = ({
       onChange(content);
     }
   };
+
+  useEffect(() => {
+    const element = document.querySelector(
+      '.ql-container.ql-snow',
+    ) as HTMLElement;
+    if (element) {
+      element.style.border = 'none';
+    }
+  }, []);
   return (
     <>
       <ReactQuill
