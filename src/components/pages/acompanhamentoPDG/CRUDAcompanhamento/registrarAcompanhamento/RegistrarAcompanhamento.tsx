@@ -21,6 +21,7 @@ interface FormData {
 interface FormDataToSubmit {
   nome_escola: string;
   nameSearch: string;
+  nome_agente: string;
   educatorsname: string;
   dataofobservation: string;
   grade: string;
@@ -94,6 +95,7 @@ export default function RegistrarAcompanhamento(): JSX.Element {
   const [formDataToSubmit, setFormDataToSubmit] = useState<FormDataToSubmit>({
     nome_escola: '',
     nameSearch: '',
+    nome_agente: '',
     educatorsname: '',
     dataofobservation: '',
     grade: '',
@@ -231,7 +233,19 @@ export default function RegistrarAcompanhamento(): JSX.Element {
     if (name === 'dataofobservation' && value === '') {
       setYearObservation('Enter a year in observation date');
     }
-    setFormDataToSubmit((prev) => ({ ...prev, [name]: value }));
+    if (name === 'educatorsname') {
+      const selectedAgent = agentesExternoData.find(
+        (agent) => agent.uuid_agente === value,
+      );
+
+      setFormDataToSubmit((prev) => ({
+        ...prev,
+        educatorsname: value,
+        nome_agente: selectedAgent ? selectedAgent.nome : '',
+      }));
+    } else {
+      setFormDataToSubmit((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleQuillChange = (content: string) => {

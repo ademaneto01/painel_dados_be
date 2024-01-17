@@ -81,6 +81,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
 
       return data.filter((item) => {
         const itemName = (item as any).nome?.toLowerCase();
+        const itemNameAgente = (item as any).nome_agente?.toLowerCase();
         const itemNameContrato = (item as any).nome_simplificado?.toLowerCase();
         const itemNameEscola = (item as any).nome_operacional?.toLowerCase();
         const itemNomeEscolaAcmp = (item as any).nome_escola?.toLowerCase();
@@ -91,6 +92,9 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
 
         const nameMatch =
           itemName && itemName.includes(normalizedFilterNameOrEmail);
+        const nameMatchAgente =
+          itemNameAgente &&
+          itemNameAgente.includes(normalizedFilterNameOrEmail);
         const nameMatchAcompanhamentoPDG =
           itemNomeEscolaAcmp &&
           itemNomeEscolaAcmp.includes(normalizedFilterNameOrEmail);
@@ -115,6 +119,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
             nameMatch ||
             emailMatch ||
             nameContratoMatch ||
+            nameMatchAgente ||
             nameEscolaMatch) &&
           schoolMatch &&
           profileMatch &&

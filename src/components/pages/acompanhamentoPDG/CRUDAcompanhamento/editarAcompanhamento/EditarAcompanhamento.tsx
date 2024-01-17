@@ -24,6 +24,7 @@ interface FormDataToSubmit {
   nome_escola: string | null;
   nameSearch: string | null;
   educatorsname: string | null;
+  nome_agente: string | null;
   dataofobservation: string | null;
   grade: string | null;
   ofstudents: string | null;
@@ -97,6 +98,7 @@ export default function EditarAcompanhamento(): JSX.Element {
     nome_escola: '',
     nameSearch: '',
     educatorsname: '',
+    nome_agente: '',
     dataofobservation: '',
     grade: '',
     ofstudents: '',
@@ -246,6 +248,7 @@ export default function EditarAcompanhamento(): JSX.Element {
           nameSearch: responseAcompanhamento[0]?.id_ee || '',
           nome_escola: responseAcompanhamento[0]?.nome_escola || '',
           educatorsname: responseAcompanhamento[0]?.id_prof || '',
+          nome_agente: responseAcompanhamento[0]?.nome_agente || '',
           dataofobservation: responseAcompanhamento[0]?.dataofobservation || '',
           grade: responseAcompanhamento[0]?.grade || '',
           ofstudents: responseAcompanhamento[0]?.ofstudents || '',
@@ -304,7 +307,19 @@ export default function EditarAcompanhamento(): JSX.Element {
     if (name === 'dataofobservation' && value === '') {
       setYearObservation('Enter a year in observation date');
     }
-    setFormDataToSubmit((prev) => ({ ...prev, [name]: value }));
+    if (name === 'educatorsname') {
+      const selectedAgent = agentesExternoData.find(
+        (agent) => agent.uuid_agente === value,
+      );
+
+      setFormDataToSubmit((prev) => ({
+        ...prev,
+        educatorsname: value,
+        nome_agente: selectedAgent ? selectedAgent.nome : '',
+      }));
+    } else {
+      setFormDataToSubmit((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleQuillChange = (content: string) => {
