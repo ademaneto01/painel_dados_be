@@ -8,8 +8,8 @@ import { useState, useEffect } from 'react';
 import { PageEnumAcompanhamentoPDG } from '@/enums';
 
 const columns = [
-  new Column('Nome responsável', 'nome_agente'),
-  new Column('Nome escola', 'nome_escola'),
+  new Column('Nome Professor', 'nome_agente'),
+  new Column('Nome Escola', 'nome_escola'),
   new Column('Cycle', 'cycle'),
   new Column('Ações', 'acoes'),
 ];

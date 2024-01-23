@@ -1,5 +1,14 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, {
+  useState,
+  useRef,
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+} from 'react';
 import styles from '@/styles/ModalStandard.module.css';
+import { FaSearch } from 'react-icons/fa';
+import { IoIosArrowDown } from 'react-icons/io';
+import { IconBaseProps, IconType } from 'react-icons';
 import { BackendApiGet, BackendApiPost } from '@/backendApi';
 import { ErrorComponent } from '@/errors/index';
 import { useGlobalContext } from '@/context/store';
@@ -72,6 +81,10 @@ export default function ModalVicularAgente({
     bo_3EM: false,
   };
   const [isProfessor, setIsProfessor] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [nameSearch, setNameSearch] = useState('');
+  const [showOptions, setShowOptions] = useState(false);
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
@@ -79,6 +92,15 @@ export default function ModalVicularAgente({
     useGlobalContext();
   const [agenteData, setAgenteData] = useState<EntitiesAgenteExterno[]>([]);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
+  function renderIcon(icon: IconType, color?: string): JSX.Element {
+    const options: IconBaseProps = {
+      fontSize: '1em',
+      color: color,
+    };
+
+    return icon(options);
+  }
 
   const handleApiErrors = (error: any) => {
     setError(true);
@@ -160,9 +182,7 @@ export default function ModalVicularAgente({
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    if (name === 'id_prof' && value !== '') {
-      getUserCargoById(value);
-    }
+
     const booleanValue =
       value === 'true' ? true : value === 'false' ? false : null;
     const updatedValue = ['escpecialista'].includes(name)
@@ -198,6 +218,42 @@ export default function ModalVicularAgente({
       fetchData();
     }
   };
+  const filteredOptions = agenteData.filter((entidade) =>
+    entidade.nome.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+  const handleOptionSelect = (option: EntitiesAgenteExterno) => {
+    setNameSearch(option.nome);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      id_prof: option.uuid_agente,
+    }));
+
+    getUserCargoById(option.uuid_agente);
+  };
+
+  const handleSearchChange = (e: any) => {
+    setSearchTerm(e.target.value);
+    if (e.target.value === '') {
+      setNameSearch('');
+      fetchUserAgente();
+      setIsProfessor(false);
+    }
+  };
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setShowOptions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [containerRef]);
 
   return (
     <div className={styles.background} onClick={onCancel}>
@@ -212,6 +268,15 @@ export default function ModalVicularAgente({
         selectedOptions={selectedOptions}
         isProfessor={isProfessor}
         titleModal={'Vincular Agente'}
+        containerRef={containerRef}
+        renderIcon={renderIcon}
+        setShowOptions={setShowOptions}
+        showOptions={showOptions}
+        nameSearch={nameSearch}
+        searchTerm={searchTerm}
+        handleSearchChange={handleSearchChange}
+        filteredOptions={filteredOptions}
+        handleOptionSelect={handleOptionSelect}
       />
       {error && <ErrorComponent message={msgError} />}
     </div>
@@ -224,9 +289,17 @@ const FormComponent: React.FC<any> = ({
   handleSubmit,
   titleModal,
   onCancel,
-  agenteData,
   handleCheckboxChange,
   isProfessor,
+  containerRef,
+  renderIcon,
+  setShowOptions,
+  showOptions,
+  nameSearch,
+  searchTerm,
+  handleSearchChange,
+  filteredOptions,
+  handleOptionSelect,
 }) => {
   return (
     <>
@@ -246,24 +319,52 @@ const FormComponent: React.FC<any> = ({
           {titleModal}
         </h1>
         <div className={styles.boxStandard}>
-          <label className={styles.labelStandard}>
-            Agente
-            <select
-              value={formData.id_prof}
-              onChange={handleInputChange}
-              name="id_prof"
-              className={styles.inputSelect}
-            >
-              <option value="">-</option>
-              {agenteData
-                .sort((a: any, b: any) => a.nome.localeCompare(b.nome))
-                .map((user: any) => (
-                  <option key={user.uuid_agente} value={user.uuid_agente}>
-                    {user.nome}
-                  </option>
-                ))}
-            </select>
-          </label>
+          <div className={styles.boxStatus}>
+            <label className={styles.labelStandard}>
+              Agente
+              <div className={styles.searchSelectContainer} ref={containerRef}>
+                <div className={styles.boxsearchInput}>
+                  <input
+                    type="text"
+                    readOnly
+                    value={nameSearch}
+                    name="nameSearch"
+                    onClick={() =>
+                      setShowOptions(showOptions === true ? false : true)
+                    }
+                    className={styles.searchInput}
+                  />
+                  {renderIcon(IoIosArrowDown)}
+                </div>
+
+                {showOptions && (
+                  <div className={styles.optionsContainer}>
+                    <div className={styles.inputContainer}>
+                      {renderIcon(FaSearch)}
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        className={styles.searchInputSelect}
+                      />
+                    </div>
+                    <div className={styles.scrollableOptionsContainer}>
+                      {filteredOptions.map((option: EntitiesAgenteExterno) => (
+                        <div
+                          key={option.uuid_agente}
+                          className={styles.optionItem}
+                          onClick={() => handleOptionSelect(option)}
+                        >
+                          {option.nome}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </label>
+          </div>
           <label className={styles.labelStandard}>
             Especialista
             <select
