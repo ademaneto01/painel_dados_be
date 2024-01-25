@@ -80,6 +80,26 @@ export default class BackendApiPut implements BackendApiInterfacePut {
     );
   }
 
+  public async editarAtivoContrato(
+    userData: any,
+  ): Promise<EntitiesContratos[]> {
+    return await this.put<EntitiesContratos>(
+      '/editarAtivoContrato',
+      userData,
+      new ContratosSerializers(),
+    );
+  }
+
+  public async editarAtivoEntidadeEscolar(
+    userData: any,
+  ): Promise<EntitiesEntidadesEscolares[]> {
+    return await this.put<EntitiesEntidadesEscolares>(
+      '/editarAtivoEntidadeEscolar',
+      userData,
+      new EntidadesEscolaresSerializers(),
+    );
+  }
+
   public async editarAgente(userData: any): Promise<EntitiesAgenteExterno[]> {
     return await this.put<EntitiesAgenteExterno>(
       '/editarAgente',

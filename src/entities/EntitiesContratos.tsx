@@ -1,5 +1,5 @@
 import { TableActionsContratos } from '@/components/actions';
-
+import { SwitchContrato } from '../components/shared/index';
 interface ContractProps {
   id: string;
   nome_simplificado: string;
@@ -10,7 +10,6 @@ interface ContractProps {
   cidade: string;
   uf: string;
   bairro: string;
-  situacao: string;
   complemento: string;
   tipocontrato: string;
   valorcontrato: string;
@@ -29,7 +28,6 @@ export default class EntitiesContratos {
   readonly cidade: string;
   readonly uf: string;
   readonly bairro: string;
-  readonly situacao: string;
   readonly complemento: string;
   readonly tipocontrato: string;
   readonly valorcontrato: string;
@@ -47,7 +45,6 @@ export default class EntitiesContratos {
     cidade,
     uf,
     bairro,
-    situacao,
     complemento,
     tipocontrato,
     valorcontrato,
@@ -64,7 +61,6 @@ export default class EntitiesContratos {
     this.cidade = cidade;
     this.uf = uf;
     this.bairro = bairro;
-    this.situacao = situacao;
     this.complemento = complemento;
     this.tipocontrato = tipocontrato;
     this.valorcontrato = valorcontrato;
@@ -74,5 +70,9 @@ export default class EntitiesContratos {
   }
   public get acoes(): JSX.Element {
     return <TableActionsContratos id={this.id} nome={this.nome_simplificado} />;
+  }
+
+  public get active(): JSX.Element {
+    return <SwitchContrato active={this.ativo} contractId={this.id} />;
   }
 }

@@ -6,6 +6,7 @@ import { PageEnumContratos } from '@/enums';
 import { EntitiesContratos } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
+import { ModalSucesso } from '../../../modal';
 
 class Column<T> {
   constructor(public header: string, public accessor: keyof T) {}
@@ -16,6 +17,7 @@ type RowData = {
   cnpj_cont: any;
   qtdescolas: any;
   acoes: any;
+  active: any;
 };
 
 const columns: Column<RowData>[] = [
@@ -23,6 +25,7 @@ const columns: Column<RowData>[] = [
   new Column<RowData>('CNPJ', 'cnpj_cont'),
   new Column<RowData>('QTD. Escolas', 'qtdescolas'),
   new Column<RowData>('Ações', 'acoes'),
+  new Column<RowData>('Ativo', 'active'),
 ];
 
 function useFetchContratos() {
@@ -84,7 +87,7 @@ function ContratosTable({ data, loaded, error, msgError, onClickRow }: any) {
 
 export default function EntidadesContratuais(): JSX.Element {
   const { data, loaded, error, msgError } = useFetchContratos();
-  const { setPage, setIdContrato } = useGlobalContext();
+  const { setPage, setIdContrato, usersUpdated } = useGlobalContext();
 
   const handleRowClick = (rowData: EntitiesContratos) => {
     setPage(PageEnumContratos.entidadesEscolares);
@@ -104,6 +107,11 @@ export default function EntidadesContratuais(): JSX.Element {
             onClick={() => setPage(PageEnumContratos.novoContrato)}
           />
         </div>
+        {usersUpdated && (
+          <ModalSucesso
+            message={'Status do contrato alterado com sucesso...'}
+          />
+        )}
         <ContratosTable
           data={data}
           loaded={loaded}

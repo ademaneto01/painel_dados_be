@@ -10,6 +10,7 @@ import { PageEnumContratos } from '@/enums';
 import { EntitiesEntidadesEscolares } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
+import { ModalSucesso } from '../../../modal';
 
 class Column<T> {
   constructor(public header: string, public accessor: keyof T) {}
@@ -19,12 +20,14 @@ type RowData = {
   nome_operacional: any;
   cidade: any;
   acoes: any;
+  active: any;
 };
 
 const columns: Column<RowData>[] = [
   new Column<RowData>('Nome Operacional', 'nome_operacional'),
   new Column<RowData>('Cidade', 'cidade'),
   new Column<RowData>('Ações', 'acoes'),
+  new Column<RowData>('Ativo', 'active'),
 ];
 
 function useFetchEntidadesEscolares() {
@@ -43,7 +46,6 @@ function useFetchEntidadesEscolares() {
           idContrato,
         );
         setData(entidadesEscola);
-        setUsersUpdated(false);
       } catch (error: any) {
         setError(true);
         if (error.response.data.mensagem) {
@@ -88,7 +90,7 @@ function EntidadesEscolaresTable({ data, loaded, error, msgError }: any) {
 
 export default function EntidadesEscolares(): JSX.Element {
   const { data, loaded, error } = useFetchEntidadesEscolares();
-  const { setPage } = useGlobalContext();
+  const { setPage, usersUpdated } = useGlobalContext();
 
   return (
     <div className={styles.pageContainer}>
@@ -110,6 +112,11 @@ export default function EntidadesEscolares(): JSX.Element {
             onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
           />
         </div>
+        {usersUpdated && (
+          <ModalSucesso
+            message={'Status da Entidade Escolar alterado com sucesso...'}
+          />
+        )}
         <EntidadesEscolaresTable data={data} loaded={loaded} error={error} />
       </PageContentContainer>
     </div>

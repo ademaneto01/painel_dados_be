@@ -6,6 +6,7 @@ import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { useState, useEffect } from 'react';
 import { PageEnumAcompanhamentoPDG } from '@/enums';
+import { Loader } from '../../../shared';
 
 const columns = [
   new Column('Nome Professor', 'nome_agente'),
@@ -19,7 +20,7 @@ export default function Acompanhamentos() {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const { usersUpdated, setUsersUpdated, setPageAcompanhamento } =
+  const { usersUpdated, setUsersUpdated, setPageAcompanhamento, isLoading } =
     useGlobalContext();
 
   useEffect(() => {
@@ -64,7 +65,7 @@ export default function Acompanhamentos() {
             )
           }
         />
-
+        {isLoading ?? <Loader />}
         <Table<EntitiesAcompanhamentoPDG>
           data={data}
           columns={columns}

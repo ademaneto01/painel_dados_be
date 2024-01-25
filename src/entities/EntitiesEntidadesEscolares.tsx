@@ -1,4 +1,5 @@
 import { TableActionEntidadeEscolar } from '@/components/actions';
+import { SwitchEntidadeEscolar } from '../components/shared/index';
 import React from 'react';
 
 interface EntidadesEscolaresProps {
@@ -60,6 +61,12 @@ export default class EntitiesEntidadesEscolares {
   public get acoes(): JSX.Element {
     return (
       <TableActionEntidadeEscolar id={this.id} nome={this.nome_operacional} />
+    );
+  }
+
+  public get active(): JSX.Element {
+    return (
+      <SwitchEntidadeEscolar active={this.ativo} entidadeEscolaId={this.id} />
     );
   }
 }

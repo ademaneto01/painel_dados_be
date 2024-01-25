@@ -18,6 +18,8 @@ import React, {
 interface ContextProps {
   usersUpdated: boolean;
   setUsersUpdated: Dispatch<SetStateAction<boolean>>;
+  isLoading: boolean;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
   showPageVisualizeAcompanhamento: string;
   setShowPageVisualizeAcompanhamento: Dispatch<SetStateAction<string>>;
   idAcompanhamento: string;
@@ -43,6 +45,8 @@ interface ContextProps {
 export const GlobalContext = createContext<ContextProps>({
   usersUpdated: false,
   setUsersUpdated: () => {},
+  isLoading: false,
+  setIsLoading: () => {},
   showPageVisualizeAcompanhamento: '',
   setShowPageVisualizeAcompanhamento: () => {},
   idAcompanhamento: '',
@@ -69,6 +73,7 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [usersUpdated, setUsersUpdated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(PageEnumContratos.entidadesContratuais);
   const [pageAcompanhamento, setPageAcompanhamento] = useState(
     PageEnumAcompanhamentoPDG.acompanhamentos,
@@ -93,6 +98,8 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
         setShowPageVisualizeAcompanhamento,
         usersUpdated,
         setUsersUpdated,
+        isLoading,
+        setIsLoading,
         page,
         setPage,
         pageAcompanhamento,
