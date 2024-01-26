@@ -27,8 +27,12 @@ export default function TableActionEntidadeEscolar(
   const [modalInfos, setModalInfos] = useState('');
   const [showModalDelete, setShowModalDelete] = useState('');
   const [showModalVermais, setShowModalVermais] = useState('');
-  const { setUsersUpdated, setIdContrato, setIdEntidadeEscolar, setPage } =
-    useGlobalContext();
+  const {
+    setContractOrEntidadeUpdated,
+    setIdContrato,
+    setIdEntidadeEscolar,
+    setPage,
+  } = useGlobalContext();
 
   const handleEditClick = () => handleClickOpenModalAddEditSchool(props.id);
   const handleAlunadosClick = () => handleClickOpenPageAlunados(props.id);
@@ -50,7 +54,7 @@ export default function TableActionEntidadeEscolar(
     try {
       await backendApi.deletarEntidadeEscolar({ id });
       setShowModalDelete('');
-      setUsersUpdated(true);
+      setContractOrEntidadeUpdated(true);
     } catch (error) {
       console.error(error);
     }
@@ -96,7 +100,7 @@ export default function TableActionEntidadeEscolar(
           handleModalInfos(props.id, event);
         }}
       />
-      <Tooltip text="Visualizar Informações"> 
+      <Tooltip text="Visualizar Informações">
         <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
       </Tooltip>
       <Action

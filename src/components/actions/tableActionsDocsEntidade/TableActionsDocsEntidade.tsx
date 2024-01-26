@@ -57,9 +57,9 @@ export default function TableActionsDocsEntidade(
 
   return (
     <div className={styles.container}>
-    <Tooltip text="Visualizar Documento"> 
-      <Action icon={reactIcon(ImEyePlus)} onClick={handleViewMoreClick} />
-    </Tooltip>
+      <Tooltip text="Visualizar Documento">
+        <Action icon={reactIcon(ImEyePlus)} onClick={handleViewMoreClick} />
+      </Tooltip>
       <Action
         icon={reactIcon(FaTrashAlt, '#f1646c')}
         onClick={() => handleClickOpenModalExcluir(props.id)}

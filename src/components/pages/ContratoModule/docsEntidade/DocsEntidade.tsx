@@ -44,6 +44,7 @@ function useFetchEntidadesEscolares() {
         setData(docsEntidadeData);
         setUsersUpdated(false);
       } catch (error: any) {
+        setUsersUpdated(false);
         setError(true);
         if (error.response.data.mensagem) {
           setMsgError(error.response.data.mensagem);

@@ -54,6 +54,8 @@ export default function TableActionAgentesRelacionadoEscola(
       setUsersUpdated(true);
     } catch (error) {
       console.log(error);
+    } finally {
+      setUsersUpdated(false);
     }
   }
 
@@ -63,7 +65,7 @@ export default function TableActionAgentesRelacionadoEscola(
 
   return (
     <div className={styles.container}>
-      <Tooltip text="Editar Agente"> 
+      <Tooltip text="Editar Agente">
         <Action
           icon={reactIcon(FiEdit)}
           onClick={() => handleClickOpenModalEditAgente(props.uuid_agente)}

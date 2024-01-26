@@ -47,6 +47,8 @@ export default function TableActionsAgenteExterno(
       setUsersUpdated(true);
     } catch (error) {
       console.log(error);
+    } finally {
+      setUsersUpdated(false);
     }
   }
 
@@ -63,13 +65,13 @@ export default function TableActionsAgenteExterno(
 
   return (
     <div className={styles.container}>
-      <Tooltip text="Editar Agente"> 
+      <Tooltip text="Editar Agente">
         <Action
           icon={reactIcon(FiEdit)}
           onClick={() => handleClickOpenEditAgente(props.uuid_agente)}
         />
       </Tooltip>
-      <Tooltip text="Visualizar Informações"> 
+      <Tooltip text="Visualizar Informações">
         <Action icon={reactIcon(ImEyePlus)} onClick={handleViewMoreClick} />
       </Tooltip>
       <Action

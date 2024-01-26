@@ -46,6 +46,8 @@ export default function TableActionsDocsContrato(
       setUsersUpdated(true);
     } catch (error) {
       console.log(error);
+    } finally {
+      setUsersUpdated(false);
     }
   }
 
@@ -57,7 +59,7 @@ export default function TableActionsDocsContrato(
 
   return (
     <div className={styles.container}>
-      <Tooltip text="Visualizar Documento"> 
+      <Tooltip text="Visualizar Documento">
         <Action icon={reactIcon(ImEyePlus)} onClick={handleViewMoreClick} />
       </Tooltip>
       <Action

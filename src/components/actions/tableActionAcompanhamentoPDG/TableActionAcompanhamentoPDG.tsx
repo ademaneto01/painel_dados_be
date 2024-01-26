@@ -60,6 +60,8 @@ export default function TableActionAcompanhamentoPDG(
       setUsersUpdated(true);
     } catch (error) {
       console.log(error);
+    } finally {
+      setUsersUpdated(false);
     }
   }
   async function handleFindJsonToPDF(id: string) {

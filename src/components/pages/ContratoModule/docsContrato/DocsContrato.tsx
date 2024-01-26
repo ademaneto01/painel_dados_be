@@ -45,6 +45,7 @@ function useFetchEntidadesEscolares() {
         setUsersUpdated(false);
       } catch (error: any) {
         setError(true);
+        setUsersUpdated(false);
         if (error.response.data.mensagem) {
           setMsgError(error.response.data.mensagem);
         } else {

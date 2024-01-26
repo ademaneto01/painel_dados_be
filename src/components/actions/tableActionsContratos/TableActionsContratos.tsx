@@ -27,7 +27,12 @@ export default function TableActionsContratos(
   const [showModalDelete, setShowModalDelete] = useState('');
   const [showModalAddDoc, setShowModalAddDoc] = useState('');
   const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
-  const { setUsersUpdated, setIdContrato, setPage } = useGlobalContext();
+  const {
+    setUsersUpdated,
+    setContractOrEntidadeUpdated,
+    setIdContrato,
+    setPage,
+  } = useGlobalContext();
   const [modalInfos, setModalInfos] = useState('');
 
   const handleEditClick = () => handleClickOpenModalAddEditSchool(props.id);
@@ -52,7 +57,7 @@ export default function TableActionsContratos(
     try {
       await backendApi.deletarContrato({ uuid_ec: id });
       setShowModalDelete('');
-      setUsersUpdated(true);
+      setContractOrEntidadeUpdated(true);
     } catch (error) {
       console.log(error);
     }
@@ -104,7 +109,7 @@ export default function TableActionsContratos(
           handleModalInfos(props.id, event);
         }}
       />
-      <Tooltip text="Visualizar Informações"> 
+      <Tooltip text="Visualizar Informações">
         <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
       </Tooltip>
       <Action

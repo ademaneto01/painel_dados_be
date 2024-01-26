@@ -35,7 +35,11 @@ function useFetchEntidadesEscolares() {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const { setUsersUpdated, usersUpdated, idContrato } = useGlobalContext();
+  const {
+    setContractOrEntidadeUpdated,
+    contractOrEntidadeUpdated,
+    idContrato,
+  } = useGlobalContext();
 
   useEffect(() => {
     async function fetchData() {
@@ -46,7 +50,9 @@ function useFetchEntidadesEscolares() {
           idContrato,
         );
         setData(entidadesEscola);
+        setContractOrEntidadeUpdated(false);
       } catch (error: any) {
+        setContractOrEntidadeUpdated(false);
         setError(true);
         if (error.response.data.mensagem) {
           setMsgError(error.response.data.mensagem);
@@ -60,7 +66,7 @@ function useFetchEntidadesEscolares() {
     if (!loaded) {
       fetchData();
     }
-  }, [loaded, usersUpdated]);
+  }, [loaded, contractOrEntidadeUpdated]);
 
   return { data, loaded, error, msgError };
 }
