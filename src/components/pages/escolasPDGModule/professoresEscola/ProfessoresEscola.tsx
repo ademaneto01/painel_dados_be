@@ -33,40 +33,37 @@ export default function EscolasPDG(): JSX.Element {
   } = useGlobalContext();
   const [showModalVincularAgente, setShowModalVincularAgente] = useState(false);
 
-  useEffect(() => {
-    if (!loaded) {
-      fetchData();
-    }
-  }, [loaded, usersUpdated]);
-
   function handleOpenModalVincularAgente(): void {
     setShowModalVincularAgente(true);
   }
   function handleClickCloseModalAdd(): void {
     setShowModalVincularAgente(false);
   }
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const token = localStorage.getItem('auth_token');
+        const backendApi = new BackendApiGet(`${token}`);
+        const agentesExternosData =
+          await backendApi.listarAgenteRelacionadoEscola(idEntidadeEscolar);
+        setData(agentesExternosData);
 
-  async function fetchData() {
-    const token = localStorage.getItem('auth_token');
-
-    try {
-      const backendApi = new BackendApiGet(`${token}`);
-      const agentesExternosData =
-        await backendApi.listarAgenteRelacionadoEscola(idEntidadeEscolar);
-      setData(agentesExternosData);
-      setUsersUpdated(false);
-    } catch (error: any) {
-      setError(true);
-      if (error.response.data.mensagem) {
-        setMsgError(error.response.data.mensagem);
-      } else {
-        setMsgError('Ocorreu um erro desconhecido.');
+        setUsersUpdated(false);
+      } catch (error: any) {
+        setError(true);
+        if (error.response.data.mensagem) {
+          setMsgError(error.response.data.mensagem);
+        } else {
+          setMsgError('Ocorreu um erro desconhecido.');
+        }
+      } finally {
+        setLoaded(true);
       }
-    } finally {
-      setLoaded(true);
     }
-  }
-
+    if (!loaded || usersUpdated) {
+      fetchData();
+    }
+  }, [loaded, usersUpdated]);
   return (
     <div className={styles.pageContainer}>
       <HeaderComponent />

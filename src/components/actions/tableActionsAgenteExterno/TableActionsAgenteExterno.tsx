@@ -38,17 +38,14 @@ export default function TableActionsAgenteExterno(
     setShowModalDelete(props.uuid_agente);
   }
   async function deleteUser() {
-    const token = Cookies.get('auth_token');
-
     try {
+      const token = Cookies.get('auth_token');
       const backendApi = new BackendApiDelete(`${token}`);
       await backendApi.deletarAgente({ userId: props.uuid_agente });
       setShowModalDelete('');
       setUsersUpdated(true);
     } catch (error) {
       console.log(error);
-    } finally {
-      setUsersUpdated(false);
     }
   }
 

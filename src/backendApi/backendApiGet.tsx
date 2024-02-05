@@ -162,6 +162,15 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
       { id: id_ee },
     );
   }
+  public async listarAgentesRelacionadoEscolaIsProf(
+    id_ee: any,
+  ): Promise<EntitiesVinculosAgentesExterno[]> {
+    return await this.get<EntitiesVinculosAgentesExterno>(
+      '/ListarAgentesRelacionadoEscolaIsProf',
+      new AgenteExternoVinculoSerializers(),
+      { id: id_ee },
+    );
+  }
 
   public async listarTodosAgentes(): Promise<EntitiesAgenteExterno[]> {
     return await this.get<EntitiesAgenteExterno>(

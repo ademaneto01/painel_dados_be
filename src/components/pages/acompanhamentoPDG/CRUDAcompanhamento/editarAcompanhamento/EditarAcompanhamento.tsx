@@ -282,7 +282,9 @@ export default function EditarAcompanhamento(): JSX.Element {
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiGet(`${token}`);
-      const response = await backendApi.listarAgenteRelacionadoEscola(id);
+      const response = await backendApi.listarAgentesRelacionadoEscolaIsProf(
+        id,
+      );
       setAgentesExternoData(
         response.map((agentesExterno) => ({
           uuid_agente: agentesExterno.uuid_agente,

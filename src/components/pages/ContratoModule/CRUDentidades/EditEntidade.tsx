@@ -25,7 +25,6 @@ interface FormData {
   linkwhats: string | null;
   uuid_ec: string | null;
   id_usuario_pdg: string | null;
-  ativo: boolean | null;
 }
 
 export default function EditEntidadeEscolar(): JSX.Element {
@@ -50,7 +49,6 @@ export default function EditEntidadeEscolar(): JSX.Element {
     linkwhats: '',
     uuid_ec: '',
     id_usuario_pdg: '',
-    ativo: true,
   });
 
   useEffect(() => {
@@ -81,7 +79,6 @@ export default function EditEntidadeEscolar(): JSX.Element {
         linkwhats: response[0]?.linkwhats || '',
         uuid_ec: response[0]?.uuid_ec || '',
         id_usuario_pdg: response[0]?.id_usuario_pdg || '',
-        ativo: response[0].ativo,
       });
     }
   };
@@ -415,19 +412,6 @@ const FormComponent: React.FC<any> = ({
           onChange={handleInputChange}
           className={styles.inputStandard}
         />
-      </label>
-      <label className={styles.labelStandard}>
-        Status*
-        <select
-          value={formData.ativo === null ? '' : formData.ativo.toString()}
-          onChange={handleInputChange}
-          name="ativo"
-          className={styles.inputSelect}
-        >
-          <option value="">-</option>
-          <option value="true">Ativo</option>
-          <option value="false">Inativo</option>
-        </select>
       </label>
 
       <div className={styles.buttonContainer}>

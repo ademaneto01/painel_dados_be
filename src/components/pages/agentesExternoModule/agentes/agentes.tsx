@@ -4,7 +4,7 @@ import { Column, Table } from '../../../Table';
 import { PageContentContainer, CreateButton } from '../../../shared';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { PageEnumAgentesExterno } from '@/enums';
 
 const columns = [
@@ -22,22 +22,27 @@ export default function AgentesExterno() {
   const { usersUpdated, setUsersUpdated, setPageAgentesExterno } =
     useGlobalContext();
 
+  const processAgenteData = (agentesData: EntitiesAgenteExterno[]) => {
+    return agentesData.map((agentes) => new EntitiesAgenteExterno(agentes));
+  };
+
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
+      if (!token) {
+        return;
+      }
       try {
-        const backendApi = new BackendApiGet(`${token}`);
+        const backendApi = new BackendApiGet(token);
+        const agentes = await backendApi.listarTodosAgentes();
+        const agentesData = agentes.map((a) => new EntitiesAgenteExterno(a));
 
-        const users = await backendApi.listarTodosAgentes();
-
-        setData(users);
+        setData(agentesData);
       } catch (error: any) {
         setError(true);
-        if (error.response.data.mensagem) {
-          setMsgError(error.response.data.mensagem);
-        } else {
-          setMsgError('Ocorreu um erro desconhecido.');
-        }
+        setMsgError(
+          error.response?.data?.mensagem || 'Ocorreu um erro desconhecido.',
+        );
       } finally {
         setLoaded(true);
         setUsersUpdated(false);
@@ -46,7 +51,9 @@ export default function AgentesExterno() {
     if (!loaded || usersUpdated) {
       fetchData();
     }
-  }, [loaded, usersUpdated]);
+  }, [data]);
+
+  const agentesMemo = useMemo(() => processAgenteData(data), [data]);
 
   return (
     <div className={styles.pageContainer}>
@@ -62,7 +69,7 @@ export default function AgentesExterno() {
         />
 
         <Table<EntitiesAgenteExterno>
-          data={data}
+          data={agentesMemo}
           columns={columns}
           loaded={loaded}
           error={error}

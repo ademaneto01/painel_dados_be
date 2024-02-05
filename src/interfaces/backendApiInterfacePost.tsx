@@ -26,6 +26,8 @@ export default interface BackendApiInterfacePost {
 
   listarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
 
+  vincularAgente(userData: any): Promise<EntitiesVincularAgente[]>;
+
   registrarDocContrato(userData: any): Promise<EntitiesRegistrarDocContrato[]>;
 
   registrarDocEntidade(userData: any): Promise<EntitiesDocsEntidade[]>;

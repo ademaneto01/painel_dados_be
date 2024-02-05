@@ -1,10 +1,11 @@
 'use client';
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { BackendApiPost } from '@/backendApi';
 import styles from '@/styles/Login.module.css';
 import Cookies from 'js-cookie';
 import { Loader } from '@/components/shared';
+import { useGlobalContext } from '@/context/store';
 
 interface FormState {
   email: string;
@@ -18,8 +19,9 @@ interface WarningState {
 
 export default function SignIn(): JSX.Element {
   const router = useRouter();
-  const [loaded, setLoaded] = useState(false);
+  const [loadedLogin, setLoadedLogin] = useState(false);
   const [form, setForm] = useState<FormState>({ email: '', password: '' });
+  const { isLoading, setIsLoading } = useGlobalContext();
   const [warning, setWarning] = useState<WarningState>({
     msg: '',
     show: false,
@@ -40,12 +42,20 @@ export default function SignIn(): JSX.Element {
     Cookies.set('auth_token', user.token);
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleLoginError = (error: any) => {
     setWarning({
       msg: error.response.data.mensagem,
       show: true,
     });
-    setLoaded(false);
+    setLoadedLogin(false);
     hideWarningAfterDelay();
   };
 
@@ -69,7 +79,7 @@ export default function SignIn(): JSX.Element {
         senha: form.password,
       });
 
-      setLoaded(true);
+      setLoadedLogin(true);
       saveUserToLocalStorage(users[0]);
       router.push('/');
     } catch (error: any) {
@@ -84,40 +94,55 @@ export default function SignIn(): JSX.Element {
   };
 
   return (
-    <div className={styles.containerFundo}>
-      <div className={styles.logoContainer}>
-        <img src="logo_be_2.png" className={styles.logo} />
-      </div>
-      <form className={styles.formLogin} onSubmit={(evt) => handleSignIn(evt)}>
-        <h1>Login</h1>
-        <div className={styles.groupForm}>
-          <label className={styles.labelLogin}>E-mail</label>
-          <input
-            className={styles.inputLogin}
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={onChange}
-          />
+    <>
+      {isLoading ? (
+        <div className={styles.containerFundo}>
+          <Loader />
         </div>
-        <div className={styles.groupForm}>
-          <label className={styles.labelLogin}>Senha</label>
-          <input
-            className={styles.inputLogin}
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={onChange}
-          />
+      ) : (
+        <div className={styles.containerFundo}>
+          <div className={styles.logoContainer}>
+            <img src="logo_be_2.png" className={styles.logo} />
+          </div>
+          <form
+            className={styles.formLogin}
+            onSubmit={(evt) => handleSignIn(evt)}
+          >
+            <h1>Login</h1>
+            <div className={styles.groupForm}>
+              <label className={styles.labelLogin}>E-mail</label>
+              <input
+                className={styles.inputLogin}
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={onChange}
+              />
+            </div>
+            <div className={styles.groupForm}>
+              <label className={styles.labelLogin}>Senha</label>
+              <input
+                className={styles.inputLogin}
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={onChange}
+              />
+            </div>
+            <button className={styles.btnLogin} type="submit">
+              Entrar
+            </button>
+            <div className={styles.boxWarning}>
+              <span className={styles.error}>
+                {warning.show && warning.msg}
+              </span>
+            </div>
+          </form>
+          <div className={styles.boxLoaderLogin}>
+            {loadedLogin ? <Loader /> : ''}
+          </div>
         </div>
-        <button className={styles.btnLogin} type="submit">
-          Entrar
-        </button>
-        <div className={styles.boxWarning}>
-          <span className={styles.error}>{warning.show && warning.msg}</span>
-        </div>
-      </form>
-      <div className={styles.boxLoaderLogin}>{loaded ? <Loader /> : ''}</div>
-    </div>
+      )}
+    </>
   );
 }

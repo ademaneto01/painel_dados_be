@@ -5,7 +5,7 @@ import {
 } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Table } from '@/components/Table';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { PageEnumContratos } from '@/enums';
 import { EntitiesEntidadesEscolares } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
@@ -41,34 +41,72 @@ function useFetchEntidadesEscolares() {
     idContrato,
   } = useGlobalContext();
 
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const token = localStorage.getItem('auth_token');
+  //     try {
+  //       const backendApi = new BackendApiGet(`${token}`);
+  //       const entidadesEscola = await backendApi.localizarEntidadesEscolares(
+  //         idContrato,
+  //       );
+  //       setData(entidadesEscola);
+  //       setContractOrEntidadeUpdated(false);
+  //     } catch (error: any) {
+  //       setContractOrEntidadeUpdated(false);
+  //       setError(true);
+  //       if (error.response.data.mensagem) {
+  //         setMsgError(error.response.data.mensagem);
+  //       } else {
+  //         setMsgError('Ocorreu um erro desconhecido.');
+  //       }
+  //     } finally {
+  //       setLoaded(true);
+  //     }
+  //   }
+  //   if (!loaded) {
+  //     fetchData();
+  //   }
+  // }, [loaded, contractOrEntidadeUpdated]);
+
+  const processEscolas = (escolas: EntitiesEntidadesEscolares[]) => {
+    return escolas.map((escolas) => new EntitiesEntidadesEscolares(escolas));
+  };
+
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
+      if (!token) {
+        return;
+      }
       try {
-        const backendApi = new BackendApiGet(`${token}`);
-        const entidadesEscola = await backendApi.localizarEntidadesEscolares(
+        const backendApi = new BackendApiGet(token);
+        const escolas = await backendApi.localizarEntidadesEscolares(
           idContrato,
         );
-        setData(entidadesEscola);
+        const escolasData = escolas.map(
+          (e) => new EntitiesEntidadesEscolares(e),
+        );
+
+        setData(escolasData);
         setContractOrEntidadeUpdated(false);
       } catch (error: any) {
         setContractOrEntidadeUpdated(false);
         setError(true);
-        if (error.response.data.mensagem) {
-          setMsgError(error.response.data.mensagem);
-        } else {
-          setMsgError('Ocorreu um erro desconhecido.');
-        }
+        setMsgError(
+          error.response?.data?.mensagem || 'Ocorreu um erro desconhecido.',
+        );
       } finally {
         setLoaded(true);
       }
     }
-    if (!loaded) {
+    if (!loaded || contractOrEntidadeUpdated) {
       fetchData();
     }
-  }, [loaded, contractOrEntidadeUpdated]);
+  }, [data]);
 
-  return { data, loaded, error, msgError };
+  const escolasProcessadas = useMemo(() => processEscolas(data), [data]);
+
+  return { data: escolasProcessadas, loaded, error, msgError };
 }
 
 function Navbar() {

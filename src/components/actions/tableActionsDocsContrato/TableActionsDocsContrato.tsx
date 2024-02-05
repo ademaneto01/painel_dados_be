@@ -46,8 +46,6 @@ export default function TableActionsDocsContrato(
       setUsersUpdated(true);
     } catch (error) {
       console.log(error);
-    } finally {
-      setUsersUpdated(false);
     }
   }
 

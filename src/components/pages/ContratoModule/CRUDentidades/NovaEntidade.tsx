@@ -23,7 +23,6 @@ interface FormData {
   facebook: string;
   linkwhats: string;
   id_usuario_pdg: string;
-  ativo: boolean | null;
 }
 
 export default function NovaEntidade(): JSX.Element {
@@ -41,7 +40,6 @@ export default function NovaEntidade(): JSX.Element {
     facebook: '',
     linkwhats: '',
     id_usuario_pdg: '',
-    ativo: true,
   });
 
   const [error, setError] = useState(false);
@@ -137,16 +135,13 @@ export default function NovaEntidade(): JSX.Element {
     if (name === 'cep') {
       fetchEndereco(value);
     }
-    const booleanValue =
-      value === 'true' ? true : value === 'false' ? false : null;
-    const updatedValue = ['ativo'].includes(name) ? booleanValue : value;
 
     if (name === 'url_dados' && value === '') {
       setFormData((prev) => ({ ...prev, url_dados: null }));
       return;
     }
 
-    setFormData((prev) => ({ ...prev, [name]: updatedValue }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const validateForm = (): boolean => {
@@ -379,19 +374,6 @@ const FormComponent: React.FC<any> = ({
           onChange={handleInputChange}
           className={styles.inputStandard}
         />
-      </label>
-      <label className={styles.labelStandard}>
-        Status*
-        <select
-          value={formData.ativo === null ? '' : formData.ativo.toString()}
-          onChange={handleInputChange}
-          name="ativo"
-          className={styles.inputSelect}
-        >
-          <option value="">-</option>
-          <option value="true">Ativo</option>
-          <option value="false">Inativo</option>
-        </select>
       </label>
 
       <div className={styles.buttonContainer}>

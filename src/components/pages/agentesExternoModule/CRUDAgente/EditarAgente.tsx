@@ -113,13 +113,19 @@ export default function EditarAgente(): JSX.Element {
 
   const validateForm = (): boolean => {
     const errors: string[] = [];
-    if (Object.values(formData).some((v) => v === '' || v === null)) {
-      errors.push('Informe os campos obrigatórios.');
+
+    if (!formData.nome.trim()) {
+      errors.push('O campo nome é obrigatório.');
+    }
+
+    if (!formData.cargo) {
+      errors.push('O campo cargo é obrigatório.');
     }
 
     if (!formData.email_primario.trim()) {
       errors.push('O campo e-mail primário é obrigatório.');
     }
+
     if (errors.length) {
       setError(true);
       setMsgError(errors.join(' '));

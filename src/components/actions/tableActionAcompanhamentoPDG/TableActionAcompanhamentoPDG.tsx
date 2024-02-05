@@ -60,8 +60,6 @@ export default function TableActionAcompanhamentoPDG(
       setUsersUpdated(true);
     } catch (error) {
       console.log(error);
-    } finally {
-      setUsersUpdated(false);
     }
   }
   async function handleFindJsonToPDF(id: string) {
@@ -131,7 +129,7 @@ export default function TableActionAcompanhamentoPDG(
       <Tooltip text="Visualizar Informações">
         <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
       </Tooltip>
-      {props.finalized ? (
+      {/* {props.finalized ? (
         <Tooltip text="Download Acompanhamento">
           <Action
             icon={renderIcon(MdOutlineFileDownload)}
@@ -140,7 +138,7 @@ export default function TableActionAcompanhamentoPDG(
         </Tooltip>
       ) : (
         ''
-      )}
+      )} */}
 
       <Action
         icon={renderIcon(FaTrashAlt, 'var(--red-300)')}

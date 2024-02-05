@@ -13,6 +13,8 @@ import Cookies from 'js-cookie';
 import { PageLoader } from '../shared';
 import { CgLogOut } from 'react-icons/cg';
 import { IconType } from 'react-icons';
+import Router from 'next/router';
+import { useGlobalContext } from '@/context/store';
 
 interface TopNavBarProps {
   toggleSideNavBar: () => void;
@@ -29,7 +31,7 @@ export default function TopNavBar(props: TopNavBarProps) {
   const [escola, setEscola] = useState('');
   const [modalTopNavBaR, setModalTopNavBaR] = useState(false);
   const [loaded, setLoaded] = useState(false);
-
+  const { setIsLoading } = useGlobalContext();
   const handleOpen = () => {
     setModalTopNavBaR(true);
   };
@@ -54,7 +56,12 @@ export default function TopNavBar(props: TopNavBarProps) {
   }, []);
 
   function logOut() {
-    setLoaded(true);
+    const handleRouteChangeComplete = () => {
+      Router.events.off('routeChangeComplete', handleRouteChangeComplete);
+    };
+    setIsLoading(true);
+    Router.events.on('routeChangeComplete', handleRouteChangeComplete);
+
     localStorage.clear();
     Cookies.remove('auth_token');
     router.replace('/login');
@@ -102,15 +109,17 @@ export default function TopNavBar(props: TopNavBarProps) {
                 setModalTopNavBaR(false);
               }}
               button1={logOut}
-              title={<Image
-                className={styles.logo}
-                src="/logo_be_cor-H.png"
-                alt="Logo Be cor"
-                priority={true}
-                aspect-ratio={1}
-                width={120}
-                height={50}
-              />}
+              title={
+                <Image
+                  className={styles.logo}
+                  src="/logo_be_cor-H.png"
+                  alt="Logo Be cor"
+                  priority={true}
+                  aspect-ratio={1}
+                  width={120}
+                  height={50}
+                />
+              }
               text={'Logout'}
               icon={reactIcon(CgLogOut)}
             />

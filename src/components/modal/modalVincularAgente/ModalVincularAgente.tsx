@@ -17,7 +17,7 @@ import { EntitiesAgenteExterno } from '@/entities';
 interface FormData {
   id_escola: string;
   id_prof: string;
-  especialista: boolean;
+  especialista: boolean | null;
   bo_3EI: boolean;
   bo_4EI: boolean;
   bo_5EI: boolean;
@@ -63,7 +63,7 @@ export default function ModalVicularAgente({
   const initialFormData: FormData = {
     id_escola: '',
     id_prof: '',
-    especialista: false,
+    especialista: null,
     bo_3EI: false,
     bo_4EI: false,
     bo_5EI: false,
@@ -145,10 +145,9 @@ export default function ModalVicularAgente({
   };
 
   const fetchUserAgente = async () => {
-    const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiGet(`${token}`);
-
     try {
+      const token = localStorage.getItem('auth_token');
+      const backendApi = new BackendApiGet(`${token}`);
       const responseUserPdg = await backendApi.listarTodosAgentes();
       if (responseUserPdg) {
         setAgenteData(responseUserPdg);
@@ -161,10 +160,9 @@ export default function ModalVicularAgente({
   };
 
   const getUserCargoById = async (value: any) => {
-    const token = localStorage.getItem('auth_token');
-    const backendApi = new BackendApiGet(`${token}`);
-
     try {
+      const token = localStorage.getItem('auth_token');
+      const backendApi = new BackendApiGet(`${token}`);
       const responseUserPdg = await backendApi.localizarAgenteId(value);
       if (responseUserPdg[0].cargo === 'Professor') {
         setIsProfessor(true);
@@ -185,9 +183,7 @@ export default function ModalVicularAgente({
 
     const booleanValue =
       value === 'true' ? true : value === 'false' ? false : null;
-    const updatedValue = ['escpecialista'].includes(name)
-      ? booleanValue
-      : value;
+    const updatedValue = ['especialista'].includes(name) ? booleanValue : value;
     setFormData((prev) => ({ ...prev, [name]: updatedValue }));
   };
 
@@ -368,7 +364,7 @@ const FormComponent: React.FC<any> = ({
           <label className={styles.labelStandard}>
             Especialista
             <select
-              value={formData.escpecialista}
+              value={formData.especialista}
               onChange={handleInputChange}
               name="especialista"
               className={styles.inputSelect}

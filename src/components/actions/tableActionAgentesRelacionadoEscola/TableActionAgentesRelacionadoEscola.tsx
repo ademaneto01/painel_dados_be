@@ -45,17 +45,14 @@ export default function TableActionAgentesRelacionadoEscola(
     setShowModalDelete(props.uuid_agente);
   }
   async function deleteUser() {
-    const token = Cookies.get('auth_token');
-
     try {
+      const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiDelete(`${token}`);
       await backendApi.deletarVinculoAgente(formData);
       setShowModalDelete('');
       setUsersUpdated(true);
     } catch (error) {
       console.log(error);
-    } finally {
-      setUsersUpdated(false);
     }
   }
 

@@ -1,7 +1,7 @@
 import { PageContentContainer, CreateButton } from '@/components/shared';
 import styles from '@/styles/Turmas.module.css';
 import { Table } from '@/components/Table';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { PageEnumContratos } from '@/enums';
 import { EntitiesContratos } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
@@ -36,32 +36,43 @@ function useFetchContratos() {
   const { setContractOrEntidadeUpdated, contractOrEntidadeUpdated } =
     useGlobalContext();
 
+  const processContratos = (contratos: EntitiesContratos[]) => {
+    return contratos.map((contrato) => new EntitiesContratos(contrato));
+  };
+
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
+      if (!token) {
+        return;
+      }
       try {
-        const backendApi = new BackendApiGet(`${token}`);
+        const backendApi = new BackendApiGet(token);
         const contratos = await backendApi.localizarContratos();
-        setData(contratos);
+        const contratosInstanciados = contratos.map(
+          (c) => new EntitiesContratos(c),
+        );
+
+        setData(contratosInstanciados);
         setContractOrEntidadeUpdated(false);
       } catch (error: any) {
         setContractOrEntidadeUpdated(false);
         setError(true);
-        if (error.response.data.mensagem) {
-          setMsgError(error.response.data.mensagem);
-        } else {
-          setMsgError('Ocorreu um erro desconhecido.');
-        }
+        setMsgError(
+          error.response?.data?.mensagem || 'Ocorreu um erro desconhecido.',
+        );
       } finally {
         setLoaded(true);
       }
     }
-    if (!loaded) {
+    if (!loaded || contractOrEntidadeUpdated) {
       fetchData();
     }
-  }, [loaded, contractOrEntidadeUpdated]);
+  }, [data]);
 
-  return { data, loaded, error, msgError };
+  const contratosProcessados = useMemo(() => processContratos(data), [data]);
+
+  return { data: contratosProcessados, loaded, error, msgError };
 }
 
 function Navbar() {

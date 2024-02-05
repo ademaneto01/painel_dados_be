@@ -34,6 +34,9 @@ export default interface BackendApiInterfaceGet {
   listarAgenteRelacionadoEscola(
     id_ee: any,
   ): Promise<EntitiesVinculosAgentesExterno[]>;
+  listarAgentesRelacionadoEscolaIsProf(
+    id_ee: any,
+  ): Promise<EntitiesVinculosAgentesExterno[]>;
   listarTodosAgentes(): Promise<EntitiesAgenteExterno[]>;
   localizarAgenteId(id: any): Promise<EntitiesAgenteExterno[]>;
   localizarUrlPainel(id_ee: any): Promise<EntitiesUrl[]>;
