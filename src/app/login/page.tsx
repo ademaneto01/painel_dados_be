@@ -21,7 +21,7 @@ export default function SignIn(): JSX.Element {
   const router = useRouter();
   const [loadedLogin, setLoadedLogin] = useState(false);
   const [form, setForm] = useState<FormState>({ email: '', password: '' });
-  const { isLoading, setIsLoading } = useGlobalContext();
+  const { isLoadingLogOut, setIsLoadingLogOut } = useGlobalContext();
   const [warning, setWarning] = useState<WarningState>({
     msg: '',
     show: false,
@@ -44,7 +44,7 @@ export default function SignIn(): JSX.Element {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsLoading(false);
+      setIsLoadingLogOut(true);
     }, 1500);
 
     return () => clearTimeout(timer);
@@ -95,7 +95,7 @@ export default function SignIn(): JSX.Element {
 
   return (
     <>
-      {isLoading ? (
+      {!isLoadingLogOut ? (
         <div className={styles.containerFundo}>
           <Loader />
         </div>

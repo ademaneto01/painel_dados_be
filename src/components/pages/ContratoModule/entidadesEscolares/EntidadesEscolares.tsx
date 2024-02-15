@@ -33,6 +33,7 @@ const columns: Column<RowData>[] = [
 function useFetchEntidadesEscolares() {
   const [data, setData] = useState<EntitiesEntidadesEscolares[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const {
@@ -40,33 +41,6 @@ function useFetchEntidadesEscolares() {
     contractOrEntidadeUpdated,
     idContrato,
   } = useGlobalContext();
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const token = localStorage.getItem('auth_token');
-  //     try {
-  //       const backendApi = new BackendApiGet(`${token}`);
-  //       const entidadesEscola = await backendApi.localizarEntidadesEscolares(
-  //         idContrato,
-  //       );
-  //       setData(entidadesEscola);
-  //       setContractOrEntidadeUpdated(false);
-  //     } catch (error: any) {
-  //       setContractOrEntidadeUpdated(false);
-  //       setError(true);
-  //       if (error.response.data.mensagem) {
-  //         setMsgError(error.response.data.mensagem);
-  //       } else {
-  //         setMsgError('Ocorreu um erro desconhecido.');
-  //       }
-  //     } finally {
-  //       setLoaded(true);
-  //     }
-  //   }
-  //   if (!loaded) {
-  //     fetchData();
-  //   }
-  // }, [loaded, contractOrEntidadeUpdated]);
 
   const processEscolas = (escolas: EntitiesEntidadesEscolares[]) => {
     return escolas.map((escolas) => new EntitiesEntidadesEscolares(escolas));
@@ -86,7 +60,7 @@ function useFetchEntidadesEscolares() {
         const escolasData = escolas.map(
           (e) => new EntitiesEntidadesEscolares(e),
         );
-
+        setIsDataLoaded(true);
         setData(escolasData);
         setContractOrEntidadeUpdated(false);
       } catch (error: any) {
@@ -106,7 +80,7 @@ function useFetchEntidadesEscolares() {
 
   const escolasProcessadas = useMemo(() => processEscolas(data), [data]);
 
-  return { data: escolasProcessadas, loaded, error, msgError };
+  return { data: escolasProcessadas, loaded, isDataLoaded, error, msgError };
 }
 
 function Navbar() {
@@ -117,12 +91,19 @@ function Navbar() {
   );
 }
 
-function EntidadesEscolaresTable({ data, loaded, error, msgError }: any) {
+function EntidadesEscolaresTable({
+  data,
+  loaded,
+  isDataLoaded,
+  error,
+  msgError,
+}: any) {
   return (
     <Table
       data={data}
       columns={columns}
       loaded={loaded}
+      isDataLoaded={isDataLoaded}
       error={error}
       msgError={msgError}
       searchInputNone={'none'}
@@ -133,7 +114,7 @@ function EntidadesEscolaresTable({ data, loaded, error, msgError }: any) {
 }
 
 export default function EntidadesEscolares(): JSX.Element {
-  const { data, loaded, error } = useFetchEntidadesEscolares();
+  const { data, loaded, error, isDataLoaded } = useFetchEntidadesEscolares();
   const { setPage, usersUpdated } = useGlobalContext();
 
   return (
@@ -161,7 +142,12 @@ export default function EntidadesEscolares(): JSX.Element {
             message={'Status da Entidade Escolar alterado com sucesso...'}
           />
         )}
-        <EntidadesEscolaresTable data={data} loaded={loaded} error={error} />
+        <EntidadesEscolaresTable
+          data={data}
+          loaded={loaded}
+          isDataLoaded={isDataLoaded}
+          error={error}
+        />
       </PageContentContainer>
     </div>
   );

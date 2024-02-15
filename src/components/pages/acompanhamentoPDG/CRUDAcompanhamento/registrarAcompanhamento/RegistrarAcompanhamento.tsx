@@ -115,9 +115,29 @@ export default function RegistrarAcompanhamento(): JSX.Element {
     lp4changes: '',
     finalcoments: '',
   });
-  const [formDataCriteriaToSubmit, setFormDataCriteriaToSubmit] = useState<
-    FormDataCriteriaToSubmit[]
-  >([]);
+  const [formDataCriteriaToSubmit, setFormDataCriteriaToSubmit] =
+    useState<FormDataCriteriaToSubmit>({
+      id: '',
+      id_acmp: '',
+      e1: 0,
+      e2: 0,
+      e3: 0,
+      e4: 0,
+      e5: 0,
+      e6: 0,
+      m1: 0,
+      m2: 0,
+      m3: 0,
+      m4: 0,
+      m5: 0,
+      m6: 0,
+      l1: 0,
+      l2: 0,
+      l3: 0,
+      l4: 0,
+      l5: 0,
+      l6: 0,
+    });
   const [agentesExternoData, setAgentesExternoData] = useState<
     FormDataAgenteExternoRelacionado[]
   >([]);
@@ -146,8 +166,8 @@ export default function RegistrarAcompanhamento(): JSX.Element {
         const backendApi = new BackendApiPost(`${token}`);
         const response = await backendApi.registrarAcompanhamento(novoForm);
         const formCriteria = {
-          id_acmp: response[0].id,
           ...formDataCriteriaToSubmit,
+          id_acmp: response[0].id,
           finalized: true,
           finalizedtimestamp: new Date(),
         };
@@ -170,8 +190,8 @@ export default function RegistrarAcompanhamento(): JSX.Element {
         const response = await backendApi.registrarAcompanhamento(novoForm);
 
         const formCriteria = {
-          id_acmp: response[0].id,
           ...formDataCriteriaToSubmit,
+          id_acmp: response[0].id,
           finalized: false,
           finalizedtimestamp: null,
         };

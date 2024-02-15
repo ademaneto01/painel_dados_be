@@ -17,6 +17,7 @@ const columns = [
 export default function AgentesExterno() {
   const [data, setData] = useState<EntitiesAgenteExterno[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const { usersUpdated, setUsersUpdated, setPageAgentesExterno } =
@@ -36,7 +37,7 @@ export default function AgentesExterno() {
         const backendApi = new BackendApiGet(token);
         const agentes = await backendApi.listarTodosAgentes();
         const agentesData = agentes.map((a) => new EntitiesAgenteExterno(a));
-
+        setIsDataLoaded(true);
         setData(agentesData);
       } catch (error: any) {
         setError(true);
@@ -71,6 +72,7 @@ export default function AgentesExterno() {
         <Table<EntitiesAgenteExterno>
           data={agentesMemo}
           columns={columns}
+          isDataLoaded={isDataLoaded}
           loaded={loaded}
           error={error}
           msgError={msgError}

@@ -28,6 +28,7 @@ const columns: Column<RowData>[] = [
 function useFetchEntidadesEscolares() {
   const [data, setData] = useState<EntitiesDocsContrato[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const { setUsersUpdated, usersUpdated, idContrato } = useGlobalContext();
@@ -40,7 +41,7 @@ function useFetchEntidadesEscolares() {
         const docsContratoData = await backendApi.listarDocsContrato(
           idContrato,
         );
-
+        setIsDataLoaded(true);
         setData(docsContratoData);
         setUsersUpdated(false);
       } catch (error: any) {
@@ -52,6 +53,7 @@ function useFetchEntidadesEscolares() {
           setMsgError('Ocorreu um erro desconhecido.');
         }
       } finally {
+        setIsDataLoaded(true);
         setLoaded(true);
       }
     }
@@ -60,7 +62,7 @@ function useFetchEntidadesEscolares() {
     }
   }, [loaded, usersUpdated]);
 
-  return { data, loaded, error, msgError };
+  return { data, loaded, error, msgError, isDataLoaded };
 }
 
 function Navbar() {
@@ -71,12 +73,20 @@ function Navbar() {
   );
 }
 
-function DocsContratoTable({ data, loaded, error, msgError, onClickRow }: any) {
+function DocsContratoTable({
+  data,
+  loaded,
+  isDataLoaded,
+  error,
+  msgError,
+  onClickRow,
+}: any) {
   return (
     <Table
       data={data}
       columns={columns}
       loaded={loaded}
+      isDataLoaded={isDataLoaded}
       error={error}
       msgError={msgError}
       searchInputNone={'none'}
@@ -88,7 +98,8 @@ function DocsContratoTable({ data, loaded, error, msgError, onClickRow }: any) {
 }
 
 export default function DocsContrato(): JSX.Element {
-  const { data, loaded, error, msgError } = useFetchEntidadesEscolares();
+  const { data, loaded, error, msgError, isDataLoaded } =
+    useFetchEntidadesEscolares();
   const { setPage } = useGlobalContext();
 
   return (
@@ -115,6 +126,7 @@ export default function DocsContrato(): JSX.Element {
 
         <DocsContratoTable
           data={data}
+          isDataLoaded={isDataLoaded}
           loaded={loaded}
           msgError={msgError}
           error={error}

@@ -52,7 +52,7 @@ export default function ScreensInfosContrato(
               </p>
               <p>
                 <strong>Incentivos:</strong>{' '}
-                {contrato.incentivos.length > 0 ? contrato.incentivos : 'N/A'}
+                {contrato.incentivos?.length > 0 ? contrato.incentivos : 'N/A'}
               </p>
               <p>
                 <strong>QTD. Bolsas:</strong> {contrato.qtdbolsas ?? 'N/A'}

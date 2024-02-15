@@ -20,7 +20,6 @@ interface FormData {
   complemento: string | null;
   tipocontrato: string | null;
   valorcontrato: string | null;
-  // ativo: boolean | null;
   bo_rede: boolean | null;
 }
 
@@ -41,7 +40,6 @@ export default function EditContrato(): JSX.Element {
     complemento: '',
     tipocontrato: '',
     valorcontrato: '',
-    // ativo: null,
     bo_rede: null,
   });
 
@@ -65,7 +63,6 @@ export default function EditContrato(): JSX.Element {
         complemento: response[0]?.complemento || '',
         tipocontrato: response[0]?.tipocontrato || '',
         valorcontrato: response[0]?.valorcontrato || '',
-        // ativo: response[0].ativo,
         bo_rede: response[0].bo_rede,
       });
     }
@@ -143,7 +140,6 @@ export default function EditContrato(): JSX.Element {
         complemento: formData.complemento,
         tipocontrato: formData.tipocontrato,
         valorcontrato: formData.valorcontrato,
-        // ativo: formData.ativo,
         bo_rede: formData.bo_rede,
       });
     } catch (error) {
@@ -183,7 +179,7 @@ export default function EditContrato(): JSX.Element {
     if (name === 'cep') {
       fetchEndereco(value);
     }
-    // if (name === 'ativo' || name === 'bo_rede')
+
     if (name === 'ativo' || name === 'bo_rede') {
       const booleanValue =
         value === 'true' ? true : value === 'false' ? false : null;
@@ -364,19 +360,7 @@ const FormComponent: React.FC<any> = ({
           <option value="B2C">B2C</option>
         </select>
       </label>
-      {/* <label className={styles.labelStandard}>
-        Status*
-        <select
-          value={formData.ativo === null ? '' : formData.ativo.toString()}
-          onChange={handleInputChange}
-          name="ativo"
-          className={styles.inputSelect}
-        >
-          <option value="">-</option>
-          <option value="true">Ativo</option>
-          <option value="false">Inativo</option>
-        </select>
-      </label> */}
+
       <label className={styles.labelStandard}>
         Rede*
         <select

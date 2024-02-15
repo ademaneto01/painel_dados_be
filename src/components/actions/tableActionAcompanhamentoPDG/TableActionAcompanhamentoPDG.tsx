@@ -12,7 +12,10 @@ import { useGlobalContext } from '@/context/store';
 import Action from '../Action';
 import { PageEnumAcompanhamentoPDG } from '@/enums';
 import { printDocument } from '@/pdfGenerate';
-import { EntitiesAcompanhamentoPDG } from '@/entities';
+import {
+  EntitiesAcompanhamentoPDG,
+  EntitiesAcompanhamentoPDGCriteria,
+} from '@/entities';
 import Tooltip from '@/components/Tooltip/Tooltip';
 
 interface PropsForFxclusion {
@@ -62,6 +65,19 @@ export default function TableActionAcompanhamentoPDG(
       console.log(error);
     }
   }
+  function avaliarDesempenho(nota: any) {
+    if (nota <= -0.7) {
+      return 'A desenvolver';
+    } else if (nota > -0.7 && nota <= -0.3) {
+      return 'Em desenvolvimento';
+    } else if (nota > -0.3 && nota < 0.3) {
+      return 'Satisfatório';
+    } else if (nota >= 0.3 && nota < 0.7) {
+      return 'Desenvolvido';
+    } else {
+      return 'Plenamente Desenvolvido';
+    }
+  }
   async function handleFindJsonToPDF(id: string) {
     const token = Cookies.get('auth_token');
     const backendApi = new BackendApiGet(token);
@@ -69,7 +85,11 @@ export default function TableActionAcompanhamentoPDG(
 
     try {
       const response = await backendApi.localizarAcompanhamentoById(id);
+      const responseCriteria = await backendApi.LocalizarCriteriaById(id);
       const dataToPDF: EntitiesAcompanhamentoPDG = response[0];
+      const dataCriteria: EntitiesAcompanhamentoPDGCriteria =
+        responseCriteria[0];
+      console.log(dataCriteria);
       const dataForPrint: DataInterface = {
         nome_escola: dataToPDF.nome_escola,
         nomeAgente: dataToPDF.nome_agente,
@@ -90,6 +110,24 @@ export default function TableActionAcompanhamentoPDG(
         lp3resourcesused: dataToPDF.lp3resourcesused,
         lp4changes: dataToPDF.lp4changes,
         finalcoments: dataToPDF.finalcoments,
+        E1: avaliarDesempenho(dataCriteria.e1),
+        E2: avaliarDesempenho(dataCriteria.e2),
+        E3: avaliarDesempenho(dataCriteria.e3),
+        E4: avaliarDesempenho(dataCriteria.e4),
+        E5: avaliarDesempenho(dataCriteria.e5),
+        E6: avaliarDesempenho(dataCriteria.e6),
+        M1: avaliarDesempenho(dataCriteria.m1),
+        M2: avaliarDesempenho(dataCriteria.m2),
+        M3: avaliarDesempenho(dataCriteria.m3),
+        M4: avaliarDesempenho(dataCriteria.m4),
+        M5: avaliarDesempenho(dataCriteria.m5),
+        M6: avaliarDesempenho(dataCriteria.m6),
+        L1: avaliarDesempenho(dataCriteria.l1),
+        L2: avaliarDesempenho(dataCriteria.l2),
+        L3: avaliarDesempenho(dataCriteria.l3),
+        L4: avaliarDesempenho(dataCriteria.l4),
+        L5: avaliarDesempenho(dataCriteria.l5),
+        L6: avaliarDesempenho(dataCriteria.l6),
       };
       await printDocument(dataForPrint);
     } catch (error) {
@@ -129,7 +167,7 @@ export default function TableActionAcompanhamentoPDG(
       <Tooltip text="Visualizar Informações">
         <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
       </Tooltip>
-      {/* {props.finalized ? (
+      {props.finalized ? (
         <Tooltip text="Download Acompanhamento">
           <Action
             icon={renderIcon(MdOutlineFileDownload)}
@@ -138,8 +176,7 @@ export default function TableActionAcompanhamentoPDG(
         </Tooltip>
       ) : (
         ''
-      )} */}
-
+      )}
       <Action
         icon={renderIcon(FaTrashAlt, 'var(--red-300)')}
         onClick={handleDeleteClick}

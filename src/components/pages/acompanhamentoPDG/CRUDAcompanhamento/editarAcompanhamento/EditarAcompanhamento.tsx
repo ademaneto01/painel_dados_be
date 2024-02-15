@@ -47,24 +47,24 @@ interface FormDataToSubmit {
 interface FormDataCriteriaToSubmit {
   id: string | null;
   id_acmp: string | null;
-  e1: number | null;
-  e2: number | null;
-  e3: number | null;
-  e4: number | null;
-  e5: number | null;
-  e6: number | null;
-  m1: number | null;
-  m2: number | null;
-  m3: number | null;
-  m4: number | null;
-  m5: number | null;
-  m6: number | null;
-  l1: number | null;
-  l2: number | null;
-  l3: number | null;
-  l4: number | null;
-  l5: number | null;
-  l6: number | null;
+  e1: number;
+  e2: number;
+  e3: number;
+  e4: number;
+  e5: number;
+  e6: number;
+  m1: number;
+  m2: number;
+  m3: number;
+  m4: number;
+  m5: number;
+  m6: number;
+  l1: number;
+  l2: number;
+  l3: number;
+  l4: number;
+  l5: number;
+  l6: number;
 }
 
 interface FormDataAgenteExternoRelacionado {
@@ -221,24 +221,24 @@ export default function EditarAcompanhamento(): JSX.Element {
       if (responseCriteria) {
         setFormDataCriteriaToSubmit((prevFormData) => ({
           ...prevFormData,
-          e1: responseCriteria[0]?.e1 || '',
-          e2: responseCriteria[0]?.e2 || '',
-          e3: responseCriteria[0]?.e3 || '',
-          e4: responseCriteria[0]?.e4 || '',
-          e5: responseCriteria[0]?.e5 || '',
-          e6: responseCriteria[0]?.e6 || '',
-          m1: responseCriteria[0]?.m1 || '',
-          m2: responseCriteria[0]?.m2 || '',
-          m3: responseCriteria[0]?.m3 || '',
-          m4: responseCriteria[0]?.m4 || '',
-          m5: responseCriteria[0]?.m5 || '',
-          m6: responseCriteria[0]?.m6 || '',
-          l1: responseCriteria[0]?.l1 || '',
-          l2: responseCriteria[0]?.l2 || '',
-          l3: responseCriteria[0]?.l3 || '',
-          l4: responseCriteria[0]?.l4 || '',
-          l5: responseCriteria[0]?.l5 || '',
-          l6: responseCriteria[0]?.l6 || '',
+          e1: responseCriteria[0]?.e1,
+          e2: responseCriteria[0]?.e2,
+          e3: responseCriteria[0]?.e3,
+          e4: responseCriteria[0]?.e4,
+          e5: responseCriteria[0]?.e5,
+          e6: responseCriteria[0]?.e6,
+          m1: responseCriteria[0]?.m1,
+          m2: responseCriteria[0]?.m2,
+          m3: responseCriteria[0]?.m3,
+          m4: responseCriteria[0]?.m4,
+          m5: responseCriteria[0]?.m5,
+          m6: responseCriteria[0]?.m6,
+          l1: responseCriteria[0]?.l1,
+          l2: responseCriteria[0]?.l2,
+          l3: responseCriteria[0]?.l3,
+          l4: responseCriteria[0]?.l4,
+          l5: responseCriteria[0]?.l5,
+          l6: responseCriteria[0]?.l6,
         }));
       }
       if (responseAcompanhamento) {

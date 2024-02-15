@@ -5,7 +5,7 @@ import {
   PageEnumAgentesExterno,
   PageEnumAcompanhamentoPDG,
 } from '@/enums';
-
+import { EntitiesContratos } from '@/entities';
 import React, {
   createContext,
   useContext,
@@ -18,10 +18,14 @@ import React, {
 interface ContextProps {
   usersUpdated: boolean;
   setUsersUpdated: Dispatch<SetStateAction<boolean>>;
+  dataContrato: EntitiesContratos[];
+  setDataContrato: Dispatch<SetStateAction<EntitiesContratos[]>>;
   contractOrEntidadeUpdated: boolean;
   setContractOrEntidadeUpdated: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  isLoadingLogOut: boolean;
+  setIsLoadingLogOut: Dispatch<SetStateAction<boolean>>;
   showPageVisualizeAcompanhamento: string;
   setShowPageVisualizeAcompanhamento: Dispatch<SetStateAction<string>>;
   idAcompanhamento: string;
@@ -51,6 +55,8 @@ export const GlobalContext = createContext<ContextProps>({
   setContractOrEntidadeUpdated: () => {},
   isLoading: false,
   setIsLoading: () => {},
+  isLoadingLogOut: false,
+  setIsLoadingLogOut: () => {},
   showPageVisualizeAcompanhamento: '',
   setShowPageVisualizeAcompanhamento: () => {},
   idAcompanhamento: '',
@@ -71,6 +77,8 @@ export const GlobalContext = createContext<ContextProps>({
   setGlobalAnoRef: () => {},
   idEntidadeEscolar: '',
   setIdEntidadeEscolar: () => {},
+  dataContrato: [],
+  setDataContrato: () => {},
 });
 
 export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
@@ -80,6 +88,7 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   const [contractOrEntidadeUpdated, setContractOrEntidadeUpdated] =
     useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingLogOut, setIsLoadingLogOut] = useState(false);
   const [page, setPage] = useState(PageEnumContratos.entidadesContratuais);
   const [pageAcompanhamento, setPageAcompanhamento] = useState(
     PageEnumAcompanhamentoPDG.acompanhamentos,
@@ -97,6 +106,7 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   const [idAgente, setIdAgente] = useState('');
   const [idEntidadeEscolar, setIdEntidadeEscolar] = useState('');
   const [globalAnoRef, setGlobalAnoRef] = useState('');
+  const [dataContrato, setDataContrato] = useState<EntitiesContratos[]>([]);
   return (
     <GlobalContext.Provider
       value={{
@@ -108,6 +118,8 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
         setContractOrEntidadeUpdated,
         isLoading,
         setIsLoading,
+        isLoadingLogOut,
+        setIsLoadingLogOut,
         page,
         setPage,
         pageAcompanhamento,
@@ -126,6 +138,8 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
         setIdEntidadeEscolar,
         idAcompanhamento,
         setIdAcompanhamento,
+        dataContrato,
+        setDataContrato,
       }}
     >
       {children}

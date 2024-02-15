@@ -18,6 +18,7 @@ const columns = [
 export default function Acompanhamentos() {
   const [data, setData] = useState<EntitiesAcompanhamentoPDG[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const { usersUpdated, setUsersUpdated, setPageAcompanhamento, isLoading } =
@@ -31,7 +32,7 @@ export default function Acompanhamentos() {
         const backendApi = new BackendApiGet(`${token}`);
 
         const users = await backendApi.localizarAcompanhamento(userId);
-
+        setIsDataLoaded(true);
         setData(users);
       } catch (error: any) {
         setError(true);
@@ -70,6 +71,7 @@ export default function Acompanhamentos() {
           data={data}
           columns={columns}
           loaded={loaded}
+          isDataLoaded={isDataLoaded}
           error={error}
           msgError={msgError}
           inputSelectAgente={true}

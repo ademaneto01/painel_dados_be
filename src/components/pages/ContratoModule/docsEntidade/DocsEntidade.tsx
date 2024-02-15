@@ -28,6 +28,7 @@ const columns: Column<RowData>[] = [
 function useFetchEntidadesEscolares() {
   const [data, setData] = useState<EntitiesDocsEntidade[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const { setUsersUpdated, usersUpdated, idEntidadeEscolar } =
@@ -42,6 +43,7 @@ function useFetchEntidadesEscolares() {
           idEntidadeEscolar,
         );
         setData(docsEntidadeData);
+        setIsDataLoaded(true);
         setUsersUpdated(false);
       } catch (error: any) {
         setUsersUpdated(false);
@@ -52,6 +54,7 @@ function useFetchEntidadesEscolares() {
           setMsgError('Ocorreu um erro desconhecido.');
         }
       } finally {
+        setIsDataLoaded(true);
         setLoaded(true);
       }
     }
@@ -60,7 +63,7 @@ function useFetchEntidadesEscolares() {
     }
   }, [loaded, usersUpdated]);
 
-  return { data, loaded, error, msgError };
+  return { data, loaded, isDataLoaded, error, msgError };
 }
 
 function Navbar() {
@@ -71,12 +74,19 @@ function Navbar() {
   );
 }
 
-function DocsEntidadeTable({ data, loaded, error, msgError }: any) {
+function DocsEntidadeTable({
+  data,
+  loaded,
+  isDataLoaded,
+  error,
+  msgError,
+}: any) {
   return (
     <Table
       data={data}
       columns={columns}
       loaded={loaded}
+      isDataLoaded={isDataLoaded}
       error={error}
       msgError={msgError}
       searchInputNone={'none'}
@@ -87,7 +97,8 @@ function DocsEntidadeTable({ data, loaded, error, msgError }: any) {
 }
 
 export default function DocsEntidade(): JSX.Element {
-  const { data, loaded, error, msgError } = useFetchEntidadesEscolares();
+  const { data, loaded, error, msgError, isDataLoaded } =
+    useFetchEntidadesEscolares();
   const { setPage } = useGlobalContext();
 
   return (
@@ -114,6 +125,7 @@ export default function DocsEntidade(): JSX.Element {
         <DocsEntidadeTable
           data={data}
           loaded={loaded}
+          isDataLoaded={isDataLoaded}
           error={error}
           msgError={msgError}
         />

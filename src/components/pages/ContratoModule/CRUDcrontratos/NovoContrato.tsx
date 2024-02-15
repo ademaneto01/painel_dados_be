@@ -18,7 +18,6 @@ interface FormData {
   uf: string;
   bairro: string;
   complemento: string;
-  // ativo: boolean | null;
   valorcontrato: string;
   tipocontrato: string;
   bo_rede: boolean | null;
@@ -37,7 +36,6 @@ export default function NovoContrato(): JSX.Element {
     complemento: '',
     tipocontrato: '',
     valorcontrato: '',
-    // ativo: null,
     bo_rede: null,
   });
 
@@ -110,7 +108,7 @@ export default function NovoContrato(): JSX.Element {
     if (name === 'cep') {
       fetchEndereco(value);
     }
-    // ['ativo', 'bo_rede']
+
     const booleanValue =
       value === 'true' ? true : value === 'false' ? false : null;
     const updatedValue = ['bo_rede'].includes(name) ? booleanValue : value;
@@ -312,19 +310,7 @@ const FormComponent: React.FC<any> = ({
           <option value="B2C">B2C</option>
         </select>
       </label>
-      {/* <label className={styles.labelStandard}>
-        Status*
-        <select
-          value={formData.ativo === null ? '' : formData.ativo.toString()}
-          onChange={handleInputChange}
-          name="ativo"
-          className={styles.inputSelect}
-        >
-          <option value="">-</option>
-          <option value="true">Ativo</option>
-          <option value="false">Inativo</option>
-        </select>
-      </label> */}
+
       <label className={styles.labelStandard}>
         Rede*
         <select

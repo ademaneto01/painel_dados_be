@@ -132,7 +132,9 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
               <div>
                 <span className={styles.label}>
                   RESP. Pedagógico:{' '}
-                  {usuarioPDG.length > 0 ? usuarioPDG[0].nome : 'N/A'}
+                  {usuarioPDG && usuarioPDG.length > 0
+                    ? usuarioPDG[0].nome
+                    : 'N/A'}
                 </span>
               </div>
               <div className={styles.conteinerUrlDados}>

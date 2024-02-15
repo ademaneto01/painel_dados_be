@@ -126,9 +126,7 @@ export default function EditarInfosContrato(): JSX.Element {
     const { name, value } = e.target;
 
     let updatedValue: any;
-    if (['pedido_min'].includes(name)) {
-      updatedValue = value !== '' ? parseInt(value, 10) : null;
-    } else if (['ativo'].includes(name) || ['exclusividade'].includes(name)) {
+    if (['ativo'].includes(name) || ['exclusividade'].includes(name)) {
       updatedValue = value === 'true' ? true : value === 'false' ? false : null;
     } else {
       updatedValue = value;

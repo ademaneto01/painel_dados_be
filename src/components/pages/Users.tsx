@@ -24,6 +24,7 @@ function PageUsers() {
   const [msgError, setMsgError] = useState('');
   const [showModalUser, setShowModalUser] = useState(false);
   const { usersUpdated, setUsersUpdated } = useGlobalContext();
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   function handleClickOpenModalAdd(): void {
     setShowModalUser(true);
@@ -32,12 +33,20 @@ function PageUsers() {
     setShowModalUser(false);
   }
 
-  function UsersTable({ data, loaded, error, columns, msgError }: any) {
+  function UsersTable({
+    data,
+    loaded,
+    isDataLoaded,
+    error,
+    columns,
+    msgError,
+  }: any) {
     return (
       <Table
         data={data}
         columns={columns}
         loaded={loaded}
+        isDataLoaded={isDataLoaded}
         error={error}
         msgError={msgError}
         labelInput={'Buscar pelo Nome'}
@@ -61,6 +70,7 @@ function PageUsers() {
           }
           return 0;
         });
+        setIsDataLoaded(true);
         setData(usersersOrderBy);
       } catch (error: any) {
         setError(true);
@@ -104,6 +114,7 @@ function PageUsers() {
           data={data}
           columns={columns}
           loaded={loaded}
+          isDataLoaded={isDataLoaded}
           error={error}
           msgError={msgError}
           labelInput={'Buscar pelo nome ou email'}

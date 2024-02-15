@@ -64,7 +64,7 @@ export default function DigitalResources() {
     return (
       <div className={styles.containerNaoContemDados}>
         <span className={styles.spanText}>
-          Ainda não existe dados cadastrado para sua Entidade Escolar....
+          Ainda não existem dados cadastrados para sua Entidade Escolar....
         </span>
       </div>
     );

@@ -11,6 +11,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "types": ["jest"],
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": ".",
@@ -33,7 +34,8 @@
     "**/*.tsx",
     "types.d.ts",
     ".next/types/**/*.ts",
-    "src/components/modal/modalEditUser"
+    "src/components/modal/modalEditUser",
+    "jest.setup.ts"
   ],
   "exclude": ["node_modules"]
 }

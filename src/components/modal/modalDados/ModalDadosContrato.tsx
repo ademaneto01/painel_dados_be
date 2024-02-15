@@ -14,7 +14,6 @@ interface FormData {
   cidade: string;
   uf: string;
   bairro: string;
-  situacao: string;
   complemento: string;
   tipocontrato: string;
   valorcontrato: string;
@@ -43,7 +42,6 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
     cidade: '',
     uf: '',
     bairro: '',
-    situacao: '',
     complemento: '',
     tipocontrato: '',
     valorcontrato: '',
@@ -72,7 +70,6 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
         cidade: response[0].cidade,
         uf: response[0].uf,
         bairro: response[0].bairro,
-        situacao: response[0].situacao,
         complemento: response[0].complemento,
         tipocontrato: response[0].tipocontrato,
         valorcontrato: response[0].valorcontrato,

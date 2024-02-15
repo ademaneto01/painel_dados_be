@@ -13,7 +13,7 @@ import Cookies from 'js-cookie';
 import { PageLoader } from '../shared';
 import { CgLogOut } from 'react-icons/cg';
 import { IconType } from 'react-icons';
-import Router from 'next/router';
+
 import { useGlobalContext } from '@/context/store';
 
 interface TopNavBarProps {
@@ -31,7 +31,7 @@ export default function TopNavBar(props: TopNavBarProps) {
   const [escola, setEscola] = useState('');
   const [modalTopNavBaR, setModalTopNavBaR] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const { setIsLoading } = useGlobalContext();
+  const { setIsLoadingLogOut } = useGlobalContext();
   const handleOpen = () => {
     setModalTopNavBaR(true);
   };
@@ -56,15 +56,10 @@ export default function TopNavBar(props: TopNavBarProps) {
   }, []);
 
   function logOut() {
-    const handleRouteChangeComplete = () => {
-      Router.events.off('routeChangeComplete', handleRouteChangeComplete);
-    };
-    setIsLoading(true);
-    Router.events.on('routeChangeComplete', handleRouteChangeComplete);
-
+    setIsLoadingLogOut(false);
+    router.replace('/login');
     localStorage.clear();
     Cookies.remove('auth_token');
-    router.replace('/login');
   }
 
   const renderIcon = (IconComponent: React.ElementType) => (

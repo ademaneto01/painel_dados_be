@@ -31,6 +31,7 @@ const columns: Column<RowData>[] = [
 function useFetchContratos() {
   const [data, setData] = useState<EntitiesContratos[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const { setContractOrEntidadeUpdated, contractOrEntidadeUpdated } =
@@ -42,17 +43,17 @@ function useFetchContratos() {
 
   useEffect(() => {
     async function fetchData() {
-      const token = localStorage.getItem('auth_token');
-      if (!token) {
-        return;
-      }
       try {
+        const token = localStorage.getItem('auth_token');
+        if (!token) {
+          throw new Error('Token de autenticação não encontrado');
+        }
         const backendApi = new BackendApiGet(token);
         const contratos = await backendApi.localizarContratos();
         const contratosInstanciados = contratos.map(
           (c) => new EntitiesContratos(c),
         );
-
+        setIsDataLoaded(true);
         setData(contratosInstanciados);
         setContractOrEntidadeUpdated(false);
       } catch (error: any) {
@@ -72,7 +73,7 @@ function useFetchContratos() {
 
   const contratosProcessados = useMemo(() => processContratos(data), [data]);
 
-  return { data: contratosProcessados, loaded, error, msgError };
+  return { data: contratosProcessados, loaded, isDataLoaded, error, msgError };
 }
 
 function Navbar() {
@@ -83,12 +84,20 @@ function Navbar() {
   );
 }
 
-function ContratosTable({ data, loaded, error, msgError, onClickRow }: any) {
+function ContratosTable({
+  data,
+  loaded,
+  isDataLoaded,
+  error,
+  msgError,
+  onClickRow,
+}: any) {
   return (
     <Table
       data={data}
       columns={columns}
       loaded={loaded}
+      isDataLoaded={isDataLoaded}
       error={error}
       msgError={msgError}
       searchInputNone={'none'}
@@ -100,7 +109,7 @@ function ContratosTable({ data, loaded, error, msgError, onClickRow }: any) {
 }
 
 export default function EntidadesContratuais(): JSX.Element {
-  const { data, loaded, error, msgError } = useFetchContratos();
+  const { data, loaded, isDataLoaded, error, msgError } = useFetchContratos();
   const { setPage, setIdContrato, usersUpdated } = useGlobalContext();
 
   const handleRowClick = (rowData: EntitiesContratos) => {
@@ -128,6 +137,7 @@ export default function EntidadesContratuais(): JSX.Element {
         )}
         <ContratosTable
           data={data}
+          isDataLoaded={isDataLoaded}
           loaded={loaded}
           error={error}
           msgError={msgError}
