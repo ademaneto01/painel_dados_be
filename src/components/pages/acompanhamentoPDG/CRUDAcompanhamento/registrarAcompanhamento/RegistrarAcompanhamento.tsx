@@ -815,6 +815,7 @@ const FormComponent: React.FC<any> = ({
                     className={styles.inputSelect}
                   >
                     <option value="">-</option>
+                    <option value="N/A">N/A</option>
                     <option value="poor&low">Poor & Low</option>
                     <option value="poor">Poor</option>
                     <option value="toolow">Too Low</option>

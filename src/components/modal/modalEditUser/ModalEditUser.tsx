@@ -31,7 +31,7 @@ const ModalEditUser: React.FC<ModalProps> = ({
   userId,
   titleModal,
 }) => {
-  const { usersUpdated, setUsersUpdated } = useGlobalContext();
+  const { setLoadedUser } = useGlobalContext();
   const [formData, setFormData] = useState<FormData>({
     nome: '',
     email: '',
@@ -144,7 +144,7 @@ const ModalEditUser: React.FC<ModalProps> = ({
     if (!loaded) {
       fetchDataUpdate();
     }
-    setUsersUpdated(true);
+
     onCancel();
   };
 
@@ -161,6 +161,10 @@ const ModalEditUser: React.FC<ModalProps> = ({
         perfil: formData.perfil,
         id_ee: formData.id_ee,
       });
+      setLoadedUser(true);
+      setTimeout(() => {
+        setLoadedUser(false);
+      }, 9000);
     } catch (error) {
       handleApiErrors(error);
       return null;

@@ -123,7 +123,15 @@ export default function EditContrato(): JSX.Element {
     }
   };
 
+  const limparValorContrato = (valor: string) => {
+    return valor.replace(/\D/g, '');
+  };
+
   const fetchData = async () => {
+    const valorContratoLimpo = limparValorContrato(
+      formData.valorcontrato ?? '',
+    );
+
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiPut(`${token}`);
@@ -139,7 +147,7 @@ export default function EditContrato(): JSX.Element {
         bairro: formData.bairro,
         complemento: formData.complemento,
         tipocontrato: formData.tipocontrato,
-        valorcontrato: formData.valorcontrato,
+        valorcontrato: valorContratoLimpo,
         bo_rede: formData.bo_rede,
       });
     } catch (error) {
@@ -176,6 +184,7 @@ export default function EditContrato(): JSX.Element {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
+
     if (name === 'cep') {
       fetchEndereco(value);
     }
@@ -338,7 +347,8 @@ const FormComponent: React.FC<any> = ({
       </label>
       <label className={styles.labelStandard}>
         Valor do contrato*
-        <input
+        <InputMask
+          mask={'9999999'}
           type="text"
           placeholder="Valor do contrato"
           name="valorcontrato"

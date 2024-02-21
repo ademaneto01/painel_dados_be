@@ -5,7 +5,6 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ModalDelete } from '../../modal';
 import { useState } from 'react';
-import Cookies from 'js-cookie';
 import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import ModalEditarVinculoAgente from '@/components/modal/modalEditarVinculoAgente/ModalEditarVinculoAgente';

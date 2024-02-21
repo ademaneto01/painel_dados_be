@@ -12,13 +12,13 @@ interface OnOffTogglerProps {
 
 export default function OnOffToggler(props: OnOffTogglerProps): JSX.Element {
   const [active, setActive] = useState(props.active);
-  const { usersUpdated, setUsersUpdated } = useGlobalContext();
+  const { setSwitchUsuarios } = useGlobalContext();
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
 
   const handleApiErrors = (error: any) => {
     setError(true);
-    if (error.response.data.mensagem) {
+    if (error.response && error.response.data && error.response.data.mensagem) {
       setMsgError(error.response.data.mensagem);
     } else {
       setMsgError('Ocorreu um erro desconhecido.');
@@ -33,7 +33,10 @@ export default function OnOffToggler(props: OnOffTogglerProps): JSX.Element {
         ativo: newActiveState,
       });
 
-      setUsersUpdated(true);
+      setSwitchUsuarios(true);
+      setTimeout(() => {
+        setSwitchUsuarios(false);
+      }, 1500);
       return response;
     } catch (error) {
       handleApiErrors(error);
@@ -49,7 +52,7 @@ export default function OnOffToggler(props: OnOffTogglerProps): JSX.Element {
   return (
     <>
       <div onClick={handleClick}>
-        <Switch checked={active} defaultChecked />
+        <Switch checked={active} />
       </div>
       {error ? <ErrorComponent message={msgError} /> : ''}
     </>

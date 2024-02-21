@@ -22,11 +22,15 @@ interface EntidadesEscolaresData {
 
 interface ModalProps {
   onCancel: () => void;
+  onUserAdded: () => void;
   titleModal: string;
 }
 
-const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
-  const { usersUpdated, setUsersUpdated } = useGlobalContext();
+const ModalAddUser: React.FC<ModalProps> = ({
+  onCancel,
+  titleModal,
+  onUserAdded,
+}) => {
   const [formData, setFormData] = useState<FormData>({
     nome: '',
     email: '',
@@ -42,7 +46,7 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
   const [entidadesEscolaresData, setEntidadesEscolaresData] = useState<
     EntidadesEscolaresData[]
   >([]);
-
+  const { setLoadedUser } = useGlobalContext();
   const [msgError, setMsgError] = useState('');
 
   const handleInputChange = (
@@ -135,8 +139,10 @@ const ModalAddUser: React.FC<ModalProps> = ({ onCancel, titleModal }) => {
         perfil: formData.perfil,
         id_ee: formData.id_ee,
       });
+      if (onUserAdded) {
+        onUserAdded();
+      }
 
-      setUsersUpdated(true);
       onCancel();
     } catch (error: any) {
       handleApiErrors(error);

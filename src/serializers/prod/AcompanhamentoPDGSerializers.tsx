@@ -5,6 +5,7 @@ interface AcompanhamentoPDGPayload {
   id: string;
   id_ee: string;
   id_prof: string;
+  id_user: string;
   nome_escola: string;
   nome_agente: string;
   dataofobservation: string;
@@ -36,6 +37,7 @@ export default class AcompanhamentoPDGSerializers
       id: otd.id,
       id_ee: otd.id_ee,
       id_prof: otd.id_prof,
+      id_user: otd.id_user,
       nome_escola: otd.nome_escola,
       nome_agente: otd.nome_agente,
       dataofobservation: otd.dataofobservation,

@@ -31,11 +31,8 @@ const columns: Column<RowData>[] = [
 function useFetchContratos() {
   const [data, setData] = useState<EntitiesContratos[]>([]);
   const [loaded, setLoaded] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const { setContractOrEntidadeUpdated, contractOrEntidadeUpdated } =
-    useGlobalContext();
 
   const processContratos = (contratos: EntitiesContratos[]) => {
     return contratos.map((contrato) => new EntitiesContratos(contrato));
@@ -53,11 +50,9 @@ function useFetchContratos() {
         const contratosInstanciados = contratos.map(
           (c) => new EntitiesContratos(c),
         );
-        setIsDataLoaded(true);
+
         setData(contratosInstanciados);
-        setContractOrEntidadeUpdated(false);
       } catch (error: any) {
-        setContractOrEntidadeUpdated(false);
         setError(true);
         setMsgError(
           error.response?.data?.mensagem || 'Ocorreu um erro desconhecido.',
@@ -66,14 +61,14 @@ function useFetchContratos() {
         setLoaded(true);
       }
     }
-    if (!loaded || contractOrEntidadeUpdated) {
+    if (!loaded) {
       fetchData();
     }
   }, [data]);
 
   const contratosProcessados = useMemo(() => processContratos(data), [data]);
 
-  return { data: contratosProcessados, loaded, isDataLoaded, error, msgError };
+  return { data: contratosProcessados, loaded, error, msgError };
 }
 
 function Navbar() {
@@ -84,20 +79,12 @@ function Navbar() {
   );
 }
 
-function ContratosTable({
-  data,
-  loaded,
-  isDataLoaded,
-  error,
-  msgError,
-  onClickRow,
-}: any) {
+function ContratosTable({ data, loaded, error, msgError, onClickRow }: any) {
   return (
     <Table
       data={data}
       columns={columns}
       loaded={loaded}
-      isDataLoaded={isDataLoaded}
       error={error}
       msgError={msgError}
       searchInputNone={'none'}
@@ -109,8 +96,8 @@ function ContratosTable({
 }
 
 export default function EntidadesContratuais(): JSX.Element {
-  const { data, loaded, isDataLoaded, error, msgError } = useFetchContratos();
-  const { setPage, setIdContrato, usersUpdated } = useGlobalContext();
+  const { data, loaded, error, msgError } = useFetchContratos();
+  const { setPage, setIdContrato, switchContrato } = useGlobalContext();
 
   const handleRowClick = (rowData: EntitiesContratos) => {
     setPage(PageEnumContratos.entidadesEscolares);
@@ -130,14 +117,13 @@ export default function EntidadesContratuais(): JSX.Element {
             onClick={() => setPage(PageEnumContratos.novoContrato)}
           />
         </div>
-        {usersUpdated && (
+        {switchContrato && (
           <ModalSucesso
             message={'Status do contrato alterado com sucesso...'}
           />
         )}
         <ContratosTable
           data={data}
-          isDataLoaded={isDataLoaded}
           loaded={loaded}
           error={error}
           msgError={msgError}

@@ -4,6 +4,7 @@ interface UserProps {
   id: string;
   id_ee: string;
   id_prof: string;
+  id_user: string;
   nome_escola: string;
   nome_agente: string;
   dataofobservation: string;
@@ -31,6 +32,7 @@ export default class EntitiesAcompanhamentoPDG {
   readonly id: string;
   readonly id_ee: string;
   readonly id_prof: string;
+  readonly id_user: string;
   readonly nome_escola: string;
   readonly nome_agente: string;
   readonly dataofobservation: string;
@@ -57,6 +59,7 @@ export default class EntitiesAcompanhamentoPDG {
     id,
     id_ee,
     id_prof,
+    id_user,
     nome_escola,
     nome_agente,
     dataofobservation,
@@ -82,6 +85,7 @@ export default class EntitiesAcompanhamentoPDG {
     this.id = id;
     this.id_ee = id_ee;
     this.id_prof = id_prof;
+    this.id_user = id_user;
     this.nome_escola = nome_escola;
     this.nome_agente = nome_agente;
     this.dataofobservation = dataofobservation;

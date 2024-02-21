@@ -62,11 +62,11 @@ export default class BackendApiPut implements BackendApiInterfacePut {
 
   public async sobrescreverContrato(
     userData: any,
-  ): Promise<EntitiesContratos[]> {
-    return await this.put<EntitiesContratos>(
+  ): Promise<EntitiesInfosContrato[]> {
+    return await this.put<EntitiesInfosContrato>(
       '/sobrescreverContrato',
       userData,
-      new ContratosSerializers(),
+      new InfosContratoSerializers(),
     );
   }
 

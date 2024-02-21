@@ -17,6 +17,7 @@ import {
   EntitiesAcompanhamentoPDGCriteria,
 } from '@/entities';
 import Tooltip from '@/components/Tooltip/Tooltip';
+import { ComponentInfos } from '@/errors';
 
 interface PropsForFxclusion {
   id: string;
@@ -32,13 +33,12 @@ export default function TableActionAcompanhamentoPDG(
   props: PropsForFxclusion,
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
-
+  const [isLoadingPdf, setIsLoadingPdf] = useState(false);
   const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
   const {
     setUsersUpdated,
     setShowPageVisualizeAcompanhamento,
     setPageAcompanhamento,
-    setIsLoading,
     setIdAcompanhamento,
   } = useGlobalContext();
   const [modalInfos, setModalInfos] = useState('');
@@ -81,18 +81,26 @@ export default function TableActionAcompanhamentoPDG(
   async function handleFindJsonToPDF(id: string) {
     const token = Cookies.get('auth_token');
     const backendApi = new BackendApiGet(token);
-    setIsLoading(true);
-
+    setIsLoadingPdf(true);
+    setTimeout(() => {
+      setIsLoadingPdf(false);
+    }, 5000);
     try {
       const response = await backendApi.localizarAcompanhamentoById(id);
       const responseCriteria = await backendApi.LocalizarCriteriaById(id);
+
       const dataToPDF: EntitiesAcompanhamentoPDG = response[0];
       const dataCriteria: EntitiesAcompanhamentoPDGCriteria =
         responseCriteria[0];
-      console.log(dataCriteria);
+
+      const userRealizedAcompanhamento = await backendApi.localizarUsuario(
+        dataToPDF.id_user,
+      );
+
       const dataForPrint: DataInterface = {
         nome_escola: dataToPDF.nome_escola,
         nomeAgente: dataToPDF.nome_agente,
+        assessor: userRealizedAcompanhamento[0].nome,
         dataofobservation: dataToPDF.dataofobservation,
         grade: dataToPDF.grade,
         ofstudents: dataToPDF.ofstudents,
@@ -129,11 +137,10 @@ export default function TableActionAcompanhamentoPDG(
         L5: avaliarDesempenho(dataCriteria.l5),
         L6: avaliarDesempenho(dataCriteria.l6),
       };
+
       await printDocument(dataForPrint);
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   }
 
@@ -154,6 +161,17 @@ export default function TableActionAcompanhamentoPDG(
 
   return (
     <div className={styles.container}>
+      {isLoadingPdf && <ComponentInfos message={'Seu PDF está sendo gerado'} />}
+      {props.finalized ? (
+        <Tooltip text="Download Acompanhamento">
+          <Action
+            icon={renderIcon(MdOutlineFileDownload)}
+            onClick={() => handleFindJsonToPDF(props.id)}
+          />
+        </Tooltip>
+      ) : (
+        ''
+      )}
       {!props.finalized ? (
         <Tooltip text="Editar Acompanhamento">
           <Action
@@ -167,16 +185,7 @@ export default function TableActionAcompanhamentoPDG(
       <Tooltip text="Visualizar Informações">
         <Action icon={renderIcon(ImEyePlus)} onClick={handleViewMoreClick} />
       </Tooltip>
-      {props.finalized ? (
-        <Tooltip text="Download Acompanhamento">
-          <Action
-            icon={renderIcon(MdOutlineFileDownload)}
-            onClick={() => handleFindJsonToPDF(props.id)}
-          />
-        </Tooltip>
-      ) : (
-        ''
-      )}
+
       <Action
         icon={renderIcon(FaTrashAlt, 'var(--red-300)')}
         onClick={handleDeleteClick}

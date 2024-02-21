@@ -30,7 +30,6 @@ function useFetchEntidadesEscolares() {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const { setUsersUpdated, usersUpdated, idEntidadeEscolar } =
     useGlobalContext();
 
@@ -42,7 +41,7 @@ function useFetchEntidadesEscolares() {
         const docsEntidadeData = await backendApi.listarDocsEntidade(
           idEntidadeEscolar,
         );
-        setIsDataLoaded(true);
+
         setData(docsEntidadeData);
         setUsersUpdated(false);
       } catch (error: any) {
@@ -62,7 +61,7 @@ function useFetchEntidadesEscolares() {
     }
   }, [loaded, usersUpdated]);
 
-  return { data, loaded, error, msgError, isDataLoaded };
+  return { data, loaded, error, msgError };
 }
 
 function Navbar() {
@@ -76,7 +75,7 @@ function Navbar() {
 function DocsEntidadeTable({
   data,
   loaded,
-  isDataLoaded,
+
   error,
   msgError,
 }: any) {
@@ -85,7 +84,6 @@ function DocsEntidadeTable({
       data={data}
       columns={columns}
       loaded={loaded}
-      isDataLoaded={isDataLoaded}
       error={error}
       msgError={msgError}
       searchInputNone={'none'}
@@ -96,8 +94,7 @@ function DocsEntidadeTable({
 }
 
 export default function DocsEscola(): JSX.Element {
-  const { data, loaded, error, msgError, isDataLoaded } =
-    useFetchEntidadesEscolares();
+  const { data, loaded, error, msgError } = useFetchEntidadesEscolares();
   const { setPageEscolasPDG } = useGlobalContext();
 
   return (
@@ -126,7 +123,6 @@ export default function DocsEscola(): JSX.Element {
         <DocsEntidadeTable
           data={data}
           loaded={loaded}
-          isDataLoaded={isDataLoaded}
           error={error}
           msgError={msgError}
         />

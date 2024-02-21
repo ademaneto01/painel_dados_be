@@ -108,7 +108,7 @@ export default function SignIn(): JSX.Element {
             className={styles.formLogin}
             onSubmit={(evt) => handleSignIn(evt)}
           >
-            <h1>Login</h1>
+            <h1 className={styles.title}>Login</h1>
             <div className={styles.groupForm}>
               <label className={styles.labelLogin}>E-mail</label>
               <input

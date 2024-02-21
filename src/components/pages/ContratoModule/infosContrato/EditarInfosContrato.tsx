@@ -313,7 +313,7 @@ const FormComponent: React.FC<any> = ({
       <label className={styles.labelStandard}>
         Reajuste
         <select
-          value={formData.reajuste_igpm_ipca}
+          value={formData.reajuste_igpm_ipca ?? ''}
           onChange={handleInputChange}
           name="reajuste_igpm_ipca"
           className={styles.inputSelect}

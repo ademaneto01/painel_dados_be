@@ -14,7 +14,7 @@ export interface TableProps<T> {
   error?: boolean;
   msgError?: string;
   loaded?: boolean;
-  isDataLoaded: boolean;
+
   searchInputNone?: string;
   searchInputNoneEscola?: string;
   searchInputNoneNome?: string;
@@ -208,7 +208,7 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
 
   const paginatedData = filteredData.slice(startIndex, endIndex);
 
-  if (loaded && props.isDataLoaded) {
+  if (loaded) {
     if (!error) {
       return (
         <>

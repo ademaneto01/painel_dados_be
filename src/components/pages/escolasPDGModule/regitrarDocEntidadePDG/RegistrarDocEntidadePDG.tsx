@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '@/styles/ModalAddDoc.module.css';
 import { BackendApiPost } from '@/backendApi';
-import { PageEnumContratos, PageEnumEscolasPDG } from '@/enums';
+import { PageEnumEscolasPDG } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { ErrorComponent } from '@/errors/index';

@@ -24,7 +24,7 @@
 .conteinerToAlingInfos {
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 3rem;
   width: 93.5%;
   background-color: var(--gray-202);

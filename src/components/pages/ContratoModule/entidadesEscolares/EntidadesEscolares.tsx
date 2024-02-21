@@ -33,14 +33,10 @@ const columns: Column<RowData>[] = [
 function useFetchEntidadesEscolares() {
   const [data, setData] = useState<EntitiesEntidadesEscolares[]>([]);
   const [loaded, setLoaded] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const {
-    setContractOrEntidadeUpdated,
-    contractOrEntidadeUpdated,
-    idContrato,
-  } = useGlobalContext();
+  const { idContrato } = useGlobalContext();
 
   const processEscolas = (escolas: EntitiesEntidadesEscolares[]) => {
     return escolas.map((escolas) => new EntitiesEntidadesEscolares(escolas));
@@ -60,11 +56,8 @@ function useFetchEntidadesEscolares() {
         const escolasData = escolas.map(
           (e) => new EntitiesEntidadesEscolares(e),
         );
-        setIsDataLoaded(true);
         setData(escolasData);
-        setContractOrEntidadeUpdated(false);
       } catch (error: any) {
-        setContractOrEntidadeUpdated(false);
         setError(true);
         setMsgError(
           error.response?.data?.mensagem || 'Ocorreu um erro desconhecido.',
@@ -73,14 +66,14 @@ function useFetchEntidadesEscolares() {
         setLoaded(true);
       }
     }
-    if (!loaded || contractOrEntidadeUpdated) {
+    if (!loaded) {
       fetchData();
     }
   }, [data]);
 
   const escolasProcessadas = useMemo(() => processEscolas(data), [data]);
 
-  return { data: escolasProcessadas, loaded, isDataLoaded, error, msgError };
+  return { data: escolasProcessadas, loaded, error, msgError };
 }
 
 function Navbar() {
@@ -91,19 +84,12 @@ function Navbar() {
   );
 }
 
-function EntidadesEscolaresTable({
-  data,
-  loaded,
-  isDataLoaded,
-  error,
-  msgError,
-}: any) {
+function EntidadesEscolaresTable({ data, loaded, error, msgError }: any) {
   return (
     <Table
       data={data}
       columns={columns}
       loaded={loaded}
-      isDataLoaded={isDataLoaded}
       error={error}
       msgError={msgError}
       searchInputNone={'none'}
@@ -114,8 +100,8 @@ function EntidadesEscolaresTable({
 }
 
 export default function EntidadesEscolares(): JSX.Element {
-  const { data, loaded, error, isDataLoaded } = useFetchEntidadesEscolares();
-  const { setPage, usersUpdated } = useGlobalContext();
+  const { data, loaded, error } = useFetchEntidadesEscolares();
+  const { setPage, switchEntidadeEscolar } = useGlobalContext();
 
   return (
     <div className={styles.pageContainer}>
@@ -137,17 +123,12 @@ export default function EntidadesEscolares(): JSX.Element {
             onClick={() => setPage(PageEnumContratos.entidadesContratuais)}
           />
         </div>
-        {usersUpdated && (
+        {switchEntidadeEscolar && (
           <ModalSucesso
             message={'Status da Entidade Escolar alterado com sucesso...'}
           />
         )}
-        <EntidadesEscolaresTable
-          data={data}
-          loaded={loaded}
-          isDataLoaded={isDataLoaded}
-          error={error}
-        />
+        <EntidadesEscolaresTable data={data} loaded={loaded} error={error} />
       </PageContentContainer>
     </div>
   );

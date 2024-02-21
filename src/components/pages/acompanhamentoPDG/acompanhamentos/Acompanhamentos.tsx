@@ -6,11 +6,12 @@ import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { useState, useEffect } from 'react';
 import { PageEnumAcompanhamentoPDG } from '@/enums';
-import { Loader } from '../../../shared';
+import { ComponentInfos } from '@/errors';
 
 const columns = [
   new Column('Nome Professor', 'nome_agente'),
   new Column('Nome Escola', 'nome_escola'),
+  new Column('Série', 'grade'),
   new Column('Cycle', 'cycle'),
   new Column('Ações', 'acoes'),
 ];
@@ -18,10 +19,10 @@ const columns = [
 export default function Acompanhamentos() {
   const [data, setData] = useState<EntitiesAcompanhamentoPDG[]>([]);
   const [loaded, setLoaded] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const { usersUpdated, setUsersUpdated, setPageAcompanhamento, isLoading } =
+  const { usersUpdated, setUsersUpdated, setPageAcompanhamento } =
     useGlobalContext();
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function Acompanhamentos() {
         const backendApi = new BackendApiGet(`${token}`);
 
         const users = await backendApi.localizarAcompanhamento(userId);
-        setIsDataLoaded(true);
+
         setData(users);
       } catch (error: any) {
         setError(true);
@@ -66,12 +67,11 @@ export default function Acompanhamentos() {
             )
           }
         />
-        {isLoading ?? <Loader />}
+
         <Table<EntitiesAcompanhamentoPDG>
           data={data}
           columns={columns}
           loaded={loaded}
-          isDataLoaded={isDataLoaded}
           error={error}
           msgError={msgError}
           inputSelectAgente={true}

@@ -103,6 +103,7 @@ export default function ModalEditarVinculoAgente({
 
     try {
       const responseUserPdg = await backendApi.localizarAgenteId(userId);
+
       setNomeAgente(responseUserPdg[0].nome);
       if (responseUserPdg[0].cargo === 'Professor') {
         setIsProfessor(true);

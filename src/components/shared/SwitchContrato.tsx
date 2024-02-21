@@ -12,7 +12,7 @@ interface SwitchProps {
 
 export default function SwitchContrato(props: SwitchProps): JSX.Element {
   const [active, setActive] = useState(props.active);
-  const { usersUpdated, setUsersUpdated } = useGlobalContext();
+  const { setSwitchContrato } = useGlobalContext();
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
 
@@ -34,9 +34,9 @@ export default function SwitchContrato(props: SwitchProps): JSX.Element {
         id: props.contractId,
       });
 
-      setUsersUpdated(true);
+      setSwitchContrato(true);
       setTimeout(() => {
-        setUsersUpdated(false);
+        setSwitchContrato(false);
       }, 1500);
       return response;
     } catch (error) {
@@ -53,7 +53,7 @@ export default function SwitchContrato(props: SwitchProps): JSX.Element {
   return (
     <>
       <div onClick={handleClick}>
-        <Switch checked={active} defaultChecked />
+        <Switch checked={active} />
       </div>
       {error ? <ErrorComponent message={msgError} /> : ''}
     </>

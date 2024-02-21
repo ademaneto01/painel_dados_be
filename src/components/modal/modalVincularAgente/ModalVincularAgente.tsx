@@ -159,23 +159,6 @@ export default function ModalVicularAgente({
     }
   };
 
-  const getUserCargoById = async (value: any) => {
-    try {
-      const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiGet(`${token}`);
-      const responseUserPdg = await backendApi.localizarAgenteId(value);
-      if (responseUserPdg[0].cargo === 'Professor') {
-        setIsProfessor(true);
-      } else {
-        setIsProfessor(false);
-      }
-      return;
-    } catch (error) {
-      handleApiErrors(error);
-      return null;
-    }
-  };
-
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -223,8 +206,11 @@ export default function ModalVicularAgente({
       ...prevFormData,
       id_prof: option.uuid_agente,
     }));
-
-    getUserCargoById(option.uuid_agente);
+    if (option.cargo === 'Professor') {
+      setIsProfessor(true);
+    } else {
+      setIsProfessor(false);
+    }
   };
 
   const handleSearchChange = (e: any) => {
@@ -352,7 +338,7 @@ const FormComponent: React.FC<any> = ({
                           className={styles.optionItem}
                           onClick={() => handleOptionSelect(option)}
                         >
-                          {option.nome}
+                          {`${option.nome} - ${option.cargo}`}
                         </div>
                       ))}
                     </div>
@@ -364,7 +350,7 @@ const FormComponent: React.FC<any> = ({
           <label className={styles.labelStandard}>
             Especialista
             <select
-              value={formData.especialista}
+              value={formData.especialista ?? ''}
               onChange={handleInputChange}
               name="especialista"
               className={styles.inputSelect}

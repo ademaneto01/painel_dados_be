@@ -9,7 +9,7 @@ import {
 } from '@/entities';
 
 export default interface BackendApiInterfacePut {
-  sobrescreverContrato(userData: any): Promise<EntitiesContratos[]>;
+  sobrescreverContrato(userData: any): Promise<EntitiesInfosContrato[]>;
 
   editarVinculoAgente(userData: any): Promise<EntitiesVincularAgente[]>;
 

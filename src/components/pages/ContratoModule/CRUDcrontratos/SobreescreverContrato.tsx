@@ -93,18 +93,6 @@ export default function SobreescreverContrato(): JSX.Element {
       const backendApi = new BackendApiPut(`${token}`);
       await backendApi.sobrescreverContrato({
         uuid_ec: idContrato,
-        nome_simplificado: formData.nome_simplificado,
-        razao_social: formData.razao_social,
-        cnpj_cont: formData.cnpj_cont,
-        cep: formData.cep,
-        endereco: formData.endereco,
-        cidade: formData.cidade,
-        uf: formData.uf,
-        bairro: formData.bairro,
-        complemento: formData.complemento,
-        tipocontrato: formData.tipocontrato,
-        valorcontrato: formData.valorcontrato,
-        bo_rede: formData.bo_rede,
       });
     } catch (error) {
       handleApiErrors(error);
@@ -114,85 +102,85 @@ export default function SobreescreverContrato(): JSX.Element {
     setPage(PageEnumContratos.entidadesContratuais);
   };
 
-  const fetchEndereco = async (cep: string) => {
-    try {
-      cep = cep.replace(/-/g, '');
-      for (const validaCep of cep) {
-        if (validaCep === '_') {
-          return null;
-        }
-      }
-      if (cep.length !== 8) {
-        return null;
-      }
-      if (cep.length === 8) {
-        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-        const data = await response.json();
+  // const fetchEndereco = async (cep: string) => {
+  //   try {
+  //     cep = cep.replace(/-/g, '');
+  //     for (const validaCep of cep) {
+  //       if (validaCep === '_') {
+  //         return null;
+  //       }
+  //     }
+  //     if (cep.length !== 8) {
+  //       return null;
+  //     }
+  //     if (cep.length === 8) {
+  //       const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+  //       const data = await response.json();
 
-        if (!data.erro) {
-          setFormData((prev) => ({
-            ...prev,
-            endereco: data.logradouro,
-            cidade: data.localidade,
-            uf: data.uf,
-            bairro: data.bairro,
-            complemento: data.complemento,
-          }));
-        } else {
-          setError(true);
-          setMsgError('CEP não encontrato...');
-          setTimeout(() => setError(false), 5000);
-        }
-      }
-    } catch (error) {
-      setError(true);
-      setMsgError('Erro ao buscar o CEP...');
-    }
-  };
+  //       if (!data.erro) {
+  //         setFormData((prev) => ({
+  //           ...prev,
+  //           endereco: data.logradouro,
+  //           cidade: data.localidade,
+  //           uf: data.uf,
+  //           bairro: data.bairro,
+  //           complemento: data.complemento,
+  //         }));
+  //       } else {
+  //         setError(true);
+  //         setMsgError('CEP não encontrato...');
+  //         setTimeout(() => setError(false), 5000);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     setError(true);
+  //     setMsgError('Erro ao buscar o CEP...');
+  //   }
+  // };
 
-  const validateForm = (): boolean => {
-    const errors: string[] = [];
-    if (Object.values(formData).some((v) => v === '' || v === null)) {
-      errors.push('Informe os campos obrigatórios.');
-    }
-    if (formData.uf.length > 2) {
-      errors.push('Campo UF é permitido somente dois caracteres...');
-    }
-    if (formData.cnpj_cont) {
-      if (!validaCNPJ(formData.cnpj_cont)) {
-        errors.push('CNPJ inválido...');
-      }
-    }
-    if (errors.length) {
-      setError(true);
-      setMsgError(errors.join(' '));
-      setTimeout(() => setError(false), 6000);
-      return false;
-    }
-    return true;
-  };
+  // const validateForm = (): boolean => {
+  //   const errors: string[] = [];
+  //   if (Object.values(formData).some((v) => v === '' || v === null)) {
+  //     errors.push('Informe os campos obrigatórios.');
+  //   }
+  //   if (formData.uf.length > 2) {
+  //     errors.push('Campo UF é permitido somente dois caracteres...');
+  //   }
+  //   if (formData.cnpj_cont) {
+  //     if (!validaCNPJ(formData.cnpj_cont)) {
+  //       errors.push('CNPJ inválido...');
+  //     }
+  //   }
+  //   if (errors.length) {
+  //     setError(true);
+  //     setMsgError(errors.join(' '));
+  //     setTimeout(() => setError(false), 6000);
+  //     return false;
+  //   }
+  //   return true;
+  // };
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const { name, value } = e.target;
+  // const handleInputChange = (
+  //   e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  // ) => {
+  //   const { name, value } = e.target;
 
-    if (name === 'cep') {
-      fetchEndereco(value);
-    }
-    const booleanValue =
-      value === 'true' ? true : value === 'false' ? false : null;
-    const updatedValue = ['ativo', 'bo_rede'].includes(name)
-      ? booleanValue
-      : value;
-    setFormData((prev) => ({ ...prev, [name]: updatedValue }));
-  };
+  //   if (name === 'cep') {
+  //     fetchEndereco(value);
+  //   }
+  //   const booleanValue =
+  //     value === 'true' ? true : value === 'false' ? false : null;
+  //   const updatedValue = ['ativo', 'bo_rede'].includes(name)
+  //     ? booleanValue
+  //     : value;
+  //   setFormData((prev) => ({ ...prev, [name]: updatedValue }));
+  // };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      fetchData();
-    }
+    fetchData();
+    // if (validateForm()) {
+    // }
   };
 
   return (
@@ -202,7 +190,7 @@ export default function SobreescreverContrato(): JSX.Element {
         <NavigationButtons setPage={setPage} />
         <FormComponent
           formData={formData}
-          handleInputChange={handleInputChange}
+          // handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
           setPage={setPage}
         />
@@ -228,7 +216,7 @@ const NavigationButtons: React.FC<any> = ({ setPage }) => (
 
 const FormComponent: React.FC<any> = ({
   formData,
-  handleInputChange,
+  // handleInputChange,
   handleSubmit,
   setPage,
 }) => {
@@ -241,8 +229,9 @@ const FormComponent: React.FC<any> = ({
           placeholder="Nome Simplificado"
           name="nome_simplificado"
           value={formData.nome_simplificado ?? ''}
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
           className={styles.inputStandard}
+          readOnly
         />
       </label>
       <label className={styles.labelStandard}>
@@ -252,8 +241,9 @@ const FormComponent: React.FC<any> = ({
           placeholder="Razão Social"
           name="razao_social"
           value={formData.razao_social ?? ''}
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
           className={styles.inputStandard}
+          readOnly
         />
       </label>
       <label className={styles.labelStandard}>
@@ -264,8 +254,9 @@ const FormComponent: React.FC<any> = ({
           placeholder="CNPJ"
           name="cnpj_cont"
           value={formData.cnpj_cont ?? ''}
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
           className={styles.inputStandard}
+          readOnly
         />
       </label>
       <label className={styles.labelStandard}>
@@ -276,8 +267,9 @@ const FormComponent: React.FC<any> = ({
           mask="99999-999"
           name="cep"
           value={formData.cep ?? ''}
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
           className={styles.inputStandard}
+          readOnly
         />
       </label>
       <label className={styles.labelStandard}>
@@ -287,8 +279,9 @@ const FormComponent: React.FC<any> = ({
           placeholder="Rua"
           name="endereco"
           value={formData.endereco ?? ''}
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
           className={styles.inputStandard}
+          readOnly
         />
       </label>
       <label className={styles.labelStandard}>
@@ -298,8 +291,9 @@ const FormComponent: React.FC<any> = ({
           placeholder="Cidade"
           name="cidade"
           value={formData.cidade ?? ''}
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
           className={styles.inputStandard}
+          readOnly
         />
       </label>
       <label className={styles.labelStandard}>
@@ -309,8 +303,9 @@ const FormComponent: React.FC<any> = ({
           placeholder="UF"
           name="uf"
           value={formData.uf ?? ''}
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
           className={styles.inputStandard}
+          readOnly
         />
       </label>
       <label className={styles.labelStandard}>
@@ -320,8 +315,9 @@ const FormComponent: React.FC<any> = ({
           placeholder="Bairro"
           name="bairro"
           value={formData.bairro ?? ''}
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
           className={styles.inputStandard}
+          readOnly
         />
       </label>
       <label className={styles.labelStandard}>
@@ -331,8 +327,9 @@ const FormComponent: React.FC<any> = ({
           placeholder="Complemento"
           name="complemento"
           value={formData.complemento ?? ''}
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
           className={styles.inputStandard}
+          readOnly
         />
       </label>
       <label className={styles.labelStandard}>
@@ -342,35 +339,40 @@ const FormComponent: React.FC<any> = ({
           placeholder="Valor do contrato"
           name="valorcontrato"
           value={formData.valorcontrato ?? ''}
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
           className={styles.inputStandard}
+          readOnly
         />
       </label>
       <label className={styles.labelStandard}>
         Tipo*
-        <select
+        <input
+          type="text"
+          placeholder="Tipo do contrato"
           value={formData.tipocontrato ?? ''}
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
           name="tipocontrato"
-          className={styles.inputSelect}
-        >
-          <option value="">-</option>
-          <option value="B2B">B2B</option>
-          <option value="B2C">B2C</option>
-        </select>
+          className={styles.inputStandard}
+          readOnly
+        />
       </label>
       <label className={styles.labelStandard}>
         Rede*
-        <select
-          value={formData.bo_rede === null ? '' : formData.bo_rede.toString()}
-          onChange={handleInputChange}
+        <input
+          type="text"
+          placeholder="Rede"
+          value={
+            formData.bo_rede === true
+              ? 'Ativa'
+              : formData.bo_rede === false
+              ? 'Inativa'
+              : ''
+          }
+          // onChange={handleInputChange}
           name="bo_rede"
-          className={styles.inputSelect}
-        >
-          <option value="">-</option>
-          <option value="true">Sim</option>
-          <option value="false">Não</option>
-        </select>
+          className={styles.inputStandard}
+          readOnly
+        />
       </label>
       <div className={styles.buttonContainer}>
         <button

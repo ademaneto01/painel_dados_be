@@ -23,7 +23,6 @@ const COLUMNS = [
 export default function EscolasPDG(): JSX.Element {
   const [data, setData] = useState<EntitiesVinculosAgentesExterno[]>([]);
   const [loaded, setLoaded] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const {
@@ -48,7 +47,7 @@ export default function EscolasPDG(): JSX.Element {
         const agentesExternosData =
           await backendApi.listarAgenteRelacionadoEscola(idEntidadeEscolar);
         setData(agentesExternosData);
-        setIsDataLoaded(true);
+
         setUsersUpdated(false);
       } catch (error: any) {
         setError(true);
@@ -81,7 +80,6 @@ export default function EscolasPDG(): JSX.Element {
           columns={COLUMNS}
           loaded={loaded}
           error={error}
-          isDataLoaded={isDataLoaded}
           msgError={msgError}
           searchInputNone={'none'}
           searchInputNoneEscola={'none'}

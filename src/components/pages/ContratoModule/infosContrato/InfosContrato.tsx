@@ -21,7 +21,7 @@ function useFetchInfosContrato() {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const { setUsersUpdated, usersUpdated, idContrato } = useGlobalContext();
+  const { idContrato } = useGlobalContext();
 
   useEffect(() => {
     async function fetchData() {
@@ -33,7 +33,6 @@ function useFetchInfosContrato() {
         );
         setIdInfos(infosContratoData[0].id);
         setData(infosContratoData);
-        setUsersUpdated(false);
       } catch (error: any) {
         setError(true);
 
@@ -49,15 +48,15 @@ function useFetchInfosContrato() {
     if (!loaded) {
       fetchData();
     }
-  }, [loaded, usersUpdated]);
+  }, [loaded]);
 
-  return { data, loaded, error, msgError, idInfos, setUsersUpdated };
+  return { data, loaded, error, msgError, idInfos, setLoaded };
 }
 
 async function deleteInfoContrato(
   idInfos: string,
   setModaldelete: Function,
-  setUsersUpdated: Function,
+  setLoaded: Function,
 ) {
   const token = Cookies.get('auth_token');
   const backendApi = new BackendApiDelete(token);
@@ -65,7 +64,7 @@ async function deleteInfoContrato(
   try {
     await backendApi.deletarInfosContrato({ id: idInfos });
     setModaldelete(false);
-    setUsersUpdated(true);
+    setLoaded(false);
   } catch (error: any) {
     console.error(error.response.data.mensagem);
   }
@@ -93,7 +92,7 @@ function InfosContratoScreen({ data, error, msgError }: any) {
 }
 
 export default function InfosContrato(): JSX.Element {
-  const { data, idInfos, setUsersUpdated, loaded, error, msgError } =
+  const { data, idInfos, setLoaded, loaded, error, msgError } =
     useFetchInfosContrato();
   const [modalDelete, setModaldelete] = useState(false);
   const { setPage } = useGlobalContext();
@@ -148,7 +147,7 @@ export default function InfosContrato(): JSX.Element {
             title={'Excluir'}
             message={`Realmente deseja Deletar Informações?`}
             onConfirm={() =>
-              deleteInfoContrato(idInfos, setModaldelete, setUsersUpdated)
+              deleteInfoContrato(idInfos, setModaldelete, setLoaded)
             }
             onCancel={() => setModaldelete(false)}
           />

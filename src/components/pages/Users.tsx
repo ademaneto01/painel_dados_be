@@ -14,7 +14,7 @@ const columns = [
   new Column('Perfil', 'perfil'),
   new Column('Escola', 'escola'),
   new Column('Ações', 'acoes'),
-  new Column('Ativo', 'ativo'),
+  new Column('Ativo', 'toogleUser'),
 ];
 
 function PageUsers() {
@@ -23,8 +23,7 @@ function PageUsers() {
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const [showModalUser, setShowModalUser] = useState(false);
-  const { usersUpdated, setUsersUpdated } = useGlobalContext();
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const { switchUsuarios, loadedUser } = useGlobalContext();
 
   function handleClickOpenModalAdd(): void {
     setShowModalUser(true);
@@ -33,27 +32,21 @@ function PageUsers() {
     setShowModalUser(false);
   }
 
-  function UsersTable({
-    data,
-    loaded,
-    isDataLoaded,
-    error,
-    columns,
-    msgError,
-  }: any) {
+  function UsersTable({ data, loaded, error, columns, msgError }: any) {
     return (
       <Table
         data={data}
         columns={columns}
         loaded={loaded}
-        isDataLoaded={isDataLoaded}
         error={error}
         msgError={msgError}
         labelInput={'Buscar pelo Nome'}
       />
     );
   }
-
+  const handleUserAdded = () => {
+    setLoaded(false);
+  };
   useEffect(() => {
     async function fetchData() {
       const token = localStorage.getItem('auth_token');
@@ -70,7 +63,7 @@ function PageUsers() {
           }
           return 0;
         });
-        setIsDataLoaded(true);
+
         setData(usersersOrderBy);
       } catch (error: any) {
         setError(true);
@@ -81,15 +74,12 @@ function PageUsers() {
         }
       } finally {
         setLoaded(true);
-        setTimeout(() => {
-          setUsersUpdated(false);
-        }, 1500);
       }
     }
-    if (!loaded || usersUpdated) {
+    if (!loaded || switchUsuarios || loadedUser) {
       fetchData();
     }
-  }, [usersUpdated, loaded]);
+  }, [loaded, switchUsuarios, loadedUser]);
 
   return (
     <div className={styles.pageContainer}>
@@ -105,16 +95,16 @@ function PageUsers() {
           <ModalAddUser
             titleModal={'Novo usuário'}
             onCancel={() => handleClickCloseModalAdd()}
+            onUserAdded={handleUserAdded}
           />
         )}
-        {usersUpdated && (
+        {switchUsuarios && (
           <ModalSucesso message={'Status do usuário alterado com sucesso...'} />
         )}
         <UsersTable
           data={data}
           columns={columns}
           loaded={loaded}
-          isDataLoaded={isDataLoaded}
           error={error}
           msgError={msgError}
           labelInput={'Buscar pelo nome ou email'}

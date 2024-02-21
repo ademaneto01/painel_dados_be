@@ -18,7 +18,7 @@ export default class EntitiesUsers {
   readonly perfil: string;
   readonly escola: string;
   readonly id_ee: string;
-  private readonly _ativo: boolean;
+  readonly ativo: boolean;
 
   constructor({ id, nome, email, perfil, escola, id_ee, ativo }: UserProps) {
     this.id = id;
@@ -27,13 +27,13 @@ export default class EntitiesUsers {
     this.perfil = perfil;
     this.escola = escola;
     this.id_ee = id_ee;
-    this._ativo = ativo;
+    this.ativo = ativo;
   }
   public get acoes(): JSX.Element {
     return <TableActionsUsers id={this.id} nome={this.nome} />;
   }
 
-  public get ativo(): JSX.Element {
-    return <OnOffToggler active={this._ativo} userId={this.id} />;
+  public get toogleUser(): JSX.Element {
+    return <OnOffToggler active={this.ativo} userId={this.id} />;
   }
 }

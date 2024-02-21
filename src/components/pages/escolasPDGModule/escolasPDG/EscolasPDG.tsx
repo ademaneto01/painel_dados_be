@@ -16,7 +16,7 @@ const COLUMNS = [
 export default function EscolasPDG(): JSX.Element {
   const [data, setData] = useState<EntitiesEntidadesEscolaresPDG[]>([]);
   const [loaded, setLoaded] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const { setPageEscolasPDG, setIdEntidadeEscolar } = useGlobalContext();
@@ -40,7 +40,7 @@ export default function EscolasPDG(): JSX.Element {
       const backendApi = new BackendApiGet(`${token}`);
       const contentidadesEscolasratos =
         await backendApi.localizarEntidadesEscolaresUsuariosPDG(idUsuario);
-      setIsDataLoaded(true);
+
       setData(contentidadesEscolasratos);
     } catch (error: any) {
       setError(true);
@@ -65,7 +65,6 @@ export default function EscolasPDG(): JSX.Element {
           data={data}
           columns={COLUMNS}
           loaded={loaded}
-          isDataLoaded={isDataLoaded}
           error={error}
           msgError={msgError}
           searchInputNone={'none'}

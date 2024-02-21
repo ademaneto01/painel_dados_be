@@ -1,7 +1,7 @@
-import styles from '@/styles/ComponenteQuill.module.css';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import styles from '@/styles/ComponenteQuill.module.css';
 
 type MultilineInputProps = {
   label?: string;
@@ -16,6 +16,7 @@ const modules = {
     ['bold', 'italic', 'underline'],
     [{ list: 'ordered' }, { list: 'bullet' }],
     ['clean'],
+    ['link'],
   ],
 };
 
@@ -26,6 +27,12 @@ const MultilineInput: React.FC<MultilineInputProps> = ({
   onChange,
   value,
 }) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const handleChange = (content: string) => {
     if (onChange) {
       onChange(content);
@@ -33,13 +40,20 @@ const MultilineInput: React.FC<MultilineInputProps> = ({
   };
 
   useEffect(() => {
-    const element = document.querySelector(
-      '.ql-container.ql-snow',
-    ) as HTMLElement;
-    if (element) {
-      element.style.border = 'none';
+    if (isMounted) {
+      const element = document.querySelector(
+        '.ql-container.ql-snow',
+      ) as HTMLElement;
+      if (element) {
+        element.style.border = 'none';
+      }
     }
-  }, []);
+  }, [isMounted]);
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <>
       <ReactQuill
@@ -48,7 +62,7 @@ const MultilineInput: React.FC<MultilineInputProps> = ({
         theme={theme}
         modules={modules}
         onChange={handleChange}
-        value={value}
+        value={value || ''}
       />
     </>
   );

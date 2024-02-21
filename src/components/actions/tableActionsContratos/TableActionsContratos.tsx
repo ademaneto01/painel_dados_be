@@ -25,14 +25,10 @@ export default function TableActionsContratos(
     y: number;
   } | null>(null);
   const [showModalDelete, setShowModalDelete] = useState('');
-  const [showModalAddDoc, setShowModalAddDoc] = useState('');
+
   const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
-  const {
-    setUsersUpdated,
-    setContractOrEntidadeUpdated,
-    setIdContrato,
-    setPage,
-  } = useGlobalContext();
+  const { setContractOrEntidadeUpdated, setIdContrato, setPage } =
+    useGlobalContext();
   const [modalInfos, setModalInfos] = useState('');
 
   const handleEditClick = () => handleClickOpenModalAddEditSchool(props.id);
@@ -134,9 +130,9 @@ export default function TableActionsContratos(
           >
             <div className={styles.modal}>
               <button onClick={handleEditClick}>Editar Contrato</button>
-              <button onClick={handleOverwriteClick}>
+              {/* <button onClick={handleOverwriteClick}>
                 Sobreescrever Contrato
-              </button>
+              </button> */}
               <button onClick={handleInfosContratoClick}>Infos Contrato</button>
               <button onClick={handleVisualizarDocs}>
                 Visualizar Documentos

@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
 import ReactSlider from 'react-slider';
-import Image from 'next/image';
 import styles from '@/styles/AcompanhamentoPDG.module.css';
 import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import InputMask from 'react-input-mask';
@@ -845,6 +844,7 @@ const FormComponent: React.FC<any> = ({
                     className={styles.inputSelect}
                   >
                     <option value="">-</option>
+                    <option value="N/A">N/A</option>
                     <option value="poor&low">Poor & Low</option>
                     <option value="poor">Poor</option>
                     <option value="toolow">Too Low</option>

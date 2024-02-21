@@ -16,14 +16,20 @@ import React, {
 } from 'react';
 
 interface ContextProps {
-  usersUpdated: boolean;
-  setUsersUpdated: Dispatch<SetStateAction<boolean>>;
+  loadedUser: boolean;
+  setLoadedUser: Dispatch<SetStateAction<boolean>>;
+  switchContrato: boolean;
+  setSwitchContrato: Dispatch<SetStateAction<boolean>>;
+  switchEntidadeEscolar: boolean;
+  setSwitchEntidadeEscolar: Dispatch<SetStateAction<boolean>>;
+  switchUsuarios: boolean;
+  setSwitchUsuarios: Dispatch<SetStateAction<boolean>>;
   dataContrato: EntitiesContratos[];
   setDataContrato: Dispatch<SetStateAction<EntitiesContratos[]>>;
+  usersUpdated: boolean;
+  setUsersUpdated: Dispatch<SetStateAction<boolean>>;
   contractOrEntidadeUpdated: boolean;
   setContractOrEntidadeUpdated: Dispatch<SetStateAction<boolean>>;
-  isLoading: boolean;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
   isLoadingLogOut: boolean;
   setIsLoadingLogOut: Dispatch<SetStateAction<boolean>>;
   showPageVisualizeAcompanhamento: string;
@@ -49,12 +55,18 @@ interface ContextProps {
 }
 
 export const GlobalContext = createContext<ContextProps>({
-  usersUpdated: false,
-  setUsersUpdated: () => {},
+  loadedUser: false,
+  setLoadedUser: () => {},
   contractOrEntidadeUpdated: false,
   setContractOrEntidadeUpdated: () => {},
-  isLoading: false,
-  setIsLoading: () => {},
+  usersUpdated: false,
+  setUsersUpdated: () => {},
+  switchContrato: false,
+  setSwitchContrato: () => {},
+  switchEntidadeEscolar: false,
+  setSwitchEntidadeEscolar: () => {},
+  switchUsuarios: false,
+  setSwitchUsuarios: () => {},
   isLoadingLogOut: false,
   setIsLoadingLogOut: () => {},
   showPageVisualizeAcompanhamento: '',
@@ -84,10 +96,13 @@ export const GlobalContext = createContext<ContextProps>({
 export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [usersUpdated, setUsersUpdated] = useState(false);
   const [contractOrEntidadeUpdated, setContractOrEntidadeUpdated] =
     useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadedUser, setLoadedUser] = useState(false);
+  const [switchContrato, setSwitchContrato] = useState(false);
+  const [usersUpdated, setUsersUpdated] = useState(false);
+  const [switchEntidadeEscolar, setSwitchEntidadeEscolar] = useState(false);
+  const [switchUsuarios, setSwitchUsuarios] = useState(false);
   const [isLoadingLogOut, setIsLoadingLogOut] = useState(false);
   const [page, setPage] = useState(PageEnumContratos.entidadesContratuais);
   const [pageAcompanhamento, setPageAcompanhamento] = useState(
@@ -110,14 +125,20 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <GlobalContext.Provider
       value={{
+        loadedUser,
+        setLoadedUser,
+        contractOrEntidadeUpdated,
+        setContractOrEntidadeUpdated,
         showPageVisualizeAcompanhamento,
         setShowPageVisualizeAcompanhamento,
         usersUpdated,
         setUsersUpdated,
-        contractOrEntidadeUpdated,
-        setContractOrEntidadeUpdated,
-        isLoading,
-        setIsLoading,
+        switchContrato,
+        setSwitchContrato,
+        switchEntidadeEscolar,
+        setSwitchEntidadeEscolar,
+        switchUsuarios,
+        setSwitchUsuarios,
         isLoadingLogOut,
         setIsLoadingLogOut,
         page,

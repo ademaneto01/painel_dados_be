@@ -12,7 +12,7 @@ interface SwitchProps {
 
 export default function SwitchEntidadeEscolar(props: SwitchProps): JSX.Element {
   const [active, setActive] = useState(props.active);
-  const { usersUpdated, setUsersUpdated } = useGlobalContext();
+  const { setSwitchEntidadeEscolar } = useGlobalContext();
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
 
@@ -34,9 +34,9 @@ export default function SwitchEntidadeEscolar(props: SwitchProps): JSX.Element {
         id: props.entidadeEscolaId,
       });
 
-      setUsersUpdated(true);
+      setSwitchEntidadeEscolar(true);
       setTimeout(() => {
-        setUsersUpdated(false);
+        setSwitchEntidadeEscolar(false);
       }, 1500);
       return response;
     } catch (error) {
@@ -53,7 +53,7 @@ export default function SwitchEntidadeEscolar(props: SwitchProps): JSX.Element {
   return (
     <>
       <div onClick={handleClick}>
-        <Switch checked={active} defaultChecked />
+        <Switch checked={active} />
       </div>
       {error ? <ErrorComponent message={msgError} /> : ''}
     </>

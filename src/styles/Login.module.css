@@ -61,7 +61,7 @@
 .labelLogin {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .inputLogin {
@@ -170,4 +170,8 @@
 }
 .boxLoaderLogin {
   height: 3.3em;
+}
+
+.title {
+  font-size: 2rem;
 }

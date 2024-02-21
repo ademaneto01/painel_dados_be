@@ -51,12 +51,19 @@ export default function NovoContrato(): JSX.Element {
       setMsgError('Ocorreu um erro desconhecido.');
     }
   };
-
+  const limparValorContrato = (valor: string) => {
+    return valor.replace(/\D/g, '');
+  };
   const fetchData = async () => {
+    const valorContratoLimpo = limparValorContrato(formData.valorcontrato);
+    const formDataAtualizado = {
+      ...formData,
+      valorcontrato: valorContratoLimpo,
+    };
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiPost(`${token}`);
-      await backendApi.registrarContrato(formData);
+      await backendApi.registrarContrato(formDataAtualizado);
       setPage(PageEnumContratos.entidadesContratuais);
     } catch (error) {
       handleApiErrors(error);
@@ -117,6 +124,7 @@ export default function NovoContrato(): JSX.Element {
 
   const validateForm = (): boolean => {
     const errors: string[] = [];
+
     if (Object.values(formData).some((v) => v === '' || v === null)) {
       errors.push('Informe os campos obrigatórios.');
     }
@@ -139,6 +147,7 @@ export default function NovoContrato(): JSX.Element {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
     if (validateForm()) {
       fetchData();
     }
@@ -288,7 +297,8 @@ const FormComponent: React.FC<any> = ({
       </label>
       <label className={styles.labelStandard}>
         Valor do contrato*
-        <input
+        <InputMask
+          mask={'9999999'}
           type="text"
           placeholder="Valor do contrato"
           name="valorcontrato"

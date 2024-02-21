@@ -2,9 +2,9 @@
   display: flex;
   position: fixed;
   padding-top: 1rem;
-  top: 6.3%;
+  top: 3.5rem;
   left: -2.05em;
-  bottom: 1%;
+  bottom: 0.6rem;
   width: 17em;
   background-image: url('/fundo_alternativo.webp');
   flex-direction: column;
