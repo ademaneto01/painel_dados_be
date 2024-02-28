@@ -17,7 +17,7 @@
   border-radius: 10px;
   padding: 1rem;
   width: 10rem;
-  height: 8rem;
+  height: 9rem;
   color: var(--gray-300);
   text-align: center;
   box-shadow: 0 0 10px var(--azul-escuro);
@@ -60,3 +60,4 @@
 .text, .icon {
   vertical-align: middle;
 }
+

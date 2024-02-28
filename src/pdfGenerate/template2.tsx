@@ -21,8 +21,7 @@ padding-bottom: 5.5rem;
         Sugestões e metas de desenvolvimento
     </div>
     <div style="display: flex; flex-wrap: wrap;">
-        <div style="font-size: 175%; background-color: transparent; border: 0.07rem solid #31599C; color: #31599C; margin-bottom: 0.7rem; padding: 0.7rem; flex-grow: 1; max-width: 100%; wordBreak: break-all;">
-          {{finalcoments}}      
+        <div style="width: calc(100%); height: 90rem; margin: 0 auto; border: 0.07rem solid #31599C; color: #31599C; padding: 0.7rem;">
         </div>
     </div>
     </div>
@@ -31,7 +30,7 @@ padding-bottom: 5.5rem;
         <div style="color: #31599C; font-size: 1.2rem; font-weight: bold; margin-left: 67%; margin-right: 0.7rem;">Acompanhamento de Aula 2/2</div>
     </div>        
     </div>
-    <div style="height: 30%;"></div>
+    <div style="height: 4%;"></div>
 </div>
 `;
 export default templateHTML2;
