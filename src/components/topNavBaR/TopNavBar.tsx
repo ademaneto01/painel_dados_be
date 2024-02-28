@@ -81,12 +81,13 @@ export default function TopNavBar(props: TopNavBarProps) {
         <div className={styles.logoContainer}>
           <Image
             className={styles.logo}
-            src="/logo_be_branco-H.png"
+            src="/BE_logo_horizontal_bco_2.png"
             alt="Logo be Branco"
             priority={true}
             aspect-ratio={1}
-            width={95}
-            height={38}
+            width={80}
+            height={43}
+            margin-bottom={5}
           />
         </div>
 
@@ -109,12 +110,12 @@ export default function TopNavBar(props: TopNavBarProps) {
               title={
                 <Image
                   className={styles.logo}
-                  src="/logo_be_cor-H.png"
+                  src="/BE_logo_horizontal_cor_1.png"
                   alt="Logo Be cor"
                   priority={true}
                   aspect-ratio={1}
-                  width={120}
-                  height={50}
+                  width={113}
+                  height={60}
                 />
               }
               text={'Logout'}
