@@ -5,7 +5,7 @@ import {
   PageEnumAgentesExterno,
   PageEnumAcompanhamentoPDG,
 } from '@/enums';
-import { EntitiesContratos } from '@/entities';
+import { EntitiesContratos, EntitiesInfosContrato } from '@/entities';
 import React, {
   createContext,
   useContext,
@@ -16,6 +16,10 @@ import React, {
 } from 'react';
 
 interface ContextProps {
+  saveInfosContrato: EntitiesInfosContrato[];
+  setSaveInfosContrato: Dispatch<SetStateAction<EntitiesInfosContrato[]>>;
+  modalSucessoSubsContrato: boolean;
+  setModalSucessoSubsContrato: Dispatch<SetStateAction<boolean>>;
   loadedUser: boolean;
   setLoadedUser: Dispatch<SetStateAction<boolean>>;
   switchContrato: boolean;
@@ -55,6 +59,8 @@ interface ContextProps {
 }
 
 export const GlobalContext = createContext<ContextProps>({
+  modalSucessoSubsContrato: false,
+  setModalSucessoSubsContrato: () => {},
   loadedUser: false,
   setLoadedUser: () => {},
   contractOrEntidadeUpdated: false,
@@ -91,11 +97,18 @@ export const GlobalContext = createContext<ContextProps>({
   setIdEntidadeEscolar: () => {},
   dataContrato: [],
   setDataContrato: () => {},
+  saveInfosContrato: [],
+  setSaveInfosContrato: () => {},
 });
 
 export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const [saveInfosContrato, setSaveInfosContrato] = useState<
+    EntitiesInfosContrato[]
+  >([]);
+  const [modalSucessoSubsContrato, setModalSucessoSubsContrato] =
+    useState(false);
   const [contractOrEntidadeUpdated, setContractOrEntidadeUpdated] =
     useState(false);
   const [loadedUser, setLoadedUser] = useState(false);
@@ -125,6 +138,10 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <GlobalContext.Provider
       value={{
+        saveInfosContrato,
+        setSaveInfosContrato,
+        modalSucessoSubsContrato,
+        setModalSucessoSubsContrato,
         loadedUser,
         setLoadedUser,
         contractOrEntidadeUpdated,

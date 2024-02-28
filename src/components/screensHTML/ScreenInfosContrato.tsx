@@ -34,10 +34,17 @@ export default function ScreensInfosContrato(
                 {contrato.resp_frete ?? 'N/A'}
               </p>
               <p>
-                <strong>Pedido Mínimo:</strong> {contrato.pedido_min ?? 'N/A'}
+                <strong>Tipo Contrato:</strong> {contrato.tipocontrato ?? 'N/A'}
+              </p>
+              <p>
+                <strong>Valor Contrato:</strong>{' '}
+                {contrato.valorcontrato ?? 'N/A'}
               </p>
             </div>
             <div className={styles.conteinerInfos}>
+              <p>
+                <strong>Pedido Mínimo:</strong> {contrato.pedido_min ?? 'N/A'}
+              </p>
               <p>
                 <strong>Reajuste:</strong>{' '}
                 {contrato.reajuste_igpm_ipca ?? 'N/A'}

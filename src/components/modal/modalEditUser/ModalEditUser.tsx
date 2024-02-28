@@ -94,9 +94,21 @@ const ModalEditUser: React.FC<ModalProps> = ({
       });
 
       const entidadesEscolares = await backendApi.todasEntidadesEscolares();
+      const sortedEntidades = entidadesEscolares.sort((a, b) => {
+        const nomeA = a.nome_operacional.toUpperCase();
+        const nomeB = b.nome_operacional.toUpperCase();
+        if (nomeA < nomeB) {
+          return -1;
+        }
+        if (nomeA > nomeB) {
+          return 1;
+        }
+
+        return 0;
+      });
 
       setEntidadesEscolaresData(
-        entidadesEscolares.map((school) => ({
+        sortedEntidades.map((school) => ({
           id: school.id || '',
           nome_operacional: school.nome_operacional || '',
         })),

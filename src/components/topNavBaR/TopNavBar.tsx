@@ -58,8 +58,10 @@ export default function TopNavBar(props: TopNavBarProps) {
   function logOut() {
     setIsLoadingLogOut(false);
     router.replace('/login');
-    localStorage.clear();
-    Cookies.remove('auth_token');
+    setTimeout(() => {
+      localStorage.clear();
+      Cookies.remove('auth_token');
+    }, 1600);
   }
 
   const renderIcon = (IconComponent: React.ElementType) => (

@@ -21,6 +21,8 @@ interface FormData {
   tipoexclusividade: string | null;
   incentivos: string[] | null;
   qtdbolsas: string | null;
+  valorcontrato: string | null;
+  tipocontrato: string | null;
   repasse: string | null;
   comentario: string | null;
 }
@@ -45,6 +47,8 @@ export default function RegistrarInfosContrato(): JSX.Element {
     tipoexclusividade: null,
     incentivos: null,
     qtdbolsas: null,
+    tipocontrato: null,
+    valorcontrato: null,
     repasse: null,
     comentario: null,
   });
@@ -62,14 +66,29 @@ export default function RegistrarInfosContrato(): JSX.Element {
     }
   };
 
+  const limparValorContrato = (valor: string) => {
+    if (typeof valor === 'string') {
+      return valor.replace(/\D/g, '');
+    } else {
+      return String(valor).replace(/\D/g, '');
+    }
+  };
+
   const fetchData = async () => {
     const token = localStorage.getItem('auth_token');
     const backendApi = new BackendApiPost(`${token}`);
+
+    const valorContratoLimpo = limparValorContrato(
+      formData.valorcontrato ?? '',
+    );
+
     try {
       const requestBody = {
         ...formData,
         uuid_ec: idContrato,
+        valorcontrato: valorContratoLimpo,
       };
+
       await backendApi.registrarInfosContrato(requestBody);
       setPage(PageEnumContratos.infosContrato);
     } catch (error) {
@@ -90,7 +109,7 @@ export default function RegistrarInfosContrato(): JSX.Element {
 
     let updatedValue: any;
 
-    if (['ativo'].includes(name) || ['exclusividade'].includes(name)) {
+    if (['exclusividade'].includes(name)) {
       updatedValue = value === 'true' ? true : value === 'false' ? false : null;
     } else {
       updatedValue = value;
@@ -368,18 +387,31 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Status*
-        <select
-          value={formData.ativo === null ? '' : formData.ativo.toString()}
+        Valor do contrato*
+        <InputMask
+          mask={'9999999'}
+          type="text"
+          placeholder="Valor do contrato"
+          name="valorcontrato"
+          value={formData.valorcontrato}
           onChange={handleInputChange}
-          name="ativo"
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Tipo*
+        <select
+          value={formData.tipocontrato}
+          onChange={handleInputChange}
+          name="tipocontrato"
           className={styles.inputSelect}
         >
           <option value="">-</option>
-          <option value="true">Ativo</option>
-          <option value="false">Inativo</option>
+          <option value="B2B">B2B</option>
+          <option value="B2C">B2C</option>
         </select>
       </label>
+
       <label className={styles.labelStandard}>
         Comentário
         <MultilineInputSSR

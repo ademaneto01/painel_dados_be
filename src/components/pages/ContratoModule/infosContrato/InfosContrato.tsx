@@ -95,7 +95,7 @@ export default function InfosContrato(): JSX.Element {
   const { data, idInfos, setLoaded, loaded, error, msgError } =
     useFetchInfosContrato();
   const [modalDelete, setModaldelete] = useState(false);
-  const { setPage } = useGlobalContext();
+  const { setPage, modalSucessoSubsContrato } = useGlobalContext();
 
   if (!loaded) {
     return <Loader />;

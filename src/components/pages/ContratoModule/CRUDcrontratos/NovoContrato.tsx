@@ -18,8 +18,7 @@ interface FormData {
   uf: string;
   bairro: string;
   complemento: string;
-  valorcontrato: string;
-  tipocontrato: string;
+
   bo_rede: boolean | null;
 }
 
@@ -34,8 +33,7 @@ export default function NovoContrato(): JSX.Element {
     uf: '',
     bairro: '',
     complemento: '',
-    tipocontrato: '',
-    valorcontrato: '',
+
     bo_rede: null,
   });
 
@@ -51,19 +49,12 @@ export default function NovoContrato(): JSX.Element {
       setMsgError('Ocorreu um erro desconhecido.');
     }
   };
-  const limparValorContrato = (valor: string) => {
-    return valor.replace(/\D/g, '');
-  };
+
   const fetchData = async () => {
-    const valorContratoLimpo = limparValorContrato(formData.valorcontrato);
-    const formDataAtualizado = {
-      ...formData,
-      valorcontrato: valorContratoLimpo,
-    };
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiPost(`${token}`);
-      await backendApi.registrarContrato(formDataAtualizado);
+      await backendApi.registrarContrato(formData);
       setPage(PageEnumContratos.entidadesContratuais);
     } catch (error) {
       handleApiErrors(error);
@@ -295,32 +286,6 @@ const FormComponent: React.FC<any> = ({
           className={styles.inputStandard}
         />
       </label>
-      <label className={styles.labelStandard}>
-        Valor do contrato*
-        <InputMask
-          mask={'9999999'}
-          type="text"
-          placeholder="Valor do contrato"
-          name="valorcontrato"
-          value={formData.valorcontrato}
-          onChange={handleInputChange}
-          className={styles.inputStandard}
-        />
-      </label>
-      <label className={styles.labelStandard}>
-        Tipo*
-        <select
-          value={formData.tipocontrato}
-          onChange={handleInputChange}
-          name="tipocontrato"
-          className={styles.inputSelect}
-        >
-          <option value="">-</option>
-          <option value="B2B">B2B</option>
-          <option value="B2C">B2C</option>
-        </select>
-      </label>
-
       <label className={styles.labelStandard}>
         Rede*
         <select

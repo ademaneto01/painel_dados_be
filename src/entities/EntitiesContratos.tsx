@@ -11,8 +11,6 @@ interface ContractProps {
   uf: string;
   bairro: string;
   complemento: string;
-  tipocontrato: string;
-  valorcontrato: string;
   ativo: boolean;
   bo_rede: boolean;
   qtdescolas: string;
@@ -29,8 +27,6 @@ export default class EntitiesContratos {
   readonly uf: string;
   readonly bairro: string;
   readonly complemento: string;
-  readonly tipocontrato: string;
-  readonly valorcontrato: string;
   readonly ativo: boolean;
   readonly bo_rede: boolean;
   readonly qtdescolas: string;
@@ -46,8 +42,6 @@ export default class EntitiesContratos {
     uf,
     bairro,
     complemento,
-    tipocontrato,
-    valorcontrato,
     ativo,
     bo_rede,
     qtdescolas,
@@ -62,8 +56,6 @@ export default class EntitiesContratos {
     this.uf = uf;
     this.bairro = bairro;
     this.complemento = complemento;
-    this.tipocontrato = tipocontrato;
-    this.valorcontrato = valorcontrato;
     this.ativo = ativo;
     this.bo_rede = bo_rede;
     this.qtdescolas = qtdescolas;

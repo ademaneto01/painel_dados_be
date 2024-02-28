@@ -7,7 +7,6 @@ interface InfosContratoMockPayload {
   ano_assinatura: string;
   ano_operacao: string;
   ano_termino: string;
-  ativo: boolean;
   resp_frete: string;
   pedido_min: number;
   reajuste_igpm_ipca: string;
@@ -15,6 +14,8 @@ interface InfosContratoMockPayload {
   tipoexclusividade: string;
   incentivos: string[];
   qtdbolsas: string;
+  tipocontrato: string;
+  valorcontrato: string;
   repasse: string;
   comentario: string;
 }
@@ -27,7 +28,6 @@ export default class InfosContratoSerializers implements SerializerInterface {
       ano_assinatura: otd.ano_assinatura,
       ano_operacao: otd.ano_operacao,
       ano_termino: otd.ano_termino,
-      ativo: otd.ativo,
       resp_frete: otd.resp_frete,
       pedido_min: otd.pedido_min,
       reajuste_igpm_ipca: otd.reajuste_igpm_ipca,
@@ -35,6 +35,8 @@ export default class InfosContratoSerializers implements SerializerInterface {
       tipoexclusividade: otd.tipoexclusividade,
       incentivos: otd.incentivos,
       qtdbolsas: otd.qtdbolsas,
+      tipocontrato: otd.tipocontrato,
+      valorcontrato: otd.valorcontrato,
       repasse: otd.repasse,
       comentario: otd.comentario,
     });

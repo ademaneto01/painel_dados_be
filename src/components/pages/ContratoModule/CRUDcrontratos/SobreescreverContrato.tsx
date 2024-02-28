@@ -2,11 +2,10 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import styles from '@/styles/NovoContrato.module.css';
 import { BackendApiGet, BackendApiPut } from '@/backendApi';
-import { ErrorComponent } from '@/errors/index';
+import { ComponentInfos, ErrorComponent } from '@/errors/index';
 import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
-import validaCNPJ from '@/validations/validaCNPJ';
 
 interface FormData {
   nome_simplificado: string | null;
@@ -18,8 +17,6 @@ interface FormData {
   uf: string;
   bairro: string | null;
   complemento: string | null;
-  tipocontrato: string | null;
-  valorcontrato: string | null;
   bo_rede: boolean | null;
 }
 
@@ -27,7 +24,13 @@ export default function SobreescreverContrato(): JSX.Element {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const { idContrato, setPage } = useGlobalContext();
+  const {
+    idContrato,
+    setPage,
+    setModalSucessoSubsContrato,
+    modalSucessoSubsContrato,
+    setSaveInfosContrato,
+  } = useGlobalContext();
   const [formData, setFormData] = useState<FormData>({
     nome_simplificado: '',
     razao_social: '',
@@ -38,8 +41,6 @@ export default function SobreescreverContrato(): JSX.Element {
     uf: '',
     bairro: '',
     complemento: '',
-    tipocontrato: '',
-    valorcontrato: '',
     bo_rede: null,
   });
 
@@ -60,8 +61,6 @@ export default function SobreescreverContrato(): JSX.Element {
         uf: response[0]?.uf || '',
         bairro: response[0]?.bairro || '',
         complemento: response[0]?.complemento || '',
-        tipocontrato: response[0]?.tipocontrato || '',
-        valorcontrato: response[0]?.valorcontrato || '',
         bo_rede: response[0].bo_rede,
       });
     }
@@ -86,7 +85,25 @@ export default function SobreescreverContrato(): JSX.Element {
       setMsgError('Ocorreu um erro desconhecido.');
     }
   };
-
+  const findOldInfos = async () => {
+    setPage(PageEnumContratos.editarInfosContrato);
+    try {
+      const token = localStorage.getItem('auth_token');
+      const backendApi = new BackendApiGet(`${token}`);
+      const oldInfos = await backendApi.listarInfosContrato(idContrato);
+      setSaveInfosContrato(oldInfos);
+    } catch (error) {
+      handleApiErrors(error);
+    } finally {
+      setLoaded(true);
+    }
+  };
+  const handleModal = () => {
+    setModalSucessoSubsContrato(true);
+    setTimeout(() => {
+      setModalSucessoSubsContrato(false);
+    }, 3000);
+  };
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('auth_token');
@@ -99,88 +116,43 @@ export default function SobreescreverContrato(): JSX.Element {
     } finally {
       setLoaded(true);
     }
-    setPage(PageEnumContratos.entidadesContratuais);
   };
 
-  // const fetchEndereco = async (cep: string) => {
-  //   try {
-  //     cep = cep.replace(/-/g, '');
-  //     for (const validaCep of cep) {
-  //       if (validaCep === '_') {
-  //         return null;
-  //       }
-  //     }
-  //     if (cep.length !== 8) {
-  //       return null;
-  //     }
-  //     if (cep.length === 8) {
-  //       const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-  //       const data = await response.json();
+  const findOldInfosToValidate = async () => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const backendApi = new BackendApiGet(`${token}`);
+      const oldInfos = await backendApi.listarInfosContrato(idContrato);
+      return oldInfos;
+    } catch (error) {
+      handleApiErrors(error);
+    } finally {
+      setLoaded(true);
+    }
+  };
 
-  //       if (!data.erro) {
-  //         setFormData((prev) => ({
-  //           ...prev,
-  //           endereco: data.logradouro,
-  //           cidade: data.localidade,
-  //           uf: data.uf,
-  //           bairro: data.bairro,
-  //           complemento: data.complemento,
-  //         }));
-  //       } else {
-  //         setError(true);
-  //         setMsgError('CEP não encontrato...');
-  //         setTimeout(() => setError(false), 5000);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     setError(true);
-  //     setMsgError('Erro ao buscar o CEP...');
-  //   }
-  // };
-
-  // const validateForm = (): boolean => {
-  //   const errors: string[] = [];
-  //   if (Object.values(formData).some((v) => v === '' || v === null)) {
-  //     errors.push('Informe os campos obrigatórios.');
-  //   }
-  //   if (formData.uf.length > 2) {
-  //     errors.push('Campo UF é permitido somente dois caracteres...');
-  //   }
-  //   if (formData.cnpj_cont) {
-  //     if (!validaCNPJ(formData.cnpj_cont)) {
-  //       errors.push('CNPJ inválido...');
-  //     }
-  //   }
-  //   if (errors.length) {
-  //     setError(true);
-  //     setMsgError(errors.join(' '));
-  //     setTimeout(() => setError(false), 6000);
-  //     return false;
-  //   }
-  //   return true;
-  // };
-
-  // const handleInputChange = (
-  //   e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  // ) => {
-  //   const { name, value } = e.target;
-
-  //   if (name === 'cep') {
-  //     fetchEndereco(value);
-  //   }
-  //   const booleanValue =
-  //     value === 'true' ? true : value === 'false' ? false : null;
-  //   const updatedValue = ['ativo', 'bo_rede'].includes(name)
-  //     ? booleanValue
-  //     : value;
-  //   setFormData((prev) => ({ ...prev, [name]: updatedValue }));
-  // };
-
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    fetchData();
-    // if (validateForm()) {
-    // }
+    const oldInfosToValidade = await findOldInfosToValidate();
+    if (oldInfosToValidade && oldInfosToValidade.length > 0) {
+      handleModal();
+      //AGUARDA O MODAL POPULAR PARA ENCONTRAR AS INFOS ANTIGAS DO CONTRATO A SER SUBSTITUIDA
+      setTimeout(() => {
+        findOldInfos();
+      }, 3500);
+      // SUBSTITUI O CONTRATO, AGUARDO LOCALIZAR O CONTRATO ANTIGO POIS APOS SER SUBSTIUIDO ALTERA O ID DA INFOS E NAO É POSSIVEL MAIS ENCONTRAR AS INFOS ANTIGAS E POPULAR ELAS NA PAGE DE EDIÇÃO DE INFOS
+      setTimeout(() => {
+        fetchData();
+      }, 3650);
+    } else {
+      setError(true);
+      setMsgError(
+        'Não existem informações a serem substituídas para o contrato selecionado..',
+      );
+      setTimeout(() => {
+        setError(false);
+      }, 3500);
+    }
   };
 
   return (
@@ -190,11 +162,17 @@ export default function SobreescreverContrato(): JSX.Element {
         <NavigationButtons setPage={setPage} />
         <FormComponent
           formData={formData}
-          // handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
           setPage={setPage}
         />
         {error && <ErrorComponent message={msgError} />}
+        {modalSucessoSubsContrato && (
+          <ComponentInfos
+            message={
+              'O contrato foi substituído com êxito. Por Favor, forneça as novas informações'
+            }
+          />
+        )}
       </PageContentContainer>
     </div>
   );
@@ -214,12 +192,7 @@ const NavigationButtons: React.FC<any> = ({ setPage }) => (
   </div>
 );
 
-const FormComponent: React.FC<any> = ({
-  formData,
-  // handleInputChange,
-  handleSubmit,
-  setPage,
-}) => {
+const FormComponent: React.FC<any> = ({ formData, handleSubmit, setPage }) => {
   return (
     <form className={styles.boxForm} onSubmit={handleSubmit}>
       <label className={styles.labelStandard}>
@@ -229,7 +202,6 @@ const FormComponent: React.FC<any> = ({
           placeholder="Nome Simplificado"
           name="nome_simplificado"
           value={formData.nome_simplificado ?? ''}
-          // onChange={handleInputChange}
           className={styles.inputStandard}
           readOnly
         />
@@ -241,7 +213,6 @@ const FormComponent: React.FC<any> = ({
           placeholder="Razão Social"
           name="razao_social"
           value={formData.razao_social ?? ''}
-          // onChange={handleInputChange}
           className={styles.inputStandard}
           readOnly
         />
@@ -254,7 +225,6 @@ const FormComponent: React.FC<any> = ({
           placeholder="CNPJ"
           name="cnpj_cont"
           value={formData.cnpj_cont ?? ''}
-          // onChange={handleInputChange}
           className={styles.inputStandard}
           readOnly
         />
@@ -267,7 +237,6 @@ const FormComponent: React.FC<any> = ({
           mask="99999-999"
           name="cep"
           value={formData.cep ?? ''}
-          // onChange={handleInputChange}
           className={styles.inputStandard}
           readOnly
         />
@@ -279,7 +248,6 @@ const FormComponent: React.FC<any> = ({
           placeholder="Rua"
           name="endereco"
           value={formData.endereco ?? ''}
-          // onChange={handleInputChange}
           className={styles.inputStandard}
           readOnly
         />
@@ -291,7 +259,6 @@ const FormComponent: React.FC<any> = ({
           placeholder="Cidade"
           name="cidade"
           value={formData.cidade ?? ''}
-          // onChange={handleInputChange}
           className={styles.inputStandard}
           readOnly
         />
@@ -303,7 +270,6 @@ const FormComponent: React.FC<any> = ({
           placeholder="UF"
           name="uf"
           value={formData.uf ?? ''}
-          // onChange={handleInputChange}
           className={styles.inputStandard}
           readOnly
         />
@@ -315,7 +281,6 @@ const FormComponent: React.FC<any> = ({
           placeholder="Bairro"
           name="bairro"
           value={formData.bairro ?? ''}
-          // onChange={handleInputChange}
           className={styles.inputStandard}
           readOnly
         />
@@ -327,31 +292,6 @@ const FormComponent: React.FC<any> = ({
           placeholder="Complemento"
           name="complemento"
           value={formData.complemento ?? ''}
-          // onChange={handleInputChange}
-          className={styles.inputStandard}
-          readOnly
-        />
-      </label>
-      <label className={styles.labelStandard}>
-        Valor do contrato*
-        <input
-          type="text"
-          placeholder="Valor do contrato"
-          name="valorcontrato"
-          value={formData.valorcontrato ?? ''}
-          // onChange={handleInputChange}
-          className={styles.inputStandard}
-          readOnly
-        />
-      </label>
-      <label className={styles.labelStandard}>
-        Tipo*
-        <input
-          type="text"
-          placeholder="Tipo do contrato"
-          value={formData.tipocontrato ?? ''}
-          // onChange={handleInputChange}
-          name="tipocontrato"
           className={styles.inputStandard}
           readOnly
         />
@@ -368,7 +308,6 @@ const FormComponent: React.FC<any> = ({
               ? 'Inativa'
               : ''
           }
-          // onChange={handleInputChange}
           name="bo_rede"
           className={styles.inputStandard}
           readOnly

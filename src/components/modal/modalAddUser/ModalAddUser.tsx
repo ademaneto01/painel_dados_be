@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
 import { BackendApiGet, BackendApiPost } from '@/backendApi';
-import { useGlobalContext } from '@/context/store';
 import { ErrorComponent } from '@/errors/index';
 
 interface FormData {
@@ -41,12 +40,12 @@ const ModalAddUser: React.FC<ModalProps> = ({
     id_ee: '',
     isPasswordMatch: true,
   });
-  const [loaded, setLoaded] = useState(false);
+
   const [error, setError] = useState(false);
   const [entidadesEscolaresData, setEntidadesEscolaresData] = useState<
     EntidadesEscolaresData[]
   >([]);
-  const { setLoadedUser } = useGlobalContext();
+
   const [msgError, setMsgError] = useState('');
 
   const handleInputChange = (
@@ -82,8 +81,22 @@ const ModalAddUser: React.FC<ModalProps> = ({
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiGet(`${token}`);
       const response = await backendApi.todasEntidadesEscolares();
+
+      const sortedEntidades = response.sort((a, b) => {
+        const nomeA = a.nome_operacional.toUpperCase();
+        const nomeB = b.nome_operacional.toUpperCase();
+        if (nomeA < nomeB) {
+          return -1;
+        }
+        if (nomeA > nomeB) {
+          return 1;
+        }
+
+        return 0;
+      });
+
       setEntidadesEscolaresData(
-        response.map((school) => ({
+        sortedEntidades.map((school) => ({
           id: school.id || '',
           nome_operacional: school.nome_operacional || '',
         })),

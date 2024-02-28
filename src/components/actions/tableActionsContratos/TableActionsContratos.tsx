@@ -130,9 +130,9 @@ export default function TableActionsContratos(
           >
             <div className={styles.modal}>
               <button onClick={handleEditClick}>Editar Contrato</button>
-              {/* <button onClick={handleOverwriteClick}>
-                Sobreescrever Contrato
-              </button> */}
+              <button onClick={handleOverwriteClick}>
+                Substituir Contrato
+              </button>
               <button onClick={handleInfosContratoClick}>Infos Contrato</button>
               <button onClick={handleVisualizarDocs}>
                 Visualizar Documentos

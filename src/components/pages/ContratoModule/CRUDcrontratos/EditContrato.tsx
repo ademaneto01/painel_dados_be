@@ -18,8 +18,6 @@ interface FormData {
   uf: string | null;
   bairro: string | null;
   complemento: string | null;
-  tipocontrato: string | null;
-  valorcontrato: string | null;
   bo_rede: boolean | null;
 }
 
@@ -38,8 +36,6 @@ export default function EditContrato(): JSX.Element {
     uf: '',
     bairro: '',
     complemento: '',
-    tipocontrato: '',
-    valorcontrato: '',
     bo_rede: null,
   });
 
@@ -61,8 +57,6 @@ export default function EditContrato(): JSX.Element {
         uf: response[0]?.uf || '',
         bairro: response[0]?.bairro || '',
         complemento: response[0]?.complemento || '',
-        tipocontrato: response[0]?.tipocontrato || '',
-        valorcontrato: response[0]?.valorcontrato || '',
         bo_rede: response[0].bo_rede,
       });
     }
@@ -123,15 +117,7 @@ export default function EditContrato(): JSX.Element {
     }
   };
 
-  const limparValorContrato = (valor: string) => {
-    return valor.replace(/\D/g, '');
-  };
-
   const fetchData = async () => {
-    const valorContratoLimpo = limparValorContrato(
-      formData.valorcontrato ?? '',
-    );
-
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiPut(`${token}`);
@@ -146,8 +132,6 @@ export default function EditContrato(): JSX.Element {
         uf: formData.uf,
         bairro: formData.bairro,
         complemento: formData.complemento,
-        tipocontrato: formData.tipocontrato,
-        valorcontrato: valorContratoLimpo,
         bo_rede: formData.bo_rede,
       });
     } catch (error) {
@@ -345,32 +329,6 @@ const FormComponent: React.FC<any> = ({
           className={styles.inputStandard}
         />
       </label>
-      <label className={styles.labelStandard}>
-        Valor do contrato*
-        <InputMask
-          mask={'9999999'}
-          type="text"
-          placeholder="Valor do contrato"
-          name="valorcontrato"
-          value={formData.valorcontrato ?? ''}
-          onChange={handleInputChange}
-          className={styles.inputStandard}
-        />
-      </label>
-      <label className={styles.labelStandard}>
-        Tipo*
-        <select
-          value={formData.tipocontrato ?? ''}
-          onChange={handleInputChange}
-          name="tipocontrato"
-          className={styles.inputSelect}
-        >
-          <option value="">-</option>
-          <option value="B2B">B2B</option>
-          <option value="B2C">B2C</option>
-        </select>
-      </label>
-
       <label className={styles.labelStandard}>
         Rede*
         <select

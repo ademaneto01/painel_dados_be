@@ -13,7 +13,6 @@ interface FormData {
   ano_assinatura: string | null;
   ano_operacao: string | null;
   ano_termino: string | null;
-  ativo: boolean | null;
   resp_frete: string;
   pedido_min: number | null;
   reajuste_igpm_ipca: string | null;
@@ -21,6 +20,8 @@ interface FormData {
   tipoexclusividade: string | null;
   incentivos: string[] | null;
   qtdbolsas: string | null;
+  tipocontrato: string | null;
+  valorcontrato: string | null;
   repasse: string | null;
   comentario: string | null;
 }
@@ -37,7 +38,6 @@ export default function EditarInfosContrato(): JSX.Element {
     ano_assinatura: null,
     ano_operacao: null,
     ano_termino: null,
-    ativo: true,
     resp_frete: '',
     pedido_min: null,
     reajuste_igpm_ipca: null,
@@ -45,13 +45,15 @@ export default function EditarInfosContrato(): JSX.Element {
     tipoexclusividade: null,
     incentivos: null,
     qtdbolsas: null,
+    tipocontrato: null,
+    valorcontrato: null,
     repasse: null,
     comentario: null,
   });
   const [idInfos, setIdInfos] = useState('');
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const { setPage, idContrato } = useGlobalContext();
+  const { setPage, idContrato, saveInfosContrato } = useGlobalContext();
 
   const handleApiErrors = (error: any) => {
     setError(true);
@@ -62,14 +64,27 @@ export default function EditarInfosContrato(): JSX.Element {
     }
   };
 
+  const limparValorContrato = (valor: string) => {
+    if (typeof valor === 'string') {
+      return valor.replace(/\D/g, '');
+    } else {
+      return String(valor).replace(/\D/g, '');
+    }
+  };
+
   const fetchData = async () => {
     const token = localStorage.getItem('auth_token');
     const backendApi = new BackendApiPut(`${token}`);
+
+    const valorContratoLimpo = limparValorContrato(
+      formData.valorcontrato ?? '',
+    );
 
     const requestBody = {
       id: idInfos,
       ...formData,
       qtdbolsas: isBolsasSelected() ? formData.qtdbolsas : 0,
+      valorcontrato: valorContratoLimpo,
     };
 
     try {
@@ -83,6 +98,45 @@ export default function EditarInfosContrato(): JSX.Element {
   useEffect(() => {
     fetchDataInitial();
   }, []);
+
+  useEffect(() => {
+    if (saveInfosContrato && saveInfosContrato.length > 0) {
+      setFormData({
+        ano_assinatura: saveInfosContrato[0].ano_assinatura,
+        ano_operacao: saveInfosContrato[0].ano_operacao,
+        ano_termino: saveInfosContrato[0].ano_termino,
+        resp_frete: saveInfosContrato[0].resp_frete,
+        pedido_min: saveInfosContrato[0].pedido_min,
+        reajuste_igpm_ipca: saveInfosContrato[0].reajuste_igpm_ipca,
+        exclusividade: saveInfosContrato[0].exclusividade,
+        tipoexclusividade: saveInfosContrato[0].tipoexclusividade,
+        incentivos: saveInfosContrato[0].incentivos,
+        qtdbolsas: saveInfosContrato[0].qtdbolsas,
+        tipocontrato: saveInfosContrato[0].tipocontrato,
+        valorcontrato: saveInfosContrato[0].valorcontrato,
+        repasse: saveInfosContrato[0].repasse,
+        comentario: saveInfosContrato[0].comentario,
+      });
+      //CASO O FLUXO CHEGUE POR SUBSTITUIÇÃO DE CONTRATO, EU AGUARDO O TIMEOUT DE SUBSTITUIR INFOS CONTRATO DO COMPONENTE SOBRESCREVERCONTRATO, PARA ENTÃO EU CONSEGUIR PEGAR O NOVO ID CRIADO PARA A NOVA INFO, POIS QUANDO O FLUXO CHEGA AQUI A FUNÇÃO DE SUBSTIUIR CONTRATO AINDA NAO FOI CHAMADA NO COMPONENTE SOBREESCREVER CONTRATO ENTÃO O ID DA INFO AINDA É O ANTIGO.
+      setTimeout(() => {
+        fetchDataFindNewIdsubstituted();
+      }, 1700);
+    }
+  }, [saveInfosContrato]);
+
+  const fetchDataFindNewIdsubstituted = async () => {
+    const token = localStorage.getItem('auth_token');
+    const backendApi = new BackendApiGet(`${token}`);
+    try {
+      const infosContratoData = await backendApi.listarInfosContrato(
+        idContrato,
+      );
+
+      setIdInfos(infosContratoData[0].id);
+    } catch (error) {
+      handleApiErrors(error);
+    }
+  };
 
   const fetchDataInitial = async () => {
     const token = localStorage.getItem('auth_token');
@@ -98,7 +152,6 @@ export default function EditarInfosContrato(): JSX.Element {
         ano_assinatura: infosContratoData[0].ano_assinatura,
         ano_operacao: infosContratoData[0].ano_operacao,
         ano_termino: infosContratoData[0].ano_termino,
-        ativo: infosContratoData[0].ativo,
         resp_frete: infosContratoData[0].resp_frete,
         pedido_min: infosContratoData[0].pedido_min,
         reajuste_igpm_ipca: infosContratoData[0].reajuste_igpm_ipca,
@@ -106,11 +159,15 @@ export default function EditarInfosContrato(): JSX.Element {
         tipoexclusividade: infosContratoData[0].tipoexclusividade,
         incentivos: infosContratoData[0].incentivos,
         qtdbolsas: infosContratoData[0].qtdbolsas,
+        tipocontrato: infosContratoData[0].tipocontrato,
+        valorcontrato: infosContratoData[0].valorcontrato,
         repasse: infosContratoData[0].repasse,
         comentario: infosContratoData[0].comentario,
       });
     } catch (error) {
-      handleApiErrors(error);
+      if (!saveInfosContrato) {
+        handleApiErrors(error);
+      }
     }
   };
 
@@ -126,7 +183,7 @@ export default function EditarInfosContrato(): JSX.Element {
     const { name, value } = e.target;
 
     let updatedValue: any;
-    if (['ativo'].includes(name) || ['exclusividade'].includes(name)) {
+    if (['exclusividade'].includes(name)) {
       updatedValue = value === 'true' ? true : value === 'false' ? false : null;
     } else {
       updatedValue = value;
@@ -184,6 +241,7 @@ export default function EditarInfosContrato(): JSX.Element {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
     if (validateForm()) {
       fetchData();
     }
@@ -413,18 +471,31 @@ const FormComponent: React.FC<any> = ({
         />
       </label>
       <label className={styles.labelStandard}>
-        Status*
-        <select
-          value={formData.ativo === null ? '' : formData.ativo.toString()}
+        Valor do contrato*
+        <InputMask
+          mask={'9999999'}
+          type="text"
+          placeholder="Valor do contrato"
+          name="valorcontrato"
+          value={formData.valorcontrato ?? ''}
           onChange={handleInputChange}
-          name="ativo"
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        Tipo*
+        <select
+          value={formData.tipocontrato ?? ''}
+          onChange={handleInputChange}
+          name="tipocontrato"
           className={styles.inputSelect}
         >
           <option value="">-</option>
-          <option value="true">Ativo</option>
-          <option value="false">Inativo</option>
+          <option value="B2B">B2B</option>
+          <option value="B2C">B2C</option>
         </select>
       </label>
+
       <label className={styles.labelStandard}>
         Comentário
         <MultilineInputSSR
