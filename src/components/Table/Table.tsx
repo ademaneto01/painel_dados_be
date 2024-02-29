@@ -277,11 +277,15 @@ export default function Table<T>(props: TableProps<T>): JSX.Element {
                     );
                   })
                 ) : (
-                  <div className={styles.errorNotDados}>
-                    <span className={styles.errorNotDadosSpan}>
-                      Ainda não existem dados cadastrados...
-                    </span>
-                  </div>
+                  <tr>
+                    <td colSpan={props.columns.length}>
+                      <div className={styles.errorNotDados}>
+                        <span className={styles.errorNotDadosSpan}>
+                          Ainda não existem dados cadastrados...
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>
