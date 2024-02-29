@@ -139,11 +139,11 @@ export default function SobreescreverContrato(): JSX.Element {
       //AGUARDA O MODAL POPULAR PARA ENCONTRAR AS INFOS ANTIGAS DO CONTRATO A SER SUBSTITUIDA
       setTimeout(() => {
         findOldInfos();
-      }, 3500);
+      }, 3600);
       // SUBSTITUI O CONTRATO, AGUARDO LOCALIZAR O CONTRATO ANTIGO POIS APOS SER SUBSTIUIDO ALTERA O ID DA INFOS E NAO É POSSIVEL MAIS ENCONTRAR AS INFOS ANTIGAS E POPULAR ELAS NA PAGE DE EDIÇÃO DE INFOS
       setTimeout(() => {
         fetchData();
-      }, 3650);
+      }, 4050);
     } else {
       setError(true);
       setMsgError(

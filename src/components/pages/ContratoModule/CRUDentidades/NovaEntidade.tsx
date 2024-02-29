@@ -345,7 +345,7 @@ const FormComponent: React.FC<any> = ({
       <label className={styles.labelStandard}>
         INEP*
         <InputMask
-          mask={'9999999'}
+          mask={'99999999'}
           type="text"
           placeholder="INEP"
           name="inep"
