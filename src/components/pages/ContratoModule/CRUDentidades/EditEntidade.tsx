@@ -24,6 +24,7 @@ interface FormData {
   facebook: string | null;
   linkwhats: string | null;
   uuid_ec: string | null;
+  inep: string | null;
   id_usuario_pdg: string | null;
 }
 
@@ -49,6 +50,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
     linkwhats: '',
     uuid_ec: '',
     id_usuario_pdg: '',
+    inep: '',
   });
 
   useEffect(() => {
@@ -78,6 +80,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
         facebook: response[0]?.facebook || '',
         linkwhats: response[0]?.linkwhats || '',
         uuid_ec: response[0]?.uuid_ec || '',
+        inep: response[0]?.inep || '',
         id_usuario_pdg: response[0]?.id_usuario_pdg || '',
       });
     }
@@ -113,12 +116,24 @@ export default function EditEntidadeEscolar(): JSX.Element {
       setMsgError('Ocorreu um erro desconhecido.');
     }
   };
+  const limparValorInep = (valor: string) => {
+    if (typeof valor === 'string') {
+      return valor.replace(/\D/g, '');
+    } else {
+      return String(valor).replace(/\D/g, '');
+    }
+  };
 
   const fetchData = async () => {
+    const valorInepLimpo = limparValorInep(formData.inep ?? '');
+    const requestBody = {
+      ...formData,
+      inep: valorInepLimpo,
+    };
     try {
       const token = localStorage.getItem('auth_token');
       const backendApi = new BackendApiPut(`${token}`);
-      await backendApi.editarEntidadeEscolar(formData);
+      await backendApi.editarEntidadeEscolar(requestBody);
     } catch (error) {
       handleApiErrors(error);
     } finally {
@@ -364,6 +379,18 @@ const FormComponent: React.FC<any> = ({
           placeholder="Complemento"
           name="complemento"
           value={formData.complemento ?? ''}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        INEP*
+        <InputMask
+          mask={'9999999'}
+          type="text"
+          placeholder="INEP"
+          name="inep"
+          value={formData.inep}
           onChange={handleInputChange}
           className={styles.inputStandard}
         />

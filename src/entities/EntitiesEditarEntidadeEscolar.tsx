@@ -18,6 +18,7 @@ interface EntidadesEscolaresProps {
   linkwhats: string;
   id_usuario_pdg: string;
   complemento: string;
+  inep: string;
   ativo: boolean;
 }
 
@@ -38,6 +39,7 @@ export default class EntitiesEditarEntidadeEscolar {
   readonly linkwhats: string;
   readonly id_usuario_pdg: string;
   readonly complemento: string;
+  readonly inep: string;
   readonly ativo: boolean;
 
   constructor({
@@ -57,6 +59,7 @@ export default class EntitiesEditarEntidadeEscolar {
     linkwhats,
     id_usuario_pdg,
     complemento,
+    inep,
     ativo,
   }: EntidadesEscolaresProps) {
     this.id = id;
@@ -75,6 +78,7 @@ export default class EntitiesEditarEntidadeEscolar {
     this.linkwhats = linkwhats;
     this.id_usuario_pdg = id_usuario_pdg;
     this.complemento = complemento;
+    this.inep = inep;
     this.ativo = ativo;
   }
   public get acoes(): JSX.Element {

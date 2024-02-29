@@ -18,6 +18,7 @@ interface UsersMockPayload {
   linkwhats: string;
   id_usuario_pdg: string;
   complemento: string;
+  inep: string;
   ativo: boolean;
 }
 
@@ -42,6 +43,7 @@ export default class EditarEntidadeEscolarSerializers
       linkwhats: otd.linkwhats,
       id_usuario_pdg: otd.id_usuario_pdg,
       complemento: otd.complemento,
+      inep: otd.inep,
       ativo: otd.ativo,
     });
   }

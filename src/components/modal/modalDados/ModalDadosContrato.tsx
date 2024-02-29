@@ -15,8 +15,6 @@ interface FormData {
   uf: string;
   bairro: string;
   complemento: string;
-  tipocontrato: string;
-  valorcontrato: string;
   qtdescolas: string;
 }
 interface ModalProps {
@@ -43,8 +41,6 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
     uf: '',
     bairro: '',
     complemento: '',
-    tipocontrato: '',
-    valorcontrato: '',
     qtdescolas: '',
   });
   const [loaded, setLoaded] = useState(false);
@@ -71,8 +67,6 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
         uf: response[0].uf,
         bairro: response[0].bairro,
         complemento: response[0].complemento,
-        tipocontrato: response[0].tipocontrato,
-        valorcontrato: response[0].valorcontrato,
         qtdescolas: response[0].qtdescolas,
       });
     } catch (error: any) {
@@ -127,14 +121,6 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
               <div>
                 <span className={styles.label}>QTD. Escolas:</span>{' '}
                 {formData.qtdescolas ?? 'N/A'}
-              </div>
-              <div>
-                <span className={styles.label}>Tipo:</span>{' '}
-                {formData.tipocontrato ?? 'N/A'}
-              </div>
-              <div>
-                <span className={styles.label}>Valor do contrato:</span>{' '}
-                {formData.valorcontrato ?? 'N/A'}
               </div>
             </div>
             <div className={styles.dadosColumn}>

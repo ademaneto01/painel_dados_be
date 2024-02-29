@@ -22,6 +22,7 @@ interface FormData {
   instagram: string;
   facebook: string;
   linkwhats: string;
+  inep: string;
   id_usuario_pdg: string;
 }
 
@@ -39,6 +40,7 @@ export default function NovaEntidade(): JSX.Element {
     instagram: '',
     facebook: '',
     linkwhats: '',
+    inep: '',
     id_usuario_pdg: '',
   });
 
@@ -60,14 +62,23 @@ export default function NovaEntidade(): JSX.Element {
     fetchUserPDGData();
   }, []);
 
+  const limparValorInep = (valor: string) => {
+    if (typeof valor === 'string') {
+      return valor.replace(/\D/g, '');
+    } else {
+      return String(valor).replace(/\D/g, '');
+    }
+  };
   const fetchData = async () => {
     const token = localStorage.getItem('auth_token');
     const backendApi = new BackendApiPost(`${token}`);
+    const valorInepLimpo = limparValorInep(formData.inep ?? '');
+    const requestBody = {
+      ...formData,
+      uuid_ec: idContrato,
+      inep: valorInepLimpo,
+    };
     try {
-      const requestBody = {
-        ...formData,
-        uuid_ec: idContrato,
-      };
       await backendApi.registrarEntidadeEscolar(requestBody);
       setPage(PageEnumContratos.entidadesContratuais);
     } catch (error) {
@@ -327,6 +338,18 @@ const FormComponent: React.FC<any> = ({
           placeholder="Complemento"
           name="complemento"
           value={formData.complemento}
+          onChange={handleInputChange}
+          className={styles.inputStandard}
+        />
+      </label>
+      <label className={styles.labelStandard}>
+        INEP*
+        <InputMask
+          mask={'9999999'}
+          type="text"
+          placeholder="INEP"
+          name="inep"
+          value={formData.inep}
           onChange={handleInputChange}
           className={styles.inputStandard}
         />

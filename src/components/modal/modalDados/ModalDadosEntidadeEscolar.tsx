@@ -18,6 +18,7 @@ interface FormData {
   cidade: string;
   uf: string;
   bairro: string;
+  inep: string;
   complemento: string;
 }
 interface ModalProps {
@@ -49,6 +50,7 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
     cidade: '',
     uf: '',
     bairro: '',
+    inep: '',
     complemento: '',
   });
   const [usuarioPDG, setUsuarioPDG] = useState<EntitiesUsersPDG[]>([]);
@@ -78,6 +80,7 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
         cidade: response[0].cidade,
         uf: response[0].uf,
         bairro: response[0].bairro,
+        inep: response[0].inep,
         complemento: response[0].complemento,
       });
       const usuariosPDG = await backendApi.localizarUsuariosPDG();
@@ -163,6 +166,11 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
               </div>
             </div>
             <div className={styles.dadosColumn}>
+              <div>
+                <span className={styles.label}>
+                  INEP: {formData.inep ? formData.inep : 'N/A'}
+                </span>
+              </div>
               <div>
                 <span className={styles.label}>
                   Rua: {formData.endereco?.trim() ? formData.endereco : 'N/A'}
