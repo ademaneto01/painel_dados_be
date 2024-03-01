@@ -93,6 +93,7 @@ export default function EditarInfosContrato(): JSX.Element {
       if (saveInfosContratoOld) {
         const temp = false;
         const ativo = false;
+
         const requestBodyEditarOldInfos = {
           id: oldIdInfos,
           temp,
