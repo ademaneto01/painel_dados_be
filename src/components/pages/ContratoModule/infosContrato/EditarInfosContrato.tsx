@@ -51,9 +51,11 @@ export default function EditarInfosContrato(): JSX.Element {
     comentario: null,
   });
   const [idInfos, setIdInfos] = useState('');
+  const [oldIdInfos, setOldIdInfos] = useState('');
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const { setPage, idContrato, saveInfosContrato } = useGlobalContext();
+  const { setPage, idContrato, saveInfosContratoOld, setSaveInfosContratoOld } =
+    useGlobalContext();
 
   const handleApiErrors = (error: any) => {
     setError(true);
@@ -88,7 +90,18 @@ export default function EditarInfosContrato(): JSX.Element {
     };
 
     try {
+      if (saveInfosContratoOld) {
+        const temp = false;
+        const ativo = false;
+        const requestBodyEditarOldInfos = {
+          id: oldIdInfos,
+          temp,
+          ativo,
+        };
+        await backendApi.editarInfosContratoTemp(requestBodyEditarOldInfos);
+      }
       await backendApi.editarInfosContrato(requestBody);
+      setSaveInfosContratoOld(false);
       setPage(PageEnumContratos.infosContrato);
     } catch (error) {
       handleApiErrors(error);
@@ -96,43 +109,42 @@ export default function EditarInfosContrato(): JSX.Element {
   };
 
   useEffect(() => {
-    fetchDataInitial();
-  }, []);
-
-  useEffect(() => {
-    if (saveInfosContrato && saveInfosContrato.length > 0) {
-      setFormData({
-        ano_assinatura: saveInfosContrato[0].ano_assinatura,
-        ano_operacao: saveInfosContrato[0].ano_operacao,
-        ano_termino: saveInfosContrato[0].ano_termino,
-        resp_frete: saveInfosContrato[0].resp_frete,
-        pedido_min: saveInfosContrato[0].pedido_min,
-        reajuste_igpm_ipca: saveInfosContrato[0].reajuste_igpm_ipca,
-        exclusividade: saveInfosContrato[0].exclusividade,
-        tipoexclusividade: saveInfosContrato[0].tipoexclusividade,
-        incentivos: saveInfosContrato[0].incentivos,
-        qtdbolsas: saveInfosContrato[0].qtdbolsas,
-        tipocontrato: saveInfosContrato[0].tipocontrato,
-        valorcontrato: saveInfosContrato[0].valorcontrato,
-        repasse: saveInfosContrato[0].repasse,
-        comentario: saveInfosContrato[0].comentario,
-      });
-      //CASO O FLUXO CHEGUE POR SUBSTITUIÇÃO DE CONTRATO, EU AGUARDO O TIMEOUT DE SUBSTITUIR INFOS CONTRATO DO COMPONENTE SOBRESCREVERCONTRATO, PARA ENTÃO EU CONSEGUIR PEGAR O NOVO ID CRIADO PARA A NOVA INFO, POIS QUANDO O FLUXO CHEGA AQUI A FUNÇÃO DE SUBSTIUIR CONTRATO AINDA NAO FOI CHAMADA NO COMPONENTE SOBREESCREVER CONTRATO ENTÃO O ID DA INFO AINDA É O ANTIGO.
-      setTimeout(() => {
-        fetchDataFindNewIdsubstituted();
-      }, 2700);
+    if (saveInfosContratoOld) {
+      fetchOldInfos();
+    } else {
+      fetchDataInitial();
     }
-  }, [saveInfosContrato]);
+  }, [saveInfosContratoOld]);
 
-  const fetchDataFindNewIdsubstituted = async () => {
+  const fetchOldInfos = async () => {
     const token = localStorage.getItem('auth_token');
     const backendApi = new BackendApiGet(`${token}`);
     try {
-      const infosContratoData = await backendApi.listarInfosContrato(
+      const infosOldContratoData = await backendApi.listarInfosContratoTemp(
         idContrato,
       );
+      const infosContratoAtual = await backendApi.listarInfosContrato(
+        idContrato,
+      );
+      setOldIdInfos(infosOldContratoData[0].id);
+      setFormData({
+        ano_assinatura: infosOldContratoData[0].ano_assinatura,
+        ano_operacao: infosOldContratoData[0].ano_operacao,
+        ano_termino: infosOldContratoData[0].ano_termino,
+        resp_frete: infosOldContratoData[0].resp_frete,
+        pedido_min: infosOldContratoData[0].pedido_min,
+        reajuste_igpm_ipca: infosOldContratoData[0].reajuste_igpm_ipca,
+        exclusividade: infosOldContratoData[0].exclusividade,
+        tipoexclusividade: infosOldContratoData[0].tipoexclusividade,
+        incentivos: infosOldContratoData[0].incentivos,
+        qtdbolsas: infosOldContratoData[0].qtdbolsas,
+        tipocontrato: infosOldContratoData[0].tipocontrato,
+        valorcontrato: infosOldContratoData[0].valorcontrato,
+        repasse: infosOldContratoData[0].repasse,
+        comentario: infosOldContratoData[0].comentario,
+      });
 
-      setIdInfos(infosContratoData[0].id);
+      setIdInfos(infosContratoAtual[0].id);
     } catch (error) {
       handleApiErrors(error);
     }
@@ -146,8 +158,6 @@ export default function EditarInfosContrato(): JSX.Element {
       const infosContratoData = await backendApi.listarInfosContrato(
         idContrato,
       );
-
-      setIdInfos(infosContratoData[0].id);
       setFormData({
         ano_assinatura: infosContratoData[0].ano_assinatura,
         ano_operacao: infosContratoData[0].ano_operacao,
@@ -164,8 +174,10 @@ export default function EditarInfosContrato(): JSX.Element {
         repasse: infosContratoData[0].repasse,
         comentario: infosContratoData[0].comentario,
       });
+
+      setIdInfos(infosContratoData[0].id);
     } catch (error) {
-      if (!saveInfosContrato) {
+      if (!saveInfosContratoOld) {
         handleApiErrors(error);
       }
     }

@@ -128,6 +128,16 @@ export default class BackendApiPut implements BackendApiInterfacePut {
     );
   }
 
+  public async editarInfosContratoTemp(
+    userData: any,
+  ): Promise<EntitiesInfosContrato[]> {
+    return await this.put<EntitiesInfosContrato>(
+      '/editarInfosContratoTemp',
+      userData,
+      new InfosContratoSerializers(),
+    );
+  }
+
   public async editarAcompanhamento(
     userData: any,
   ): Promise<EntitiesAcompanhamentoPDG[]> {

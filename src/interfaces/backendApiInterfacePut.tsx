@@ -29,5 +29,7 @@ export default interface BackendApiInterfacePut {
 
   editarInfosContrato(userData: any): Promise<EntitiesInfosContrato[]>;
 
+  editarInfosContratoTemp(userData: any): Promise<EntitiesInfosContrato[]>;
+
   editarAlunados(userData: any): Promise<EntitiesAlunados[]>;
 }

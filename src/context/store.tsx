@@ -16,8 +16,8 @@ import React, {
 } from 'react';
 
 interface ContextProps {
-  saveInfosContrato: EntitiesInfosContrato[];
-  setSaveInfosContrato: Dispatch<SetStateAction<EntitiesInfosContrato[]>>;
+  saveInfosContratoOld: boolean;
+  setSaveInfosContratoOld: Dispatch<SetStateAction<boolean>>;
   modalSucessoSubsContrato: boolean;
   setModalSucessoSubsContrato: Dispatch<SetStateAction<boolean>>;
   loadedUser: boolean;
@@ -97,16 +97,14 @@ export const GlobalContext = createContext<ContextProps>({
   setIdEntidadeEscolar: () => {},
   dataContrato: [],
   setDataContrato: () => {},
-  saveInfosContrato: [],
-  setSaveInfosContrato: () => {},
+  saveInfosContratoOld: false,
+  setSaveInfosContratoOld: () => {},
 });
 
 export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [saveInfosContrato, setSaveInfosContrato] = useState<
-    EntitiesInfosContrato[]
-  >([]);
+  const [saveInfosContratoOld, setSaveInfosContratoOld] = useState(false);
   const [modalSucessoSubsContrato, setModalSucessoSubsContrato] =
     useState(false);
   const [contractOrEntidadeUpdated, setContractOrEntidadeUpdated] =
@@ -138,8 +136,8 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <GlobalContext.Provider
       value={{
-        saveInfosContrato,
-        setSaveInfosContrato,
+        saveInfosContratoOld,
+        setSaveInfosContratoOld,
         modalSucessoSubsContrato,
         setModalSucessoSubsContrato,
         loadedUser,

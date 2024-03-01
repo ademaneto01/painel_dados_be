@@ -27,9 +27,6 @@ export default function ScreensInfosContrato(
                 {contrato.ano_termino ?? 'N/A'}
               </p>
               <p>
-                <strong>Status:</strong> {contrato.ativo ? 'Ativo' : 'Inativo'}
-              </p>
-              <p>
                 <strong>Responsável pelo Frete:</strong>{' '}
                 {contrato.resp_frete ?? 'N/A'}
               </p>
@@ -40,11 +37,11 @@ export default function ScreensInfosContrato(
                 <strong>Valor Contrato:</strong>{' '}
                 {contrato.valorcontrato ?? 'N/A'}
               </p>
-            </div>
-            <div className={styles.conteinerInfos}>
               <p>
                 <strong>Pedido Mínimo:</strong> {contrato.pedido_min ?? 'N/A'}
               </p>
+            </div>
+            <div className={styles.conteinerInfos}>
               <p>
                 <strong>Reajuste:</strong>{' '}
                 {contrato.reajuste_igpm_ipca ?? 'N/A'}

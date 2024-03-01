@@ -143,6 +143,17 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
     );
   }
 
+  public async listarInfosContratoTemp(
+    uuid_ec: any,
+  ): Promise<EntitiesInfosContrato[]> {
+    return await this.get<EntitiesInfosContrato>(
+      '/listarInfosContratoTemp',
+
+      new InfosContratoSerializers(),
+      { id: uuid_ec },
+    );
+  }
+
   public async localizarEntidadeEscolar(
     id: any,
   ): Promise<EntitiesEditarEntidadeEscolar[]> {

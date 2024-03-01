@@ -24,13 +24,6 @@ export default function SobreescreverContrato(): JSX.Element {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const {
-    idContrato,
-    setPage,
-    setModalSucessoSubsContrato,
-    modalSucessoSubsContrato,
-    setSaveInfosContrato,
-  } = useGlobalContext();
   const [formData, setFormData] = useState<FormData>({
     nome_simplificado: '',
     razao_social: '',
@@ -43,6 +36,13 @@ export default function SobreescreverContrato(): JSX.Element {
     complemento: '',
     bo_rede: null,
   });
+  const {
+    idContrato,
+    setPage,
+    setModalSucessoSubsContrato,
+    setSaveInfosContratoOld,
+    modalSucessoSubsContrato,
+  } = useGlobalContext();
 
   useEffect(() => {
     fetchDataInitial();
@@ -85,23 +85,12 @@ export default function SobreescreverContrato(): JSX.Element {
       setMsgError('Ocorreu um erro desconhecido.');
     }
   };
-  const findOldInfos = async () => {
-    setPage(PageEnumContratos.editarInfosContrato);
-    try {
-      const token = localStorage.getItem('auth_token');
-      const backendApi = new BackendApiGet(`${token}`);
-      const oldInfos = await backendApi.listarInfosContrato(idContrato);
-      setSaveInfosContrato(oldInfos);
-    } catch (error) {
-      handleApiErrors(error);
-    } finally {
-      setLoaded(true);
-    }
-  };
+
   const handleModal = () => {
     setModalSucessoSubsContrato(true);
     setTimeout(() => {
       setModalSucessoSubsContrato(false);
+      setPage(PageEnumContratos.editarInfosContrato);
     }, 3000);
   };
   const fetchData = async () => {
@@ -111,9 +100,11 @@ export default function SobreescreverContrato(): JSX.Element {
       await backendApi.sobrescreverContrato({
         uuid_ec: idContrato,
       });
+      setSaveInfosContratoOld(true);
     } catch (error) {
       handleApiErrors(error);
     } finally {
+      handleModal();
       setLoaded(true);
     }
   };
@@ -133,17 +124,21 @@ export default function SobreescreverContrato(): JSX.Element {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const oldInfosToValidade = await findOldInfosToValidate();
-    if (oldInfosToValidade && oldInfosToValidade.length > 0) {
-      handleModal();
-      //AGUARDA O MODAL POPULAR PARA ENCONTRAR AS INFOS ANTIGAS DO CONTRATO A SER SUBSTITUIDA
-      setTimeout(() => {
-        findOldInfos();
-      }, 3600);
-      // SUBSTITUI O CONTRATO, AGUARDO LOCALIZAR O CONTRATO ANTIGO POIS APOS SER SUBSTIUIDO ALTERA O ID DA INFOS E NAO É POSSIVEL MAIS ENCONTRAR AS INFOS ANTIGAS E POPULAR ELAS NA PAGE DE EDIÇÃO DE INFOS
-      setTimeout(() => {
-        fetchData();
-      }, 4050);
+    const oldInfosToValidate = await findOldInfosToValidate();
+    if (
+      oldInfosToValidate &&
+      oldInfosToValidate.length > 0 &&
+      oldInfosToValidate.some(
+        (info) =>
+          info.ano_assinatura != null &&
+          info.resp_frete != null &&
+          info.ano_operacao != null &&
+          info.ano_termino != null &&
+          info.tipocontrato != null &&
+          info.valorcontrato != null,
+      )
+    ) {
+      fetchData();
     } else {
       setError(true);
       setMsgError(
