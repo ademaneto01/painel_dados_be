@@ -8,6 +8,9 @@ import EntitiesUsers from '@/entities/EntitiesUsers';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { ModalSucesso } from '../modal';
+import { ErrorComponent } from '@/errors/index';
+import handleApiErrors from '@/utils';
+
 const columns = [
   new Column('Nome', 'nome'),
   new Column('E-mail', 'email'),
@@ -66,12 +69,7 @@ function PageUsers() {
 
         setData(usersersOrderBy);
       } catch (error: any) {
-        setError(true);
-        if (error.response.data.mensagem) {
-          setMsgError(error.response.data.mensagem);
-        } else {
-          setMsgError('Ocorreu um erro desconhecido.');
-        }
+        handleApiErrors(error, setError, setMsgError);
       } finally {
         setLoaded(true);
       }
@@ -109,6 +107,7 @@ function PageUsers() {
           msgError={msgError}
           labelInput={'Buscar pelo nome ou email'}
         />
+        {error && <ErrorComponent message={msgError} />}
       </PageContentContainer>
     </div>
   );

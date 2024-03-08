@@ -6,10 +6,11 @@ import {
 import styles from '@/styles/Turmas.module.css';
 import { Table } from '@/components/Table';
 import { useEffect, useState } from 'react';
-import { PageEnumContratos, PageEnumEscolasPDG } from '@/enums';
+import { PageEnumEscolasPDG } from '@/enums';
 import { EntitiesDocsEntidade } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
+import handleApiErrors from '@/utils';
 
 class Column<T> {
   constructor(public header: string, public accessor: keyof T) {}
@@ -46,12 +47,7 @@ function useFetchEntidadesEscolares() {
         setUsersUpdated(false);
       } catch (error: any) {
         setUsersUpdated(false);
-        setError(true);
-        if (error.response.data.mensagem) {
-          setMsgError(error.response.data.mensagem);
-        } else {
-          setMsgError('Ocorreu um erro desconhecido.');
-        }
+        handleApiErrors(error, setError, setMsgError);
       } finally {
         setLoaded(true);
       }
@@ -72,13 +68,7 @@ function Navbar() {
   );
 }
 
-function DocsEntidadeTable({
-  data,
-  loaded,
-
-  error,
-  msgError,
-}: any) {
+function DocsEntidadeTable({ data, loaded, error, msgError }: any) {
   return (
     <Table
       data={data}

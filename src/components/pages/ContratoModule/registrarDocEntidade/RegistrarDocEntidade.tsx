@@ -5,6 +5,7 @@ import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { ErrorComponent } from '@/errors/index';
+import handleApiErrors from '@/utils';
 
 export default function RegistrarDocEntidade(): JSX.Element {
   const [nomeDocInputs, setNomeDocInputs] = useState<string[]>(['']);
@@ -59,15 +60,6 @@ export default function RegistrarDocEntidade(): JSX.Element {
     setPage(PageEnumContratos.docsEntidade);
   };
 
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
-  };
-
   const fetchDocData = async (nome_doc: string, url_doc: string) => {
     const token = localStorage.getItem('auth_token');
     const backendApi = new BackendApiPost(`${token}`);
@@ -80,7 +72,7 @@ export default function RegistrarDocEntidade(): JSX.Element {
     try {
       return await backendApi.registrarDocEntidade(bodyReq);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };

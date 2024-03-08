@@ -11,6 +11,8 @@ import { useGlobalContext } from '@/context/store';
 import { PageEnumContratos } from '@/enums';
 import Action from '../Action';
 import Tooltip from '@/components/Tooltip/Tooltip';
+import { ErrorComponent } from '@/errors';
+import handleApiErrors from '@/utils';
 
 interface PropsForFxclusion {
   id: string;
@@ -25,7 +27,8 @@ export default function TableActionsContratos(
     y: number;
   } | null>(null);
   const [showModalDelete, setShowModalDelete] = useState('');
-
+  const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
   const { setContractOrEntidadeUpdated, setIdContrato, setPage } =
     useGlobalContext();
@@ -54,8 +57,8 @@ export default function TableActionsContratos(
       await backendApi.deletarContrato({ uuid_ec: id });
       setShowModalDelete('');
       setContractOrEntidadeUpdated(true);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      handleApiErrors(error, setError, setMsgError);
     }
   }
 
@@ -157,6 +160,7 @@ export default function TableActionsContratos(
           onCancel={() => setShowModalDelete('')}
         />
       )}
+      {error && <ErrorComponent message={msgError} />}
     </div>
   );
 }

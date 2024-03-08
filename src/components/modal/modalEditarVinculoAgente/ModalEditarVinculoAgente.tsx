@@ -3,6 +3,7 @@ import styles from '@/styles/ModalStandard.module.css';
 import { BackendApiGet, BackendApiPost, BackendApiPut } from '@/backendApi';
 import { ErrorComponent } from '@/errors/index';
 import { useGlobalContext } from '@/context/store';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   id_escola: string | null;
@@ -79,18 +80,7 @@ export default function ModalEditarVinculoAgente({
   const { setPageEscolasPDG, idEntidadeEscolar, setUsersUpdated } =
     useGlobalContext();
   const [nomeAgente, setNomeAgente] = useState('');
-
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
-  const handleApiErrors = (error: any) => {
-    setError(true);
-
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
-  };
 
   useEffect(() => {
     fetchDataInitialAgente();
@@ -112,7 +102,7 @@ export default function ModalEditarVinculoAgente({
       }
       return;
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };
@@ -154,7 +144,7 @@ export default function ModalEditarVinculoAgente({
       setFormData(mappedData);
       return;
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };
@@ -185,7 +175,7 @@ export default function ModalEditarVinculoAgente({
       onCancel();
       return;
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };

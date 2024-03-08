@@ -11,6 +11,8 @@ import { useGlobalContext } from '@/context/store';
 import { PageEnumContratos } from '@/enums';
 import Action from '../Action';
 import Tooltip from '@/components/Tooltip/Tooltip';
+import { ErrorComponent } from '@/errors';
+import handleApiErrors from '@/utils';
 
 interface PropsForFxclusion {
   id: string;
@@ -25,14 +27,12 @@ export default function TableActionEntidadeEscolar(
     y: number;
   } | null>(null);
   const [modalInfos, setModalInfos] = useState('');
+  const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const [showModalDelete, setShowModalDelete] = useState('');
   const [showModalVermais, setShowModalVermais] = useState('');
-  const {
-    setContractOrEntidadeUpdated,
-    setIdContrato,
-    setIdEntidadeEscolar,
-    setPage,
-  } = useGlobalContext();
+  const { setContractOrEntidadeUpdated, setIdEntidadeEscolar, setPage } =
+    useGlobalContext();
 
   const handleEditClick = () => handleClickOpenModalAddEditSchool(props.id);
   const handleAlunadosClick = () => handleClickOpenPageAlunados(props.id);
@@ -55,8 +55,8 @@ export default function TableActionEntidadeEscolar(
       await backendApi.deletarEntidadeEscolar({ id });
       setShowModalDelete('');
       setContractOrEntidadeUpdated(true);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      handleApiErrors(error, setError, setMsgError);
     }
   }
 
@@ -144,6 +144,8 @@ export default function TableActionEntidadeEscolar(
           onCancel={() => setShowModalDelete('')}
         />
       )}
+
+      {error && <ErrorComponent message={msgError} />}
     </div>
   );
 }

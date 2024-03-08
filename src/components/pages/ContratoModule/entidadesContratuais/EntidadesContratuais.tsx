@@ -7,6 +7,7 @@ import { EntitiesContratos } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { ModalSucesso } from '../../../modal';
+import handleApiErrors from '@/utils';
 
 class Column<T> {
   constructor(public header: string, public accessor: keyof T) {}
@@ -53,10 +54,7 @@ function useFetchContratos() {
 
         setData(contratosInstanciados);
       } catch (error: any) {
-        setError(true);
-        setMsgError(
-          error.response?.data?.mensagem || 'Ocorreu um erro desconhecido.',
-        );
+        handleApiErrors(error, setError, setMsgError);
       } finally {
         setLoaded(true);
       }

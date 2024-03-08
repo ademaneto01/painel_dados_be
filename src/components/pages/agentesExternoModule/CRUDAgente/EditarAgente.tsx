@@ -6,6 +6,7 @@ import { ErrorComponent } from '@/errors/index';
 import { PageEnumAgentesExterno } from '@/enums';
 import { useGlobalContext } from '@/context/store';
 import { BackButton, PageContentContainer } from '@/components/shared';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   nome: string;
@@ -39,15 +40,6 @@ export default function EditarAgente(): JSX.Element {
   const { setPageAgentesExterno, setUsersUpdated, idAgente } =
     useGlobalContext();
 
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
-  };
-
   const fetchData = async () => {
     const token = localStorage.getItem('auth_token');
     const backendApi = new BackendApiPut(`${token}`);
@@ -60,7 +52,7 @@ export default function EditarAgente(): JSX.Element {
       setUsersUpdated(true);
       setPageAgentesExterno(PageEnumAgentesExterno.agentes);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     }
     setPageAgentesExterno(PageEnumAgentesExterno.agentes);
   };
@@ -89,7 +81,7 @@ export default function EditarAgente(): JSX.Element {
         ativo: infosContratoData[0].bo_ativo,
       });
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     }
   };
 

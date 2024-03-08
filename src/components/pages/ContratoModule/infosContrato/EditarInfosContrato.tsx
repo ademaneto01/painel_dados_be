@@ -8,6 +8,7 @@ import { ErrorComponent } from '@/errors/index';
 import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   ano_assinatura: string | null;
@@ -57,15 +58,6 @@ export default function EditarInfosContrato(): JSX.Element {
   const { setPage, idContrato, saveInfosContratoOld, setSaveInfosContratoOld } =
     useGlobalContext();
 
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
-  };
-
   const limparValorContrato = (valor: string) => {
     if (typeof valor === 'string') {
       return valor.replace(/\D/g, '');
@@ -105,7 +97,7 @@ export default function EditarInfosContrato(): JSX.Element {
       setSaveInfosContratoOld(false);
       setPage(PageEnumContratos.infosContrato);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     }
   };
 
@@ -147,7 +139,7 @@ export default function EditarInfosContrato(): JSX.Element {
 
       setIdInfos(infosContratoAtual[0].id);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     }
   };
 
@@ -179,7 +171,7 @@ export default function EditarInfosContrato(): JSX.Element {
       setIdInfos(infosContratoData[0].id);
     } catch (error) {
       if (!saveInfosContratoOld) {
-        handleApiErrors(error);
+        handleApiErrors(error, setError, setMsgError);
       }
     }
   };

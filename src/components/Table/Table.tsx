@@ -14,7 +14,6 @@ export interface TableProps<T> {
   error?: boolean;
   msgError?: string;
   loaded?: boolean;
-
   searchInputNone?: string;
   searchInputNoneEscola?: string;
   searchInputNoneNome?: string;

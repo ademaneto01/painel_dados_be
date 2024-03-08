@@ -8,6 +8,7 @@ import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { EntitiesUsuariosPDG } from '@/entities';
 import validaCNPJ from '@/validations/validaCNPJ';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   nome_operacional: string;
@@ -49,15 +50,6 @@ export default function NovaEntidade(): JSX.Element {
   const [userPDG, setUserPDG] = useState<EntitiesUsuariosPDG[]>([]);
   const { setPage, idContrato } = useGlobalContext();
 
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
-  };
-
   useEffect(() => {
     fetchUserPDGData();
   }, []);
@@ -82,7 +74,7 @@ export default function NovaEntidade(): JSX.Element {
       await backendApi.registrarEntidadeEscolar(requestBody);
       setPage(PageEnumContratos.entidadesContratuais);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     }
     setPage(PageEnumContratos.entidadesEscolares);
   };
@@ -98,7 +90,7 @@ export default function NovaEntidade(): JSX.Element {
       }
       return responseUserPdg;
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };

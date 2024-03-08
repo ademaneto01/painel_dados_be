@@ -304,7 +304,7 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
 
       return entities;
     } else {
-      throw new FailedToFetchError();
+      throw FailedToFetchError;
     }
   }
 }

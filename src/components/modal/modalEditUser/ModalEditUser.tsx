@@ -3,6 +3,7 @@ import styles from '@/styles/ModalEditUser.module.css';
 import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { ErrorComponent } from '@/errors/index';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   nome: string | null;
@@ -63,15 +64,6 @@ const ModalEditUser: React.FC<ModalProps> = ({
     return isPasswordMatch ? styles.inputStandard : styles.inputStandardError;
   }
 
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
-  };
-
   useEffect(() => {
     fetchDataInitial();
   }, [userId]);
@@ -114,7 +106,7 @@ const ModalEditUser: React.FC<ModalProps> = ({
         })),
       );
     } catch (error: any) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   }
@@ -178,7 +170,7 @@ const ModalEditUser: React.FC<ModalProps> = ({
         setLoadedUser(false);
       }, 9000);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     } finally {
       setLoaded(true);

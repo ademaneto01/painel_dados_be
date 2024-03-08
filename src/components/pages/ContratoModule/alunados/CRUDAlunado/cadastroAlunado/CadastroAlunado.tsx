@@ -7,6 +7,7 @@ import { ModalSucesso } from '@/components/modal';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { IconBaseProps, IconType } from 'react-icons';
+import handleApiErrors from '@/utils';
 
 interface FormDataAlunados {
   id_ee: string;
@@ -110,19 +111,7 @@ export default function CadastrarAlunado(): JSX.Element {
         setPage(PageEnumContratos.alunados);
       }, 1500);
     } catch (error) {
-      handleApiErrors(error);
-    }
-  };
-
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-      setTimeout(() => {
-        setError(false);
-      }, 6000);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
+      handleApiErrors(error, setError, setMsgError);
     }
   };
 

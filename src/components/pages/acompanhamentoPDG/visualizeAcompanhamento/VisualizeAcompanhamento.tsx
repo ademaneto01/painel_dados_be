@@ -5,6 +5,7 @@ import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { useState, useEffect } from 'react';
 import { PageEnumAcompanhamentoPDG } from '@/enums';
+import handleApiErrors from '@/utils';
 
 export default function VisualizeAcompanhamento() {
   const [data, setData] = useState<EntitiesAcompanhamentoPDG[]>([]);
@@ -32,12 +33,7 @@ export default function VisualizeAcompanhamento() {
         fetchAgenteExterno(users[0].id_prof);
         setData(users);
       } catch (error: any) {
-        setError(true);
-        if (error.response.data.mensagem) {
-          setMsgError(error.response.data.mensagem);
-        } else {
-          setMsgError('Ocorreu um erro desconhecido.');
-        }
+        handleApiErrors(error, setError, setMsgError);
       } finally {
         setLoaded(true);
         setUsersUpdated(false);
@@ -62,10 +58,7 @@ export default function VisualizeAcompanhamento() {
       const nomeAgente = dataAgenteExterno[0]?.nome || 'N/A';
       setNomeAgente(nomeAgente);
     } catch (error: any) {
-      setError(true);
-      const mensagemErro =
-        error.response?.data?.mensagem || 'Ocorreu um erro desconhecido.';
-      setMsgError(mensagemErro);
+      handleApiErrors(error, setError, setMsgError);
     }
   }
   return (

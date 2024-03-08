@@ -13,6 +13,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ComponenteCalendar } from '@/components/pages/calendar';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   id: string;
@@ -174,7 +175,7 @@ export default function RegistrarAcompanhamento(): JSX.Element {
 
         await backendApi.registrarAcompanhamentoCriteria(formCriteria);
       } catch (error) {
-        handleApiErrors(error);
+        handleApiErrors(error, setError, setMsgError);
       }
     }
     if (estado === 'save') {
@@ -198,7 +199,7 @@ export default function RegistrarAcompanhamento(): JSX.Element {
 
         await backendApi.registrarAcompanhamentoCriteria(formCriteria);
       } catch (error) {
-        handleApiErrors(error);
+        handleApiErrors(error, setError, setMsgError);
       }
     }
     setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos);
@@ -216,7 +217,7 @@ export default function RegistrarAcompanhamento(): JSX.Element {
         })),
       );
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     }
   };
 
@@ -234,7 +235,7 @@ export default function RegistrarAcompanhamento(): JSX.Element {
         })),
       );
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     }
   };
 
@@ -297,15 +298,6 @@ export default function RegistrarAcompanhamento(): JSX.Element {
       ...prevData,
       [fieldName]: value,
     }));
-  };
-
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
   };
 
   const validateForm = (): boolean => {

@@ -17,7 +17,8 @@ import {
   EntitiesAcompanhamentoPDGCriteria,
 } from '@/entities';
 import Tooltip from '@/components/Tooltip/Tooltip';
-import { ComponentInfos } from '@/errors';
+import { ComponentInfos, ErrorComponent } from '@/errors';
+import handleApiErrors from '@/utils';
 
 interface PropsForFxclusion {
   id: string;
@@ -34,6 +35,8 @@ export default function TableActionAcompanhamentoPDG(
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
   const [isLoadingPdf, setIsLoadingPdf] = useState(false);
+  const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const [showModalAddEditSchool, setShowModalAddEditSchool] = useState('');
   const {
     setUsersUpdated,
@@ -61,8 +64,8 @@ export default function TableActionAcompanhamentoPDG(
       await backendApi.deletarAcompanhamento({ id });
       setShowModalDelete('');
       setUsersUpdated(true);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      handleApiErrors(error, setError, setMsgError);
     }
   }
   function avaliarDesempenho(nota: any) {
@@ -139,8 +142,8 @@ export default function TableActionAcompanhamentoPDG(
       };
 
       await printDocument(dataForPrint);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      handleApiErrors(error, setError, setMsgError);
     }
   }
 
@@ -206,6 +209,7 @@ export default function TableActionAcompanhamentoPDG(
           onCancel={() => setShowModalDelete('')}
         />
       )}
+      {error && <ErrorComponent message={msgError} />}
     </div>
   );
 }

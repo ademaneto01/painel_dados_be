@@ -5,6 +5,7 @@ import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
 import EntitiesUsersPDG from '@/entities/EntitiesUsuariosPDG';
 import { ErrorComponent } from '@/errors/index';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   nome_operacional: string;
@@ -89,12 +90,7 @@ const ModalDadosEntidadeEscolar: React.FC<ModalProps> = ({
       });
       setUsuarioPDG(usuarioEncontrado ? [usuarioEncontrado] : []);
     } catch (error: any) {
-      setError(true);
-      if (error.response.data.mensagem) {
-        setMsgError(error.response.data.mensagem);
-      } else {
-        setMsgError('Ocorreu um erro desconhecido.');
-      }
+      handleApiErrors(error, setError, setMsgError);
     } finally {
       setLoaded(true);
     }

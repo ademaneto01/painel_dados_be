@@ -2,6 +2,8 @@ import { BackendApiGet } from '@/backendApi';
 import { EntitiesUrl } from '@/entities';
 import { useEffect, useState } from 'react';
 import styles from '@/styles/DigitalResources.module.css';
+import { ErrorComponent } from '@/errors';
+import handleApiErrors from '@/utils';
 
 export default function DigitalResources() {
   const [data, setData] = useState([] as EntitiesUrl[]);
@@ -33,12 +35,7 @@ export default function DigitalResources() {
           setNaoContemDados(true);
         }
       } catch (error: any) {
-        setError(true);
-        if (error.response.data.mensagem) {
-          setMsgError(error.response.data.mensagem);
-        } else {
-          setMsgError('Ocorreu um erro desconhecido.');
-        }
+        handleApiErrors(error, setError, setMsgError);
       } finally {
         setLoaded(true);
       }
@@ -58,6 +55,7 @@ export default function DigitalResources() {
             src={entityUrl.url_dados}
           />
         ))}
+        {error && <ErrorComponent message={msgError} />}
       </div>
     );
   } else if (naoContemDados) {
@@ -66,6 +64,7 @@ export default function DigitalResources() {
         <span className={styles.spanText}>
           Ainda não existem dados cadastrados para sua Entidade Escolar....
         </span>
+        {error && <ErrorComponent message={msgError} />}
       </div>
     );
   }

@@ -11,6 +11,7 @@ import {
 import { useGlobalContext } from '@/context/store';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ModalSucesso } from '@/components/modal';
+import handleApiErrors from '@/utils';
 
 interface FormAlunadosToEdit {
   id_ee: string;
@@ -193,7 +194,7 @@ export default function EditarAlunado(): JSX.Element {
         setFormDataTurmasEdit(transformToFormTurmasEdit(turmas[0]));
       }
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     }
   };
 
@@ -211,7 +212,7 @@ export default function EditarAlunado(): JSX.Element {
       };
       return await backendApi.listarIndividualAlunados(data);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };
@@ -226,21 +227,11 @@ export default function EditarAlunado(): JSX.Element {
       };
       return await backendApi.listarIndividualTurmas(data);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-      setTimeout(() => {
-        setError(false);
-      }, 1500);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
-  };
+
   const editAlunado = async (combinedFormData: CombinedFormData) => {
     try {
       const token = localStorage.getItem('auth_token');
@@ -252,7 +243,7 @@ export default function EditarAlunado(): JSX.Element {
         setPage(PageEnumContratos.alunados);
       }, 1500);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     }
   };
 

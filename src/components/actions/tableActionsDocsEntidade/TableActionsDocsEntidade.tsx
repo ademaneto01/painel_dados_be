@@ -10,6 +10,8 @@ import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { ImEyePlus } from 'react-icons/im';
 import Tooltip from '@/components/Tooltip/Tooltip';
+import { ErrorComponent } from '@/errors';
+import handleApiErrors from '@/utils';
 
 interface PropsForFxclusion {
   id: string;
@@ -19,10 +21,8 @@ interface PropsForFxclusion {
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
   const options: IconBaseProps = {};
-
   options.fontSize = '1.3em';
   options.color = color;
-
   return icon(options);
 }
 
@@ -31,6 +31,8 @@ export default function TableActionsDocsEntidade(
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
   const [showModalDoc, setShowModalDoc] = useState('');
+  const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const { setUsersUpdated } = useGlobalContext();
 
   function handleClickOpenModalExcluir(id: string): void {
@@ -44,8 +46,8 @@ export default function TableActionsDocsEntidade(
       await backendApi.deletarDocEntidade({ id: props.id });
       setShowModalDelete('');
       setUsersUpdated(true);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      handleApiErrors(error, setError, setMsgError);
     }
   }
 
@@ -80,6 +82,8 @@ export default function TableActionsDocsEntidade(
           onCancel={() => setShowModalDelete('')}
         />
       )}
+
+      {error && <ErrorComponent message={msgError} />}
     </div>
   );
 }

@@ -8,6 +8,7 @@ import { ErrorComponent } from '@/errors/index';
 import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   ano_assinatura: string | null;
@@ -57,15 +58,6 @@ export default function RegistrarInfosContrato(): JSX.Element {
   const [msgError, setMsgError] = useState('');
   const { setPage, idContrato } = useGlobalContext();
 
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
-  };
-
   const limparValorContrato = (valor: string) => {
     if (typeof valor === 'string') {
       return valor.replace(/\D/g, '');
@@ -92,7 +84,7 @@ export default function RegistrarInfosContrato(): JSX.Element {
       await backendApi.registrarInfosContrato(requestBody);
       setPage(PageEnumContratos.infosContrato);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     }
     setPage(PageEnumContratos.infosContrato);
   };

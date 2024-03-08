@@ -8,6 +8,7 @@ import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { EntitiesUsuariosPDG } from '@/entities';
 import validaCNPJ from '@/validations/validaCNPJ';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   id: string | null;
@@ -91,7 +92,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
       const backendApi = new BackendApiGet(`${token}`);
       return await backendApi.localizarUsuariosPDG();
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };
@@ -103,19 +104,11 @@ export default function EditEntidadeEscolar(): JSX.Element {
 
       return await backendApi.localizarEntidadeEscolar(id);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };
 
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
-  };
   const limparValorInep = (valor: string) => {
     if (typeof valor === 'string') {
       return valor.replace(/\D/g, '');
@@ -135,7 +128,7 @@ export default function EditEntidadeEscolar(): JSX.Element {
       const backendApi = new BackendApiPut(`${token}`);
       await backendApi.editarEntidadeEscolar(requestBody);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     } finally {
       setLoaded(true);
     }

@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
 import { BackendApiGet, BackendApiPost } from '@/backendApi';
 import { ErrorComponent } from '@/errors/index';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   nome: string;
@@ -40,13 +41,11 @@ const ModalAddUser: React.FC<ModalProps> = ({
     id_ee: '',
     isPasswordMatch: true,
   });
-
+  const [msgError, setMsgError] = useState('');
   const [error, setError] = useState(false);
   const [entidadesEscolaresData, setEntidadesEscolaresData] = useState<
     EntidadesEscolaresData[]
   >([]);
-
-  const [msgError, setMsgError] = useState('');
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -56,16 +55,6 @@ const ModalAddUser: React.FC<ModalProps> = ({
       ...prevState,
       [name]: value,
     }));
-  };
-
-  const handleApiErrors = (error: any) => {
-    setError(true);
-
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
   };
 
   function getPasswordClass(isPasswordMatch: boolean): string {
@@ -102,7 +91,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
         })),
       );
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   }
@@ -158,7 +147,7 @@ const ModalAddUser: React.FC<ModalProps> = ({
 
       onCancel();
     } catch (error: any) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };

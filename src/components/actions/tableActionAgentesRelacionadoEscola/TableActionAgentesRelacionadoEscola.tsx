@@ -9,6 +9,8 @@ import { BackendApiDelete } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import ModalEditarVinculoAgente from '@/components/modal/modalEditarVinculoAgente/ModalEditarVinculoAgente';
 import Tooltip from '@/components/Tooltip/Tooltip';
+import { ErrorComponent } from '@/errors';
+import handleApiErrors from '@/utils';
 
 interface PropsForFxclusion {
   uuid_agente: string;
@@ -33,12 +35,13 @@ export default function TableActionAgentesRelacionadoEscola(
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
   const [showModalEditAgente, setShowModalEditAgente] = useState('');
+  const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const { setUsersUpdated, idEntidadeEscolar } = useGlobalContext();
   const initialFormData: FormData = {
     userId: props.uuid_agente,
     id_ee: idEntidadeEscolar,
   };
-
   const [formData, setFormData] = useState<FormData>(initialFormData);
   function handleClickOpenModalExcluir(id: string): void {
     setShowModalDelete(props.uuid_agente);
@@ -50,8 +53,8 @@ export default function TableActionAgentesRelacionadoEscola(
       await backendApi.deletarVinculoAgente(formData);
       setShowModalDelete('');
       setUsersUpdated(true);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      handleApiErrors(error, setError, setMsgError);
     }
   }
 
@@ -86,6 +89,7 @@ export default function TableActionAgentesRelacionadoEscola(
           onCancel={() => setShowModalDelete('')}
         />
       )}
+      {error && <ErrorComponent message={msgError} />}
     </div>
   );
 }

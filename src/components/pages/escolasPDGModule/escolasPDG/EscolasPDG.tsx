@@ -6,6 +6,7 @@ import { EntitiesEntidadesEscolaresPDG } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumEscolasPDG } from '@/enums';
+import handleApiErrors from '@/utils';
 
 const COLUMNS = [
   new Column('Nome Operacional', 'nome_operacional'),
@@ -16,7 +17,6 @@ const COLUMNS = [
 export default function EscolasPDG(): JSX.Element {
   const [data, setData] = useState<EntitiesEntidadesEscolaresPDG[]>([]);
   const [loaded, setLoaded] = useState(false);
-
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const { setPageEscolasPDG, setIdEntidadeEscolar } = useGlobalContext();
@@ -43,12 +43,7 @@ export default function EscolasPDG(): JSX.Element {
 
       setData(contentidadesEscolasratos);
     } catch (error: any) {
-      setError(true);
-      if (error.response.data.mensagem) {
-        setMsgError(error.response.data.mensagem);
-      } else {
-        setMsgError('Ocorreu um erro desconhecido.');
-      }
+      handleApiErrors(error, setError, setMsgError);
     } finally {
       setLoaded(true);
     }

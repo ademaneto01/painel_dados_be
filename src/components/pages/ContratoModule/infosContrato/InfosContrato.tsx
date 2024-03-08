@@ -35,12 +35,10 @@ function useFetchInfosContrato() {
         setData(infosContratoData);
       } catch (error: any) {
         setError(true);
-
-        if (error.response.data.mensagem) {
-          setMsgError(error.response.data.mensagem);
-        } else {
-          setMsgError('Ocorreu um erro desconhecido.');
-        }
+        setMsgError(
+          error.response?.data?.mensagem ||
+            'Ocorreu uma perda de pacotes na sua conexão. Recomendamos utilizar uma conexão de internet mais estável.',
+        );
       } finally {
         setLoaded(true);
       }

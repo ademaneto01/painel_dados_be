@@ -13,6 +13,7 @@ import { BackendApiGet, BackendApiPost } from '@/backendApi';
 import { ErrorComponent } from '@/errors/index';
 import { useGlobalContext } from '@/context/store';
 import { EntitiesAgenteExterno } from '@/entities';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   id_escola: string;
@@ -102,15 +103,6 @@ export default function ModalVicularAgente({
     return icon(options);
   }
 
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
-  };
-
   useEffect(() => {
     fetchUserAgente();
   }, []);
@@ -139,7 +131,7 @@ export default function ModalVicularAgente({
         return;
       }
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     }
     onCancel();
   };
@@ -154,7 +146,7 @@ export default function ModalVicularAgente({
       }
       return responseUserPdg;
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };

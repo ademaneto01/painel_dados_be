@@ -6,6 +6,7 @@ import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { useState, useEffect, useMemo } from 'react';
 import { PageEnumAgentesExterno } from '@/enums';
+import handleApiErrors from '@/utils';
 
 const columns = [
   new Column('Nome', 'nome'),
@@ -40,10 +41,7 @@ export default function AgentesExterno() {
 
         setData(agentesData);
       } catch (error: any) {
-        setError(true);
-        setMsgError(
-          error.response?.data?.mensagem || 'Ocorreu um erro desconhecido.',
-        );
+        handleApiErrors(error, setError, setMsgError);
       } finally {
         setLoaded(true);
         setUsersUpdated(false);

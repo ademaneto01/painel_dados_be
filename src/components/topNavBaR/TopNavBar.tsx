@@ -1,20 +1,19 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from '@/styles/TopNavBar.module.css';
-
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { IoPowerOutline } from 'react-icons/io5';
 import { GoSidebarCollapse, GoSidebarExpand } from 'react-icons/go';
 import { BackendApiGet } from '@/backendApi';
-
 import { ModalTopNavBaR } from '../modal';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { PageLoader } from '../shared';
 import { CgLogOut } from 'react-icons/cg';
 import { IconType } from 'react-icons';
-
 import { useGlobalContext } from '@/context/store';
+import { ErrorComponent } from '@/errors';
+import handleApiErrors from '@/utils';
 
 interface TopNavBarProps {
   toggleSideNavBar: () => void;
@@ -31,6 +30,8 @@ export default function TopNavBar(props: TopNavBarProps) {
   const [escola, setEscola] = useState('');
   const [modalTopNavBaR, setModalTopNavBaR] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const { setIsLoadingLogOut } = useGlobalContext();
   const handleOpen = () => {
     setModalTopNavBaR(true);
@@ -47,8 +48,8 @@ export default function TopNavBar(props: TopNavBarProps) {
         const user = await backendApi.localizarEntidadeEscolar(id);
 
         setEscola(user[0].nome_operacional || '');
-      } catch (error) {
-        console.error('Error fetching user data:', error);
+      } catch (error: any) {
+        handleApiErrors(error, setError, setMsgError);
       }
     };
     fetchUserData();
@@ -125,6 +126,7 @@ export default function TopNavBar(props: TopNavBarProps) {
         </div>
       </div>
       {loaded ? <PageLoader /> : ''}
+      {error && <ErrorComponent message={msgError} />}
     </>
   );
 }

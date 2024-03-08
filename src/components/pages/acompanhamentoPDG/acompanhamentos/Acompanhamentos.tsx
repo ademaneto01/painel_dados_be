@@ -6,7 +6,7 @@ import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { useState, useEffect } from 'react';
 import { PageEnumAcompanhamentoPDG } from '@/enums';
-import { ComponentInfos } from '@/errors';
+import handleApiErrors from '@/utils';
 
 const columns = [
   new Column('Nome Professor', 'nome_agente'),
@@ -19,7 +19,6 @@ const columns = [
 export default function Acompanhamentos() {
   const [data, setData] = useState<EntitiesAcompanhamentoPDG[]>([]);
   const [loaded, setLoaded] = useState(false);
-
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const { usersUpdated, setUsersUpdated, setPageAcompanhamento } =
@@ -36,12 +35,7 @@ export default function Acompanhamentos() {
 
         setData(users);
       } catch (error: any) {
-        setError(true);
-        if (error.response.data.mensagem) {
-          setMsgError(error.response.data.mensagem);
-        } else {
-          setMsgError('Ocorreu um erro desconhecido.');
-        }
+        handleApiErrors(error, setError, setMsgError);
       } finally {
         setLoaded(true);
         setUsersUpdated(false);

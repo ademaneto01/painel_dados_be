@@ -14,6 +14,7 @@ import {
 import { useGlobalContext } from '@/context/store';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ModalDelete, ModalSucesso } from '@/components/modal';
+import handleApiErrors from '@/utils';
 
 interface FormDataAlunados {
   id: string;
@@ -100,7 +101,7 @@ export default function Alunados(): JSX.Element {
         setSpanCadastro(true);
       }
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       setIsDataFilled(false);
       setSpanCadastro(true);
     }
@@ -116,7 +117,7 @@ export default function Alunados(): JSX.Element {
       };
       return await backendApi.listarIndividualAlunados(data);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };
@@ -131,19 +132,8 @@ export default function Alunados(): JSX.Element {
       };
       return await backendApi.listarIndividualTurmas(data);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
-    }
-  };
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-      setTimeout(() => {
-        setError(false);
-      }, 1500);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 
@@ -185,7 +175,7 @@ export default function Alunados(): JSX.Element {
         setPage(PageEnumContratos.alunados);
       }, 1600);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };

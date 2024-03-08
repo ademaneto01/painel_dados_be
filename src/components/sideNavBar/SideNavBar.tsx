@@ -19,6 +19,8 @@ import {
   IoSchool,
   IoSchoolOutline,
 } from 'react-icons/io5';
+import { ErrorComponent } from '@/errors';
+import handleApiErrors from '@/utils';
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
   return icon({ style: { fontSize: '1.3em', color: color } });
@@ -32,6 +34,8 @@ interface SideNavBarProps {
 
 export default function SideNavBar(props: SideNavBarProps) {
   const [perfil, setPerfil] = useState('');
+  const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('auth_token');
@@ -44,8 +48,8 @@ export default function SideNavBar(props: SideNavBarProps) {
         if (user && user.length > 0) {
           setPerfil(user[0].perfil || '');
         }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
+      } catch (error: any) {
+        handleApiErrors(error, setError, setMsgError);
       }
     };
 
@@ -153,6 +157,7 @@ export default function SideNavBar(props: SideNavBarProps) {
           hidden={perfil === 'Escola' ? true : false}
         />
       </div>
+      {error && <ErrorComponent message={msgError} />}
     </div>
   );
 }

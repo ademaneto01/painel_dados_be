@@ -4,6 +4,7 @@ import { BackendApiGet } from '@/backendApi';
 import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
 import { ErrorComponent } from '@/errors/index';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   nome_simplificado: string;
@@ -70,12 +71,7 @@ const ModalDadosContrato: React.FC<ModalProps> = ({ onCancel, idContrato }) => {
         qtdescolas: response[0].qtdescolas,
       });
     } catch (error: any) {
-      setError(true);
-      if (error.response.data.mensagem) {
-        setMsgError(error.response.data.mensagem);
-      } else {
-        setMsgError('Ocorreu um erro desconhecido.');
-      }
+      handleApiErrors(error, setError, setMsgError);
     } finally {
       setLoaded(true);
     }

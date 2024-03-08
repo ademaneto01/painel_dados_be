@@ -6,6 +6,7 @@ import { ErrorComponent } from '@/errors/index';
 import { PageEnumAgentesExterno } from '@/enums';
 import { useGlobalContext } from '@/context/store';
 import { BackButton, PageContentContainer } from '@/components/shared';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   nome: string;
@@ -38,15 +39,6 @@ export default function RegistrarAgente(): JSX.Element {
   const [msgError, setMsgError] = useState('');
   const { setPageAgentesExterno, setUsersUpdated } = useGlobalContext();
 
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
-  };
-
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('auth_token');
@@ -55,7 +47,7 @@ export default function RegistrarAgente(): JSX.Element {
       setUsersUpdated(true);
       setPageAgentesExterno(PageEnumAgentesExterno.agentes);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     }
     setPageAgentesExterno(PageEnumAgentesExterno.agentes);
   };

@@ -5,6 +5,7 @@ import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { ErrorComponent } from '@/errors/index';
+import handleApiErrors from '@/utils';
 
 export default function RegistrarDoc(): JSX.Element {
   const [nomeDocInputs, setNomeDocInputs] = useState<string[]>(['']);
@@ -41,22 +42,6 @@ export default function RegistrarDoc(): JSX.Element {
     }
   };
 
-  const validateForm = (): boolean => {
-    const errors: string[] = [];
-
-    if (nomeDocInputs.length === 1 || urlDocInputs.length === 1) {
-      errors.push('Todos os campos são obrigatórios...');
-    }
-
-    if (errors.length > 0) {
-      setError(true);
-      setMsgError(errors.join(' '));
-      setTimeout(() => setError(false), 6000);
-      return false;
-    }
-    return true;
-  };
-
   const handleSubmit = async () => {
     for (let i = 0; i < nomeDocInputs.length; i++) {
       const nome_doc = nomeDocInputs[i];
@@ -75,15 +60,6 @@ export default function RegistrarDoc(): JSX.Element {
     setPage(PageEnumContratos.docsContrato);
   };
 
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
-    }
-  };
-
   const fetchDocData = async (nome_doc: string, url_doc: string) => {
     const token = localStorage.getItem('auth_token');
     const backendApi = new BackendApiPost(`${token}`);
@@ -96,7 +72,7 @@ export default function RegistrarDoc(): JSX.Element {
     try {
       return await backendApi.registrarDocContrato(bodyReq);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
     }
   };

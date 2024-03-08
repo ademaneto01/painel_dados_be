@@ -11,6 +11,8 @@ import { useGlobalContext } from '@/context/store';
 import { PageEnumAgentesExterno } from '@/enums';
 import { ImEyePlus } from 'react-icons/im';
 import Tooltip from '@/components/Tooltip/Tooltip';
+import { ErrorComponent } from '@/errors';
+import handleApiErrors from '@/utils';
 
 interface PropsForFxclusion {
   uuid_agente: string;
@@ -31,6 +33,8 @@ export default function TableActionsAgenteExterno(
 ): JSX.Element {
   const [showModalDelete, setShowModalDelete] = useState('');
   const [showModalVermais, setShowModalVermais] = useState('');
+  const [error, setError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const { setUsersUpdated, setIdAgente, setPageAgentesExterno } =
     useGlobalContext();
 
@@ -44,8 +48,8 @@ export default function TableActionsAgenteExterno(
       await backendApi.deletarAgente({ userId: props.uuid_agente });
       setShowModalDelete('');
       setUsersUpdated(true);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      handleApiErrors(error, setError, setMsgError);
     }
   }
 
@@ -91,6 +95,7 @@ export default function TableActionsAgenteExterno(
           onCancel={() => setShowModalDelete('')}
         />
       )}
+      {error && <ErrorComponent message={msgError} />}
     </div>
   );
 }

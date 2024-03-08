@@ -6,6 +6,7 @@ import { ComponentInfos, ErrorComponent } from '@/errors/index';
 import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
+import handleApiErrors from '@/utils';
 
 interface FormData {
   nome_simplificado: string | null;
@@ -72,17 +73,8 @@ export default function SobreescreverContrato(): JSX.Element {
       const backendApi = new BackendApiGet(`${token}`);
       return await backendApi.localizarContrato(id);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
       return null;
-    }
-  };
-
-  const handleApiErrors = (error: any) => {
-    setError(true);
-    if (error.response.data.mensagem) {
-      setMsgError(error.response.data.mensagem);
-    } else {
-      setMsgError('Ocorreu um erro desconhecido.');
     }
   };
 
@@ -102,7 +94,7 @@ export default function SobreescreverContrato(): JSX.Element {
       });
       setSaveInfosContratoOld(true);
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     } finally {
       handleModal();
       setLoaded(true);
@@ -116,7 +108,7 @@ export default function SobreescreverContrato(): JSX.Element {
       const oldInfos = await backendApi.listarInfosContrato(idContrato);
       return oldInfos;
     } catch (error) {
-      handleApiErrors(error);
+      handleApiErrors(error, setError, setMsgError);
     } finally {
       setLoaded(true);
     }
