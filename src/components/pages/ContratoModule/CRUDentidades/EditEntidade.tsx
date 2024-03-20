@@ -7,8 +7,8 @@ import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { EntitiesUsuariosPDG } from '@/entities';
-import validaCNPJ from '@/validations/validaCNPJ';
-import handleApiErrors from '@/utils';
+import validaCNPJ from '@/utils/validaCNPJ';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface FormData {
   id: string | null;

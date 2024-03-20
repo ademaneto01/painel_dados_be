@@ -18,7 +18,7 @@ import {
 } from '@/entities';
 import Tooltip from '@/components/Tooltip/Tooltip';
 import { ComponentInfos, ErrorComponent } from '@/errors';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface PropsForFxclusion {
   id: string;

@@ -11,7 +11,7 @@ import { useGlobalContext } from '@/context/store';
 import { ImEyePlus } from 'react-icons/im';
 import Tooltip from '@/components/Tooltip/Tooltip';
 import { ErrorComponent } from '@/errors';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface PropsForFxclusion {
   id: string;

@@ -7,8 +7,10 @@ import SideNavBar from '@/components/sideNavBar';
 import TopNavBar from '@/components/topNavBaR';
 import * as pages from '@/components/pages';
 import { BackendApiGet } from '@/backendApi';
+import { useRouter } from 'next/navigation';
 
 export default function Home(): JSX.Element {
+  const router = useRouter();
   const [sideNavBarHidden, setSideNavBarHidden] = useState(false);
   const [perfil, setPerfil] = useState('');
 

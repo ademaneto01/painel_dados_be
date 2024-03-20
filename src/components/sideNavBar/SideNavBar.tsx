@@ -20,7 +20,7 @@ import {
   IoSchoolOutline,
 } from 'react-icons/io5';
 import { ErrorComponent } from '@/errors';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 function reactIcon(icon: IconType, color?: string): JSX.Element {
   return icon({ style: { fontSize: '1.3em', color: color } });

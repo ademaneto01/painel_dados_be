@@ -4,7 +4,7 @@ import { BackendApiGet } from '@/backendApi';
 import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
 import { ErrorComponent } from '@/errors/index';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface FormData {
   nome: string;

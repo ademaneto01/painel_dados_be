@@ -6,7 +6,7 @@ import { ComponentInfos, ErrorComponent } from '@/errors/index';
 import { PageEnumContratos } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface FormData {
   nome_simplificado: string | null;

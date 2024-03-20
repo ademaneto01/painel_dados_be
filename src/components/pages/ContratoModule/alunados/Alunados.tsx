@@ -14,7 +14,7 @@ import {
 import { useGlobalContext } from '@/context/store';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ModalDelete, ModalSucesso } from '@/components/modal';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface FormDataAlunados {
   id: string;

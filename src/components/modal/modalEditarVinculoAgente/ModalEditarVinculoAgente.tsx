@@ -3,7 +3,8 @@ import styles from '@/styles/ModalStandard.module.css';
 import { BackendApiGet, BackendApiPost, BackendApiPut } from '@/backendApi';
 import { ErrorComponent } from '@/errors/index';
 import { useGlobalContext } from '@/context/store';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
+import { ModalForm } from '@/components/shared';
 
 interface FormData {
   id_escola: string | null;

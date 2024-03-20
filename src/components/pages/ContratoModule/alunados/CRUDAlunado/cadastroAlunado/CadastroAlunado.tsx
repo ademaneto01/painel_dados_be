@@ -7,7 +7,7 @@ import { ModalSucesso } from '@/components/modal';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { IconBaseProps, IconType } from 'react-icons';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface FormDataAlunados {
   id_ee: string;

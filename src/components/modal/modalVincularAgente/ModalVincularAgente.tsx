@@ -13,7 +13,8 @@ import { BackendApiGet, BackendApiPost } from '@/backendApi';
 import { ErrorComponent } from '@/errors/index';
 import { useGlobalContext } from '@/context/store';
 import { EntitiesAgenteExterno } from '@/entities';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
+import { ModalForm } from '@/components/shared';
 
 interface FormData {
   id_escola: string;
@@ -277,124 +278,104 @@ const FormComponent: React.FC<any> = ({
 }) => {
   return (
     <>
-      <form
-        className={styles.container}
+      <ModalForm
         onSubmit={handleSubmit}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        <h1
-          style={{
-            fontSize: '20px',
-            color: 'gray',
-          }}
-        >
-          {titleModal}
-        </h1>
-        <div className={styles.boxStandard}>
-          <div className={styles.boxStatus}>
-            <label className={styles.labelStandard}>
-              Agente
-              <div className={styles.searchSelectContainer} ref={containerRef}>
-                <div className={styles.boxsearchInput}>
-                  <input
-                    type="text"
-                    readOnly
-                    value={nameSearch}
-                    name="nameSearch"
-                    onClick={() =>
-                      setShowOptions(showOptions === true ? false : true)
-                    }
-                    className={styles.searchInput}
-                  />
-                  {renderIcon(IoIosArrowDown)}
-                </div>
-
-                {showOptions && (
-                  <div className={styles.optionsContainer}>
-                    <div className={styles.inputContainer}>
-                      {renderIcon(FaSearch)}
-                      <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                        className={styles.searchInputSelect}
-                      />
-                    </div>
-                    <div className={styles.scrollableOptionsContainer}>
-                      {filteredOptions.map((option: EntitiesAgenteExterno) => (
-                        <div
-                          key={option.uuid_agente}
-                          className={styles.optionItem}
-                          onClick={() => handleOptionSelect(option)}
-                        >
-                          {`${option.nome} - ${option.cargo}`}
-                        </div>
-                      ))}
-                    </div>
+        title={titleModal}
+        onCancel={onCancel}
+        children={
+          <div className={styles.boxStandard}>
+            <div className={styles.boxStatus}>
+              <label className={styles.labelStandard}>
+                Agente
+                <div
+                  className={styles.searchSelectContainer}
+                  ref={containerRef}
+                >
+                  <div className={styles.boxsearchInput}>
+                    <input
+                      type="text"
+                      readOnly
+                      value={nameSearch}
+                      name="nameSearch"
+                      onClick={() =>
+                        setShowOptions(showOptions === true ? false : true)
+                      }
+                      className={styles.searchInput}
+                    />
+                    {renderIcon(IoIosArrowDown)}
                   </div>
-                )}
-              </div>
-            </label>
-          </div>
-          <label className={styles.labelStandard}>
-            Especialista
-            <select
-              value={formData.especialista ?? ''}
-              onChange={handleInputChange}
-              name="especialista"
-              className={styles.inputSelect}
-            >
-              <option value="">-</option>
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
-            </select>
-          </label>
-          <div>
-            {isProfessor && (
-              <div>
-                <span className={styles.labelTitle}>Séries Escolares</span>
-                <div className={styles.optionContainer}>
-                  {OPTIONS.map((option) => (
-                    <div
-                      key={option}
-                      className={styles.divCheckBoxVincularAgente}
-                    >
-                      <input
-                        className={styles.checkBoxModalVincularAgente}
-                        type="checkbox"
-                        value={option}
-                        name={option}
-                        checked={formData[option]}
-                        onChange={handleCheckboxChange}
-                      />
-                      {option.slice(3)}
+
+                  {showOptions && (
+                    <div className={styles.optionsContainer}>
+                      <div className={styles.inputContainer}>
+                        {renderIcon(FaSearch)}
+                        <input
+                          type="text"
+                          placeholder="Search..."
+                          value={searchTerm}
+                          onChange={handleSearchChange}
+                          className={styles.searchInputSelect}
+                        />
+                      </div>
+                      <div className={styles.scrollableOptionsContainer}>
+                        {filteredOptions.map(
+                          (option: EntitiesAgenteExterno) => (
+                            <div
+                              key={option.uuid_agente}
+                              className={styles.optionItem}
+                              onClick={() => handleOptionSelect(option)}
+                            >
+                              {`${option.nome} - ${option.cargo}`}
+                            </div>
+                          ),
+                        )}
+                      </div>
                     </div>
-                  ))}
+                  )}
                 </div>
-              </div>
-            )}
+              </label>
+            </div>
+            <label className={styles.labelStandard}>
+              Especialista
+              <select
+                value={formData.especialista ?? ''}
+                onChange={handleInputChange}
+                name="especialista"
+                className={styles.inputSelect}
+              >
+                <option value="">-</option>
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
+              </select>
+            </label>
+            <div>
+              {isProfessor && (
+                <div>
+                  <span className={styles.labelTitle}>Séries Escolares</span>
+                  <div className={styles.optionContainer}>
+                    {OPTIONS.map((option) => (
+                      <div
+                        key={option}
+                        className={styles.divCheckBoxVincularAgente}
+                      >
+                        <input
+                          className={styles.checkBoxModalVincularAgente}
+                          type="checkbox"
+                          value={option}
+                          name={option}
+                          checked={formData[option]}
+                          onChange={handleCheckboxChange}
+                        />
+                        {option.slice(3)}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-        <div className={styles.buttonContainer}>
-          <button
-            className={styles.cancelButton}
-            type="button"
-            onClick={onCancel}
-          >
-            Cancelar
-          </button>
-          <button
-            className={styles.confirmButton}
-            type="button"
-            onClick={handleSubmit}
-          >
-            Salvar
-          </button>
-        </div>
-      </form>
+        }
+      />
     </>
   );
 };

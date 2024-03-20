@@ -10,7 +10,7 @@ import { PageEnumContratos } from '@/enums';
 import { EntitiesDocsContrato } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 class Column<T> {
   constructor(public header: string, public accessor: keyof T) {}

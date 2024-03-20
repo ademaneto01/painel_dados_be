@@ -6,7 +6,7 @@ import { EntitiesEntidadesEscolaresPDG } from '@/entities';
 import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumEscolasPDG } from '@/enums';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 const COLUMNS = [
   new Column('Nome Operacional', 'nome_operacional'),

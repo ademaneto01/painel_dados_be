@@ -5,7 +5,7 @@ import { PageEnumEscolasPDG } from '@/enums';
 import { PageContentContainer, BackButton } from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
 import { ErrorComponent } from '@/errors/index';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 export default function RegistrarDocEntidadePDG(): JSX.Element {
   const [nomeDocInputs, setNomeDocInputs] = useState<string[]>(['']);

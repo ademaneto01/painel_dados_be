@@ -2,7 +2,8 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import styles from '@/styles/ModalStandard.module.css';
 import { BackendApiGet, BackendApiPost } from '@/backendApi';
 import { ErrorComponent } from '@/errors/index';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
+import { InputSelect, InputStandard, ModalForm } from '@/components/shared';
 
 interface FormData {
   nome: string;
@@ -154,118 +155,75 @@ const ModalAddUser: React.FC<ModalProps> = ({
 
   return (
     <>
-      <div className={styles.background} onClick={onCancel}>
-        <form
-          className={styles.container}
-          onSubmit={handleSubmit}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <h1
-            style={{
-              fontSize: '20px',
-              color: 'gray',
-            }}
-          >
-            {titleModal}
-          </h1>
+      <ModalForm
+        onSubmit={handleSubmit}
+        title={titleModal}
+        onCancel={onCancel}
+        children={
           <div className={styles.boxStandard}>
-            <label className={styles.labelStandard}>
-              Nome*
-              <input
-                type="text"
-                placeholder="Nome"
-                name="nome"
-                value={formData.nome ?? ''}
-                onChange={handleInputChange}
-                className={styles.inputStandard}
-              />
-            </label>
-            <label className={styles.labelStandard}>
-              E-mail*
-              <input
-                type="email"
-                placeholder="E-mail"
-                name="email"
-                value={formData.email ?? ''}
-                onChange={handleInputChange}
-                className={styles.inputStandard}
-              />
-            </label>
+            <InputStandard
+              label="Nome*"
+              type="text"
+              placeholder="Nome"
+              name="nome"
+              value={formData.nome ?? ''}
+              onChange={handleInputChange}
+            />
+            <InputStandard
+              label="E-mail*"
+              type="email"
+              placeholder="E-mail"
+              name="email"
+              value={formData.email ?? ''}
+              onChange={handleInputChange}
+            />
             <div className={styles.containerSenhasAddUser}>
               <div className={styles.boxSenhasAddUser}>
-                <label className={styles.labelStandard}>
-                  Senha*
-                  <input
-                    type="password"
-                    placeholder="Senha"
-                    name="senha"
-                    value={formData.senha ?? ''}
-                    onChange={handleInputChange}
-                    className={getPasswordClass(formData.isPasswordMatch)}
-                  />
-                </label>
+                <InputStandard
+                  label="Senha*"
+                  type="password"
+                  placeholder="Senha"
+                  name="senha"
+                  value={formData.senha ?? ''}
+                  onChange={handleInputChange}
+                  className={getPasswordClass(formData.isPasswordMatch)}
+                />
               </div>
               <div className={styles.boxSenhasAddUser}>
-                <label className={styles.labelStandard}>
-                  Confirme a senha*
-                  <input
-                    type="password"
-                    placeholder="Confirme a senha"
-                    name="confirmPassword"
-                    value={formData.confirmPassword ?? ''}
-                    onChange={handleInputChange}
-                    className={styles.inputStandard}
-                  />
-                </label>
+                <InputStandard
+                  label="Confirme a senha*"
+                  type="password"
+                  placeholder="Confirme a senha"
+                  name="confirmPassword"
+                  value={formData.confirmPassword ?? ''}
+                  onChange={handleInputChange}
+                />
               </div>
             </div>
-            <label className={styles.labelStandard}>
-              Escola*
-              <select
-                value={formData.id_ee ?? ''}
-                onChange={handleInputChange}
-                name="id_ee"
-                className={styles.inputSelect}
-              >
-                <option value="">-</option>
-                {entidadesEscolaresData.map((school) => (
-                  <option key={school.id} value={school.id || ''}>
-                    {school.nome_operacional}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className={styles.labelStandard}>
-              Perfil*
-              <select
-                value={formData.perfil ?? ''}
-                onChange={handleInputChange}
-                name="perfil"
-                className={styles.inputSelect}
-              >
-                <option value="">-</option>
-                <option value="Administrador">Administrator</option>
-                <option value="Pedagógico">Pedagógico</option>
-                <option value="Escola">Escola</option>
-              </select>
-            </label>
+            <InputSelect
+              label={'Escola*'}
+              name={'id_ee'}
+              value={formData.id_ee ?? ''}
+              onChange={handleInputChange}
+              options={entidadesEscolaresData.map((school) => ({
+                value: school.id || '',
+                label: school.nome_operacional || '-',
+              }))}
+            />
+            <InputSelect
+              label={'Perfil*'}
+              name={'perfil'}
+              value={formData.perfil ?? ''}
+              onChange={handleInputChange}
+              options={[
+                { value: 'Administrador', label: 'Administrator' },
+                { value: 'Pedagógico', label: 'Pedagógico' },
+                { value: 'Escola', label: 'Escola' },
+              ]}
+            />
           </div>
-          <div className={styles.buttonContainer}>
-            <button
-              className={styles.cancelButton}
-              type="button"
-              onClick={onCancel}
-            >
-              Cancelar
-            </button>
-            <button className={styles.confirmButton} type="submit">
-              Salvar
-            </button>
-          </div>
-        </form>
-      </div>
+        }
+      />
       {error ? <ErrorComponent message={msgError} /> : ''}
     </>
   );

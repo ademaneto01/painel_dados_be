@@ -3,7 +3,8 @@ import { EntitiesUrl } from '@/entities';
 import { useEffect, useState } from 'react';
 import styles from '@/styles/DigitalResources.module.css';
 import { ErrorComponent } from '@/errors';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
+import iframeUrl from '@/utils/metaBase';
 
 export default function DigitalResources() {
   const [data, setData] = useState([] as EntitiesUrl[]);
@@ -47,14 +48,15 @@ export default function DigitalResources() {
   if (!naoContemDados) {
     return (
       <div className={styles.containerDigitaResources}>
-        {data.map((entityUrl) => (
+        {/* {data.map((entityUrl) => (
           <iframe
             key={entityUrl.id}
             width="100%"
             height="100%"
             src={entityUrl.url_dados}
           />
-        ))}
+        ))} */}
+        <iframe width="100%" height="100%" src={iframeUrl} />
         {error && <ErrorComponent message={msgError} />}
       </div>
     );

@@ -5,7 +5,7 @@ import {
   PageEnumAgentesExterno,
   PageEnumAcompanhamentoPDG,
 } from '@/enums';
-import { EntitiesContratos, EntitiesInfosContrato } from '@/entities';
+import { EntitiesContratos } from '@/entities';
 import React, {
   createContext,
   useContext,

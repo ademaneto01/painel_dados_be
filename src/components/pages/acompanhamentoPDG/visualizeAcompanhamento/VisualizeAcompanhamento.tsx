@@ -5,7 +5,7 @@ import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { useState, useEffect } from 'react';
 import { PageEnumAcompanhamentoPDG } from '@/enums';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 export default function VisualizeAcompanhamento() {
   const [data, setData] = useState<EntitiesAcompanhamentoPDG[]>([]);

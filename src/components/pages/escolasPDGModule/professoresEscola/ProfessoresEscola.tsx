@@ -11,7 +11,7 @@ import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumEscolasPDG } from '@/enums';
 import ModalVicularAgente from '@/components/modal/modalVincularAgente/ModalVincularAgente';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 const COLUMNS = [
   new Column('Nome', 'nome'),

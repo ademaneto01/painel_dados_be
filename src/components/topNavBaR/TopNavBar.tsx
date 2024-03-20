@@ -13,7 +13,7 @@ import { CgLogOut } from 'react-icons/cg';
 import { IconType } from 'react-icons';
 import { useGlobalContext } from '@/context/store';
 import { ErrorComponent } from '@/errors';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface TopNavBarProps {
   toggleSideNavBar: () => void;

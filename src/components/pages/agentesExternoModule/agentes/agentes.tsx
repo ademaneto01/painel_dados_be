@@ -6,7 +6,7 @@ import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { useState, useEffect, useMemo } from 'react';
 import { PageEnumAgentesExterno } from '@/enums';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 const columns = [
   new Column('Nome', 'nome'),

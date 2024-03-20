@@ -4,10 +4,14 @@ import InputMask from 'react-input-mask';
 import { BackendApiGet, BackendApiPut } from '@/backendApi';
 import { ErrorComponent } from '@/errors/index';
 import { PageEnumContratos } from '@/enums';
-import { PageContentContainer, BackButton } from '@/components/shared';
+import {
+  PageContentContainer,
+  BackButton,
+  InputStandard,
+} from '@/components/shared';
 import { useGlobalContext } from '@/context/store';
-import validaCNPJ from '@/validations/validaCNPJ';
-import handleApiErrors from '@/utils';
+import validaCNPJ from '@/utils/validaCNPJ';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface FormData {
   nome_simplificado: string | null;
@@ -220,28 +224,22 @@ const FormComponent: React.FC<any> = ({
 }) => {
   return (
     <form className={styles.boxForm} onSubmit={handleSubmit}>
-      <label className={styles.labelStandard}>
-        Nome Simplificado*
-        <input
-          type="text"
-          placeholder="Nome Simplificado"
-          name="nome_simplificado"
-          value={formData.nome_simplificado ?? ''}
-          onChange={handleInputChange}
-          className={styles.inputStandard}
-        />
-      </label>
-      <label className={styles.labelStandard}>
-        Razão Social*
-        <input
-          type="text"
-          placeholder="Razão Social"
-          name="razao_social"
-          value={formData.razao_social ?? ''}
-          onChange={handleInputChange}
-          className={styles.inputStandard}
-        />
-      </label>
+      <InputStandard
+        label="Nome Simplificado*"
+        type="text"
+        placeholder="Nome Simplificado"
+        name="nome_simplificado"
+        value={formData.nome_simplificado}
+        onChange={handleInputChange}
+      />
+      <InputStandard
+        label="Razão Social*"
+        type="text"
+        placeholder="Razão Social"
+        name="razao_social"
+        value={formData.razao_social}
+        onChange={handleInputChange}
+      />
       <label className={styles.labelStandard}>
         CNPJ*
         <InputMask
@@ -266,61 +264,46 @@ const FormComponent: React.FC<any> = ({
           className={styles.inputStandard}
         />
       </label>
-      <label className={styles.labelStandard}>
-        Rua*
-        <input
-          type="text"
-          placeholder="Rua"
-          name="endereco"
-          value={formData.endereco ?? ''}
-          onChange={handleInputChange}
-          className={styles.inputStandard}
-        />
-      </label>
-      <label className={styles.labelStandard}>
-        Cidade*
-        <input
-          type="text"
-          placeholder="Cidade"
-          name="cidade"
-          value={formData.cidade ?? ''}
-          onChange={handleInputChange}
-          className={styles.inputStandard}
-        />
-      </label>
-      <label className={styles.labelStandard}>
-        UF*
-        <input
-          type="text"
-          placeholder="UF"
-          name="uf"
-          value={formData.uf ?? ''}
-          onChange={handleInputChange}
-          className={styles.inputStandard}
-        />
-      </label>
-      <label className={styles.labelStandard}>
-        Bairro*
-        <input
-          type="text"
-          placeholder="Bairro"
-          name="bairro"
-          value={formData.bairro ?? ''}
-          onChange={handleInputChange}
-          className={styles.inputStandard}
-        />
-      </label>
-      <label className={styles.labelStandard}>
-        Complemento*
-        <input
-          type="text"
-          placeholder="Complemento"
-          name="complemento"
-          value={formData.complemento ?? ''}
-          onChange={handleInputChange}
-          className={styles.inputStandard}
-        />
-      </label>
+      <InputStandard
+        label="Rua*"
+        type="text"
+        placeholder="Rua"
+        name="endereco"
+        value={formData.endereco}
+        onChange={handleInputChange}
+      />
+      <InputStandard
+        label="Cidade*"
+        type="text"
+        placeholder="Cidade"
+        name="cidade"
+        value={formData.cidade}
+        onChange={handleInputChange}
+      />
+      <InputStandard
+        label="UF*"
+        type="text"
+        placeholder="UF"
+        name="uf"
+        value={formData.uf}
+        onChange={handleInputChange}
+      />
+      <InputStandard
+        label="Bairro*"
+        type="text"
+        placeholder="Bairro"
+        name="bairro"
+        value={formData.bairro}
+        onChange={handleInputChange}
+      />
+      <InputStandard
+        label="Complemento*"
+        type="text"
+        placeholder="Complemento"
+        name="complemento"
+        value={formData.complemento}
+        onChange={handleInputChange}
+      />
       <label className={styles.labelStandard}>
         Rede*
         <select

@@ -9,7 +9,7 @@ import { BackendApiGet } from '@/backendApi';
 import { useGlobalContext } from '@/context/store';
 import { ModalSucesso } from '../modal';
 import { ErrorComponent } from '@/errors/index';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 const columns = [
   new Column('Nome', 'nome'),

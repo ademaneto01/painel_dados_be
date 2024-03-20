@@ -11,7 +11,7 @@ import {
 import { useGlobalContext } from '@/context/store';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ModalSucesso } from '@/components/modal';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface FormAlunadosToEdit {
   id_ee: string;

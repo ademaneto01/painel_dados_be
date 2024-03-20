@@ -10,7 +10,7 @@ import { useGlobalContext } from '@/context/store';
 import ModalEditarVinculoAgente from '@/components/modal/modalEditarVinculoAgente/ModalEditarVinculoAgente';
 import Tooltip from '@/components/Tooltip/Tooltip';
 import { ErrorComponent } from '@/errors';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface PropsForFxclusion {
   uuid_agente: string;

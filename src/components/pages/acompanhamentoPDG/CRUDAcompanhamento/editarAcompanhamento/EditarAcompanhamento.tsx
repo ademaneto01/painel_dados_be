@@ -13,7 +13,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ComponenteCalendar } from '@/components/pages/calendar';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface FormData {
   id: string;
@@ -148,18 +148,26 @@ export default function EditarAcompanhamento(): JSX.Element {
         const token = localStorage.getItem('auth_token');
         const backendApi = new BackendApiPut(`${token}`);
         const response = await backendApi.editarAcompanhamento(novoForm);
-        const formCriteria = {
-          id_acmp: response[0].id,
-          ...formDataCriteriaToSubmit,
-          finalized: true,
-          finalizedtimestamp: new Date(),
-        };
 
-        await backendApi.editarCriteria(formCriteria);
+        if (response && response[0] && response[0].id) {
+          const formCriteria = {
+            id_acmp: response[0].id,
+            ...formDataCriteriaToSubmit,
+            finalized: true,
+            finalizedtimestamp: new Date(),
+          };
+          await backendApi.editarCriteria(formCriteria);
+        } else {
+          setError(true);
+          setMsgError(
+            'Ocorreu um erro ao tentar vincular as notas de critério. Por favor, entre em contato com o suporte técnico fornecendo detalhes sobre os passos que levaram a este erro.',
+          );
+        }
       } catch (error) {
         handleApiErrors(error, setError, setMsgError);
       }
     }
+
     if (estado === 'save') {
       const novoForm = {
         ...formDataToSubmit,
@@ -173,14 +181,21 @@ export default function EditarAcompanhamento(): JSX.Element {
         const backendApi = new BackendApiPut(`${token}`);
         const response = await backendApi.editarAcompanhamento(novoForm);
 
-        const formCriteria = {
-          id_acmp: response[0].id,
-          ...formDataCriteriaToSubmit,
-          finalized: false,
-          finalizedtimestamp: null,
-        };
+        if (response && response[0] && response[0].id) {
+          const formCriteria = {
+            id_acmp: response[0].id,
+            ...formDataCriteriaToSubmit,
+            finalized: false,
+            finalizedtimestamp: null,
+          };
 
-        await backendApi.editarCriteria(formCriteria);
+          await backendApi.editarCriteria(formCriteria);
+        } else {
+          setError(true);
+          setMsgError(
+            'Ocorreu um erro ao tentar vincular as notas de critério. Por favor, entre em contato com o suporte técnico fornecendo detalhes sobre os passos que levaram a este erro.',
+          );
+        }
       } catch (error) {
         handleApiErrors(error, setError, setMsgError);
       }

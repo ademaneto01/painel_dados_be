@@ -5,7 +5,7 @@ import { ImCross } from 'react-icons/im';
 import { IconType, IconBaseProps } from 'react-icons';
 import EntitiesUsersPDG from '@/entities/EntitiesUsuariosPDG';
 import { ErrorComponent } from '@/errors/index';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface FormData {
   nome_operacional: string;

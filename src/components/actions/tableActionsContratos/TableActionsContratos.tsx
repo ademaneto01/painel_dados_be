@@ -12,7 +12,7 @@ import { PageEnumContratos } from '@/enums';
 import Action from '../Action';
 import Tooltip from '@/components/Tooltip/Tooltip';
 import { ErrorComponent } from '@/errors';
-import handleApiErrors from '@/utils';
+import handleApiErrors from '@/utils/HandleApiErrors';
 
 interface PropsForFxclusion {
   id: string;
