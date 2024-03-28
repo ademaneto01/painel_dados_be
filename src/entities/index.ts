@@ -21,6 +21,7 @@ import EntitiesInfosContrato from './EntitiesInfosContrato';
 import EntitiesAlunados from './EntitiesAlunados';
 import EntitiesAcompanhamentoPDG from './EntitiesAcompanhamentoPDG';
 import EntitiesAcompanhamentoPDGCriteria from './EntitiesAcompanhamentoPDGCriteria';
+import EntitiesMetaBaseIframe from './EntitiesMetaBaseIframe';
 export {
   EntitiesUsers,
   EntitiesUserLogin,
@@ -45,4 +46,5 @@ export {
   EntitiesAlunados,
   EntitiesAcompanhamentoPDG,
   EntitiesAcompanhamentoPDGCriteria,
+  EntitiesMetaBaseIframe,
 };

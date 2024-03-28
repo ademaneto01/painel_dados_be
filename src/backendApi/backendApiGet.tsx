@@ -14,6 +14,7 @@ import {
   EntitiesAlunados,
   EntitiesAcompanhamentoPDG,
   EntitiesAcompanhamentoPDGCriteria,
+  EntitiesMetaBaseIframe,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterfaceGet, SerializerInterface } from '@/interfaces';
@@ -33,6 +34,7 @@ import {
   AlunadosSerializers,
   AcompanhamentoPDGSerializers,
   AcompanhamentoPDGCriteriaSerializers,
+  MetaBaseIframeSerializers,
 } from '@/serializers/prod';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
@@ -84,6 +86,16 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
       new ContratosSerializers(),
     );
   }
+  public async metaBaseIframe(
+    nomeEscola: any,
+  ): Promise<EntitiesMetaBaseIframe[]> {
+    return await this.get<EntitiesMetaBaseIframe>(
+      '/metaBaseIframe',
+      new MetaBaseIframeSerializers(),
+      { id: nomeEscola },
+    );
+  }
+
   public async getUrl(userId: any): Promise<EntitiesUrl[]> {
     return await this.get<EntitiesUrl>(
       '/findDadosUser',
@@ -281,12 +293,14 @@ export default class BackendApiGet implements BackendApiInterfaceGet {
       ? await this.api.get(
           `${route}?id=${
             route === '/listarIndividualAlunados' ||
-            route === '/listarIndividualTurmas'
+            route === '/listarIndividualTurmas' ||
+            route === '/metaBaseIframe'
               ? JSON.stringify(data.id)
               : data.id
           }`,
         )
       : await this.api.get(route);
+
     return this.serializeOrError<T>(response, serializer);
   }
 

@@ -20,6 +20,7 @@ import EntidadesEscolaresSerializers from './EntidadesEscolaresSerializers';
 import AlunadosSerializers from './AlunadosSerializers';
 import AcompanhamentoPDGSerializers from './AcompanhamentoPDGSerializers';
 import AcompanhamentoPDGCriteriaSerializers from './AcompanhamentoPDGCriteriaSerializers';
+import MetaBaseIframeSerializers from './MetaBaseIframeSerializers';
 export {
   AlunadosSerializers,
   UsersSerializers,
@@ -43,4 +44,5 @@ export {
   EntidadesEscolaresSerializers,
   AcompanhamentoPDGSerializers,
   AcompanhamentoPDGCriteriaSerializers,
+  MetaBaseIframeSerializers,
 };

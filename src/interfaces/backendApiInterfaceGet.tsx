@@ -13,6 +13,7 @@ import {
   EntitiesInfosContrato,
   EntitiesAlunados,
   EntitiesAcompanhamentoPDG,
+  EntitiesMetaBaseIframe,
 } from '@/entities';
 
 export default interface BackendApiInterfaceGet {
@@ -27,7 +28,7 @@ export default interface BackendApiInterfaceGet {
   localizarEntidadesEscolares(
     uuid_ec: any,
   ): Promise<EntitiesEntidadesEscolares[]>;
-
+  metaBaseIframe(id: any): Promise<EntitiesMetaBaseIframe[]>;
   localizarEntidadeEscolar(id: any): Promise<EntitiesEditarEntidadeEscolar[]>;
   localizarUsuariosPDG(): Promise<EntitiesUsuariosPDG[]>;
   localizarContrato(id: any): Promise<EntitiesContratos[]>;
