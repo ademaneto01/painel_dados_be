@@ -143,7 +143,7 @@ export default function SideNavBar(props: SideNavBarProps) {
           hidden={perfil === 'Pedagógico' ? true : false}
         />
         <SideNavBarButton
-          text="Recursos Digitais"
+          text="Painel de Acompanhamento"
           onClick={() => {
             props.setPage(PageEnum.digitalResources);
           }}
