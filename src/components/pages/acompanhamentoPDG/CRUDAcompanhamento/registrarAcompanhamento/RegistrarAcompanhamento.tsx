@@ -176,6 +176,8 @@ export default function RegistrarAcompanhamento(): JSX.Element {
           };
 
           await backendApi.registrarAcompanhamentoCriteria(formCriteria);
+
+          setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos);
         } else {
           setError(true);
           setMsgError(
@@ -207,6 +209,8 @@ export default function RegistrarAcompanhamento(): JSX.Element {
           };
 
           await backendApi.registrarAcompanhamentoCriteria(formCriteria);
+
+          setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos);
         } else {
           setError(true);
           setMsgError(
@@ -217,7 +221,6 @@ export default function RegistrarAcompanhamento(): JSX.Element {
         handleApiErrors(error, setError, setMsgError);
       }
     }
-    setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos);
   };
 
   const fetchData = async () => {
