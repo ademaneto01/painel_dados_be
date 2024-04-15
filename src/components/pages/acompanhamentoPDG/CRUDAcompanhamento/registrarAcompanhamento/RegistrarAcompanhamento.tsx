@@ -14,6 +14,7 @@ import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
 import { IconBaseProps, IconType } from 'react-icons';
 import { ComponenteCalendar } from '@/components/pages/calendar';
 import handleApiErrors from '@/utils/HandleApiErrors';
+import { ModalSucesso } from '@/components/modal';
 
 interface FormData {
   id: string;
@@ -87,6 +88,7 @@ export default function RegistrarAcompanhamento(): JSX.Element {
   const calendarRef = useRef<HTMLDivElement>(null);
   const [showOptions, setShowOptions] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [twoFactorModal, setTwoFactorModal] = useState(false);
   const [avaliationPage, setAvaliationPage] = useState(false);
   const [isFinalize, setIsFinalize] = useState('');
   const [yearObservation, setYearObservation] = useState(
@@ -175,9 +177,16 @@ export default function RegistrarAcompanhamento(): JSX.Element {
             finalizedtimestamp: new Date(),
           };
 
-          await backendApi.registrarAcompanhamentoCriteria(formCriteria);
-
-          setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos);
+          const responseRegistro =
+            await backendApi.registrarAcompanhamentoCriteria(formCriteria);
+          if (responseRegistro[0].id && response[0].id) {
+            setTwoFactorModal(true);
+            setTimeout(() => {
+              setPageAcompanhamento(PageEnumAcompanhamentoPDG.acompanhamentos);
+            }, 1000);
+          } else {
+            //modal avisando o erro e botao para voltar e tentar salvar novamente, aqui vai precisar
+          }
         } else {
           setError(true);
           setMsgError(
@@ -472,8 +481,10 @@ export default function RegistrarAcompanhamento(): JSX.Element {
           ReactSlider={ReactSlider}
           boxRanges={boxRanges}
           avaliationPage={avaliationPage}
+          twoFactorModal={twoFactorModal}
         />
         {error && <ErrorComponent message={msgError} />}
+        {twoFactorModal && <ModalSucesso message={'teste'} />}
       </PageContentContainer>
     </div>
   );
