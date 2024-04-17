@@ -102,7 +102,7 @@ export default function SignIn(): JSX.Element {
       ) : (
         <div className={styles.containerFundo}>
           <div className={styles.logoContainer}>
-            <img src="Bestema_logo.png" className={styles.logo} />
+            <img src="BE_logo_horizontal_bco_2.png" className={styles.logo} />
           </div>
           <form
             className={styles.formLogin}

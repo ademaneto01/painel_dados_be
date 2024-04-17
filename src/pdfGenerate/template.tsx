@@ -10,7 +10,7 @@ padding-bottom: 5.5rem;
     <div style=" margin-left: 2rem; margin-top: 3%;">
     <div style="color: #A6CE38; font-size: 340%; font-weight: bold;">Acompanhamento Pedagógico</div>
     <div style="margin-top: 1rem; color: #31599C; font-size: 220%; margin-bottom: 1rem">Práticas de alto impacto</div>
-    <img src="logobe.png" alt="Logo" style="position:absolute; margin-top: -7rem; margin-left: 75%; margin-right: 2rem; width: 16rem; height: auto;">
+    <img src="BE_logo_horizontal_cor_1.png" alt="Logo" style="position:absolute; margin-top: -7rem; margin-left: 75%; margin-right: 2rem; width: 16rem; height: auto;">
     </div>
     <div style="margin-top: 1.5rem; margin-left: 2rem;">
     <div style="display: flex; flex-wrap: wrap;">
