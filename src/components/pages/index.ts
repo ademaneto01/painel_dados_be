@@ -4,6 +4,7 @@ import Contratos from './ContratoModule/SwitchCaseContratos';
 import EscolasPDG from './escolasPDGModule/SwitchCaseEscolasPDG';
 import AgentesExterno from './agentesExternoModule/SwitchCaseAgentesExterno';
 import pagesAcompanhamento from './acompanhamentoPDG/SwitchCaseAcompanhamento';
+import LoaderPage from './LoaderPage';
 export {
   DigitalResources,
   Users,
@@ -11,4 +12,5 @@ export {
   EscolasPDG,
   AgentesExterno,
   pagesAcompanhamento,
+  LoaderPage,
 };
