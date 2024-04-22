@@ -14,3 +14,16 @@
 .expanded {
   margin-left: 4em;
 }
+
+.containerFundo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('/fundo_alternativo2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}

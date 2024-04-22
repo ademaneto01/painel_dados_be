@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { use, useEffect } from 'react';
 import styles from '@/styles/Home.module.css';
 import { PageEnum } from '@/enums';
 import { useState } from 'react';
@@ -8,10 +8,12 @@ import TopNavBar from '@/components/topNavBaR';
 import * as pages from '@/components/pages';
 import { BackendApiGet } from '@/backendApi';
 import { useRouter } from 'next/navigation';
+import { Loader } from '@/components/shared';
 
 export default function Home(): JSX.Element {
   const router = useRouter();
   const [sideNavBarHidden, setSideNavBarHidden] = useState(false);
+  const [page, setPage] = useState(PageEnum.loaderPage);
   const [perfil, setPerfil] = useState('');
 
   useEffect(() => {
@@ -32,19 +34,16 @@ export default function Home(): JSX.Element {
             setPage(PageEnum.escolasPDG);
           } else if (user[0].perfil === 'Escola') {
             setPage(PageEnum.digitalResources);
-          } else {
-            setPage(PageEnum.digitalResources);
           }
         }
       } catch (error) {
+        router.push('/login');
         console.error('Error fetching user data:', error);
       }
     };
 
     fetchUserData();
   }, []);
-
-  const [page, setPage] = useState(PageEnum.digitalResources);
 
   function toggleSideNavBar(): void {
     setSideNavBarHidden(!sideNavBarHidden);
@@ -54,6 +53,8 @@ export default function Home(): JSX.Element {
     switch (page) {
       case PageEnum.users:
         return <pages.Users />;
+      case PageEnum.loaderPage:
+        return <pages.LoaderPage />;
       case PageEnum.digitalResources:
         return <pages.DigitalResources />;
       case PageEnum.contratos:
@@ -72,21 +73,30 @@ export default function Home(): JSX.Element {
   function expandable(style: string): string {
     return style + (sideNavBarHidden ? ` ${styles.expanded}` : '');
   }
-
-  return (
-    <main className={styles.main}>
-      <TopNavBar
-        toggleSideNavBar={toggleSideNavBar}
-        hidden={sideNavBarHidden}
-      />
-      <SideNavBar
-        hidden={sideNavBarHidden}
-        activePage={page}
-        setPage={setPage}
-      />
-      <div className={expandable(styles.pageContainer)}>
-        <Page />
+  if (page === PageEnum.loaderPage) {
+    return (
+      <div className={styles.containerFundo}>
+        <div className={styles.boxLoaderLogin}>
+          <Loader />
+        </div>
       </div>
-    </main>
-  );
+    );
+  } else {
+    return (
+      <main className={styles.main}>
+        <TopNavBar
+          toggleSideNavBar={toggleSideNavBar}
+          hidden={sideNavBarHidden}
+        />
+        <SideNavBar
+          hidden={sideNavBarHidden}
+          activePage={page}
+          setPage={setPage}
+        />
+        <div className={expandable(styles.pageContainer)}>
+          <Page />
+        </div>
+      </main>
+    );
+  }
 }
