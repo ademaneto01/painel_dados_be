@@ -25,6 +25,7 @@ interface UserProps {
   lp4changes: string;
   finalcoments: string;
   finalized: boolean;
+  criado_em: string;
   deleted: boolean;
 }
 
@@ -53,6 +54,7 @@ export default class EntitiesAcompanhamentoPDG {
   readonly lp4changes: string;
   readonly finalcoments: string;
   readonly finalized: boolean;
+  readonly criado_em: string;
   readonly deleted: boolean;
 
   constructor({
@@ -80,6 +82,7 @@ export default class EntitiesAcompanhamentoPDG {
     lp4changes,
     finalcoments,
     finalized,
+    criado_em,
     deleted,
   }: UserProps) {
     this.id = id;
@@ -106,6 +109,7 @@ export default class EntitiesAcompanhamentoPDG {
     this.lp4changes = lp4changes;
     this.finalcoments = finalcoments;
     this.finalized = finalized;
+    this.criado_em = criado_em;
     this.deleted = deleted;
   }
   public get acoes(): JSX.Element {

@@ -9,6 +9,7 @@ import { PageEnumAcompanhamentoPDG } from '@/enums';
 import handleApiErrors from '@/utils/HandleApiErrors';
 
 const columns = [
+  new Column('Criado Em', 'criado_em'),
   new Column('Nome Professor', 'nome_agente'),
   new Column('Nome Escola', 'nome_escola'),
   new Column('Série', 'grade'),

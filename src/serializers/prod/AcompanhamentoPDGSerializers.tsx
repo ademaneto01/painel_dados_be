@@ -1,5 +1,6 @@
 import { EntitiesAcompanhamentoPDG } from '@/entities';
 import { SerializerInterface } from '@/interfaces';
+import { formatDate } from '@/utils/formatDate';
 
 interface AcompanhamentoPDGPayload {
   id: string;
@@ -26,6 +27,7 @@ interface AcompanhamentoPDGPayload {
   lp4changes: string;
   finalcoments: string;
   finalized: boolean;
+  criado_em: string;
   deleted: boolean;
 }
 
@@ -33,6 +35,7 @@ export default class AcompanhamentoPDGSerializers
   implements SerializerInterface
 {
   toEntity(otd: AcompanhamentoPDGPayload): EntitiesAcompanhamentoPDG {
+    const criadoEmFormatado = formatDate(otd.criado_em);
     return new EntitiesAcompanhamentoPDG({
       id: otd.id,
       id_ee: otd.id_ee,
@@ -58,6 +61,7 @@ export default class AcompanhamentoPDGSerializers
       lp4changes: otd.lp4changes,
       finalcoments: otd.finalcoments,
       finalized: otd.finalized,
+      criado_em: criadoEmFormatado,
       deleted: otd.deleted,
     });
   }
