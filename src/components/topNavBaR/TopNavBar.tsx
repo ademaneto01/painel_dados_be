@@ -58,7 +58,7 @@ export default function TopNavBar(props: TopNavBarProps) {
 
   function logOut() {
     setIsLoadingLogOut(false);
-    router.replace('/login');
+    router.replace('/');
     setTimeout(() => {
       localStorage.clear();
       Cookies.remove('auth_token');
