@@ -1,102 +1,134 @@
 'use client';
-import React, { use, useEffect } from 'react';
-import styles from '@/styles/Home.module.css';
-import { PageEnum } from '@/enums';
-import { useState } from 'react';
-import SideNavBar from '@/components/sideNavBar';
-import TopNavBar from '@/components/topNavBaR';
-import * as pages from '@/components/pages';
-import { BackendApiGet } from '@/backendApi';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { BackendApiPost } from '@/backendApi';
+import styles from '@/styles/Login.module.css';
+import Cookies from 'js-cookie';
 import { Loader } from '@/components/shared';
 
-export default function Home(): JSX.Element {
+interface FormState {
+  email: string;
+  password: string;
+}
+
+interface WarningState {
+  msg: string;
+  show: boolean;
+}
+
+export default function SignIn(): JSX.Element {
   const router = useRouter();
-  const [sideNavBarHidden, setSideNavBarHidden] = useState(false);
-  const [page, setPage] = useState(PageEnum.loaderPage);
-  const [perfil, setPerfil] = useState('');
+  const [loadedLogin, setLoadedLogin] = useState(false);
+  const [form, setForm] = useState<FormState>({ email: '', password: '' });
+  const [warning, setWarning] = useState<WarningState>({
+    msg: '',
+    show: false,
+  });
 
-  useEffect(() => {
-    const token = localStorage.getItem('auth_token');
-    const userId = localStorage.getItem('userId');
+  const updateForm = (key: string, value: string) => {
+    setForm((old) => ({
+      ...old,
+      [key]: value,
+    }));
+  };
 
-    const backendApi = new BackendApiGet(`${token}`);
-    const fetchUserData = async () => {
-      try {
-        const user = await backendApi.localizarUsuario(userId);
+  const saveUserToLocalStorage = (user: any) => {
+    localStorage.setItem('userNome', user.nome);
+    localStorage.setItem('escola', user.id_ee);
+    localStorage.setItem('auth_token', user.token);
+    localStorage.setItem('userId', user.id);
+    Cookies.set('auth_token', user.token);
+  };
 
-        if (user && user.length > 0) {
-          setPerfil(user[0].perfil || '');
+  const handleLoginError = (error: any) => {
+    setWarning({
+      msg: error.response.data.mensagem,
+      show: true,
+    });
+    setLoadedLogin(false);
+    hideWarningAfterDelay();
+  };
 
-          if (user[0].perfil === 'Administrador') {
-            setPage(PageEnum.users);
-          } else if (user[0].perfil === 'Pedagógico') {
-            setPage(PageEnum.escolasPDG);
-          } else if (user[0].perfil === 'Escola') {
-            setPage(PageEnum.digitalResources);
-          }
-        }
-      } catch (error) {
-        router.push('/login');
-        console.error('Error fetching user data:', error);
-      }
-    };
+  const hideWarningAfterDelay = () => {
+    setTimeout(() => {
+      setWarning(() => ({
+        msg: '',
+        show: false,
+      }));
+    }, 6000);
+  };
 
-    fetchUserData();
-  }, []);
+  const handleSignIn = async (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
 
-  function toggleSideNavBar(): void {
-    setSideNavBarHidden(!sideNavBarHidden);
-  }
+    try {
+      const backendApi = new BackendApiPost();
 
-  function Page(): JSX.Element {
-    switch (page) {
-      case PageEnum.users:
-        return <pages.Users />;
-      case PageEnum.loaderPage:
-        return <pages.LoaderPage />;
-      case PageEnum.digitalResources:
-        return <pages.DigitalResources />;
-      case PageEnum.contratos:
-        return <pages.Contratos />;
-      case PageEnum.escolasPDG:
-        return <pages.EscolasPDG />;
-      case PageEnum.agentesExterno:
-        return <pages.AgentesExterno />;
-      case PageEnum.acompanhamentoPDG:
-        return <pages.pagesAcompanhamento />;
-      default:
-        return <></>;
+      const users = await backendApi.userLogin({
+        email: form.email,
+        senha: form.password,
+      });
+
+      setLoadedLogin(true);
+      saveUserToLocalStorage(users[0]);
+      router.push('/splash');
+    } catch (error: any) {
+      handleLoginError(error);
     }
-  }
+  };
 
-  function expandable(style: string): string {
-    return style + (sideNavBarHidden ? ` ${styles.expanded}` : '');
-  }
-  if (page === PageEnum.loaderPage) {
-    return (
-      <div className={styles.containerFundo}>
-        <div className={styles.boxLoaderLogin}>
-          <Loader />
+  const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const value = evt.target.value;
+    const key = evt.target.name;
+    updateForm(key, value);
+  };
+
+  return (
+    <>
+      {
+        <div className={styles.containerFundo}>
+          <div className={styles.logoContainer}>
+            <img src="Bestema_logo.png" className={styles.logo} />
+          </div>
+          <form
+            className={styles.formLogin}
+            onSubmit={(evt) => handleSignIn(evt)}
+          >
+            <h1 className={styles.title}>Login</h1>
+            <div className={styles.groupForm}>
+              <label className={styles.labelLogin}>E-mail</label>
+              <input
+                className={styles.inputLogin}
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={onChange}
+              />
+            </div>
+            <div className={styles.groupForm}>
+              <label className={styles.labelLogin}>Senha</label>
+              <input
+                className={styles.inputLogin}
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={onChange}
+              />
+            </div>
+            <button className={styles.btnLogin} type="submit">
+              Entrar
+            </button>
+            <div className={styles.boxWarning}>
+              <span className={styles.error}>
+                {warning.show && warning.msg}
+              </span>
+            </div>
+          </form>
+          <div className={styles.boxLoaderLogin}>
+            {loadedLogin ? <Loader /> : ''}
+          </div>
         </div>
-      </div>
-    );
-  } else {
-    return (
-      <main className={styles.main}>
-        <TopNavBar
-          toggleSideNavBar={toggleSideNavBar}
-          hidden={sideNavBarHidden}
-        />
-        <SideNavBar
-          hidden={sideNavBarHidden}
-          activePage={page}
-          setPage={setPage}
-        />
-        <div className={expandable(styles.pageContainer)}>
-          <Page />
-        </div>
-      </main>
-    );
-  }
+      }
+    </>
+  );
 }
