@@ -1,11 +1,10 @@
 'use client';
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { BackendApiPost } from '@/backendApi';
 import styles from '@/styles/Login.module.css';
 import Cookies from 'js-cookie';
 import { Loader } from '@/components/shared';
-import { useGlobalContext } from '@/context/store';
 
 interface FormState {
   email: string;
@@ -21,7 +20,6 @@ export default function SignIn(): JSX.Element {
   const router = useRouter();
   const [loadedLogin, setLoadedLogin] = useState(false);
   const [form, setForm] = useState<FormState>({ email: '', password: '' });
-  const { isLoadingLogOut, setIsLoadingLogOut } = useGlobalContext();
   const [warning, setWarning] = useState<WarningState>({
     msg: '',
     show: false,
@@ -41,14 +39,6 @@ export default function SignIn(): JSX.Element {
     localStorage.setItem('userId', user.id);
     Cookies.set('auth_token', user.token);
   };
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsLoadingLogOut(true);
-  //   }, 500);
-
-  //   return () => clearTimeout(timer);
-  // }, []);
 
   const handleLoginError = (error: any) => {
     setWarning({
