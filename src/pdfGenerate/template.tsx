@@ -10,7 +10,7 @@ padding-bottom: 5.5rem;
     <div style=" margin-left: 2rem; margin-top: 3%;">
     <div style="color: #A6CE38; font-size: 340%; font-weight: bold;">Acompanhamento Pedagógico</div>
     <div style="margin-top: 1rem; color: #31599C; font-size: 220%; margin-bottom: 1rem">Práticas de alto impacto</div>
-    <img src="logobe.png" alt="Logo" style="position:absolute; margin-top: -7rem; margin-left: 75%; margin-right: 2rem; width: 16rem; height: auto;">
+    <img src="logobe.webp" alt="Logo" style="position:absolute; margin-top: -7rem; margin-left: 75%; margin-right: 2rem; width: 16rem; height: auto;">
     </div>
     <div style="margin-top: 1.5rem; margin-left: 2rem;">
     <div style="display: flex; flex-wrap: wrap;">
@@ -212,7 +212,7 @@ padding-bottom: 5.5rem;
         </div>
     </div>
     <div style="display: flex; align-items: center;">
-        <img src="balloon_be.png" alt="Logo" style="margin-left: -1%; margin-right: 0.7rem; margin-top: 0.3rem; width: 15%; height: auto;">
+        <img src="balloon_be.webp" alt="Logo" style="margin-left: -1%; margin-right: 0.7rem; margin-top: 0.3rem; width: 15%; height: auto;">
         <div style="color: #31599C; font-size: 1.2rem; font-weight: bold; margin-left: 67%; margin-right: 0.7rem;">Acompanhamento de Aula 1/2</div>
     </div>        
     </div>
