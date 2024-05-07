@@ -82,7 +82,7 @@ export default function TopNavBar(props: TopNavBarProps) {
         <div className={styles.logoContainer}>
           <Image
             className={styles.logo}
-            src="/Bestema_logo.png"
+            src="/Bestema_logo.webp"
             alt="Logo be Branco"
             priority={true}
             aspect-ratio={1}
@@ -111,7 +111,7 @@ export default function TopNavBar(props: TopNavBarProps) {
               title={
                 <Image
                   className={styles.logo}
-                  src="/logobe.png"
+                  src="/logobe.webp"
                   alt="Logo Be cor"
                   priority={true}
                   aspect-ratio={1}
