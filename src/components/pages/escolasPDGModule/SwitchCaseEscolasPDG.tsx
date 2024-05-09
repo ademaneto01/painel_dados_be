@@ -16,6 +16,12 @@ export default function SwitchCaseEscolasPDG() {
         return <pages.DocsEscola />;
       case PageEnumEscolasPDG.professoresEscola:
         return <pages.ProfessoresEscola />;
+      case PageEnumEscolasPDG.alunadosPDG:
+        return <pages.AlunadosPDG />;
+      case PageEnumEscolasPDG.cadastroAlunadoPDG:
+        return <pages.CadastrarAlunadoPDG />;
+      case PageEnumEscolasPDG.editarAlunadoPDG:
+        return <pages.EditarAlunadoPDG />;
       default:
         return <></>;
     }
