@@ -8,7 +8,6 @@ import Action from '../Action';
 import Tooltip from '@/components/Tooltip/Tooltip';
 import { useGlobalContext } from '@/context/store';
 import { PageEnumEscolasPDG } from '@/enums';
-import { PageEnumContratos } from '@/enums';
 import { FiMoreHorizontal, FiMoreVertical } from 'react-icons/fi';
 
 interface PropsForFxclusion {
@@ -65,7 +64,7 @@ export default function TableActionEntidadeEscolarPDG(
 
   function handleClickOpenPageAlunados(id: string): void {
     setIdEntidadeEscolar(id);
-    setPage(PageEnumContratos.alunados);
+    setPageEscolasPDG(PageEnumEscolasPDG.alunadosPDG);
   }
 
   return (
