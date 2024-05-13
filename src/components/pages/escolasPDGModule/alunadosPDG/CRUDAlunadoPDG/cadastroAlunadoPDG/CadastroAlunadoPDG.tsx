@@ -51,7 +51,8 @@ export default function CadastrarAlunadoPDG(): JSX.Element {
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const [sucesso, setSucesso] = useState(false);
-  const { idEntidadeEscolar, setPageEscolasPDG, globalAnoRef } = useGlobalContext();
+  const { idEntidadeEscolar, setPageEscolasPDG, globalAnoRef } =
+    useGlobalContext();
   const [formDataAlunados, setFormDataAlunados] = useState<FormDataAlunados>({
     id_ee: '',
     ano_ref: '',
