@@ -1,5 +1,4 @@
 import { useGlobalContext } from '@/context/store';
-// import pages from '../escolasPDGModule/index';
 import dynamic from 'next/dynamic';
 import { PageEnumEscolasPDG } from '@/enums';
 import styles from '@/styles/CardLessons.module.css';

@@ -1,5 +1,4 @@
 import { useGlobalContext } from '@/context/store';
-// import pages from '../../pages/ContratoModule/index';
 import dynamic from 'next/dynamic';
 import { PageEnumContratos } from '@/enums';
 import styles from '@/styles/CardLessons.module.css';
