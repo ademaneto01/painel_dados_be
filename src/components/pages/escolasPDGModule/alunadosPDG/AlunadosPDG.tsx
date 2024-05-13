@@ -62,7 +62,8 @@ const initialFormData: FormDataAlunados = {
 export default function AlunadosPDG(): JSX.Element {
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const { idEntidadeEscolar, setPageEscolasPDG, setGlobalAnoRef } = useGlobalContext();
+  const { idEntidadeEscolar, setPageEscolasPDG, setGlobalAnoRef } =
+    useGlobalContext();
   const [formAnoRef, setFormAnoRef] = useState('');
   const [isDataFilled, setIsDataFilled] = useState(Boolean);
   const [spanCadastro, setSpanCadastro] = useState(Boolean);

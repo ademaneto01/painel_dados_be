@@ -1,47 +1,111 @@
 import { useGlobalContext } from '@/context/store';
-import pages from '../../pages/ContratoModule/index';
+// import pages from '../../pages/ContratoModule/index';
+import dynamic from 'next/dynamic';
 import { PageEnumContratos } from '@/enums';
 import styles from '@/styles/CardLessons.module.css';
 
+const EntidadesContratuais = dynamic(
+  () => import('../ContratoModule/entidadesContratuais/EntidadesContratuais'),
+);
+
+const EntidadesEscolares = dynamic(
+  () => import('../ContratoModule/entidadesEscolares/EntidadesEscolares'),
+);
+
+const NovoContrato = dynamic(
+  () => import('../ContratoModule/CRUDcrontratos/NovoContrato'),
+);
+
+const SobreescreverContrato = dynamic(
+  () => import('../ContratoModule/CRUDcrontratos/SobreescreverContrato'),
+);
+
+const EditContrato = dynamic(
+  () => import('../ContratoModule/CRUDcrontratos/EditContrato'),
+);
+
+const EditEntidade = dynamic(
+  () => import('../ContratoModule/CRUDentidades/EditEntidade'),
+);
+
+const NovaEntidade = dynamic(
+  () => import('../ContratoModule/CRUDentidades/NovaEntidade'),
+);
+
+const RegistrarDoc = dynamic(
+  () => import('../ContratoModule/registrarDoc/RegistrarDoc'),
+);
+const DocsContrato = dynamic(
+  () => import('../ContratoModule/docsContrato/DocsContrato'),
+);
+
+const DocsEntidade = dynamic(
+  () => import('../ContratoModule/docsEntidade/DocsEntidade'),
+);
+const RegistrarDocEntidade = dynamic(
+  () => import('../ContratoModule/registrarDocEntidade/RegistrarDocEntidade'),
+);
+const InfosContrato = dynamic(
+  () => import('../ContratoModule/infosContrato/InfosContrato'),
+);
+const RegistrarInfosContrato = dynamic(
+  () => import('../ContratoModule/infosContrato/RegistrarInfosContrato'),
+);
+const EditarInfosContrato = dynamic(
+  () => import('../ContratoModule/infosContrato/EditarInfosContrato'),
+);
+const Alunados = dynamic(() => import('../ContratoModule/alunados/Alunados'));
+const CadastrarAlunado = dynamic(
+  () =>
+    import(
+      '../ContratoModule/alunados/CRUDAlunado/cadastroAlunado/CadastroAlunado'
+    ),
+);
+const EditarAlunado = dynamic(
+  () =>
+    import(
+      '../ContratoModule/alunados/CRUDAlunado/editarAlunado/EditarAlunado'
+    ),
+);
 export default function SwitchCaseContratos() {
   const { page } = useGlobalContext();
 
   function PagesContratos(): JSX.Element {
     switch (page) {
       case PageEnumContratos.entidadesContratuais:
-        return <pages.EntidadesContratuais />;
+        return <EntidadesContratuais />;
       case PageEnumContratos.entidadesEscolares:
-        return <pages.EntidadesEscolares />;
+        return <EntidadesEscolares />;
       case PageEnumContratos.novoContrato:
-        return <pages.NovoContrato />;
+        return <NovoContrato />;
       case PageEnumContratos.sobreescreverContrato:
-        return <pages.SobreescreverContrato />;
+        return <SobreescreverContrato />;
       case PageEnumContratos.editContrato:
-        return <pages.EditContrato />;
+        return <EditContrato />;
       case PageEnumContratos.editEntidade:
-        return <pages.EditEntidade />;
+        return <EditEntidade />;
       case PageEnumContratos.novaEntidade:
-        return <pages.NovaEntidade />;
+        return <NovaEntidade />;
       case PageEnumContratos.registrarDoc:
-        return <pages.RegistrarDoc />;
+        return <RegistrarDoc />;
       case PageEnumContratos.docsContrato:
-        return <pages.DocsContrato />;
+        return <DocsContrato />;
       case PageEnumContratos.docsEntidade:
-        return <pages.DocsEntidade />;
+        return <DocsEntidade />;
       case PageEnumContratos.registrarDocEntidade:
-        return <pages.RegistrarDocEntidade />;
+        return <RegistrarDocEntidade />;
       case PageEnumContratos.infosContrato:
-        return <pages.InfosContrato />;
+        return <InfosContrato />;
       case PageEnumContratos.registrarInfosContrato:
-        return <pages.RegistrarInfosContrato />;
+        return <RegistrarInfosContrato />;
       case PageEnumContratos.editarInfosContrato:
-        return <pages.EditarInfosContrato />;
+        return <EditarInfosContrato />;
       case PageEnumContratos.alunados:
-        return <pages.Alunados />;
+        return <Alunados />;
       case PageEnumContratos.cadastroAlunado:
-        return <pages.CadastrarAlunado />;
+        return <CadastrarAlunado />;
       case PageEnumContratos.editarAlunado:
-        return <pages.EditarAlunado />;
+        return <EditarAlunado />;
 
       default:
         return <></>;
