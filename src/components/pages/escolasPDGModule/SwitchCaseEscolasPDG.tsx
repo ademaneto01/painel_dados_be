@@ -33,6 +33,13 @@ const EditarAlunadoPDG = dynamic(
       '../escolasPDGModule/alunadosPDG/CRUDAlunadoPDG/editarAlunadoPDG/EditarAlunadoPDG'
     ),
 );
+const RegistrarOcorrenciaPDG = dynamic(
+  () =>
+    import(
+      '../escolasPDGModule/ocorrenciasPDG/CRUDOcorrenciasPDG/RegistrarOcorrenciaPDG'
+    ),
+);
+
 export default function SwitchCaseEscolasPDG() {
   const { pageEscolasPDG } = useGlobalContext();
 
@@ -51,10 +58,10 @@ export default function SwitchCaseEscolasPDG() {
       case PageEnumEscolasPDG.cadastroAlunadoPDG:
         return <CadastrarAlunadoPDG />;
       case PageEnumEscolasPDG.editarAlunadoPDG:
-         return <EditarAlunadoPDG />;
+        return <EditarAlunadoPDG />;
       case PageEnumEscolasPDG.RegistrarOcorrenciaPDG:
-        return <pages.RegistrarOcorrenciaPDG />;
-      
+        return <RegistrarOcorrenciaPDG />;
+
       default:
         return <></>;
     }
