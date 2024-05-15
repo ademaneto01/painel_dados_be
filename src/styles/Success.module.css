@@ -1,0 +1,59 @@
+.errorComponent {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--verde-tech);
+  color: var(--verde-tech);
+  font-weight: bold;
+  background-color: var(--verde-tech-claro);
+  box-shadow: 0 2px 4px var(--black-200);
+  border-radius: 5px;
+  bottom: 2rem;
+  left: 2rem;
+  width: 16rem;
+  padding: 1rem;
+  z-index: 15;
+}
+.infosComponent {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--white-200);
+  color: var(--white);
+  font-weight: bold;
+  background-color: var(--gray-300);
+  box-shadow: 0 2px 4px var(--black-200);
+  border-radius: 5px;
+  bottom: 2rem;
+  left: 2rem;
+  width: 16rem;
+  padding: 1rem;
+  z-index: 15;
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.loadingDot {
+  animation: blink 1.5s infinite;
+}
+
+.loadingDot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.loadingDot:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.loadingDot:nth-child(3) {
+  animation-delay: 1s;
+}

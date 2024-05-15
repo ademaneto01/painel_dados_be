@@ -21,6 +21,7 @@ import AlunadosSerializers from './AlunadosSerializers';
 import AcompanhamentoPDGSerializers from './AcompanhamentoPDGSerializers';
 import AcompanhamentoPDGCriteriaSerializers from './AcompanhamentoPDGCriteriaSerializers';
 import MetaBaseIframeSerializers from './MetaBaseIframeSerializers';
+import RegistrarOcorrenciaPDGSerializers from './RegistrarOcorrenciaPDGSerializers';
 export {
   AlunadosSerializers,
   UsersSerializers,
@@ -45,4 +46,5 @@ export {
   AcompanhamentoPDGSerializers,
   AcompanhamentoPDGCriteriaSerializers,
   MetaBaseIframeSerializers,
+  RegistrarOcorrenciaPDGSerializers,
 };

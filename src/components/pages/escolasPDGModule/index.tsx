@@ -5,6 +5,7 @@ import RegistrarDocEntidadePDG from './regitrarDocEntidadePDG/RegistrarDocEntida
 import AlunadosPDG from './alunadosPDG/AlunadosPDG';
 import CadastrarAlunadoPDG from './alunadosPDG/CRUDAlunadoPDG/cadastroAlunadoPDG/CadastroAlunadoPDG';
 import EditarAlunadoPDG from './alunadosPDG/CRUDAlunadoPDG/editarAlunadoPDG/EditarAlunadoPDG';
+import RegistrarOcorrenciaPDG from './ocorrenciasPDG/CRUDOcorrenciasPDG/RegistrarOcorrenciaPDG';
 const pageComponentsEscolasPDG = {
   EscolasPDG,
   ProfessoresEscola,
@@ -13,5 +14,6 @@ const pageComponentsEscolasPDG = {
   AlunadosPDG,
   CadastrarAlunadoPDG,
   EditarAlunadoPDG,
+  RegistrarOcorrenciaPDG,
 };
 export default pageComponentsEscolasPDG;

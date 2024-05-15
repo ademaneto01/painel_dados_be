@@ -10,6 +10,7 @@ import SwitchEntidadeEscolar from './SwitchEntitadeEscolar';
 import ModalForm from './ModalForm';
 import InputStandard from './InputStandard';
 import InputSelect from './InputSelect';
+import CheckboxGroup from './CheckboxGroup';
 export {
   InputSelect,
   InputStandard,
@@ -23,4 +24,5 @@ export {
   OnOffToggler,
   SwitchContrato,
   SwitchEntidadeEscolar,
+  CheckboxGroup,
 };

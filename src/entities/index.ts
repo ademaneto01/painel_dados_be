@@ -22,6 +22,7 @@ import EntitiesAlunados from './EntitiesAlunados';
 import EntitiesAcompanhamentoPDG from './EntitiesAcompanhamentoPDG';
 import EntitiesAcompanhamentoPDGCriteria from './EntitiesAcompanhamentoPDGCriteria';
 import EntitiesMetaBaseIframe from './EntitiesMetaBaseIframe';
+import EntitiesRegistrarOcorrenciaPDG from './EntitiesRegistrarOcorrenciaPDG';
 export {
   EntitiesUsers,
   EntitiesUserLogin,
@@ -47,4 +48,5 @@ export {
   EntitiesAcompanhamentoPDG,
   EntitiesAcompanhamentoPDGCriteria,
   EntitiesMetaBaseIframe,
+  EntitiesRegistrarOcorrenciaPDG,
 };

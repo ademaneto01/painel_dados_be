@@ -4,7 +4,6 @@ import InputMask from 'react-input-mask';
 import { BackendApiGet, BackendApiDelete } from '@/backendApi';
 import { ErrorComponent } from '@/errors/index';
 import { PageEnumEscolasPDG } from '@/enums';
-import { PageEnumContratos } from '@/enums';
 import { FaSearch } from 'react-icons/fa';
 import {
   PageContentContainer,

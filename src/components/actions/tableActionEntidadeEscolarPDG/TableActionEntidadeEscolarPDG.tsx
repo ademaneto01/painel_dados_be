@@ -67,6 +67,11 @@ export default function TableActionEntidadeEscolarPDG(
     setPageEscolasPDG(PageEnumEscolasPDG.alunadosPDG);
   }
 
+  function handleRegistroOcorrenciaClick(id: string): void {
+    setIdEntidadeEscolar(id);
+    setPageEscolasPDG(PageEnumEscolasPDG.RegistrarOcorrenciaPDG);
+  }
+
   return (
     <div className={styles.container}>
       <Action
@@ -90,7 +95,7 @@ export default function TableActionEntidadeEscolarPDG(
           >
             <div className={styles.modal}>
               <button onClick={handleAlunadosClick}>Alunado</button>
-              <button>Registrar Ocorrência</button>
+              <button onClick={() => handleRegistroOcorrenciaClick(props.id)}>Registrar Ocorrência</button>
             </div>
           </div>
         </div>

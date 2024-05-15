@@ -1,32 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import Select from 'react-select';
 import { PageEnumEscolasPDG } from '@/enums';
 import { useGlobalContext } from '@/context/store';
-import { PageContentContainer, BackButton } from '@/components/shared';
+import { PageContentContainer, BackButton, CheckboxGroup } from '@/components/shared';
 import { BackendApiPost, BackendApiGet } from '@/backendApi';
 import handleApiErrors from '@/utils/HandleApiErrors';
 import styles from '@/styles/RegistrarOcorrenciaPDG.module.css';
-import { EntitiesAgenteExterno } from '@/entities';
-
-interface Option {
-  value: string;
-  label: string;
-}
+import { EntitiesVinculosAgentesExterno } from '@/entities';
+import { ErrorComponent } from '@/errors/index';
+import { SuccessComponent } from '@/success/index';
 
 export default function RegistrarOcorrenciaPDG(): JSX.Element {
-  const [data, setData] = useState<EntitiesAgenteExterno[]>([]);
+  const [data, setData] = useState<EntitiesVinculosAgentesExterno[]>([]);
   const [loaded, setLoaded] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [ocorrencia, setOcorrencia] = useState<string>('');
   const { setPageEscolasPDG, idEntidadeEscolar } = useGlobalContext();
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
+  const [sucesso, setSucesso] = useState(false);
+  const [messageSucesso, setMessageSucesso] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem('auth_token');
       try {
-        const backendApi = new BackendApiGet(token);
+        const backendApi = new BackendApiGet(`${token}`);
         const agentesEscola = await backendApi.listarAgenteRelacionadoEscola(idEntidadeEscolar);
         setData(agentesEscola);
       } catch (error: any) {
@@ -39,59 +37,66 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
     fetchData();
   }, [idEntidadeEscolar]);
 
-  const fetchDataForSubmit = async (texto_ocorrencia: string, user_escola: string) => {
+  const fetchDataForSubmit = async (ocorrencia: string, idEntidadeEscolar: string) => {
     const token = localStorage.getItem('auth_token');
     const user_id = localStorage.getItem('userId');
-    const backendApi = new BackendApiPost(token);
+    const backendApi = new BackendApiPost(`${token}`);
     const bodyReq = {
       id_ee: idEntidadeEscolar,
-      texto_ocorrencia,
-      user_escola,
+      texto_ocorrencia: ocorrencia,
+      user_escola: selectedOptions,
       id_user: user_id,
     };
-
     try {
-      await backendApi.createOcorrencia(bodyReq);
+      await backendApi.registrarOcorrenciaPDG(bodyReq);
     } catch (error: any) {
       handleApiErrors(error, setError, setMsgError);
     }
   };
 
+  const HeaderComponent: React.FC = () => <h4>Registrar Ocorrência</h4>;
+
   const handleSubmit = () => {
-    if (ocorrencia.trim()) {
+    if (ocorrencia.trim() && selectedOptions.length > 0) {
       fetchDataForSubmit(ocorrencia, idEntidadeEscolar);
+      setSucesso(true);
+      setMessageSucesso('Ocorrência registrada com sucesso!');
+      setTimeout(() => {
+        setPageEscolasPDG(PageEnumEscolasPDG.escolasPDG);
+      }, 600);
     } else {
       setError(true);
-      setMsgError('Por favor, preencha a ocorrência.');
+      setMsgError('Por favor, preencha a ocorrência e selecione pelo menos um agente relacionado.');
     }
   };
 
-  const handleSelectChange = (selectedOptions: Option[]) => {
-    setSelectedOptions(selectedOptions);
+  const handleSelectChange = (newSelectedOptions: string[]) => {
+    setSelectedOptions(newSelectedOptions);
   };
 
   const agenteOptions = data.map((agente) => ({
-    value: agente.id.toString(),
+    value: agente.uuid_agente.toString(),
     label: agente.nome,
   }));
 
   return (
     <div>
-      <h1>Registrar Ocorrência</h1>
+      <HeaderComponent />
       <PageContentContainer>
+        <BackButton
+          color={'var(--gray-300)'}
+          colorBackGround={'var(--white)'}
+          text="Voltar"
+          size="8rem"
+          onClick={() => setPageEscolasPDG(PageEnumEscolasPDG.escolasPDG)}
+        />
         <form>
-          <div className={styles.selectContainer}>
-            <label htmlFor="agentes">Agentes Relacionados:</label>
-            <Select
-              isMulti
-              id="agentes"
-              name="agentes"
-              options={agenteOptions}
-              value={selectedOptions}
-              onChange={handleSelectChange}
-              className={styles.inputSelectReact}
-            />
-          </div>
+        <label htmlFor="agentes" >Agentes Relacionados:</label>
+        <CheckboxGroup
+          options={agenteOptions}
+          selectedOptions={selectedOptions}
+          onChange={handleSelectChange}
+        />
           <textarea
             className={styles.textArea}
             value={ocorrencia}
@@ -99,7 +104,8 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
             placeholder="Descreva a ocorrência"
             rows={5}
           />
-          {error && <p className={styles.error}>{msgError}</p>}
+          {sucesso && <SuccessComponent message={messageSucesso} />}
+          {error && <ErrorComponent message={msgError} />}
           <div className={styles.buttonContainer}>
             <button
               className={styles.confirmButton}
@@ -115,13 +121,6 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
             >
               Cancelar
             </button>
-            <BackButton
-              color={'var(--gray-300)'}
-              colorBackGround={'var(--white)'}
-              text="Voltar"
-              size="8rem"
-              onClick={() => setPageEscolasPDG(PageEnumEscolasPDG.escolasPDG)}
-            />
           </div>
         </form>
       </PageContentContainer>

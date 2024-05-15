@@ -1,0 +1,92 @@
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+  background-color: var(--white);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.checkboxGroup::-webkit-scrollbar {
+  width: 8px;
+}
+
+.checkboxGroup::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.checkboxGroup::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.checkboxGroup::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.checkboxLabel:hover {
+  background-color: var(--gray-200);
+}
+
+.checkboxLabel input {
+  margin-right: 0.75rem;
+  width: 20px;
+  height: 20px;
+}
+
+.checkboxLabel span {
+  font-size: 1rem;
+  color: #333;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 2px solid var(--verde-learn); 
+  outline: none;
+  position: relative;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.checkboxLabel input[type="checkbox"]:checked {
+  background-color: var(--verde-learn);
+  border-color: var(--verde-learn);
+}
+
+.checkboxLabel input[type="checkbox"]::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%) rotate(45deg); 
+  width: 5px;
+  height: 10px;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  transition: background-color 0.3s;
+  opacity: 0;
+}
+
+.checkboxLabel input[type="checkbox"]:checked::before {
+  opacity: 1; 
+  border-color: var(--white);
+}
+
+
+

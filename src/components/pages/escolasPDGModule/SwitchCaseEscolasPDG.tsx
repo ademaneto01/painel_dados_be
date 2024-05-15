@@ -22,6 +22,8 @@ export default function SwitchCaseEscolasPDG() {
         return <pages.CadastrarAlunadoPDG />;
       case PageEnumEscolasPDG.editarAlunadoPDG:
         return <pages.EditarAlunadoPDG />;
+      case PageEnumEscolasPDG.RegistrarOcorrenciaPDG:
+        return <pages.RegistrarOcorrenciaPDG />;
       default:
         return <></>;
     }

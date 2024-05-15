@@ -6,6 +6,7 @@ enum PageEnumEscolasPDG {
   alunadosPDG = 'alunadosPDG',
   cadastroAlunadoPDG = 'cadastroAlunadoPDG',
   editarAlunadoPDG = 'editarAlunadoPDG',
+  RegistrarOcorrenciaPDG = 'RegistrarOcorrenciaPDG',
 }
 
 export default PageEnumEscolasPDG;
