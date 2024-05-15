@@ -11,6 +11,7 @@ import {
   EntitiesAlunados,
   EntitiesAcompanhamentoPDG,
   EntitiesAcompanhamentoPDGCriteria,
+  EntitiesRegistrarOcorrenciaPDG,
 } from '@/entities';
 import { FailedToFetchError } from '@/errors';
 import { BackendApiInterfacePost, SerializerInterface } from '@/interfaces';
@@ -27,6 +28,7 @@ import {
   AlunadosSerializers,
   AcompanhamentoPDGSerializers,
   AcompanhamentoPDGCriteriaSerializers,
+  RegistrarOcorrenciaPDGSerializers,
 } from '@/serializers/prod';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
@@ -73,6 +75,16 @@ export default class BackendApiPost implements BackendApiInterfacePost {
       '/registrarEntidadeEscolar',
       userData,
       new RegistrarEntidadeEscolarSerializers(),
+    );
+  }
+
+  public async registrarOcorrenciaPDG(
+    userData: any,
+  ): Promise<EntitiesRegistrarOcorrenciaPDG[]> {
+    return await this.post<EntitiesRegistrarOcorrenciaPDG>(
+      '/registrarOcorrencia',
+      userData,
+      new RegistrarOcorrenciaPDGSerializers(),
     );
   }
 

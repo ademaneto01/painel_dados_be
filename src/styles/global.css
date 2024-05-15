@@ -1,4 +1,5 @@
 :root {
+  --white-2003: #f0f3f886;
   --white: #ffffff;
   --white-200: #eaf0f7;
   --white-300: #f1f5fa;
@@ -14,6 +15,7 @@
   --dark-gray: rgba(78, 78, 78, 0.2);
   --azul-tech: #31599c;
   --verde-tech: rgb(12, 182, 177);
+  --verde-tech-claro: #B8FFDE;
   --verde-learn: rgb(0, 135, 157);
   --azul-tech-opaque: rgb(49, 89, 156, 0.7);
   --azul-techt: rgb(49, 89, 156, 0.7);
@@ -28,6 +30,7 @@
   --red-300: #ca1c1cce;
   --brown: brown;
   --blue-light: #7286a2;
+  --smooth-blue: #d5ffff;
 }
 
 * {

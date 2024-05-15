@@ -63,21 +63,19 @@ async function printDocument(data: DataInterface) {
     const imgWidth2 = canvas2.width * scale2;
     const imgHeight2 = canvas2.height * scale2;
 
-    // Add first page
     doc.addImage(
-      canvas1.toDataURL('image/png'),
-      'PNG',
+      canvas1.toDataURL('image/webp'),
+      'WEBP',
       0,
       0,
       imgWidth1,
       imgHeight1,
     );
 
-    // Add second page
     doc.addPage();
     doc.addImage(
-      canvas2.toDataURL('image/png'),
-      'PNG',
+      canvas2.toDataURL('image/webp'),
+      'WEBP',
       0,
       0,
       imgWidth2,

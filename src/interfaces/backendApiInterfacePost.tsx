@@ -11,6 +11,7 @@ import {
   EntitiesAlunados,
   EntitiesAcompanhamentoPDG,
   EntitiesAcompanhamentoPDGCriteria,
+  EntitiesRegistrarOcorrenciaPDG,
 } from '@/entities';
 
 export default interface BackendApiInterfacePost {
@@ -37,6 +38,8 @@ export default interface BackendApiInterfacePost {
   registrarAlunados(userData: any): Promise<EntitiesAlunados[]>;
 
   registrarAcompanhamento(userData: any): Promise<EntitiesAcompanhamentoPDG[]>;
+
+  registrarOcorrenciaPDG(userData: any): Promise<EntitiesRegistrarOcorrenciaPDG[]>;
 
   registrarAcompanhamentoCriteria(
     userData: any,
