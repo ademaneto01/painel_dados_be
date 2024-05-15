@@ -96,7 +96,8 @@ const initialFormData: FormDataAlunados = {
 export default function EditarAlunadoPDG(): JSX.Element {
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
-  const { idEntidadeEscolar, setPageEscolasPDG, globalAnoRef } = useGlobalContext();
+  const { idEntidadeEscolar, setPageEscolasPDG, globalAnoRef } =
+    useGlobalContext();
   const [sucesso, setSucesso] = useState(false);
 
   const [formDataAlunados, setFormDataAlunados] =

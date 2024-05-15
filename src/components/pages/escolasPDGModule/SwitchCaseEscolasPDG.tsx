@@ -1,29 +1,60 @@
 import { useGlobalContext } from '@/context/store';
-import pages from '../escolasPDGModule/index';
+import dynamic from 'next/dynamic';
 import { PageEnumEscolasPDG } from '@/enums';
 import styles from '@/styles/CardLessons.module.css';
 
+const EscolasPDG = dynamic(
+  () => import('../escolasPDGModule/escolasPDG/EscolasPDG'),
+);
+const RegistrarDocEntidadePDG = dynamic(
+  () =>
+    import(
+      '../escolasPDGModule/regitrarDocEntidadePDG/RegistrarDocEntidadePDG'
+    ),
+);
+const DocsEscola = dynamic(
+  () => import('../escolasPDGModule/docsEscola/DoscEscola'),
+);
+const ProfessoresEscola = dynamic(
+  () => import('../escolasPDGModule/professoresEscola/ProfessoresEscola'),
+);
+const AlunadosPDG = dynamic(
+  () => import('../escolasPDGModule/alunadosPDG/AlunadosPDG'),
+);
+const CadastrarAlunadoPDG = dynamic(
+  () =>
+    import(
+      '../escolasPDGModule/alunadosPDG/CRUDAlunadoPDG/cadastroAlunadoPDG/CadastroAlunadoPDG'
+    ),
+);
+const EditarAlunadoPDG = dynamic(
+  () =>
+    import(
+      '../escolasPDGModule/alunadosPDG/CRUDAlunadoPDG/editarAlunadoPDG/EditarAlunadoPDG'
+    ),
+);
 export default function SwitchCaseEscolasPDG() {
   const { pageEscolasPDG } = useGlobalContext();
 
   function PagesEscolasPDG(): JSX.Element {
     switch (pageEscolasPDG) {
       case PageEnumEscolasPDG.escolasPDG:
-        return <pages.EscolasPDG />;
+        return <EscolasPDG />;
       case PageEnumEscolasPDG.registrarDocEntidadePDG:
-        return <pages.RegistrarDocEntidadePDG />;
+        return <RegistrarDocEntidadePDG />;
       case PageEnumEscolasPDG.docsEscola:
-        return <pages.DocsEscola />;
+        return <DocsEscola />;
       case PageEnumEscolasPDG.professoresEscola:
-        return <pages.ProfessoresEscola />;
+        return <ProfessoresEscola />;
       case PageEnumEscolasPDG.alunadosPDG:
-        return <pages.AlunadosPDG />;
+        return <AlunadosPDG />;
       case PageEnumEscolasPDG.cadastroAlunadoPDG:
-        return <pages.CadastrarAlunadoPDG />;
+        return <CadastrarAlunadoPDG />;
       case PageEnumEscolasPDG.editarAlunadoPDG:
-        return <pages.EditarAlunadoPDG />;
+         return <EditarAlunadoPDG />;
       case PageEnumEscolasPDG.RegistrarOcorrenciaPDG:
         return <pages.RegistrarOcorrenciaPDG />;
+      
       default:
         return <></>;
     }
