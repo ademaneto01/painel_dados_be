@@ -71,7 +71,7 @@ export default function SignIn(): JSX.Element {
 
       setLoadedLogin(true);
       saveUserToLocalStorage(users[0]);
-      router.push('/splash');
+      router.push('/app');
     } catch (error: any) {
       handleLoginError(error);
     }
