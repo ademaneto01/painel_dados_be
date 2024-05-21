@@ -195,7 +195,6 @@ export default function ModalEditarVinculoAgente({
         handleSubmit={handleSubmit}
         setPageEscolasPDG={setPageEscolasPDG}
         onCancel={onCancel}
-        HeaderComponent={HeaderComponent}
         handleCheckboxChange={handleCheckboxChange}
         selectedOptions={selectedOptions}
         isProfessor={isProfessor}
@@ -207,17 +206,11 @@ export default function ModalEditarVinculoAgente({
   );
 }
 
-const HeaderComponent: React.FC = () => (
-  <h1 className={styles.titleModalEditarVinculoAgetne}>
-    Editar Vinculo Agente
-  </h1>
-);
-
 const FormComponent: React.FC<any> = ({
   formData,
   handleInputChange,
   handleSubmit,
-  HeaderComponent,
+  titleModal,
   onCancel,
   handleCheckboxChange,
   isProfessor,
@@ -225,66 +218,62 @@ const FormComponent: React.FC<any> = ({
 }) => {
   return (
     <>
-      <form
-        className={styles.container}
+      <ModalForm
         onSubmit={handleSubmit}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        <div className={styles.boxStandard}>
-          <HeaderComponent />
-          <label className={styles.labelStandard}>
-            Agente
-            <input
-              type="text"
-              placeholder="agente"
-              name="agente"
-              value={nomeAgente}
-              className={styles.inputStandard}
-              readOnly
-            />
-          </label>
-          <label className={styles.labelStandard}>
-            Especialista
-            <select
-              value={formData.especialista ?? ''}
-              onChange={handleInputChange}
-              name="especialista"
-              className={styles.inputSelect}
-            >
-              <option value="">-</option>
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
-            </select>
-          </label>
-          <div>
-            {isProfessor && (
-              <div>
-                <span className={styles.labelTitle}>Séries Escolares</span>
-                <div className={styles.optionContainer}>
-                  {OPTIONS.map((option) => (
-                    <div
-                      key={option}
-                      className={styles.divCheckBoxVincularAgente}
-                    >
-                      <input
-                        className={styles.checkBoxModalVincularAgente}
-                        type="checkbox"
-                        value={option}
-                        name={option}
-                        checked={formData[option] ?? ''}
-                        onChange={handleCheckboxChange}
-                      />
-                      {option.slice(3)}
-                    </div>
-                  ))}
+        title={titleModal}
+        onCancel={onCancel}
+        children={
+          <div className={styles.boxStandard}>
+            <label className={styles.labelStandard}>
+              Agente
+              <input
+                type="text"
+                placeholder="agente"
+                name="agente"
+                value={nomeAgente}
+                className={styles.inputStandard}
+                readOnly
+              />
+            </label>
+            <label className={styles.labelStandard}>
+              Especialista
+              <select
+                value={formData.especialista ?? ''}
+                onChange={handleInputChange}
+                name="especialista"
+                className={styles.inputSelect}
+              >
+                <option value="">-</option>
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
+              </select>
+            </label>
+            <div>
+              {isProfessor && (
+                <div>
+                  <span className={styles.labelTitle}>Séries Escolares</span>
+                  <div className={styles.optionContainer}>
+                    {OPTIONS.map((option) => (
+                      <div
+                        key={option}
+                        className={styles.divCheckBoxVincularAgente}
+                      >
+                        <input
+                          className={styles.checkBoxModalVincularAgente}
+                          type="checkbox"
+                          value={option}
+                          name={option}
+                          checked={formData[option] ?? ''}
+                          onChange={handleCheckboxChange}
+                        />
+                        {option.slice(3)}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className={styles.buttonContainer}>
+              )}
+            </div>
+            {/* <div className={styles.buttonContainer}>
           <button
             className={styles.cancelButton}
             type="button"
@@ -299,8 +288,10 @@ const FormComponent: React.FC<any> = ({
           >
             Salvar
           </button>
-        </div>
-      </form>
+        </div> */}
+          </div>
+        }
+      />
     </>
   );
 };

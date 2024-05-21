@@ -90,7 +90,7 @@ export default function TableActionsAgenteExterno(
       {showModalDelete === props.uuid_agente && (
         <ModalDelete
           title={'Excluir'}
-          message={`Realmente deseja excluir ${props.nome} ?`}
+          message={`Realmente deseja excluir${props.nome} ?`}
           onConfirm={() => deleteUser()}
           onCancel={() => setShowModalDelete('')}
         />
