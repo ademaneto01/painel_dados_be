@@ -15,6 +15,47 @@
 }
 .labelCheckBox {
   display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.labelCheckBox input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--verde-learn); 
+  outline: none;
+  position: relative;
+  transition: background-color 0.3s, border-color 0.3s;
+  padding: 0.4rem;
+  margin-left: 0.5rem;
+}
+
+.labelCheckBox input[type="checkbox"]:checked {
+  background-color: var(--verde-learn);
+  border-color: var(--verde-learn);
+}
+
+.labelCheckBox input[type="checkbox"]::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%; 
+  left: 49%; 
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--white);
+  transition: background-color 0.3s;
+  opacity: 0;
+}
+
+.labelCheckBox input[type="checkbox"]:checked::before {
+  opacity: 1; 
 }
 
 .inputCheckBox {

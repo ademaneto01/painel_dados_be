@@ -134,8 +134,13 @@
   padding: 0.3rem;
 }
 
+.spacer2 {
+  padding: 0.5rem;
+}
+
 .selectContainer {
   margin-bottom: 1rem;
+  width: 20rem;
 }
 
 .inputSelect {
