@@ -12,6 +12,7 @@ import { SuccessComponent } from '@/success/index';
 export default function RegistrarOcorrenciaPDG(): JSX.Element {
   const [data, setData] = useState<EntitiesVinculosAgentesExterno[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [selectedValue, setSelectedValue] = useState<string>('');   
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [ocorrencia, setOcorrencia] = useState<string>('');
   const { setPageEscolasPDG, idEntidadeEscolar } = useGlobalContext();
@@ -19,6 +20,7 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
   const [msgError, setMsgError] = useState('');
   const [sucesso, setSucesso] = useState(false);
   const [messageSucesso, setMessageSucesso] = useState('');
+  const [checkboxValue, setCheckboxValue] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,6 +48,9 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
       texto_ocorrencia: ocorrencia,
       user_escola: selectedOptions,
       id_user: user_id,
+      confidencial: checkboxValue,
+      tipo: tipo,
+      canal: canal,
     };
     try {
       await backendApi.registrarOcorrenciaPDG(bodyReq);
@@ -70,8 +75,36 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
     }
   };
 
+  const canal = [
+    { value: 'econtroPresencial', label: 'Econtro Presencial' },
+    { value: 'encontroOnline', label: 'Encontro Online' },
+    { value: 'email', label: 'E-mail' },
+    { value: 'whatsapp', label: 'Whatsapp' },
+    { value: 'telefone', label: 'Telefone' },
+    { value: 'documentoDigital', label: 'Documento Digital' },
+    { value: 'outro', label: 'Outro' },
+  ];
+
+  const tipo = [
+    { value: 'econtroPresencial', label: 'Econtro Presencial' },
+    { value: 'encontroOnline', label: 'Encontro Online' },
+    { value: 'email', label: 'E-mail' },
+    { value: 'whatsapp', label: 'Whatsapp' },
+    { value: 'telefone', label: 'Telefone' },
+    { value: 'documentoDigital', label: 'Documento Digital' },
+    { value: 'outro', label: 'Outro' },
+  ];
+
+  const handleSelectInputChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedValue(event.target.value);
+  };
+
   const handleSelectChange = (newSelectedOptions: string[]) => {
     setSelectedOptions(newSelectedOptions);
+  };
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckboxValue(event.target.checked);
   };
 
   const agenteOptions = data.map((agente) => ({
@@ -97,6 +130,47 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
           selectedOptions={selectedOptions}
           onChange={handleSelectChange}
         />
+        <div className={styles.spacer}></div>
+          <div className={styles.selectContainer}>
+            <label htmlFor="select">Canal:  </label>
+            <select
+              id="select"
+              value={selectedValue}
+              onChange={handleSelectInputChange}
+              className={styles.inputSelect}
+            >
+              {canal.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={styles.spacer}></div>
+          <div className={styles.selectContainer}>
+            <label htmlFor="select">Tipo:  </label>
+            <select
+              id="select"
+              value={selectedValue}
+              onChange={handleSelectInputChange}
+              className={styles.inputSelect}
+            >
+              {tipo.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        <div>
+            <label htmlFor="checkbox">Confidencial:   </label>
+            <input
+              type="checkbox"
+              id="checkbox"
+              checked={checkboxValue}
+              onChange={handleCheckboxChange}
+            />
+          </div>
           <textarea
             className={styles.textArea}
             value={ocorrencia}

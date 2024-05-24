@@ -7,6 +7,9 @@ interface UserProps {
     user_escola: string,
     id_ee: string;
     id_user: string;
+    tipo: string;
+    canal: string;
+    confidencial: string;
   }
 
 export default class RegistrarOcorrenciaPDGSerializers
@@ -19,6 +22,9 @@ export default class RegistrarOcorrenciaPDGSerializers
         user_escola: otd.user_escola,
         id_ee: otd.id_ee,
         id_user: otd.id_user,
+        canal: otd.canal,
+        confidencial: otd.confidencial,
+        tipo: otd.tipo,
     });
   }
 }
