@@ -13,7 +13,8 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
   const [data, setData] = useState<EntitiesVinculosAgentesExterno[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  const [selectedValue, setSelectedValue] = useState<string>(''); // Updated to string type
+  const [selectedCanal, setSelectedCanal] = useState<string>('');
+  const [selectedTipo, setSelectedTipo] = useState<string>(''); 
   const [ocorrencia, setOcorrencia] = useState<string>('');
   const { setPage, idEntidadeEscolar } = useGlobalContext();
   const [error, setError] = useState(false);
@@ -79,8 +80,12 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
     { value: 'outro', label: 'Outro' },
   ];
 
-  const handleSelectInputChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedValue(event.target.value);
+  const handleSelectInputCanal = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCanal(event.target.value);
+  };
+
+  const handleSelectInputTipo = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedTipo(event.target.value);
   };
 
   const handleCheckboxGroupChange = (newSelectedOptions: string[]) => {
@@ -136,8 +141,8 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
             <label htmlFor="select">Canal:  </label>
             <select
               id="select"
-              value={selectedValue}
-              onChange={handleSelectInputChange}
+              value={selectedCanal}
+              onChange={handleSelectInputCanal}
               className={styles.inputSelect}
             >
               {canal.map((option) => (
@@ -152,8 +157,8 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
             <label htmlFor="select">Tipo:  </label>
             <select
               id="select"
-              value={selectedValue}
-              onChange={handleSelectInputChange}
+              value={selectedTipo}
+              onChange={handleSelectInputTipo}
               className={styles.inputSelect}
             >
               {tipo.map((option) => (
