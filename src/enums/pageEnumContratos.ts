@@ -16,6 +16,7 @@ enum PageEnumContratos {
   alunados = 'alunados',
   cadastroAlunado = 'cadastroAlunado',
   editarAlunado = 'editarAlunado',
+  registrarOcorrencia = 'registrarOcorrencia'
 }
 
 export default PageEnumContratos;

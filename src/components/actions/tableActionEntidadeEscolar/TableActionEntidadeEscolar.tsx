@@ -89,6 +89,10 @@ export default function TableActionEntidadeEscolar(
     setShowModalVermais(id);
     setModalInfos('');
   }
+  function handleRegistroOcorrenciaClick(id: string): void {
+    setIdEntidadeEscolar(id);
+    setPage(PageEnumContratos.registrarOcorrencia);
+  }
 
   return (
     <div className={styles.container}>
@@ -121,6 +125,7 @@ export default function TableActionEntidadeEscolar(
             <div className={styles.modal}>
               <button onClick={handleEditClick}>Editar Entidade</button>
               <button onClick={handleAlunadosClick}>Alunado</button>
+              <button onClick={() => handleRegistroOcorrenciaClick(props.id)}>Registrar Ocorrência</button>
               <button onClick={handleVisualizarDocClick}>
                 Visualizar Documentos
               </button>
