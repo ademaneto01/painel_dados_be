@@ -15,6 +15,7 @@ import EditarInfosContrato from './infosContrato/EditarInfosContrato';
 import Alunados from './alunados/Alunados';
 import CadastrarAlunado from './alunados/CRUDAlunado/cadastroAlunado/CadastroAlunado';
 import EditarAlunado from './alunados/CRUDAlunado/editarAlunado/EditarAlunado';
+import RegistrarOcorrencia from './CRUDOcorrencias/RegistrarOcorrencia'
 
 const pageComponentsContratos = {
   EntidadesContratuais,
@@ -34,5 +35,6 @@ const pageComponentsContratos = {
   Alunados,
   CadastrarAlunado,
   EditarAlunado,
+  RegistrarOcorrencia,
 };
 export default pageComponentsContratos;

@@ -66,6 +66,12 @@ const EditarAlunado = dynamic(
       '../ContratoModule/alunados/CRUDAlunado/editarAlunado/EditarAlunado'
     ),
 );
+const RegistrarOcorrencia = dynamic(
+  () =>
+    import(
+      '../ContratoModule/CRUDOcorrencias/RegistrarOcorrencia'
+    ),
+);
 export default function SwitchCaseContratos() {
   const { page } = useGlobalContext();
 
@@ -105,7 +111,8 @@ export default function SwitchCaseContratos() {
         return <CadastrarAlunado />;
       case PageEnumContratos.editarAlunado:
         return <EditarAlunado />;
-
+      case PageEnumContratos.registrarOcorrencia:
+          return <RegistrarOcorrencia />;
       default:
         return <></>;
     }

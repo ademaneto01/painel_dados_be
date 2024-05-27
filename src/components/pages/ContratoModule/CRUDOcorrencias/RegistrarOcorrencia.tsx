@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PageEnumEscolasPDG } from '@/enums';
+import { PageEnumContratos } from '@/enums';
 import { useGlobalContext } from '@/context/store';
 import { PageContentContainer, BackButton, CheckboxGroup, InputSelect } from '@/components/shared';
 import { BackendApiPost, BackendApiGet } from '@/backendApi';
@@ -9,14 +9,14 @@ import { EntitiesVinculosAgentesExterno } from '@/entities';
 import { ErrorComponent } from '@/errors/index';
 import { SuccessComponent } from '@/success/index';
 
-export default function RegistrarOcorrenciaPDG(): JSX.Element {
+export default function RegistrarOcorrencia(): JSX.Element {
   const [data, setData] = useState<EntitiesVinculosAgentesExterno[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [selectedCanal, setSelectedCanal] = useState<string>('');
   const [selectedTipo, setSelectedTipo] = useState<string>('');   
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [ocorrencia, setOcorrencia] = useState<string>('');
-  const { setPageEscolasPDG, idEntidadeEscolar } = useGlobalContext();
+  const { setPage, idEntidadeEscolar } = useGlobalContext();
   const [error, setError] = useState(false);
   const [msgError, setMsgError] = useState('');
   const [sucesso, setSucesso] = useState(false);
@@ -68,7 +68,7 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
       setSucesso(true);
       setMessageSucesso('Ocorrência registrada com sucesso!');
       setTimeout(() => {
-        setPageEscolasPDG(PageEnumEscolasPDG.escolasPDG);
+        setPage(PageEnumContratos.entidadesEscolares);
       }, 600);
     } else {
       setError(true);
@@ -143,7 +143,7 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
           colorBackGround={'var(--white)'}
           text="Voltar"
           size="8rem"
-          onClick={() => setPageEscolasPDG(PageEnumEscolasPDG.escolasPDG)}
+          onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
         />
         <form id="registroOcorrencia">
         <label htmlFor="agentes" >Agentes Relacionados:</label>
@@ -202,7 +202,7 @@ export default function RegistrarOcorrenciaPDG(): JSX.Element {
             <button
               className={styles.cancelButton}
               type="button"
-              onClick={() => setPageEscolasPDG(PageEnumEscolasPDG.escolasPDG)}
+              onClick={() => setPage(PageEnumContratos.entidadesEscolares)}
             >
               Cancelar
             </button>

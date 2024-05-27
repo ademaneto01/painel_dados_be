@@ -1,26 +1,40 @@
-.labelStandard {
-  font-size: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-}
-
 .inputSelect {
   text-align: start;
-  width: 102%;
+  width: 100%;
   padding-left: 0.7rem;
   height: 2.5rem;
   color: var(--azul-tenro);
+  background-color: var(--white);
   border-radius: 5px;
   border: 1px solid var(--gray-200);
   margin-top: 0.2rem;
-  background-color: var(--white);
   cursor: pointer;
+  transition: border-color 0.3s;
+  overflow-y: auto;
 }
 
 .inputSelect:focus-within {
   box-shadow: 0 0 5px var(--gray-200);
 }
+
 .inputSelect:focus {
   outline: transparent;
+  border: 1px solid var(--verde-learn);
+}
+
+.inputSelect::-webkit-scrollbar {
+  width: 8px;
+}
+
+.inputSelect::-webkit-scrollbar-track {
+  background: rgb(210, 240, 244);
+}
+
+.inputSelect::-webkit-scrollbar-thumb {
+  background: var(--verde-learn-light);
+  border-radius: 4px;
+}
+
+.inputSelect::-webkit-scrollbar-thumb:hover {
+  background: var(--verde-learn-light);
 }

@@ -12,52 +12,6 @@
   gap: 1rem;
 }
 
-.labelStandard {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.inputStandard {
-  all: unset;
-  text-align: start;
-  width: 100%;
-  padding-left: 0.7rem;
-  height: 2.5rem;
-  border-radius: 5px;
-  border: 1px solid var(--gray-200);
-  margin-top: 0.2rem;
-  cursor: text;
-}
-
-.inputSelect {
-  text-align: start;
-  width: 101%;
-  padding-left: 0.7rem;
-  height: 2.5rem;
-  max-height: 3rem;
-  overflow-y: visible;
-  color: var(--azul-tenro);
-  background-color: var(--white);
-  border-radius: 5px;
-  border: 1px solid var(--gray-200);
-  margin-top: 0.2rem;
-  cursor: pointer;
-}
-
-.inputSelectReact {
-  width: 100%;
-  margin-top: 1rem;
-}
-
-.inputSelect:focus-within {
-  box-shadow: 0 0 5px var(--gray-200);
-}
-
-.inputSelect:focus {
-  outline: transparent;
-}
-
 .confirmButton,
 .cancelButton {
   border: none;
@@ -109,6 +63,12 @@
   resize: none;
   margin-top: 1rem;
   overflow-wrap: break-word;
+  transition: border-color 0.3s;
+}
+
+.textArea:focus {
+  outline: none; 
+  border: 1px solid var(--verde-learn);
 }
 
 .selectContainer {
@@ -123,4 +83,85 @@
 
 .selectContainer {
   margin-bottom: 1rem;
+}
+
+.confidential {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.confidential input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--verde-learn); 
+  outline: none;
+  position: relative;
+  transition: background-color 0.3s, border-color 0.3s;
+  padding: 0.4rem;
+  margin-left: 0.5rem;
+}
+
+.confidential input[type="checkbox"]:checked {
+  background-color: var(--verde-learn);
+  border-color: var(--verde-learn);
+}
+
+.confidential input[type="checkbox"]::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%; 
+  left: 49%; 
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--white);
+  transition: background-color 0.3s;
+  opacity: 0;
+}
+
+.confidential input[type="checkbox"]:checked::before {
+  opacity: 1; 
+}
+
+.spacer {
+  padding: 0.3rem;
+}
+
+.spacer2 {
+  padding: 0.5rem;
+}
+
+.selectContainer {
+  margin-bottom: 1rem;
+  width: 20rem;
+}
+
+.inputSelect {
+  text-align: start;
+  width: 100%;
+  padding-left: 0.7rem;
+  height: 2.5rem;
+  color: var(--azul-tenro);
+  background-color: var(--white);
+  border-radius: 5px;
+  border: 1px solid var(--gray-200);
+  margin-top: 0.2rem;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.inputSelect:focus-within {
+  box-shadow: 0 0 5px var(--gray-200);
+}
+
+.inputSelect:focus {
+  outline: transparent;
+  border: 1px solid var(--verde-learn);
 }
